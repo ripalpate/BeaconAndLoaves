@@ -16,7 +16,7 @@ namespace BeaconAndLoaves.Models
         public string State { get; set; }
         public string ZipCode { get; set; }
         public string PhoneNumber { get; set; }
-        public string IsOwner { get; set; }
-        public string IsActive { get; set; }
+        public bool IsOwner { get; set; }
+        public bool IsActive { get; set; }
     }
 }
