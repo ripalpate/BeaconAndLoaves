@@ -22,6 +22,10 @@ namespace BeaconAndLoaves
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.Configure<DbConfiguration>(Configuration);
+
+            //services.AddTransient<UserRepository>();
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -63,5 +67,10 @@ namespace BeaconAndLoaves
                 }
             });
         }
+    }
+
+    public class DbConfiguration
+    {
+        public string ConnectionString { get; set; }
     }
 }
