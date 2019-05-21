@@ -30,15 +30,19 @@ namespace BeaconAndLoaves.Data
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var insertQuery = @" Insert into property (name, location, fitnessLevel, UserId)
+                var insertQuery = @" Insert into property (ownerId, propertyType, street, city, state, zipcode, description, imageUrl, price)
                                                             Output inserted.*
-                                                            Values(@name, @location, @fitnessLevel, @userId)";
+                                                            Values(@ownerId, @propertyType, @street, @city, @state, @zipcode, @description, @imageUrl, @price)";
                 var parameters = new
                 {
-                    Name = name,
-                    Location = location,
-                    FitnessLevel = fitnessLevel,
-                    UserId = userId
+                    PropertyType = propertyType,
+                    Street = street,
+                    City = city,
+                    State = state,
+                    Zipcode = zipcode,
+                    description,
+                    imageUrl,
+                    price
                 };
                 var newTarget = db.QueryFirstOrDefault<Target>(insertQuery, parameters);
 
