@@ -16,6 +16,6 @@ namespace BeaconAndLoaves.Models
         Visa,
         Mastercard,
         Discover,
-        Bitcoin,        
+        Bitcoin     
     }
 }
