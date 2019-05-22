@@ -1,5 +1,6 @@
 ﻿using BeaconAndLoaves.Models;
 using Dapper;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,12 +11,17 @@ namespace BeaconAndLoaves.Data
 {
     public class UserRepository
     {
-        const string ConnectionString = "Server=localhost;Database=BeaconAndLoaves;Trusted_Connection=True";
+        readonly string _connectionString;
+
+        public UserRepository(IOptions<DbConfiguration> dbConfig)
+        {
+            _connectionString = dbConfig.Value.ConnectionString;
+        }
 
         public User AddUser(string email, string firebaseId, string name, string street, string city,
                             string state, string zipcode, string phoneNumber, bool isOwner)
         {
-            using(var db = new SqlConnection(ConnectionString))
+            using(var db = new SqlConnection(_connectionString))
             {
                 var newUser = db.QueryFirstOrDefault<User>(@"
                     insert into users (email, firebaseId, name, street, city, state, zipcode, phoneNumber, isOwner)
@@ -32,7 +38,7 @@ namespace BeaconAndLoaves.Data
         }
         public IEnumerable<User> GetAllUsers()
         {
-            using (var db = new SqlConnection(ConnectionString))
+            using (var db = new SqlConnection(_connectionString))
             {
                 var users = db.Query<User>(@"
                     select * 
