@@ -53,5 +53,13 @@ namespace BeaconAndLoaves.Controllers
             return Ok(getProperties);
         }
 
+        //Update Properties
+        [HttpPut("{id}")]
+        public ActionResult UpdateProperty(int id, PropertyType type, string propertyName, string street, string city, string state, string zipcode, string description, string imageUrl, decimal price)
+        {
+            var user = _repo.UpdateProperty(id, type, propertyName, street, city, state, zipcode, description, imageUrl, price);
+            return Ok();
+        }
+
     }
 }

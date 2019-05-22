@@ -72,5 +72,46 @@ namespace BeaconAndLoaves.Data
                 return properties;
             }
         }
+
+        public bool UpdateProperty(int id, PropertyType type, string propertyName, string street, string city, string state, string zipcode, string description, string imageUrl, decimal price)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql =
+                    @"update Properties 
+                      set type= @type,
+	                    propertyName= @propertyName,
+	                    street= @street, 
+	                    city= @city, 
+	                    state= @state, 
+	                    zipcode= @zipcode, 
+	                    description = @description,
+	                    imageUrl= @imageUrl, 
+	                    price =  @price
+                     Where id = @id";
+
+                var parameters = new
+                {
+                    Id = id,
+                    Type = type,
+                    PropertyName = propertyName,
+                    Street = street,
+                    City = city,
+                    State = state,
+                    Zipcode = zipcode,
+                    Description = description,
+                    ImageUrl = imageUrl,
+                    Price = price
+                };
+                var rowsAffected = db.Execute(sql, parameters );
+
+                if (rowsAffected == 1)
+                {
+                    return true;
+                }
+                throw new Exception("Could not update property");
+            }
+
+        }
     }
 }
