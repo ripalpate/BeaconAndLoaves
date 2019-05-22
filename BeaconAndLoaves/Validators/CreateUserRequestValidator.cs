@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BeaconAndLoaves.Validators
 {
-    public class CreaeteUserRequestValidator
+    public class CreateUserRequestValidator
     {
         public bool Validate(CreateUserRequest requestToValidate)
         {
-            return !(string.IsNullOrEmpty(requestToValidate.Email)
+            return (string.IsNullOrEmpty(requestToValidate.Email)
                    || string.IsNullOrEmpty(requestToValidate.FirebaseId)
                    || string.IsNullOrEmpty(requestToValidate.Name)
                    || string.IsNullOrEmpty(requestToValidate.Street)

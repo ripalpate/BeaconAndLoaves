@@ -1,3 +1,4 @@
+using BeaconAndLoaves.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,7 +25,7 @@ namespace BeaconAndLoaves
 
             services.Configure<DbConfiguration>(Configuration);
 
-            //services.AddTransient<UserRepository>();
+            services.AddTransient<UserRepository>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
