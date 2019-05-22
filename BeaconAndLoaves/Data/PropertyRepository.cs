@@ -34,8 +34,8 @@ namespace BeaconAndLoaves.Data
             using (var db = new SqlConnection(_connectionString))
             {
                 var insertQuery = @" Insert into properties (ownerId, type, propertyName, street, city, state, zipcode, description, imageUrl, price)
-                                                            Output inserted.*
-                                                            Values(@ownerId, @type, @propertyName, @street, @city, @state, @zipcode, @description, @imageUrl, @price)";
+                                        Output inserted.*
+                                        Values(@ownerId, @type, @propertyName, @street, @city, @state, @zipcode, @description, @imageUrl, @price)";
                 var parameters = new
                 {
                     OwnerId = ownerId,
@@ -73,41 +73,28 @@ namespace BeaconAndLoaves.Data
             }
         }
 
-        public bool UpdateProperty(int id, PropertyType type, string propertyName, string street, string city, string state, string zipcode, string description, string imageUrl, decimal price)
+        public Property UpdateProperty(Property propertyToUpdate)
         {
             using (var db = new SqlConnection(_connectionString))
             {
                 var sql =
                     @"update Properties 
-                      set type= @type,
-	                    propertyName= @propertyName,
-	                    street= @street, 
-	                    city= @city, 
-	                    state= @state, 
-	                    zipcode= @zipcode, 
-	                    description = @description,
-	                    imageUrl= @imageUrl, 
-	                    price =  @price
-                     Where id = @id";
+                      set Type= @type,
+	                    PropertyName= @propertyName,
+	                    Street= @street, 
+	                    City= @city, 
+	                    State= @state, 
+	                    Zipcode= @zipcode, 
+	                    Description = @description,
+	                    ImageUrl= @imageUrl, 
+	                    Price =  @price
+                     Where Id = @id";
 
-                var parameters = new
-                {
-                    Id = id,
-                    Type = type,
-                    PropertyName = propertyName,
-                    Street = street,
-                    City = city,
-                    State = state,
-                    Zipcode = zipcode,
-                    Description = description,
-                    ImageUrl = imageUrl,
-                    Price = price
-                };
-                var rowsAffected = db.Execute(sql, parameters );
+                var rowsAffected = db.Execute(sql, propertyToUpdate);
 
                 if (rowsAffected == 1)
                 {
-                    return true;
+                    return propertyToUpdate;
                 }
                 throw new Exception("Could not update property");
             }

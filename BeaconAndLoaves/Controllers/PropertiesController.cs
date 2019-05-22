@@ -55,10 +55,14 @@ namespace BeaconAndLoaves.Controllers
 
         //Update Properties
         [HttpPut("{id}")]
-        public ActionResult UpdateProperty(int id, PropertyType type, string propertyName, string street, string city, string state, string zipcode, string description, string imageUrl, decimal price)
+        public ActionResult UpdateProperty(int id, Property propertyToUpdate)
         {
-            var user = _repo.UpdateProperty(id, type, propertyName, street, city, state, zipcode, description, imageUrl, price);
-            return Ok();
+            if(id != propertyToUpdate.Id)
+            {
+                return BadRequest();
+            }
+            var property = _repo.UpdateProperty(propertyToUpdate);
+            return Ok(property);
         }
 
     }
