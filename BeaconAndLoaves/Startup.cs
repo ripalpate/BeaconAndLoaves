@@ -25,7 +25,9 @@ namespace BeaconAndLoaves
 
             services.Configure<DbConfiguration>(Configuration);
 
+            services.AddTransient<UserRepository>();
             services.AddTransient<PropertyRepository>();
+
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
