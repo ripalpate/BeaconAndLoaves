@@ -36,6 +36,7 @@ namespace BeaconAndLoaves.Data
             }
             throw new Exception("No user created");
         }
+
         public IEnumerable<User> GetAllUsers()
         {
             using (var db = new SqlConnection(_connectionString))
@@ -46,6 +47,20 @@ namespace BeaconAndLoaves.Data
                     where isactive = 1").ToList();
 
                 return users;
+            }
+        }
+
+        public IEnumerable<User> GetSingleUser(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var singleUser = db.Query<User>(@"
+                    select *
+                    from users
+                    where id = @id",
+                    new { id }).ToList();
+
+                return singleUser;
             }
         }
     }

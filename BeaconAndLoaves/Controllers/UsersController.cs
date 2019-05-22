@@ -46,5 +46,12 @@ namespace BeaconAndLoaves.Controllers
             return Ok(users);
         }
 
+        [HttpGet("{id}")]
+        public ActionResult GetSingleUser(int id)
+        {
+            var singleUser = _repository.GetSingleUser(id);
+
+            return Ok(singleUser);
+        }
     }
 }
