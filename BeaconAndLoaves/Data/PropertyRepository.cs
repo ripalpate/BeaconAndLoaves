@@ -1,4 +1,5 @@
 ﻿using BeaconAndLoaves.Models;
+using Dapper;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace BeaconAndLoaves.Data
         public Property AddProperty(
             int ownerId, 
             PropertyType type, 
+            string propertyName,
             string street, 
             string city, 
             string state, 
@@ -30,28 +32,30 @@ namespace BeaconAndLoaves.Data
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var insertQuery = @" Insert into property (ownerId, propertyType, street, city, state, zipcode, description, imageUrl, price)
+                var insertQuery = @" Insert into properties (ownerId, type, propertyName, street, city, state, zipcode, description, imageUrl, price)
                                                             Output inserted.*
-                                                            Values(@ownerId, @propertyType, @street, @city, @state, @zipcode, @description, @imageUrl, @price)";
+                                                            Values(@ownerId, @type, @propertyName, @street, @city, @state, @zipcode, @description, @imageUrl, @price)";
                 var parameters = new
                 {
-                    PropertyType = propertyType,
+                    OwnerId = ownerId,
+                    Type = type,
+                    PropertyName = propertyName,
                     Street = street,
                     City = city,
                     State = state,
                     Zipcode = zipcode,
-                    description,
-                    imageUrl,
-                    price
+                    Description = description,
+                    ImageUrl = imageUrl,
+                    Price = price
                 };
-                var newTarget = db.QueryFirstOrDefault<Target>(insertQuery, parameters);
+                var newProperty = db.QueryFirstOrDefault<Property>(insertQuery, parameters);
 
-                if (newTarget != null)
+                if (newProperty != null)
                 {
-                    return newTarget;
+                    return newProperty;
                 }
             }
-            throw new Exception("Could not create target");
+            throw new Exception("Could not create property");
         }
     }
 }
