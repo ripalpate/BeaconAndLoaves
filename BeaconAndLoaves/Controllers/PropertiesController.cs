@@ -44,5 +44,14 @@ namespace BeaconAndLoaves.Controllers
 
             return Created($"/api/properties/{newProperty.Id}", newProperty);
         }
+
+        //Get All Properties
+        [HttpGet]
+        public ActionResult GetAllProperties()
+        {
+            var getProperties = _repo.GetAllProperties();
+            return Ok(getProperties);
+        }
+
     }
 }

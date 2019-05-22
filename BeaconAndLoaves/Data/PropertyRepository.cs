@@ -18,6 +18,7 @@ namespace BeaconAndLoaves.Data
             _connectionString = dbConfig.Value.ConnectionString;
         }
 
+        // Add Property Method
         public Property AddProperty(
             int ownerId, 
             PropertyType type, 
@@ -56,6 +57,20 @@ namespace BeaconAndLoaves.Data
                 }
             }
             throw new Exception("Could not create property");
+        }
+
+        //Get All Propeties Method
+        public IEnumerable<Property> GetAllProperties()
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var properties = db.Query<Property>(@"
+                    select * 
+                    from properties
+                    where isActive = 1").ToList();
+
+                return properties;
+            }
         }
     }
 }
