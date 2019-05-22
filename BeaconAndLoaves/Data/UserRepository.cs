@@ -35,8 +35,8 @@ namespace BeaconAndLoaves.Data
             using (var db = new SqlConnection(ConnectionString))
             {
                 var users = db.Query<User>(@"
-                    select id, email, firebaseId, name, street, city,
-                    state, zipcode, phonenumber, isowner, isactive from users
+                    select * 
+                    from users
                     where isactive = 1").ToList();
 
                 return users;
