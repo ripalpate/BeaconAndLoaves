@@ -64,6 +64,32 @@ namespace BeaconAndLoaves.Data
             }
         }
 
+        public User UpdateUser(User userToUpdate)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"Update Users
+                            Set email = @email,
+                                firebaseId = @firebaseId,
+                                name = @name,
+                                street = @street,
+                                city = @city,
+                                state = @state,
+                                zipcode = @zipcode,
+                                phoneNumber = @phoneNumber,
+                                isOwner = @isOwner,
+                                isActive = @isActive
+                            Where id = @id";
+
+                var rowsAffected = db.Execute(sql, userToUpdate);
+
+                if (rowsAffected == 1)
+                    return userToUpdate;
+            }
+
+            throw new Exception("Could not update user");
+        }
+
         public User DeleteUser(User userToDelete)
         {
             using (var db = new SqlConnection(_connectionString))
