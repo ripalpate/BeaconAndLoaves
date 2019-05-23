@@ -53,5 +53,13 @@ namespace BeaconAndLoaves.Controllers
 
             return Ok(singleUser);
         }
+
+        [HttpPut("{id}")]
+        public ActionResult DeleteUser(User userToDelete)
+        {
+            var deletedUser = _repository.DeleteUser(userToDelete);
+
+            return Ok(deletedUser);
+        }
     }
 }

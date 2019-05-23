@@ -63,5 +63,31 @@ namespace BeaconAndLoaves.Data
                 return singleUser;
             }
         }
+
+        public User DeleteUser(User userToDelete)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"Update Users
+                            Set email = @email,
+                                firebaseId = @firebaseId,
+                                name = @name,
+                                street = @street,
+                                city = @city,
+                                state = @state,
+                                zipcode = @zipcode,
+                                phoneNumber = @phoneNumber,
+                                isOwner = @isOwner,
+                                isActive = 0
+                            Where id = @id";
+
+                var rowsAffected = db.Execute(sql, userToDelete);
+
+                if (rowsAffected == 1)
+                    return userToDelete;
+            }
+
+            throw new Exception("Could not delete user");
+        }
     }
 }
