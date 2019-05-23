@@ -64,5 +64,48 @@ namespace BeaconAndLoaves.Data
             }
         }
 
+
+        public UserPayment UpdateUserPayment(UserPayment userPaymentUpdating)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql =
+                    @"
+                    update UserPayment 
+                      set PaymentTypeId= @paymentTypeId,
+	                    AccountNumber= @accountNumber,
+	                    ExpirationDate= @expirationDate, 
+	                    CVV= @cvv, 
+	                    AccountName= @accountName
+                     where Id = @id";
+
+                var updatedStuff = db.Execute(sql, userPaymentUpdating);
+
+                if (updatedStuff == 1)
+                {
+                    return userPaymentUpdating;
+                }
+                throw new Exception("Error on backend db stuff - Could not update userPayment");
+            }
+        }
+
+        public void DeleteUserPayment(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql =
+                    @"Update UserPayment 
+                      Set isActive = 0
+                      where Id = @id";
+
+                var updatedStuff = db.Execute(sql, new { Id = id });
+
+                if (updatedStuff != 1)
+                {
+                    throw new Exception("Check out the isActive update again, something went wrong");
+                }
+            }
+        }
+
     }
 }

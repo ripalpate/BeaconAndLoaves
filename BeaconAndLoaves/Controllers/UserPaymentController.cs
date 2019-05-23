@@ -54,5 +54,23 @@ namespace BeaconAndLoaves.Controllers
             return Ok(userPaymentById);
         }
 
+        [HttpPut("{id}")]
+        public ActionResult UpdateUserPayment(int id, UserPayment userPaymentUpdating)
+        {
+            if (id != userPaymentUpdating.Id)
+            {
+                return BadRequest();
+            }
+            var userPayment = _repository.UpdateUserPayment(userPaymentUpdating);
+            return Ok(userPayment);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteUserPayment(int id)
+        {
+            _repository.DeleteUserPayment(id);
+            return Ok("IsActive status is changed");
+        }
+
     }
 }
