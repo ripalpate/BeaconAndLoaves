@@ -50,15 +50,15 @@ namespace BeaconAndLoaves.Data
             }
         }
 
-        public IEnumerable<User> GetSingleUser(int id)
+        public User GetSingleUser(int id)
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var singleUser = db.Query<User>(@"
+                var singleUser = db.QueryFirstOrDefault<User>(@"
                     select *
                     from users
                     where id = @id",
-                    new { id }).ToList();
+                    new { id });
 
                 return singleUser;
             }
