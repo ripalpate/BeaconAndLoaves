@@ -63,11 +63,11 @@ namespace BeaconAndLoaves.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult DeleteUser(User userToDelete)
+        public ActionResult DeleteUser(int id)
         {
-            var deletedUser = _repository.DeleteUser(userToDelete);
+            _repository.DeleteUser(id);
 
-            return Ok(deletedUser);
+            return Ok("IsActive status set to false.");
         }
     }
 }

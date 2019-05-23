@@ -77,8 +77,7 @@ namespace BeaconAndLoaves.Data
                                 state = @state,
                                 zipcode = @zipcode,
                                 phoneNumber = @phoneNumber,
-                                isOwner = @isOwner,
-                                isActive = @isActive
+                                isOwner = @isOwner
                             Where id = @id";
 
                 var rowsAffected = db.Execute(sql, userToUpdate);
@@ -90,30 +89,19 @@ namespace BeaconAndLoaves.Data
             throw new Exception("Could not update user");
         }
 
-        public User DeleteUser(User userToDelete)
+        public void DeleteUser(int id)
         {
             using (var db = new SqlConnection(_connectionString))
             {
                 var sql = @"Update Users
-                            Set email = @email,
-                                firebaseId = @firebaseId,
-                                name = @name,
-                                street = @street,
-                                city = @city,
-                                state = @state,
-                                zipcode = @zipcode,
-                                phoneNumber = @phoneNumber,
-                                isOwner = @isOwner,
-                                isActive = 0
+                            Set isActive = 0
                             Where id = @id";
 
-                var rowsAffected = db.Execute(sql, userToDelete);
+                var rowsAffected = db.Execute(sql, new { Id = id });
 
-                if (rowsAffected == 1)
-                    return userToDelete;
+                if (rowsAffected != 1)
+                    throw new Exception ("Could not delete user");
             }
-
-            throw new Exception("Could not delete user");
         }
     }
 }
