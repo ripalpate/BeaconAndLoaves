@@ -53,6 +53,15 @@ namespace BeaconAndLoaves.Controllers
             return Ok(getProperties);
         }
 
+        //Get Single Property
+        [HttpGet("{id}")]
+        public ActionResult GetSingleProperty(int id)
+        {
+            var singleProperty = _repo.GetSingleProperty(id);
+
+            return Ok(singleProperty);
+        }
+
         //Update Property
         [HttpPut("{id}")]
         public ActionResult UpdateProperty(int id, Property propertyToUpdate)

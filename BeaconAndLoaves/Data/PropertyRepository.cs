@@ -73,6 +73,22 @@ namespace BeaconAndLoaves.Data
             }
         }
 
+        //Get Single property method
+        public Property GetSingleProperty(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"
+                    select *
+                    from properties
+                    where id = @id";
+                var parameters = new { Id = id };
+                var singleProperty = db.QueryFirstOrDefault<Property>(sql, parameters);
+
+                return singleProperty;
+            }
+        }
+
         // Update Property Method
         public Property UpdateProperty(Property propertyToUpdate)
         {
