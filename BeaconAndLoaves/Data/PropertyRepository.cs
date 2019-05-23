@@ -20,13 +20,13 @@ namespace BeaconAndLoaves.Data
 
         // Add Property Method
         public Property AddProperty(
-            int ownerId, 
-            PropertyType type, 
+            int ownerId,
+            PropertyType type,
             string propertyName,
-            string street, 
-            string city, 
-            string state, 
-            string zipcode, 
+            string street,
+            string city,
+            string state,
+            string zipcode,
             string description,
             string imageUrl,
             decimal price)
@@ -73,6 +73,7 @@ namespace BeaconAndLoaves.Data
             }
         }
 
+        // Update Property Method
         public Property UpdateProperty(Property propertyToUpdate)
         {
             using (var db = new SqlConnection(_connectionString))
@@ -98,7 +99,25 @@ namespace BeaconAndLoaves.Data
                 }
                 throw new Exception("Could not update property");
             }
+        }
 
+        //On Delete Property it is updating IsActive status to false.
+        public void DeleteProperty(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql =
+                    @"Update Properties 
+                      Set isActive= 0
+                      Where Id = @id";
+
+                var rowsAffected = db.Execute(sql, new { Id = id});
+
+                if (rowsAffected != 1)
+                {
+                    throw new Exception("Didn't do right");
+                }
+            }
         }
     }
 }

@@ -53,7 +53,7 @@ namespace BeaconAndLoaves.Controllers
             return Ok(getProperties);
         }
 
-        //Update Properties
+        //Update Property
         [HttpPut("{id}")]
         public ActionResult UpdateProperty(int id, Property propertyToUpdate)
         {
@@ -65,5 +65,12 @@ namespace BeaconAndLoaves.Controllers
             return Ok(property);
         }
 
+        //Delete Property
+        [HttpDelete("{id}")]
+        public ActionResult DeleteProperty(int id)
+        {
+            _repo.DeleteProperty(id);
+            return Ok("IsActive status is changed");
+        }
     }
 }
