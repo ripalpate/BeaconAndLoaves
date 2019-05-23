@@ -82,7 +82,7 @@ namespace BeaconAndLoaves.Data
 
                 var rowsAffected = db.Execute(sql, userToUpdate);
 
-                if (rowsAffected == 1)
+                if (rowsAffected >= 1)
                     return userToUpdate;
             }
 

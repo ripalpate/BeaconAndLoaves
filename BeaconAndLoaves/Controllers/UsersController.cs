@@ -55,11 +55,14 @@ namespace BeaconAndLoaves.Controllers
         }
 
         [HttpPut("update/{id}")]
-        public ActionResult UpdateUser(User userToUpdate)
+        public ActionResult UpdateUser(int id, User userToUpdate)
         {
-            var updatededUser = _repository.UpdateUser(userToUpdate);
-
-            return Ok(updatededUser);
+            if (id != userToUpdate.Id)
+            {
+                return BadRequest();
+            }
+            var updatedUser = _repository.UpdateUser(userToUpdate);
+            return Ok(updatedUser);
         }
 
         [HttpPut("{id}")]
