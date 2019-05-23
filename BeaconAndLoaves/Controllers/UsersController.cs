@@ -54,7 +54,7 @@ namespace BeaconAndLoaves.Controllers
             return Ok(singleUser);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         public ActionResult UpdateUser(User userToUpdate)
         {
             var updatededUser = _repository.UpdateUser(userToUpdate);
