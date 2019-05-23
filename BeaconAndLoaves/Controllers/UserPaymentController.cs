@@ -46,5 +46,13 @@ namespace BeaconAndLoaves.Controllers
             return Ok(userPayments);
         }
 
+        [HttpGet("{id}")]
+        public ActionResult GetSingleUserPayment(int id)
+        {
+            var userPaymentById = _repository.GetSingleUserPayment(id);
+
+            return Ok(userPaymentById);
+        }
+
     }
 }

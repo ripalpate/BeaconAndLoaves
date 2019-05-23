@@ -50,5 +50,19 @@ namespace BeaconAndLoaves.Data
             }
         }
 
+        public IEnumerable<UserPayment> GetSingleUserPayment(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var singleUserPayment = db.Query<UserPayment>(@"
+                    select *
+                    from userPayment
+                    where id = @id and isactive = 1",
+                    new { id }).ToList();
+
+                return singleUserPayment;
+            }
+        }
+
     }
 }
