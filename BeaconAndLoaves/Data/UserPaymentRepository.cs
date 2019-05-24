@@ -25,10 +25,10 @@ namespace BeaconAndLoaves.Data
             using (var db = new SqlConnection(_connectionString))
             {
                 var newUserPayment = db.QueryFirstOrDefault<UserPayment>(@"
-                    insert into UserPayment (paymentTypeId, userId, accountNumber, expirationDate, cvv, accountName, isActive)
+                    insert into UserPayment (paymentTypeId, userId, accountNumber, expirationDate, cvv, accountName)
                     output inserted.*
-                    values (@paymentTypeId, @userId, @accountNumber, @expirationDate, @cvv, @accountName, @isActive)",
-                    new { paymentTypeId, userId, accountNumber, expirationDate, cvv, accountName, isActive });
+                    values (@paymentTypeId, @userId, @accountNumber, @expirationDate, @cvv, @accountName)",
+                    new { paymentTypeId, userId, accountNumber, expirationDate, cvv, accountName });
 
                 if (newUserPayment != null)
                 {
