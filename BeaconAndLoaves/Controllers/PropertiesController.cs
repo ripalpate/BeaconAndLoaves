@@ -44,5 +44,42 @@ namespace BeaconAndLoaves.Controllers
 
             return Created($"/api/properties/{newProperty.Id}", newProperty);
         }
+
+        //Get All Properties
+        [HttpGet]
+        public ActionResult GetAllProperties()
+        {
+            var getProperties = _repo.GetAllProperties();
+            return Ok(getProperties);
+        }
+
+        //Get Single Property
+        [HttpGet("{id}")]
+        public ActionResult GetSingleProperty(int id)
+        {
+            var singleProperty = _repo.GetSingleProperty(id);
+
+            return Ok(singleProperty);
+        }
+
+        //Update Property
+        [HttpPut("{id}")]
+        public ActionResult UpdateProperty(int id, Property propertyToUpdate)
+        {
+            if(id != propertyToUpdate.Id)
+            {
+                return BadRequest();
+            }
+            var property = _repo.UpdateProperty(propertyToUpdate);
+            return Ok(property);
+        }
+
+        //Delete Property
+        [HttpDelete("{id}")]
+        public ActionResult DeleteProperty(int id)
+        {
+            _repo.DeleteProperty(id);
+            return Ok("IsActive status is changed");
+        }
     }
 }
