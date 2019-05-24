@@ -81,7 +81,7 @@ namespace BeaconAndLoaves.Data
                 var sql = @"
                     select *
                     from properties
-                    where id = @id";
+                    where id = @id and isActive = 1";
                 var parameters = new { Id = id };
                 var singleProperty = db.QueryFirstOrDefault<Property>(sql, parameters);
 
