@@ -19,22 +19,6 @@ namespace BeaconAndLoaves.Models
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
         public bool IsActive { get; set; }
-
-        //public Property() { }
-
-        //public Property(int id, PropertyType type, string propertyName, string street, string city, string state, string zipcode, string description, string imageUrl, decimal price)
-        //{
-        //    Id = id;
-        //    Type = type;
-        //    PropertyName = propertyName;
-        //    Street = street;
-        //    City = city;
-        //    State = state;
-        //    ZipCode = zipcode;
-        //    Description = description;
-        //    ImageUrl = imageUrl;
-        //    Price = price;
-        //}
     }
 
     public enum PropertyType

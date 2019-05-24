@@ -74,8 +74,8 @@ namespace BeaconAndLoaves.Controllers
             return Ok(property);
         }
 
-        //Delete Property
-        [HttpDelete("{id}")]
+        //Updating isActive status of Property
+        [HttpPut("patch/{id}")]
         public ActionResult DeleteProperty(int id)
         {
             _repo.DeleteProperty(id);
