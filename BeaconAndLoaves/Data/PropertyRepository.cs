@@ -18,14 +18,15 @@ namespace BeaconAndLoaves.Data
             _connectionString = dbConfig.Value.ConnectionString;
         }
 
+        // Add Property Method
         public Property AddProperty(
-            int ownerId, 
-            PropertyType type, 
+            int ownerId,
+            PropertyType type,
             string propertyName,
-            string street, 
-            string city, 
-            string state, 
-            string zipcode, 
+            string street,
+            string city,
+            string state,
+            string zipcode,
             string description,
             string imageUrl,
             decimal price)
@@ -33,8 +34,8 @@ namespace BeaconAndLoaves.Data
             using (var db = new SqlConnection(_connectionString))
             {
                 var insertQuery = @" Insert into properties (ownerId, type, propertyName, street, city, state, zipcode, description, imageUrl, price)
-                                                            Output inserted.*
-                                                            Values(@ownerId, @type, @propertyName, @street, @city, @state, @zipcode, @description, @imageUrl, @price)";
+                                        Output inserted.*
+                                        Values(@ownerId, @type, @propertyName, @street, @city, @state, @zipcode, @description, @imageUrl, @price)";
                 var parameters = new
                 {
                     OwnerId = ownerId,
@@ -56,6 +57,83 @@ namespace BeaconAndLoaves.Data
                 }
             }
             throw new Exception("Could not create property");
+        }
+
+        //Get All Propeties Method
+        public IEnumerable<Property> GetAllProperties()
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var properties = db.Query<Property>(@"
+                    select * 
+                    from properties
+                    where isActive = 1").ToList();
+
+                return properties;
+            }
+        }
+
+        //Get Single property method
+        public Property GetSingleProperty(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"
+                    select *
+                    from properties
+                    where id = @id";
+                var parameters = new { Id = id };
+                var singleProperty = db.QueryFirstOrDefault<Property>(sql, parameters);
+
+                return singleProperty;
+            }
+        }
+
+        // Update Property Method
+        public Property UpdateProperty(Property propertyToUpdate)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql =
+                    @"update Properties 
+                      set Type= @type,
+	                    PropertyName= @propertyName,
+	                    Street= @street, 
+	                    City= @city, 
+	                    State= @state, 
+	                    Zipcode= @zipcode, 
+	                    Description = @description,
+	                    ImageUrl= @imageUrl, 
+	                    Price =  @price
+                     Where Id = @id";
+
+                var rowsAffected = db.Execute(sql, propertyToUpdate);
+
+                if (rowsAffected == 1)
+                {
+                    return propertyToUpdate;
+                }
+                throw new Exception("Could not update property");
+            }
+        }
+
+        //On Delete Property it is updating IsActive status to false.
+        public void DeleteProperty(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql =
+                    @"Update Properties 
+                      Set isActive= 0
+                      Where Id = @id";
+
+                var rowsAffected = db.Execute(sql, new { Id = id});
+
+                if (rowsAffected != 1)
+                {
+                    throw new Exception("Didn't do right");
+                }
+            }
         }
     }
 }
