@@ -11,11 +11,13 @@ namespace BeaconAndLoaves.Data
 {
     public class UserRepository
     {
+        readonly PropertyRepository _propertyRepository;
         readonly string _connectionString;
 
-        public UserRepository(IOptions<DbConfiguration> dbConfig)
+        public UserRepository(IOptions<DbConfiguration> dbConfig, PropertyRepository propertyRepository)
         {
             _connectionString = dbConfig.Value.ConnectionString;
+            _propertyRepository = propertyRepository;
         }
 
         public User AddUser(string email, string firebaseId, string name, string street, string city,
@@ -39,12 +41,21 @@ namespace BeaconAndLoaves.Data
 
         public IEnumerable<User> GetAllUsers()
         {
+
             using (var db = new SqlConnection(_connectionString))
             {
+                var properties = _propertyRepository.GetAllProperties();
+
                 var users = db.Query<User>(@"
                     select * 
                     from users
                     where isactive = 1").ToList();
+
+                foreach(var user in users)
+                {
+                    var matchingProperties = properties.Where(p => p.OwnerId == user.Id).ToList();
+                    user.Properties = matchingProperties;
+                }
 
                 return users;
             }
