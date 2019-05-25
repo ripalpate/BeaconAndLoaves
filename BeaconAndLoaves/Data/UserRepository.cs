@@ -12,12 +12,19 @@ namespace BeaconAndLoaves.Data
     public class UserRepository
     {
         readonly PropertyRepository _propertyRepository;
+        readonly UserPaymentRepository _userPaymentRepository;
+        readonly RentalRepository _rentalRepository;
         readonly string _connectionString;
 
-        public UserRepository(IOptions<DbConfiguration> dbConfig, PropertyRepository propertyRepository)
+        public UserRepository(IOptions<DbConfiguration> dbConfig,
+                                PropertyRepository propertyRepository,
+                                UserPaymentRepository userPaymentRepository,
+                                RentalRepository rentalRepository)
         {
             _connectionString = dbConfig.Value.ConnectionString;
             _propertyRepository = propertyRepository;
+            _userPaymentRepository = userPaymentRepository;
+            _rentalRepository = rentalRepository;
         }
 
         public User AddUser(string email, string firebaseId, string name, string street, string city,
@@ -45,6 +52,8 @@ namespace BeaconAndLoaves.Data
             using (var db = new SqlConnection(_connectionString))
             {
                 var properties = _propertyRepository.GetAllProperties();
+                var userPayments = _userPaymentRepository.GetAllUserPayments();
+                var rentals = _rentalRepository.GetAllRentals();
 
                 var users = db.Query<User>(@"
                     select * 
@@ -54,7 +63,11 @@ namespace BeaconAndLoaves.Data
                 foreach(var user in users)
                 {
                     var matchingProperties = properties.Where(p => p.OwnerId == user.Id).ToList();
+                    var matchingUserPayments = userPayments.Where(up => up.UserId == user.Id).ToList();
+                    var matchingRentals = rentals.Where(r => r.UserId == user.Id).ToList();
                     user.Properties = matchingProperties;
+                    user.UserPayments = matchingUserPayments;
+                    user.Rentals = matchingRentals;
                 }
 
                 return users;
@@ -88,7 +101,8 @@ namespace BeaconAndLoaves.Data
                                 state = @state,
                                 zipcode = @zipcode,
                                 phoneNumber = @phoneNumber,
-                                isOwner = @isOwner
+                                isOwner = @isOwner,
+                                isActive = @isActive
                             Where id = @id";
 
                 var rowsAffected = db.Execute(sql, userToUpdate);
