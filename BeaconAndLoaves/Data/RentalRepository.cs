@@ -48,7 +48,7 @@ namespace BeaconAndLoaves.Data
 	                    UserPaymentId= @userPaymentId,
 	                    StartDate= @startDate, 
 	                    EndDate= @endDate, 
-	                    RentalAmount= @rentalAmount, 
+	                    RentalAmount= @rentalAmount
                       Where Id = @id";
 
                 var rowsAffected = db.Execute(sql, rentalToUpdate);
