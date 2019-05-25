@@ -27,6 +27,8 @@ namespace BeaconAndLoaves
 
             services.AddTransient<UserRepository>();
             services.AddTransient<PropertyRepository>();
+            services.AddTransient<PaymentTypeRepository>();
+            services.AddTransient<UserPaymentRepository>();
 
 
             // In production, the React files will be served from this directory

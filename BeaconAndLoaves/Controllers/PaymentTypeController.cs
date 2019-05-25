@@ -15,9 +15,9 @@ namespace BeaconAndLoaves.Controllers
 
         readonly PaymentTypeRepository _paymentTypeRepository;
 
-        public PaymentTypeController()
+        public PaymentTypeController(PaymentTypeRepository paymentTypeRepository)
         {
-            _paymentTypeRepository = new PaymentTypeRepository();
+            _paymentTypeRepository = paymentTypeRepository;
         }
 
         [HttpGet]

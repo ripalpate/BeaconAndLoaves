@@ -5,16 +5,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using BeaconAndLoaves.Models;
 using Dapper;
+using Microsoft.Extensions.Options;
 
 namespace BeaconAndLoaves.Data
 {
     public class PaymentTypeRepository
     {
-        const string ConnectionString = "Server = localhost; Database = BeaconAndLoaves; Trusted_Connection = True;";
+        readonly string _connectionString;
 
+        public PaymentTypeRepository(IOptions<DbConfiguration> dbConfig)
+        {
+            _connectionString = dbConfig.Value.ConnectionString;
+        }
         public IEnumerable<PaymentType> GetAll()
         {
-            using (var db = new SqlConnection(ConnectionString))
+            using (var db = new SqlConnection(_connectionString))
             {
                 var paymentTypes = db.Query<PaymentType>("Select * from PaymentTypes").ToList();
 
