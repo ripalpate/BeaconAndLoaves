@@ -18,5 +18,11 @@ namespace BeaconAndLoaves.Models
         public string PhoneNumber { get; set; }
         public bool IsOwner { get; set; }
         public bool IsActive { get; set; }
+
+        public List<Property> Properties { get; set; }
+
+        public List<UserPayment> UserPayments { get; set; }
+
+        public List<Rental> Rentals { get; set; }
     }
 }
