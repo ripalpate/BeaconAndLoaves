@@ -35,6 +35,19 @@ namespace BeaconAndLoaves.Controllers
                 createRequest.StartDate, createRequest.EndDate, createRequest.RentalAmount);
 
             return Created($"api/rentals/{newRental.Id}", newRental);
+
+        }
+
+        //Update Rental
+        [HttpPut("{id}")]
+        public ActionResult UpdateRental(int id, Rental rentalToUpdate)
+        {
+            if (id != rentalToUpdate.Id)
+            {
+                return BadRequest();
+            }
+            var rental = _repository.UpdateProperty(rentalToUpdate);
+            return Ok(rental);
         }
     }
 }
