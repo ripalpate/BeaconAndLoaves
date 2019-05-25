@@ -36,5 +36,24 @@ namespace BeaconAndLoaves.Controllers
 
             return Created($"api/rentals/{newRental.Id}", newRental);
         }
+
+
+        [HttpGet]
+        public ActionResult GetAllRentals()
+        {
+            var rentals = _repository.GetAllRentals();
+
+            return Ok(rentals);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetSingleRental(int id)
+        {
+            var rentalById = _repository.GetSingleRental(id);
+
+            return Ok(rentalById);
+        }
+
+
     }
 }
