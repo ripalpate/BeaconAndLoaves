@@ -1,4 +1,5 @@
 ﻿using Dapper;
+﻿using BeaconAndLoaves.Models;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -31,5 +32,23 @@ namespace BeaconAndLoaves.Data
         }
 
 
+        public Rental AddRental(int propertyId, int userId, int userPaymentId,
+            DateTime startDate, DateTime endDate, decimal rentalAmount)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var newRental = db.QueryFirstOrDefault<Rental>(@"
+                    insert into rentals (propertyId, userId, userPaymentId, startDate, endDate, rentalAmount)
+                    output inserted.*
+                    values (@propertyId, @userId, @userPaymentId, @startDate, @endDate, @rentalAmount)",
+                    new { propertyId, userId, userPaymentId, startDate, endDate, rentalAmount });
+
+                if (newRental != null)
+                {
+                    return newRental;
+                }
+            }
+            throw new Exception("No rental created");
+        }
     }
 }
