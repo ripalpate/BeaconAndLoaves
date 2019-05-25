@@ -35,5 +35,22 @@ namespace BeaconAndLoaves.Data
             }
             throw new Exception("No likedProperty created");
         }
+
+        public void DeleteLikedProperty(int userId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var parameter = new { Id = userId };
+
+                var deleteQuery = "Delete From LikedProperties where Id = @id";
+
+                var rowsAffected = db.Execute(deleteQuery, parameter);
+
+                if (rowsAffected != 1)
+                {
+                    throw new Exception("Couldn't delete it, man.");
+                }
+            }
+        }
     }
 }

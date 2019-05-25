@@ -36,5 +36,13 @@ namespace BeaconAndLoaves.Controllers
                 return Created($"api/likedProperties/{newLikedProperty.Id}", newLikedProperty);
 
             }
-        }
+
+            [HttpDelete("{id}")]
+            public ActionResult DeleteLikedProperty(int id)
+            {
+                _repository.DeleteLikedProperty(id);
+
+                return Ok("That shit's gone, man.");
+            }
+    }
 }
