@@ -53,5 +53,24 @@ namespace BeaconAndLoaves.Controllers
 
             return Ok(singleUser);
         }
+
+        [HttpPut("update/{id}")]
+        public ActionResult UpdateUser(int id, User userToUpdate)
+        {
+            if (id != userToUpdate.Id)
+            {
+                return BadRequest();
+            }
+            var updatedUser = _repository.UpdateUser(userToUpdate);
+            return Ok(updatedUser);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult DeleteUser(int id)
+        {
+            _repository.DeleteUser(id);
+
+            return Ok("IsActive status set to false.");
+        }
     }
 }

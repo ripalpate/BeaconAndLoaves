@@ -50,17 +50,57 @@ namespace BeaconAndLoaves.Data
             }
         }
 
-        public IEnumerable<User> GetSingleUser(int id)
+        public User GetSingleUser(int id)
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var singleUser = db.Query<User>(@"
+                var singleUser = db.QueryFirstOrDefault<User>(@"
                     select *
                     from users
                     where id = @id",
-                    new { id }).ToList();
+                    new { id });
 
                 return singleUser;
+            }
+        }
+
+        public User UpdateUser(User userToUpdate)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"Update Users
+                            Set email = @email,
+                                firebaseId = @firebaseId,
+                                name = @name,
+                                street = @street,
+                                city = @city,
+                                state = @state,
+                                zipcode = @zipcode,
+                                phoneNumber = @phoneNumber,
+                                isOwner = @isOwner
+                            Where id = @id";
+
+                var rowsAffected = db.Execute(sql, userToUpdate);
+
+                if (rowsAffected >= 1)
+                    return userToUpdate;
+            }
+
+            throw new Exception("Could not update user");
+        }
+
+        public void DeleteUser(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"Update Users
+                            Set isActive = 0
+                            Where id = @id";
+
+                var rowsAffected = db.Execute(sql, new { Id = id });
+
+                if (rowsAffected != 1)
+                    throw new Exception ("Could not delete user");
             }
         }
     }
