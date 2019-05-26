@@ -52,5 +52,35 @@ namespace BeaconAndLoaves.Data
                 }
             }
         }
+
+        public IEnumerable<LikedProperty> GetAllLikedProperties()
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var likedProperties = db.Query<LikedProperty>(@"
+                    select * 
+                    from likedProperties
+                    ").ToList();
+
+                return likedProperties;
+            }
+        }
+
+        public LikedProperty GetSingleLikedProperty(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                    select *
+                    from likedProperties
+                    where id = @id";
+                var parameters = new { Id = id };
+                var singleLikedProperty = db.QueryFirstOrDefault<LikedProperty>(query, parameters);
+
+                return singleLikedProperty;
+            }
+        }
+
+
     }
 }
