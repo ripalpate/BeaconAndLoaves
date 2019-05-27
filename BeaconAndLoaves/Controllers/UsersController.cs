@@ -17,7 +17,7 @@ namespace BeaconAndLoaves.Controllers
         readonly UserRepository _repository;
         readonly CreateUserRequestValidator _validator;
 
-        public UsersController(UserRepository repository)
+         public UsersController(UserRepository repository)
         {
             _repository = repository;
             _validator = new CreateUserRequestValidator();
