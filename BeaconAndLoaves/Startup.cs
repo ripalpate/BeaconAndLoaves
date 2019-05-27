@@ -30,6 +30,7 @@ namespace BeaconAndLoaves
             services.AddTransient<PaymentTypeRepository>();
             services.AddTransient<UserPaymentRepository>();
             services.AddTransient<RentalRepository>();
+            services.AddTransient<LikedPropertyRepository>();
 
 
 
