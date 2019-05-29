@@ -7,7 +7,9 @@ class Auth extends React.Component {
       e.preventDefault();
       authRequests.authenticate()
         .then(() => {
-          this.props.history.push('/properties');
+          const uid = authRequests.getCurrentUid();
+          // const users = 
+          this.props.history.push('/home');
         })
         .catch(error => console.error('there was a problem with auth', error));
     }
@@ -22,7 +24,7 @@ class Auth extends React.Component {
             </div>
           </div>
         );
-      }
+    }
 }
 
 export default Auth;
