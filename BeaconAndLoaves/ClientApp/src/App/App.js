@@ -7,10 +7,10 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
-import Auth from './components/pages/Auth';
-import MyNavbar from './components/MyNavbar';
-import authRequests from './helpers/data/authRequests';
-import connection from './helpers/data/connection';
+import Auth from '../components/pages/Auth/Auth';
+import MyNavbar from '../components/MyNavbar';
+import authRequests from '../helpers/data/authRequests';
+import connection from '../helpers/data/connection';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
