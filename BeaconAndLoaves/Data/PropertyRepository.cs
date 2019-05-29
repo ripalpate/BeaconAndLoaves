@@ -106,7 +106,8 @@ namespace BeaconAndLoaves.Data
 	                    Zipcode= @zipcode, 
 	                    Description = @description,
 	                    ImageUrl= @imageUrl, 
-	                    Price =  @price
+	                    Price =  @price,
+                        IsActive = @isActive
                      Where Id = @id";
 
                 var rowsAffected = db.Execute(sql, propertyToUpdate);
