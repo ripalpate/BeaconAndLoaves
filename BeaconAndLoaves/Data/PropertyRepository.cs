@@ -29,13 +29,14 @@ namespace BeaconAndLoaves.Data
             string zipcode,
             string description,
             string imageUrl,
-            decimal price)
+            decimal price,
+            DateTime createdOn)
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var insertQuery = @" Insert into properties (ownerId, type, propertyName, street, city, state, zipcode, description, imageUrl, price)
+                var insertQuery = @" Insert into properties (ownerId, type, propertyName, street, city, state, zipcode, description, imageUrl, price, createdOn)
                                         Output inserted.*
-                                        Values(@ownerId, @type, @propertyName, @street, @city, @state, @zipcode, @description, @imageUrl, @price)";
+                                        Values(@ownerId, @type, @propertyName, @street, @city, @state, @zipcode, @description, @imageUrl, @price, @createdOn)";
                 var parameters = new
                 {
                     OwnerId = ownerId,
@@ -47,7 +48,8 @@ namespace BeaconAndLoaves.Data
                     Zipcode = zipcode,
                     Description = description,
                     ImageUrl = imageUrl,
-                    Price = price
+                    Price = price,
+                    CreatedOn = DateTime.Now
                 };
                 var newProperty = db.QueryFirstOrDefault<Property>(insertQuery, parameters);
 
@@ -104,7 +106,8 @@ namespace BeaconAndLoaves.Data
 	                    Zipcode= @zipcode, 
 	                    Description = @description,
 	                    ImageUrl= @imageUrl, 
-	                    Price =  @price
+	                    Price =  @price,
+                        IsActive = @isActive
                      Where Id = @id";
 
                 var rowsAffected = db.Execute(sql, propertyToUpdate);

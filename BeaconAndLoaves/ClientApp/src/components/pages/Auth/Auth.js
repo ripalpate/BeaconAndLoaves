@@ -1,5 +1,5 @@
 import React from 'react';
-import authRequests from '../../helpers/data/authRequests';
+import authRequests from '../../../helpers/data/authRequests';
 
 class Auth extends React.Component {
 
