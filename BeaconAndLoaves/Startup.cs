@@ -1,4 +1,5 @@
 using BeaconAndLoaves.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BeaconAndLoaves
 {
@@ -23,7 +25,22 @@ namespace BeaconAndLoaves
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.Configure<DbConfiguration>(Configuration);
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.IncludeErrorDetails = true;
+                options.Authority = "https://securetoken.google.com/beacon-and-loaves";
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = "https://securetoken.google.com/beacon-and-loaves",
+                    ValidateAudience = true,
+                    ValidAudience = "beacon-and-loaves",
+                    ValidateLifetime = true
+                };
+            });
+
+        services.Configure<DbConfiguration>(Configuration);
 
             services.AddTransient<UserRepository>();
             services.AddTransient<PropertyRepository>();
@@ -55,6 +72,7 @@ namespace BeaconAndLoaves
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
