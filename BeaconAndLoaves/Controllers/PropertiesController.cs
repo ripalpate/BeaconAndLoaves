@@ -40,7 +40,8 @@ namespace BeaconAndLoaves.Controllers
                 createRequest.ZipCode, 
                 createRequest.Description,
                 createRequest.ImageUrl,
-                createRequest.Price);
+                createRequest.Price,
+                createRequest.CreatedOn);
 
             return Created($"/api/properties/{newProperty.Id}", newProperty);
         }
