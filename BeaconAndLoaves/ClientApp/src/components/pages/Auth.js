@@ -8,7 +8,7 @@ class Auth extends React.Component {
       authRequests.authenticate()
         .then(() => {
           this.props.setAuthBg();
-          this.props.history.push('/beans');
+          this.props.history.push('/');
         })
         .catch(error => console.error('there was a problem with auth', error));
     }

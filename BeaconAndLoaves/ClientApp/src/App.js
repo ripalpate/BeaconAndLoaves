@@ -15,7 +15,7 @@ import connection from './helpers/data/connection';
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
     ? (<Component { ...props } {...rest} />)
-    : (<Redirect to={{ pathname: '/auth', state: { from: props.location } }}/>));
+    : (<Redirect to={{ pathname: '/', state: { from: props.location } }}/>));
   return <Route {...rest} render={props => routeChecker(props)} />;
 };
 
