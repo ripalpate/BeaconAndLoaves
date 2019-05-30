@@ -32,15 +32,18 @@ const getAllUsers = () => new Promise((resolve, reject) => {
 //     });
 // });
 
-// const getSingleBean = beanId => axios.get(`${firebaseUrl}/beans/${beanId}.json`);
+const getSingleUser = userId => axios.get(`${apiUrl}/${userId}`);
 
-// const deleteBean = beanId => axios.delete(`${firebaseUrl}/beans/${beanId}.json`);
+const deleteUser = userId => axios.put(`${apiUrl}/${userId}`);
 
 const createUser = userObject => axios.post(`${apiUrl}/register`, (userObject));
 
-// const updateBean = (beanId, beanObject) => axios.put(`${firebaseUrl}/beans/${beanId}.json`, beanObject);
+const updateUser = (userId, userObject) => axios.put(`${apiUrl}/${userId}`, userObject);
 
 export default {
   getAllUsers,
-  createUser
+  createUser,
+  deleteUser,
+  updateUser,
+  getSingleUser
 };
