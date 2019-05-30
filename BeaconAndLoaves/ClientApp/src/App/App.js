@@ -8,6 +8,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import Auth from '../components/pages/Auth/Auth';
+import Register from '../components/pages/Register/Register'
 import MyNavbar from '../components/MyNavbar';
 import authRequests from '../helpers/data/authRequests';
 import connection from '../helpers/data/connection';
@@ -15,7 +16,7 @@ import connection from '../helpers/data/connection';
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
     ? (<Component { ...props } {...rest} />)
-    : (<Redirect to={{ pathname: '/properties', state: { from: props.location } }}/>));
+    : (<Redirect to={{ pathname: '/register', state: { from: props.location } }}/>));
   return <Route {...rest} render={props => routeChecker(props)} />;
 };
 
@@ -74,6 +75,7 @@ export default class App extends Component {
                     authed={ authed }
                   />
                   <PrivateRoute path='/' exact component={Auth} authed={this.state.authed} />
+                  <PrivateRoute path='/register' exact component={Register} authed={this.state.authed} />
                 </Switch>
           </React.Fragment>
         </BrowserRouter>
