@@ -76,6 +76,7 @@ export default class App extends Component {
                   />
                   <PrivateRoute path='/' exact component={Auth} authed={this.state.authed} />
                   <PrivateRoute path='/register' exact component={Register} authed={this.state.authed} />
+                  {/* <PrivateRoute path='/home' exact component={Home} authed={this.state.authed} /> */}
                 </Switch>
           </React.Fragment>
         </BrowserRouter>

@@ -13,25 +13,6 @@ const getAllUsers = () => new Promise((resolve, reject) => {
     });
 });
 
-// const getBeansByArrayOfIds = beanIdsArray => new Promise((resolve, reject) => {
-//   axios.get(`${firebaseUrl}/beans.json`)
-//     .then((result) => {
-//       const beansObject = result.data;
-//       const beansArray = [];
-//       if (beansObject !== null) {
-//         Object.keys(beansObject).forEach((bean) => {
-//           beansObject[bean].id = bean;
-//           beansArray.push(beansObject[bean]);
-//         });
-//       }
-//       const selectedBeans = beansArray.filter(x => beanIdsArray.includes(x.id));
-//       resolve(selectedBeans);
-//     })
-//     .catch((err) => {
-//       reject(err);
-//     });
-// });
-
 const getSingleUser = userId => axios.get(`${apiUrl}/${userId}`);
 
 const deleteUser = userId => axios.put(`${apiUrl}/${userId}`);
