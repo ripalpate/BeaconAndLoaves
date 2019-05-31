@@ -14,6 +14,7 @@ import Properties from '../components/pages/Properties/Properties';
 import LightHouses from '../components/pages/LightHouses/LightHouses';
 import SiloNuclears from '../components/pages/SiloNuclears/SiloNuclears';
 import LightHouseDetail from '../components/pages/LightHouseDetail/LightHouseDetail';
+import SiloNuclearDetail from '../components/pages/SiloNuclearDetail/SiloNuclearDetail';
 import MyNavbar from '../components/MyNavbar';
 import authRequests from '../helpers/data/authRequests';
 import connection from '../helpers/data/connection';
@@ -78,7 +79,7 @@ export default class App extends Component {
     }
 
     return (
-      <div className="App row">
+      <div className="App">
         <BrowserRouter>
           <React.Fragment>
             <MyNavbar isAuthed={ authed } logoutClickEvent={logoutClickEvent} />
@@ -94,6 +95,7 @@ export default class App extends Component {
                   <PrivateRoute path="/properties/lightHouses"  component={LightHouses} authed={this.state.authed}/>
                   <PrivateRoute exact path="/lightHouses/:id" authed={this.state.authed} component={LightHouseDetail}/>
                   <PrivateRoute path="/properties/siloNuclears"  component={SiloNuclears} authed={this.state.authed}/>
+                  <PrivateRoute exact path="/siloNuclears/:id" authed={this.state.authed} component={SiloNuclearDetail}/>
                 </Switch>
           </React.Fragment>
         </BrowserRouter>

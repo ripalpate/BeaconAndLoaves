@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const lightHousesShape = PropTypes.shape({
+const propertiesShape = PropTypes.shape({
   propertyName: PropTypes.string.isRequired,
   street: PropTypes.string.isRequired,
   city: PropTypes.string.isRequired,
@@ -11,4 +11,4 @@ const lightHousesShape = PropTypes.shape({
   price: PropTypes.number.isRequired,
 });
 
-export default lightHousesShape;
+export default propertiesShape;

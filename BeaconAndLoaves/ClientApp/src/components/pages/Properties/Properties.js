@@ -1,5 +1,6 @@
 import React from 'react';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
+import './Properties.scss';
 
 class Properties extends React.Component {
   state = {
@@ -27,7 +28,7 @@ class Properties extends React.Component {
   render() {
     const {lightHouse,siloNuclear } = this.state;
     return (
-      <div className="properties">
+      <div className="properties d-flex">
         <div id="lighthouses" onClick={this.pageView}>
           <h3>LightHouse({lightHouse.length})</h3>
           <img className="lighthouse-img" src="https://www.millerheimangroup.com/wp-content/uploads/2018/09/lighthouse.jpg" alt="lighthouse" width = "500"/>

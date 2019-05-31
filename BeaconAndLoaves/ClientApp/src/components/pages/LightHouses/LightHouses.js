@@ -29,8 +29,8 @@ class LightHouses extends React.Component {
       />
     ));
     return (
-        <div className="lightHouses mx-auto mt-5">
-          <h3 className = "lightHouseContainer d-flex mt-5">{singleLightHouseComponent}</h3>
+        <div className="lightHouses row mt-5">
+          <h3 className = "lightHouseContainer d-flex mx-auto mt-5">{singleLightHouseComponent}</h3>
         </div>
     );
   // }
