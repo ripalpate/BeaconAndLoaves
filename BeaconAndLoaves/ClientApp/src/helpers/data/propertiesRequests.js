@@ -6,9 +6,8 @@ const getProperties = () => new Promise((resolve, reject) => {
   axios
     .get(apiUrl)
     .then((results) => {
-      const propertiesObject = results.data;
-     //console.log(propertiesObject);
-      resolve(propertiesObject);
+      const properties = results.data;
+      resolve(properties);
     })
     .catch(err => reject(err));
 });
