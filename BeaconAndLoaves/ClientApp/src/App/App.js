@@ -12,7 +12,7 @@ import Register from '../components/pages/Register/Register'
 import Home from '../components/pages/Home/Home';
 import Profile from '../components/pages/Profile/Profile';
 import Properties from '../components/pages/Properties/Properties';
-import MyNavbar from '../components/MyNavbar';
+import MyNavbar from '../components/MyNavbar/MyNavbar';
 import authRequests from '../helpers/data/authRequests';
 import connection from '../helpers/data/connection';
 
