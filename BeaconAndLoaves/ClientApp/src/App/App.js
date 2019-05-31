@@ -77,7 +77,7 @@ export default class App extends Component {
     }
 
     return (
-      <div className="App">
+      <div className="App row">
         <BrowserRouter>
           <React.Fragment>
             <MyNavbar isAuthed={ authed } logoutClickEvent={logoutClickEvent} />

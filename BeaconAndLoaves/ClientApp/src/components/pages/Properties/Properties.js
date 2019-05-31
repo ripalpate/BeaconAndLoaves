@@ -1,5 +1,4 @@
 import React from 'react';
-import authRequests from '../../../helpers/data/authRequests';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
 
 class Properties extends React.Component {
