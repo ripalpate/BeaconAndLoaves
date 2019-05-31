@@ -1,5 +1,5 @@
 import React from 'react';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import lightHousesShape from '../../../helpers/propz/lightHousesShape';
 import './SingleLightHouse.scss';
 
@@ -7,12 +7,20 @@ import './SingleLightHouse.scss';
 
 class SingleLightHouse extends React.Component {
   static propTypes = {
-    lightHouse: lightHousesShape
+    lightHouse: lightHousesShape,
+    lightHouseDetailView: PropTypes.func
   }
+
+  changeLightHouseToDetailView = (e) => {
+    e.preventDefault();
+    const { lightHouseDetailView, lightHouse } = this.props;
+    lightHouseDetailView(lightHouse.id);
+  }
+
   render() {
     const {lightHouse} = this.props;
     return (
-        <div className="card ml-4 bg-light mb-3 singleLightHouse">
+        <div className="card ml-4 bg-light mb-3 singleLightHouse" onClick={this.changeLightHouseToDetailView}>
           <div className="imgHolder">
             <img className="singleLightHouseImg"src={lightHouse.imageUrl} alt="lighthouse" width="500"/>
           </div>

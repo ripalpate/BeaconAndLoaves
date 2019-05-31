@@ -13,6 +13,7 @@ import Profile from '../components/pages/Profile/Profile';
 import Properties from '../components/pages/Properties/Properties';
 import LightHouses from '../components/pages/LightHouses/LightHouses';
 import SiloNuclears from '../components/pages/SiloNuclears/SiloNuclears';
+import LightHouseDetail from '../components/pages/LightHouseDetail/LightHouseDetail';
 import MyNavbar from '../components/MyNavbar';
 import authRequests from '../helpers/data/authRequests';
 import connection from '../helpers/data/connection';
@@ -91,6 +92,7 @@ export default class App extends Component {
                   <PrivateRoute exact path="/profile" component={Profile} authed={this.state.authed}/>
                   <PrivateRoute exact path="/properties" component={Properties} authed={this.state.authed}/>
                   <PrivateRoute path="/properties/lightHouses"  component={LightHouses} authed={this.state.authed}/>
+                  <PrivateRoute exact path="/lightHouses/:id" authed={this.state.authed} component={LightHouseDetail}/>
                   <PrivateRoute path="/properties/siloNuclears"  component={SiloNuclears} authed={this.state.authed}/>
                 </Switch>
           </React.Fragment>

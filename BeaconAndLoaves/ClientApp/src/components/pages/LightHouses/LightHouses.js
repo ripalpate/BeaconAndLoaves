@@ -15,12 +15,17 @@ class LightHouses extends React.Component {
         this.setState({ lightHouses });
       }).catch(err => console.error(err));
   }
+  lightHouseDetailView = (lightHouseId) => {
+    this.props.history.push(`/lightHouses/${lightHouseId}`);
+  }
+
   render() {
      const {  lightHouses } = this.state;
     const singleLightHouseComponent = lightHouses.map(lightHouse => (
       <SingleLightHouse
       lightHouse={lightHouse}
       Key = {lightHouse.id}
+      lightHouseDetailView = {this.lightHouseDetailView}
       />
     ));
     return (
