@@ -16,7 +16,7 @@ class SiloNuclears extends React.Component {
       }).catch(err => console.error(err));
   }
   siloNuclearDetailView = (siloNuclearId) => {
-    this.props.history.push(`/siloNuclears/${siloNuclearId}`);
+    this.props.history.push(`/properties/siloNuclears/${siloNuclearId}`);
   }
 
   render() {

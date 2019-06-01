@@ -7,19 +7,22 @@ const getProperties = () => new Promise((resolve, reject) => {
     .get(apiUrl)
     .then((results) => {
       const properties = results.data;
-      // const properties = [];
-      // if (results.data !== null) {
-      //   Object.keys(results.data).forEach((key) => {
-      //     results.data[key].id = key;
-      //     properties.push(results.data[key]);
-      //   });
-      // }
-      //console.log(properties);
       resolve(properties);
     })
     .catch(err => reject(err));
 });
 
+const getSingleProperty = propertyId => new Promise((resolve, reject) => {
+  axios.get(`${apiUrl}/${propertyId}`)
+    .then((result) => {
+      const singleProperty = result.data;
+      singleProperty.id = propertyId;
+      console.log(singleProperty);
+      resolve(singleProperty);
+    }).catch(err => reject(err));
+});
+
 export default {
   getProperties,
+  getSingleProperty
 };

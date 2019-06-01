@@ -89,7 +89,7 @@ export default class App extends Component {
                   <PrivateRoute path="/properties/lightHouses"  component={LightHouses} authed={this.state.authed}/>
                   <PrivateRoute exact path="/lightHouses/:id" authed={this.state.authed} component={LightHouseDetail}/>
                   <PrivateRoute path="/properties/siloNuclears"  component={SiloNuclears} authed={this.state.authed}/>
-                  <PrivateRoute exact path="/siloNuclears/:id" authed={this.state.authed} component={SiloNuclearDetail}/>
+                  <PrivateRoute exact path="properties/siloNuclears/:id" authed={this.state.authed} component={SiloNuclearDetail}/>
                 </Switch>
           </React.Fragment>
         </BrowserRouter>
