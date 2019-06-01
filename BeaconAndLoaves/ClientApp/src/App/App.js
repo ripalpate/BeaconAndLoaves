@@ -8,7 +8,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import Auth from '../components/pages/Auth/Auth';
-import Register from '../components/pages/Register/Register'
+import Register from '../components/pages/Register/Register';
 import Home from '../components/pages/Home/Home';
 import Profile from '../components/pages/Profile/Profile';
 import Properties from '../components/pages/Properties/Properties';
@@ -64,7 +64,7 @@ export default class App extends Component {
 
     const logoutClickEvent = () => {
       authRequests.logoutUser();
-      this.setState({ authed: false});
+      this.setState({ authed: false });
     };
 
     return (

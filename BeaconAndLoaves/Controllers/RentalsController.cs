@@ -7,12 +7,13 @@ using BeaconAndLoaves.Models;
 using BeaconAndLoaves.Validators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static BeaconAndLoaves.Controllers.SecureControllerBaseController;
 
 namespace BeaconAndLoaves.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RentalsController : ControllerBase
+    public class RentalsController : SecureControllerBase
     {
         readonly RentalRepository _repository;
         readonly CreateRentalRequestValidator _validator;

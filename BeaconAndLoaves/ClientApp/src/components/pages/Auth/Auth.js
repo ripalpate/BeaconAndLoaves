@@ -12,8 +12,8 @@ class Auth extends React.Component {
       .catch(error => console.error('there was a problem with auth', error));
   }
 
-    render() {
-        return (
+  render() {
+    return (
           <div className="Auth mx-auto">
             <div className="btn-container mt-5">
               <button className="bttn-pill bttn-lg bttn-danger" onClick={this.authenticateUser}>
@@ -21,8 +21,8 @@ class Auth extends React.Component {
               </button>
             </div>
           </div>
-        );
-    }
+    );
+  }
 }
 
 export default Auth;

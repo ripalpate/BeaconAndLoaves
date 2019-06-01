@@ -4,24 +4,24 @@ import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
 
 const defaultUser = {
-    email: '',
-    firebaseId: '',
-    name: '',
-    street: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    phoneNumber: '',
-    isOwner: '',
-    isActive: ''
-  };
+  email: '',
+  firebaseId: '',
+  name: '',
+  street: '',
+  city: '',
+  state: '',
+  zipCode: '',
+  phoneNumber: '',
+  isOwner: '',
+  isActive: '',
+};
 
 class Register extends React.Component {
     state = {
-        users : [],
-        currentUser : [],
-        newUser : defaultUser
-      }
+      users: [],
+      currentUser: [],
+      newUser: defaultUser,
+    }
 
       formFieldStringState = (name, e) => {
         e.preventDefault();
@@ -29,13 +29,13 @@ class Register extends React.Component {
         tempUser[name] = e.target.value;
         this.setState({ newUser: tempUser });
       }
-    
+
       emailChange = e => this.formFieldStringState('email', e);
-    
+
       nameChange = e => this.formFieldStringState('name', e);
-    
+
       streetChange = e => this.formFieldStringState('street', e);
-    
+
       cityChange = e => this.formFieldStringState('city', e);
 
       stateChange = e => this.formFieldStringState('state', e);
@@ -52,39 +52,39 @@ class Register extends React.Component {
         myUser.firebaseId = authRequests.getCurrentUid();
         this.setState({ newUser: defaultUser });
         userRequests.createUser(myUser)
-        .then(() => {
+          .then(() => {
             this.props.history.push('/home');
-        })
+          });
       };
-    
+
       getUsers = () => {
         userRequests.getAllUsers()
           .then((users) => {
             this.setState({ users });
           })
           .then(() => {
-              this.checkRegistration();
-          })
+            this.checkRegistration();
+          });
       };
-    
+
       checkRegistration = () => {
-        const users = this.state.users;
+        const { users } = this.state;
         const uid = authRequests.getCurrentUid();
         const currentUser = users.filter(user => user.firebaseId === uid);
-        if(currentUser.length !== 0){
-            this.props.history.push('/home');
+        if (currentUser.length !== 0) {
+          this.props.history.push('/home');
         } else {
-            this.setState({ currentUser });
+          this.setState({ currentUser });
         }
       }
 
       componentDidMount() {
         this.getUsers();
       }
- 
-    render() {
+
+      render() {
         const {
-            newUser,
+          newUser,
         } = this.state;
 
         return (
@@ -210,7 +210,7 @@ class Register extends React.Component {
                 </form>
             </div>
         );
-    }
+      }
 }
 
 export default Register;
