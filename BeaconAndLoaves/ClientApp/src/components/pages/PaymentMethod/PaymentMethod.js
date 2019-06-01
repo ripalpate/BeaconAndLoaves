@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import userPaymentRequests from '../../../helpers/data/userRequests';
+import paymentMethodRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
+import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 
 const defaultPaymentMethod = {
     accountName: '',
@@ -39,7 +40,7 @@ class PaymentMethod extends React.Component {
         const myPaymentMethod = { ...this.state.newPaymentMethod };
         myPaymentMethod.isActive = true;
         this.setState({ newPaymentMethod: defaultPaymentMethod });
-        userPaymentRequests.createUserPayment(myPaymentMethod)
+        paymentMethodRequests.createUserPayment(myPaymentMethod)
         .then(() => {
             this.props.history.push('/home');
         })
@@ -132,7 +133,7 @@ class PaymentMethod extends React.Component {
                         type="text"
                         className="form-control"
                         id="CVV"
-                        placeholder="TN"
+                        placeholder="333"
                         value={newPaymentMethod.CVV}
                         onChange={this.CVVChange}
                         />
