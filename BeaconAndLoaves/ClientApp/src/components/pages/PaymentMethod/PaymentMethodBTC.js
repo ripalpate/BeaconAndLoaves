@@ -7,12 +7,10 @@ const defaultPaymentMethod = {
     accountName: '',
     paymentType: '',
     accountNumber: '',
-    expDate: '',
-    CVV: '',
     isActive: ''
   };
 
-class PaymentMethod extends React.Component {
+class PaymentMethodBTC extends React.Component {
     state = {
         newPaymentMethod : defaultPaymentMethod
       }
@@ -30,10 +28,6 @@ class PaymentMethod extends React.Component {
     
       accountNumberChange = e => this.formFieldStringState('accountNumber', e);
     
-      expDateChange = e => this.formFieldStringState('expDate', e);
-
-      CVVChange = e => this.formFieldStringState('CVV', e);
-
       formSubmit = (e) => {
         e.preventDefault();
         const myPaymentMethod = { ...this.state.newPaymentMethod };
@@ -69,7 +63,7 @@ class PaymentMethod extends React.Component {
                         type="text"
                         className="form-control"
                         id="accountName"
-                        placeholder="My card"
+                        placeholder="My BTC Account Name"
                         value={newPaymentMethod.accountName}
                         onChange={this.accountNameChange}
                         />
@@ -85,60 +79,28 @@ class PaymentMethod extends React.Component {
                         type="text"
                         className="form-control"
                         id="paymentType"
-                        placeholder="Visa"
+                        placeholder="Bitcoin"
                         value={newPaymentMethod.paymentType}
                         onChange={this.paymentTypeChange}
                         />
                     </div>
                     </div>
                     <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Account Number</label>
+                    <label htmlFor="link" className="sr-only">Bitcoin Address</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
-                        <div className="input-group-text">Account Number</div>
+                        <div className="input-group-text">Bitcoin Address</div>
                         </div>
                         <input
                         type="text"
                         className="form-control"
                         id="accountNumber"
-                        placeholder="987654321"
+                        placeholder="1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"
                         value={newPaymentMethod.accountNumber}
                         onChange={this.accountNumberChange}
                         />
                     </div>
-                    </div>
-                    <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Exp Date</label>
-                    <div className="input-group mb-2">
-                        <div className="input-group-prepend">
-                        <div className="input-group-text">Exp Date</div>
-                        </div>
-                        <input
-                        type="text"
-                        className="form-control"
-                        id="expDate"
-                        placeholder="12/11/2023"
-                        value={newPaymentMethod.expDate}
-                        onChange={this.expDateChange}
-                        />
-                    </div>
-                    </div>
-                    <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">CVV</label>
-                    <div className="input-group mb-2">
-                        <div className="input-group-prepend">
-                        <div className="input-group-text">CVV</div>
-                        </div>
-                        <input
-                        type="text"
-                        className="form-control"
-                        id="CVV"
-                        placeholder="333"
-                        value={newPaymentMethod.CVV}
-                        onChange={this.CVVChange}
-                        />
-                    </div>
-                    </div>
+                    </div>                    
                 </div>
                 <button type="submit" className="btn bean-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
                     <i className="fas fa-plus-circle" />
@@ -149,4 +111,4 @@ class PaymentMethod extends React.Component {
     }
 }
 
-export default PaymentMethod;
+export default PaymentMethodBTC;

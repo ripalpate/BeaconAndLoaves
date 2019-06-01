@@ -13,6 +13,7 @@ import Home from '../components/pages/Home/Home';
 import Profile from '../components/pages/Profile/Profile';
 import Properties from '../components/pages/Properties/Properties';
 import PaymentMethod from '../components/pages/PaymentMethod/PaymentMethod';
+import PaymentMethodBTC from '../components/pages/PaymentMethod/PaymentMethodBTC';
 import LightHouses from '../components/pages/LightHouses/LightHouses';
 import SiloNuclears from '../components/pages/SiloNuclears/SiloNuclears';
 import LightHouseDetail from '../components/pages/LightHouseDetail/LightHouseDetail';
@@ -86,7 +87,8 @@ export default class App extends Component {
                   <PrivateRoute path='/register' exact component={Register} authed={this.state.authed} />
                   <PrivateRoute path="/home" component={Home} authed={this.state.authed}/>
                   <PrivateRoute exact path="/profile" component={Profile} authed={this.state.authed}/>
-                  <PrivateRoute exact path="/paymentMethod" component={PaymentMethod} authed={this.state.authed}/>
+                  <PrivateRoute path="/paymentMethod" component={PaymentMethod} authed={this.state.authed}/>
+                  <PrivateRoute path="/paymentMethodBTC" component={PaymentMethodBTC} authed={this.state.authed}/>
                   <PrivateRoute exact path="/properties" component={Properties} authed={this.state.authed}/>
                   <PrivateRoute path="/properties/lightHouses"  component={LightHouses} authed={this.state.authed}/>
                   <PrivateRoute exact path="/lightHouses/:id" authed={this.state.authed} component={LightHouseDetail}/>
