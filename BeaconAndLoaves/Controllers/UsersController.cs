@@ -48,7 +48,7 @@ namespace BeaconAndLoaves.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetSingleUser(int id)
+        public ActionResult GetSingleUser(string id)
         {
             var singleUser = _repository.GetSingleUser(id);
 
