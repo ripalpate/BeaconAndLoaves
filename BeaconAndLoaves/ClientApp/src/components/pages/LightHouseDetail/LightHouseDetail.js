@@ -1,6 +1,6 @@
 import React from 'react';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
-
+import './LightHouseDetail.scss';
 class LightHouseDetail extends React.Component {
   state = {
     lightHouse: []

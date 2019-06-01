@@ -1,6 +1,6 @@
 import React from 'react';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
-
+import './SiloNuclearDetail.scss';
 class SiloNuclearDetail extends React.Component {
   state = {
     siloNuclear: []
