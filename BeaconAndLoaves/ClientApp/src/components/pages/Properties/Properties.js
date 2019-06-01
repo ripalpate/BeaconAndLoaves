@@ -26,7 +26,7 @@ class Properties extends React.Component {
   }
 
   render() {
-    const {lightHouse,siloNuclear } = this.state;
+    const { lightHouse, siloNuclear } = this.state;
     return (
       <div className="properties d-flex">
         <div id="lighthouses" onClick={this.pageView}>

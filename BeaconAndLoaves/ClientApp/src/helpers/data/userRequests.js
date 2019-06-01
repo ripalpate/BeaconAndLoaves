@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = "/api/users";
+const apiUrl = '/api/users';
 
 const getAllUsers = () => new Promise((resolve, reject) => {
   axios.get(apiUrl)
@@ -26,5 +26,5 @@ export default {
   createUser,
   deleteUser,
   updateUser,
-  getSingleUser
+  getSingleUser,
 };
