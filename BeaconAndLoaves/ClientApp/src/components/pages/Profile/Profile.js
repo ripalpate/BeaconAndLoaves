@@ -11,19 +11,11 @@ class Profile extends React.Component {
   getUsers = () => {
     userRequests.getAllUsers()
       .then((users) => {
-        this.setState({ users });
-      })
-      .then(() => {
-        this.checkRegistration();
+        const uid = authRequests.getCurrentUid();
+        const currentUser = users.filter(user => user.firebaseId === uid);
+        this.setState({ currentUser });
       });
   };
-
-  checkRegistration = () => {
-    const { users } = this.state;
-    const uid = authRequests.getCurrentUid();
-    const currentUser = users.filter(user => user.firebaseId === uid);
-    this.setState({ currentUser });
-  }
 
   componentDidMount() {
     this.getUsers();
