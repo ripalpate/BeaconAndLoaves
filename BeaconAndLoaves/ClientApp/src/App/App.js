@@ -35,10 +35,9 @@ const PrivateRoute = ({ component: Component, authed, ...rest }) => {
 };
 
 export default class App extends Component {
-  displayName = App.name
-
   state = {
     authed: false,
+    pendingUser: true,
   }
 
   componentDidMount() {
@@ -48,10 +47,13 @@ export default class App extends Component {
       if (user) {
         this.setState({
           authed: true,
+          pendingUser: false,
         });
+        authRequests.getCurrentUserJwt();
       } else {
         this.setState({
           authed: false,
+          pendingUser: false,
         });
       }
     });
@@ -64,12 +66,17 @@ export default class App extends Component {
   render() {
     const {
       authed,
+      pendingUser,
     } = this.state;
 
     const logoutClickEvent = () => {
       authRequests.logoutUser();
       this.setState({ authed: false });
     };
+
+    if (pendingUser) {
+      return null;
+    }
 
     return (
       <div className="App">

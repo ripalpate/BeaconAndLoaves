@@ -20,15 +20,28 @@ axios.interceptors.response.use(response => {
    console.error("Blew up")
 });
 
+// const authenticate = () => {
+//   const provider = new firebase.auth.GoogleAuthProvider();
+//   return firebase.auth().signInWithPopup(provider).then(cred => {
+//     //get token from firebase
+//     cred.user.getIdToken()
+//         //save the token to the session storage
+//       .then(token => sessionStorage.setItem('token',token));
+//   });
+// };
+
 const authenticate = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
-  return firebase.auth().signInWithPopup(provider).then(cred => {
-    //get token from firebase
-    cred.user.getIdToken()
-        //save the token to the session storage
-      .then(token => sessionStorage.setItem('token',token));
-  });
+  return firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then(getCurrentUserJwt);
 };
+
+const getCurrentUserJwt = () => firebase
+  .auth()
+  .currentUser.getIdToken()
+  .then(token => sessionStorage.setItem('token', token));
 
 const logoutUser = () => firebase.auth().signOut();
 
