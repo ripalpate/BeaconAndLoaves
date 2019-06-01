@@ -7,6 +7,14 @@ const getProperties = () => new Promise((resolve, reject) => {
     .get(apiUrl)
     .then((results) => {
       const properties = results.data;
+      // const properties = [];
+      // if (results.data !== null) {
+      //   Object.keys(results.data).forEach((key) => {
+      //     results.data[key].id = key;
+      //     properties.push(results.data[key]);
+      //   });
+      // }
+      //console.log(properties);
       resolve(properties);
     })
     .catch(err => reject(err));
