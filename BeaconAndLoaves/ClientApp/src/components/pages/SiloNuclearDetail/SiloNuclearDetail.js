@@ -1,5 +1,5 @@
 import React from 'react';
-import propertiesRequests from '../../../helpers/data/propertiesRequests';
+import smashRequests from '../../../helpers/data/smashRequests';
 import './SiloNuclearDetail.scss';
 class SiloNuclearDetail extends React.Component {
   state = {
@@ -8,12 +8,12 @@ class SiloNuclearDetail extends React.Component {
 
   componentDidMount() {
     const siloNuclearId = this.props.match.params.id;
-    propertiesRequests.getProperties()
-      .then((properties) => {
-        const siloNuclears = properties.filter(property => property.type === 1);
-        const siloNuclear= siloNuclears.find(property => property.id == siloNuclearId);
-        this.setState( {siloNuclear});
-      }).catch(err => console.error(err));
+    smashRequests.getAllPropertiesWithOwnerInfo()
+    .then((properties) => {
+      const siloNuclears = properties.filter(property => property.type === 1);
+      const siloNuclear= siloNuclears.find(property => property.id == siloNuclearId);
+      this.setState( {siloNuclear});
+    }).catch(err => console.error(err));
   }
   render() {
     const{siloNuclear}= this.state;
@@ -28,6 +28,7 @@ class SiloNuclearDetail extends React.Component {
             <p>{siloNuclear.city}, {siloNuclear.state} - {siloNuclear.zipCode}</p>
             <p>{siloNuclear.description}</p>
             <p>${siloNuclear.price}/per night</p>
+            <p>Owned By: {siloNuclear.name}</p>
             <button className="btn btn-primary mr-2">Rent</button>
             <button className="btn btn-success">Liked Property</button>
           </div>
