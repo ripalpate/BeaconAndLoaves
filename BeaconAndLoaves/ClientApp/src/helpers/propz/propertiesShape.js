@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 
 const propertiesShape = PropTypes.shape({
-  propertyName: PropTypes.string.isRequired,
-  street: PropTypes.string.isRequired,
-  city: PropTypes.string.isRequired,
-  state: PropTypes.string.isRequired,
-  zipcode: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  PropertyName: PropTypes.string.isRequired,
+  Street: PropTypes.string.isRequired,
+  City: PropTypes.string.isRequired,
+  State: PropTypes.string.isRequired,
+  Zipcode: PropTypes.string.isRequired,
+  Description: PropTypes.string.isRequired,
+  ImageUrl: PropTypes.string.isRequired,
+  Price: PropTypes.string.isRequired,
 });
 
 export default propertiesShape;

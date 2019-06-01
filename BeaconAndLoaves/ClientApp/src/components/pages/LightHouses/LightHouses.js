@@ -24,7 +24,7 @@ class LightHouses extends React.Component {
     const singleLightHouseComponent = lightHouses.map(lightHouse => (
       <SingleLightHouse
       lightHouse={lightHouse}
-      Key = {lightHouse.id}
+      key = {lightHouse.id}
       lightHouseDetailView = {this.lightHouseDetailView}
       />
     ));

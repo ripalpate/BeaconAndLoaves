@@ -24,7 +24,7 @@ class SiloNuclears extends React.Component {
     const singleSiloNuclearComponent = siloNuclears.map(siloNuclear => (
       <SingleSiloNuclear
       siloNuclear={siloNuclear}
-      Key = {siloNuclear.id}
+      key = {siloNuclear.id}
       siloNuclearDetailView = {this.siloNuclearDetailView}
       />
     ));

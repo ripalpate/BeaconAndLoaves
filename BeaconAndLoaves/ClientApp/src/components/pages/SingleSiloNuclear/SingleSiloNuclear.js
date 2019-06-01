@@ -7,7 +7,7 @@ import './SingleSiloNuclear.scss';
 
 class SingleSiloNuclear extends React.Component {
   static propTypes = {
-    siloNuclear: propertiesShape,
+    siloNuclear: PropTypes.arrayOf(propertiesShape),
     siloNuclearDetailView: PropTypes.func
   }
 

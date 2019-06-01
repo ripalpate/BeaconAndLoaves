@@ -7,7 +7,7 @@ import './SingleLightHouse.scss';
 
 class SingleLightHouse extends React.Component {
   static propTypes = {
-    lightHouse: propertiesShape,
+    lightHouse: PropTypes.arrayOf(propertiesShape),
     lightHouseDetailView: PropTypes.func
   }
 
