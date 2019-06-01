@@ -3,14 +3,14 @@ import authRequests from '../../../helpers/data/authRequests';
 
 class Auth extends React.Component {
 
-    authenticateUser = (e) => {
-      e.preventDefault();
-      authRequests.authenticate()
-        .then(() => {
-          this.props.history.push('/properties');
-        })
-        .catch(error => console.error('there was a problem with auth', error));
-    }
+  authenticateUser = (e) => {
+    e.preventDefault();
+    authRequests.authenticate()
+      .then(() => {
+        this.props.history.push('/register');
+      })
+      .catch(error => console.error('there was a problem with auth', error));
+  }
 
     render() {
         return (
@@ -22,7 +22,7 @@ class Auth extends React.Component {
             </div>
           </div>
         );
-      }
+    }
 }
 
 export default Auth;

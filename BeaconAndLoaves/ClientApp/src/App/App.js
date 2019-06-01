@@ -8,6 +8,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import Auth from '../components/pages/Auth/Auth';
+import Register from '../components/pages/Register/Register'
 import Home from '../components/pages/Home/Home';
 import Profile from '../components/pages/Profile/Profile';
 import Properties from '../components/pages/Properties/Properties';
@@ -15,14 +16,14 @@ import LightHouses from '../components/pages/LightHouses/LightHouses';
 import SiloNuclears from '../components/pages/SiloNuclears/SiloNuclears';
 import LightHouseDetail from '../components/pages/LightHouseDetail/LightHouseDetail';
 import SiloNuclearDetail from '../components/pages/SiloNuclearDetail/SiloNuclearDetail';
-import MyNavbar from '../components/MyNavbar';
+import MyNavbar from '../components/MyNavbar/MyNavbar';
 import authRequests from '../helpers/data/authRequests';
 import connection from '../helpers/data/connection';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
     ? (<Component { ...props } {...rest} />)
-    : (<Redirect to={{ pathname: '/properties', state: { from: props.location } }}/>));
+    : (<Redirect to={{ pathname: '/register', state: { from: props.location } }}/>));
   return <Route {...rest} render={props => routeChecker(props)} />;
 };
 
@@ -38,7 +39,6 @@ export default class App extends Component {
 
   state = {
     authed: false,
-    pendingUser: true,
   }
 
   componentDidMount() {
@@ -48,12 +48,10 @@ export default class App extends Component {
       if (user) {
         this.setState({
           authed: true,
-          pendingUser: false,
         });
       } else {
         this.setState({
           authed: false,
-          pendingUser: false,
         });
       }
     });
@@ -66,17 +64,12 @@ export default class App extends Component {
   render() {
     const {
       authed,
-      pendingUser,
     } = this.state;
 
     const logoutClickEvent = () => {
       authRequests.logoutUser();
       this.setState({ authed: false});
     };
-
-    if (pendingUser) {
-      return null;
-    }
 
     return (
       <div className="App">
@@ -89,6 +82,7 @@ export default class App extends Component {
                     authed={ authed }
                   />
                   <PrivateRoute path='/' exact component={Auth} authed={this.state.authed} />
+                  <PrivateRoute path='/register' exact component={Register} authed={this.state.authed} />
                   <PrivateRoute path="/home" component={Home} authed={this.state.authed}/>
                   <PrivateRoute exact path="/profile" component={Profile} authed={this.state.authed}/>
                   <PrivateRoute exact path="/properties" component={Properties} authed={this.state.authed}/>
