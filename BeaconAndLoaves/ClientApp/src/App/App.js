@@ -12,6 +12,7 @@ import Register from '../components/pages/Register/Register'
 import Home from '../components/pages/Home/Home';
 import Profile from '../components/pages/Profile/Profile';
 import Properties from '../components/pages/Properties/Properties';
+import PaymentMethod from '../components/pages/PaymentMethod/PaymentMethod';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
 import authRequests from '../helpers/data/authRequests';
 import connection from '../helpers/data/connection';
@@ -81,6 +82,7 @@ export default class App extends Component {
                   <PrivateRoute path='/register' exact component={Register} authed={this.state.authed} />
                   <PrivateRoute path="/home" component={Home} authed={this.state.authed}/>
                   <PrivateRoute exact path="/profile" component={Profile} authed={this.state.authed}/>
+                  <PrivateRoute exact path="/paymentMethod" component={PaymentMethod} authed={this.state.authed}/>
                   <PrivateRoute exact path="/properties" component={Properties} authed={this.state.authed}/>
                 </Switch>
           </React.Fragment>
