@@ -18,7 +18,7 @@ class LightHouseDetail extends React.Component {
   render() {
     const{lightHouse}= this.state;
     return (
-      <div className="card ml-4 bg-light detail">
+      <div className="card mx-auto bg-light detail">
           <div className="imgHolder">
             <img className="singleLightHouseImg"src={lightHouse.imageUrl} alt="lighthouse"/>
           </div>
@@ -28,6 +28,8 @@ class LightHouseDetail extends React.Component {
             <p>{lightHouse.city}, {lightHouse.state} - {lightHouse.zipCode}</p>
             <p>{lightHouse.description}</p>
             <p>${lightHouse.price}/per night</p>
+            <button className="btn btn-primary mr-2">Rent</button>
+            <button className="btn btn-success">Liked Property</button>
           </div>
         </div>
     );

@@ -18,7 +18,7 @@ class SiloNuclearDetail extends React.Component {
   render() {
     const{siloNuclear}= this.state;
     return (
-      <div className="card ml-4 bg-light detail">
+      <div className="card mx-auto bg-light detail">
           <div className="imgHolder">
             <img className="singleLightHouseImg" src={siloNuclear.imageUrl} alt="siloNuclear"/>
           </div>
@@ -28,6 +28,8 @@ class SiloNuclearDetail extends React.Component {
             <p>{siloNuclear.city}, {siloNuclear.state} - {siloNuclear.zipCode}</p>
             <p>{siloNuclear.description}</p>
             <p>${siloNuclear.price}/per night</p>
+            <button className="btn btn-primary mr-2">Rent</button>
+            <button className="btn btn-success">Liked Property</button>
           </div>
         </div>
     );
