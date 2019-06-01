@@ -4,7 +4,6 @@ import authRequests from '../../../helpers/data/authRequests';
 
 class Profile extends React.Component {
   state = {
-    users: [],
     currentUser: [],
   }
 
