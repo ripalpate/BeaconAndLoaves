@@ -15,6 +15,12 @@ class SiloNuclearDetail extends React.Component {
       this.setState( {siloNuclear});
     }).catch(err => console.error(err));
   }
+
+  likedPropertyView = (e) => {
+    const view = e.currentTarget.id;
+    this.props.history.push(`/${view}`);
+  }
+
   render() {
     const{siloNuclear}= this.state;
     return (
@@ -30,7 +36,7 @@ class SiloNuclearDetail extends React.Component {
             <p>${siloNuclear.price}/per night</p>
             <p>Owned By: {siloNuclear.name}</p>
             <button className="btn btn-primary mr-2">Rent</button>
-            <button className="btn btn-success">Liked Property</button>
+            <button className="btn btn-success"id="likedProperties" onClick={this.likedPropertyView}>Liked Property</button>
           </div>
         </div>
     );

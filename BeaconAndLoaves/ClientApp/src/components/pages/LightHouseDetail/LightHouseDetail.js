@@ -1,7 +1,7 @@
 import React from 'react';
-import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import './LightHouseDetail.scss';
 import smashRequests from '../../../helpers/data/smashRequests';
+
 class LightHouseDetail extends React.Component {
   state = {
     lightHouse: []
@@ -15,6 +15,11 @@ class LightHouseDetail extends React.Component {
       const lightHouse= lightHouses.find(property => property.id == lightHouseId);
       this.setState( {lightHouse});
     }).catch(err => console.error(err));
+  }
+
+  likedPropertyView = (e) => {
+    const view = e.currentTarget.id;
+    this.props.history.push(`/${view}`);
   }
 
   componentDidMount() {
@@ -35,7 +40,7 @@ class LightHouseDetail extends React.Component {
             <p>${lightHouse.price}/per night</p>
             <p>Owned By: {lightHouse.name}</p>
             <button className="btn btn-primary mr-2">Rent</button>
-            <button className="btn btn-success">Liked Property</button>
+            <button className="btn btn-success" id="likedProperties" onClick={this.likedPropertyView}>Liked Property</button>
           </div>
         </div>
     );
