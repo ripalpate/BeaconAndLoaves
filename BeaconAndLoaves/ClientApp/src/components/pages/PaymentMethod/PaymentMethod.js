@@ -39,6 +39,7 @@ class PaymentMethod extends React.Component {
         const myPaymentMethod = { ...this.state.newPaymentMethod };
         myPaymentMethod.isActive = true;
         this.setState({ newPaymentMethod: defaultPaymentMethod });
+        console.log(myPaymentMethod)
         paymentMethodRequests.createUserPayment(myPaymentMethod)
         .then(() => {
             this.props.history.push('/home');
@@ -47,7 +48,7 @@ class PaymentMethod extends React.Component {
   
 
       componentDidMount() {
-        
+
       }
  
     render() {
