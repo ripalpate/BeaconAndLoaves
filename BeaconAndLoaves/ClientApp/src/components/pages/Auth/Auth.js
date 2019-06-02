@@ -1,5 +1,7 @@
 import React from 'react';
 import authRequests from '../../../helpers/data/authRequests';
+import './Auth.scss';
+
 
 class Auth extends React.Component {
   authenticateUser = (e) => {
@@ -13,8 +15,8 @@ class Auth extends React.Component {
 
   render() {
     return (
-          <div className="Auth mx-auto">
-            <div className="btn-container mt-5">
+          <div className="Auth">
+            <div className="btn-container">
               <button className="bttn-pill bttn-lg bttn-danger" onClick={this.authenticateUser}>
                 <i className="fab fa-google"></i> Sign In w/Google
               </button>
