@@ -16,15 +16,18 @@ class SiloNuclearDetail extends React.Component {
     }).catch(err => console.error(err));
   }
 
-  likedPropertyView = (e) => {
-    const view = e.currentTarget.id;
-    this.props.history.push(`/${view}`);
+  backButton = () => {
+    this.props.history.push('/properties/siloNuclears');
   }
 
   render() {
     const{siloNuclear}= this.state;
     return (
-      <div className="card mx-auto bg-light detail">
+      <div>
+        <div className="back-button">
+          <button className = "btn btn-warning" onClick = {this.backButton}>Back</button>
+        </div>
+        <div className="card mx-auto bg-light detail">
           <div className="imgHolder">
             <img className="singleLightHouseImg" src={siloNuclear.imageUrl} alt="siloNuclear"/>
           </div>
@@ -36,9 +39,10 @@ class SiloNuclearDetail extends React.Component {
             <p>${siloNuclear.price}/per night</p>
             <p>Owned By: {siloNuclear.name}</p>
             <button className="btn btn-primary mr-2">Rent</button>
-            <button className="btn btn-success"id="likedProperties" onClick={this.likedPropertyView}>Liked Property</button>
+            <button className="btn btn-success"id="likedProperties">Liked Property</button>
           </div>
         </div>
+      </div>
     );
   }
 }
