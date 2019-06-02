@@ -4,32 +4,27 @@ import authRequests from '../../../helpers/data/authRequests';
 
 class Profile extends React.Component {
   state = {
-    users: [],
+    paymentAccounts: [],
     currentUser: [],
   }
 
-  // getSingleUser = () => {
-  //   const uid = authRequests.getCurrentUid();
-  //   const { users } = this.state;
-  //   const currentUser = users.filter(user => user.firebaseId === uid);
-  //   this.setState({ currentUser });
-  // }
-
-  // getUser = () => {
-  //   userRequests.getAllUsers()
-  //     .then((users) => {
-  //       this.setState({ users });
-  //     })
-  //     .then(() => {
-  //       this.getSingleUser();
+  // getUserPayments = (id) => {
+  //   userRequests.getSingleUserPayment(id)
+  //     .then((paymentAccounts) => {
+  //       this.setState({ paymentAccounts });
   //     });
-  // };
+  // }
 
   getUser = () => {
     const uid = authRequests.getCurrentUid();
     userRequests.getSingleUser(uid)
       .then((currentUser) => {
-        this.setState({ currentUser: currentUser.data });
+        this.setState({ currentUser: currentUser.data })
+          // .then(() => {
+          //   const id = currentUser.Id;
+          //   console.log(id);
+          //   this.getUserPayments(id);
+          // });
       });
   };
 
@@ -38,7 +33,10 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { currentUser } = this.state;
+    const { currentUser, paymentAccounts } = this.state;
+
+    console.log(currentUser.userPayments);
+
     return (
       <div className="profileDiv d-flex align-center">
         <div id="profile">
@@ -49,6 +47,10 @@ class Profile extends React.Component {
           <div>{currentUser.state}</div>
           <div>{currentUser.zipcode}</div>
           <div>{currentUser.phonenumber}</div>
+          <select className="custom-select mb-2">
+              <option defaultValue>Payment Accounts</option>
+              {/* {paymentDropdownItems} */}
+          </select>
         </div>
       </div>
     );

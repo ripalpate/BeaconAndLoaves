@@ -21,10 +21,13 @@ const createUser = userObject => axios.post(`${apiUrl}/register`, (userObject));
 
 const updateUser = (userId, userObject) => axios.put(`${apiUrl}/${userId}`, userObject);
 
+const getSingleUserPayment = userId => axios.get(`api/userpayment/${userId}`);
+
 export default {
   getAllUsers,
   createUser,
   deleteUser,
   updateUser,
   getSingleUser,
+  getSingleUserPayment,
 };
