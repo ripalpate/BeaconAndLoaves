@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
+import userShape from '../../../helpers/propz/userShape';
 
 const defaultUser = {
   email: '',
@@ -21,6 +22,16 @@ class Register extends React.Component {
       users: [],
       currentUser: [],
       newUser: defaultUser,
+    }
+
+    static propTypes = {
+      currentUser: userShape.userShape,
+      deleteSingleRoast: PropTypes.func,
+      passRoastToEdit: PropTypes.func,
+      onSelect: PropTypes.func,
+      roasts: PropTypes.array,
+      uid: PropTypes.string,
+      ownerUid: PropTypes.string,
     }
 
       formFieldStringState = (name, e) => {

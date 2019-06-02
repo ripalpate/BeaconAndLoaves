@@ -4,12 +4,10 @@ import authRequests from '../../../helpers/data/authRequests';
 
 class Profile extends React.Component {
   state = {
-    paymentAccounts: [],
     currentUser: {
       userPayments: [],
       properties: [],
     },
-    accountId: '',
   }
 
   changeView = (e) => {
