@@ -7,12 +7,13 @@ using BeaconAndLoaves.Models;
 using BeaconAndLoaves.Validators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static BeaconAndLoaves.Controllers.SecureControllerBaseController;
 
 namespace BeaconAndLoaves.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PropertiesController : ControllerBase
+    public class PropertiesController : SecureControllerBase
     {
         readonly PropertyRepository _repo;
         readonly CreatePropertyRequestValidator _validator;

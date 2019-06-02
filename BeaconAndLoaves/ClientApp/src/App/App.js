@@ -8,7 +8,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import Auth from '../components/pages/Auth/Auth';
-import Register from '../components/pages/Register/Register'
+import Register from '../components/pages/Register/Register';
 import Home from '../components/pages/Home/Home';
 import Profile from '../components/pages/Profile/Profile';
 import Properties from '../components/pages/Properties/Properties';
@@ -36,10 +36,9 @@ const PrivateRoute = ({ component: Component, authed, ...rest }) => {
 };
 
 export default class App extends Component {
-  displayName = App.name
-
   state = {
     authed: false,
+    pendingUser: true,
   }
 
   componentDidMount() {
@@ -49,10 +48,13 @@ export default class App extends Component {
       if (user) {
         this.setState({
           authed: true,
+          pendingUser: false,
         });
+        authRequests.getCurrentUserJwt();
       } else {
         this.setState({
           authed: false,
+          pendingUser: false,
         });
       }
     });
@@ -65,12 +67,17 @@ export default class App extends Component {
   render() {
     const {
       authed,
+      pendingUser,
     } = this.state;
 
     const logoutClickEvent = () => {
       authRequests.logoutUser();
-      this.setState({ authed: false});
+      this.setState({ authed: false });
     };
+
+    if (pendingUser) {
+      return null;
+    }
 
     return (
       <div className="App">
@@ -87,9 +94,9 @@ export default class App extends Component {
                   <PrivateRoute path="/home" component={Home} authed={this.state.authed}/>
                   <PrivateRoute exact path="/profile" component={Profile} authed={this.state.authed}/>
                   <PrivateRoute exact path="/properties" component={Properties} authed={this.state.authed}/>
-                  <PrivateRoute path="/properties/lightHouses"  component={LightHouses} authed={this.state.authed}/>
+                  <PrivateRoute path="/properties/lightHouses" component={LightHouses} authed={this.state.authed}/>
                   <PrivateRoute exact path="/lightHouses/:id" authed={this.state.authed} component={LightHouseDetail}/>
-                  <PrivateRoute path="/properties/siloNuclears"  component={SiloNuclears} authed={this.state.authed}/>
+                  <PrivateRoute path="/properties/siloNuclears" component={SiloNuclears} authed={this.state.authed}/>
                   <PrivateRoute exact path="/siloNuclears/:id" authed={this.state.authed} component={SiloNuclearDetail}/>
                   <PrivateRoute path="/likedProperties" authed={this.state.authed} component={LikedProperties}/>
                 </Switch>

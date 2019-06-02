@@ -51,38 +51,49 @@ namespace BeaconAndLoaves.Data
 
             using (var db = new SqlConnection(_connectionString))
             {
-                var properties = _propertyRepository.GetAllProperties();
-                var userPayments = _userPaymentRepository.GetAllUserPayments();
-                var rentals = _rentalRepository.GetAllRentals();
+                //var properties = _propertyRepository.GetAllProperties();
+                //var userPayments = _userPaymentRepository.GetAllUserPayments();
+                //var rentals = _rentalRepository.GetAllRentals();
 
                 var users = db.Query<User>(@"
                     select * 
                     from users
                     where isactive = 1").ToList();
 
-                foreach(var user in users)
-                {
-                    var matchingProperties = properties.Where(p => p.OwnerId == user.Id).ToList();
-                    var matchingUserPayments = userPayments.Where(up => up.UserId == user.Id).ToList();
-                    var matchingRentals = rentals.Where(r => r.UserId == user.Id).ToList();
-                    user.Properties = matchingProperties;
-                    user.UserPayments = matchingUserPayments;
-                    user.Rentals = matchingRentals;
-                }
+                //foreach(var user in users)
+                //{
+                //    var matchingProperties = properties.Where(p => p.OwnerId == user.Id).ToList();
+                //    var matchingUserPayments = userPayments.Where(up => up.UserId == user.Id).ToList();
+                //    var matchingRentals = rentals.Where(r => r.UserId == user.Id).ToList();
+                //    user.Properties = matchingProperties;
+                //    user.UserPayments = matchingUserPayments;
+                //    user.Rentals = matchingRentals;
+                //}
 
                 return users;
             }
         }
 
-        public User GetSingleUser(int id)
+        public User GetSingleUser(string id)
         {
+            var properties = _propertyRepository.GetAllProperties();
+            var userPayments = _userPaymentRepository.GetAllUserPayments();
+            var rentals = _rentalRepository.GetAllRentals();
+
             using (var db = new SqlConnection(_connectionString))
             {
                 var singleUser = db.QueryFirstOrDefault<User>(@"
                     select *
                     from users
-                    where id = @id",
+                    where firebaseid = @id",
                     new { id });
+
+                var matchingProperties = properties.Where(p => p.OwnerId == singleUser.Id).ToList();
+                var matchingUserPayments = userPayments.Where(up => up.UserId == singleUser.Id).ToList();
+                var matchingRentals = rentals.Where(r => r.UserId == singleUser.Id).ToList();
+                singleUser.Properties = matchingProperties;
+                singleUser.UserPayments = matchingUserPayments;
+                singleUser.Rentals = matchingRentals;
 
                 return singleUser;
             }
