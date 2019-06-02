@@ -75,17 +75,17 @@ class Profile extends React.Component {
       if (currentUser.isOwner === true) {
         return (
           <div>
-          <button id='renting' type="button" className="btn renter-history-btn btn-success m-5" onClick={this.changeView}>
+          <button id='renting' type="button" className="btn renter-history-btn btn-success text-center" onClick={this.changeView}>
             See My Renting History
           </button>
-          <button id='rental' type="button" className="btn rental-history-btn btn-success m-5" onClick={this.changeView}>
+          <button id='rental' type="button" className="btn rental-history-btn btn-success text-center" onClick={this.changeView}>
             See My Renting History
           </button>
           </div>
         );
       }
       return (<div>
-            <button id='renting' type="button" className="btn renter-history-btn btn-success m-5" onClick={this.changeView}>
+            <button id='renting' type="button" className="btn renter-history-btn btn-success mx-auto" onClick={this.changeView}>
               See My Renting History
             </button>
           </div>);
@@ -99,8 +99,8 @@ class Profile extends React.Component {
           <div className="ml-1">Street: {currentUser.street}</div>
           <div className="ml-1">City: {currentUser.city}</div>
           <div className="ml-1">State: {currentUser.state}</div>
-          <div className="ml-1">Zipcode: {currentUser.zipcode}</div>
-          <div className="ml-1">Phone Number: {currentUser.phonenumber}</div>
+          <div className="ml-1">Zipcode: {currentUser.zipCode}</div>
+          <div className="ml-1">Phone Number: {currentUser.phoneNumber}</div>
           <div className="ml-1">
             {makeDropdowns()}
           </div>
