@@ -36,6 +36,26 @@ class Profile extends React.Component {
   render() {
     const { currentUser } = this.state;
 
+    const makeButtons = () => {
+      if (currentUser.isOwner === true) {
+        return (
+          <div>
+          <button id='renting' type="button" className="btn renter-history-btn btn-success m-5" onClick={this.changeView}>
+            See My Renting History
+          </button>
+          <button id='rental' type="button" className="btn rental-history-btn btn-success m-5" onClick={this.changeView}>
+            See My Renting History
+          </button>
+          </div>
+        );
+      }
+      return (<div>
+            <button id='renting' type="button" className="btn renter-history-btn btn-success m-5" onClick={this.changeView}>
+              See My Renting History
+            </button>
+          </div>);
+    };
+
     return (
       <div className="profileDiv d-flex align-center">
         <div id="profile">
@@ -62,12 +82,9 @@ class Profile extends React.Component {
               }
             </select>
           </span>
-          <button id='renting' type="button" className="btn renter-history-btn btn-success m-5" onClick={this.changeView}>
-            See My Renting History
-          </button>
-          <button id='rental' type="button" className="btn rental-history-btn btn-success m-5" onClick={this.changeView}>
-            See My Properties' History
-          </button>
+          <div>
+              {makeButtons()}
+          </div>
         </div>
       </div>
     );
