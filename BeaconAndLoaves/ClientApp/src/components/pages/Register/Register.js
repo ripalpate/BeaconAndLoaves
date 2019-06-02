@@ -27,6 +27,7 @@ class Register extends React.Component {
     }
 
     static propTypes = {
+      users: PropTypes.arrayOf(userShape.userShape),
       currentUser: userShape.userShape,
     }
 
