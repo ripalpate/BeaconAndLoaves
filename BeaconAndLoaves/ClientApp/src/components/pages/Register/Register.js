@@ -4,6 +4,8 @@ import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import userShape from '../../../helpers/propz/userShape';
 
+import './Register.scss';
+
 const defaultUser = {
   email: '',
   firebaseId: '',
@@ -93,7 +95,7 @@ class Register extends React.Component {
         } = this.state;
 
         return (
-          <div className="reg-container">
+          <div className="reg-container mx-auto">
               <form className="row form-container border border-dark rounded mt-5 mx-auto" onSubmit={this.formSubmit}>
                 <div className="form col-11 mt-2">
                   <div className="col-auto form-lines p-0">
