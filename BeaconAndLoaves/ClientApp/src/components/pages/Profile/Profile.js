@@ -36,6 +36,41 @@ class Profile extends React.Component {
   render() {
     const { currentUser } = this.state;
 
+    const makeDropdowns = () => {
+      if (currentUser.isOwner === true) {
+        return (
+          <div>
+            <span>Payment Accounts:
+              <select className="custom-select mb-2">
+              <option defaultValue>Select Payment Account</option>
+                {
+                currentUser.userPayments.map((account, i) => (<option key={i}>{account.accountName}</option>))
+                }
+              </select>
+            </span>
+            <span>My Properties:
+              <select className="custom-select mb-2">
+              <option defaultValue>Select Property</option>
+                {
+                currentUser.properties.map((property, i) => (<option key={i}>{property.propertyName}</option>))
+                }
+              </select>
+            </span>
+          </div>
+        );
+      }
+      return (<div>
+           <span>Payment Accounts:
+              <select className="custom-select mb-2">
+              <option defaultValue>Select Payment Account</option>
+                {
+                currentUser.userPayments.map((account, i) => (<option key={i}>{account.accountName}</option>))
+                }
+              </select>
+            </span>
+          </div>);
+    };
+
     const makeButtons = () => {
       if (currentUser.isOwner === true) {
         return (
@@ -66,24 +101,11 @@ class Profile extends React.Component {
           <div>{currentUser.state}</div>
           <div>{currentUser.zipcode}</div>
           <div>{currentUser.phonenumber}</div>
-          <span>Payment Accounts:
-            <select className="custom-select mb-2">
-            <option defaultValue>Select Payment Account</option>
-              {
-              currentUser.userPayments.map((account, i) => (<option key={i}>{account.accountName}</option>))
-              }
-            </select>
-          </span>
-          <span>My Properties:
-            <select className="custom-select mb-2">
-            <option defaultValue>Select Property</option>
-              {
-              currentUser.properties.map((property, i) => (<option key={i}>{property.propertyName}</option>))
-              }
-            </select>
-          </span>
           <div>
-              {makeButtons()}
+            {makeDropdowns()}
+          </div>
+          <div>
+            {makeButtons()}
           </div>
         </div>
       </div>
