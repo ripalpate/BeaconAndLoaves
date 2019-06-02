@@ -204,7 +204,7 @@ class Register extends React.Component {
                     </div>
                     </div>
                 </div>
-                <button type="submit" className="btn bean-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
+                <button type="submit" className="btn user-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
                     <i className="fas fa-plus-circle" />
                 </button>
                 </form>

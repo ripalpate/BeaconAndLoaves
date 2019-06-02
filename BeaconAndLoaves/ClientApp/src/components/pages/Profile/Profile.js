@@ -5,37 +5,31 @@ import authRequests from '../../../helpers/data/authRequests';
 class Profile extends React.Component {
   state = {
     paymentAccounts: [],
-    currentUser: [],
+    currentUser: {
+      userPayments: [],
+      properties: [],
+    },
+    accountId: '',
   }
-
-  // getUserPayments = (id) => {
-  //   userRequests.getSingleUserPayment(id)
-  //     .then((paymentAccounts) => {
-  //       this.setState({ paymentAccounts });
-  //     });
-  // }
 
   getUser = () => {
     const uid = authRequests.getCurrentUid();
     userRequests.getSingleUser(uid)
       .then((currentUser) => {
-        this.setState({ currentUser: currentUser.data })
-          // .then(() => {
-          //   const id = currentUser.Id;
-          //   console.log(id);
-          //   this.getUserPayments(id);
-          // });
+        this.setState({ currentUser: currentUser.data });
       });
   };
+
+  setSelect = (selectedAccount) => {
+    this.setState({ accountId: selectedAccount });
+  }
 
   componentDidMount() {
     this.getUser();
   }
 
   render() {
-    const { currentUser, paymentAccounts } = this.state;
-
-    console.log(currentUser.userPayments);
+    const { currentUser } = this.state;
 
     return (
       <div className="profileDiv d-flex align-center">
@@ -47,10 +41,22 @@ class Profile extends React.Component {
           <div>{currentUser.state}</div>
           <div>{currentUser.zipcode}</div>
           <div>{currentUser.phonenumber}</div>
-          <select className="custom-select mb-2">
-              <option defaultValue>Payment Accounts</option>
-              {/* {paymentDropdownItems} */}
-          </select>
+          <span>Payment Accounts:
+            <select className="custom-select mb-2">
+            <option defaultValue>Select Payment Account</option>
+              {
+              currentUser.userPayments.map((account, i) => (<option key={i}>{account.accountName}</option>))
+              }
+            </select>
+          </span>
+          <span>My Properties:
+            <select className="custom-select mb-2">
+            <option defaultValue>Select Property</option>
+              {
+              currentUser.properties.map((property, i) => (<option key={i}>{property.propertyName}</option>))
+              }
+            </select>
+          </span>
         </div>
       </div>
     );
