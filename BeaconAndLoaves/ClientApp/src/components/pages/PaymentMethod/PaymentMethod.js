@@ -5,6 +5,7 @@ import authRequests from '../../../helpers/data/authRequests';
 
 const defaultPaymentMethod = {
     accountName: '',
+    userId: '',
     paymentType: '',
     accountNumber: '',
     expDate: '',
