@@ -1,0 +1,33 @@
+
+@import "../../../styles/variables";
+
+.btn-container {
+    img {
+    width: 50%;
+  }
+  text-align: center;
+  margin-top: 5%;
+  font-family: 'open sans';
+}
+
+body {
+    background:  linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
+                  url('https://cdn.pixabay.com/photo/2017/06/04/23/17/lighthouse-2372461_960_720.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+    background-size: cover;
+    min-height: 100%;
+}
+
+.title, .sub-title {
+  color: white;
+}
+
+.title {
+  font-size: 5em;
+}
+
+.title-container{
+  margin-top: 10%;
+}
