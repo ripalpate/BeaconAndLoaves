@@ -16,9 +16,9 @@ class Auth extends React.Component {
     return (
           <div className="Auth">
             <div className="title-container">
-              <p className="text-center">Beacon and Loaves</p>
-              <h3 className="text-center">Vacation rentals for lighthouse enthusiasts</h3>
-              <h6 className="text-center">***(Expanding soon to nuclear silo rentals)***</h6>
+              <p className="title text-center">Beacon and Loaves</p>
+              <h3 className="sub-title text-center">Vacation rentals for lighthouse enthusiasts</h3>
+              <h6 className="sub-title text-center">***(Expanding soon to nuclear silo rentals)***</h6>
             </div>
             <div className="btn-container">
               <button className="bttn-pill bttn-lg bttn-danger" onClick={this.authenticateUser}>
