@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
+import userShape from '../../../helpers/propz/userShape';
+
+import './Register.scss';
 
 const defaultUser = {
   email: '',
@@ -21,6 +24,11 @@ class Register extends React.Component {
       users: [],
       currentUser: [],
       newUser: defaultUser,
+    }
+
+    static propTypes = {
+      users: PropTypes.arrayOf(userShape.userShape),
+      currentUser: userShape.userShape,
     }
 
       formFieldStringState = (name, e) => {
@@ -88,10 +96,10 @@ class Register extends React.Component {
         } = this.state;
 
         return (
-            <div>
-                <form className="row form-container border border-dark rounded mt-5 mx-auto" onSubmit={this.formSubmit}>
+          <div className="reg-container mx-auto">
+              <form className="row form-container border border-dark rounded mt-5 mx-auto" onSubmit={this.formSubmit}>
                 <div className="form col-11 mt-2">
-                    <div className="col-auto form-lines p-0">
+                  <div className="col-auto form-lines p-0">
                     <label htmlFor="link" className="sr-only">Email</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
@@ -106,8 +114,8 @@ class Register extends React.Component {
                         onChange={this.emailChange}
                         />
                     </div>
-                    </div>
-                    <div className="col-auto form-lines p-0">
+                  </div>
+                  <div className="col-auto form-lines p-0">
                     <label htmlFor="name" className="sr-only">Name</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
@@ -122,8 +130,8 @@ class Register extends React.Component {
                         onChange={this.nameChange}
                         />
                     </div>
-                    </div>
-                    <div className="col-auto form-lines p-0">
+                  </div>
+                  <div className="col-auto form-lines p-0">
                     <label htmlFor="link" className="sr-only">Street</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
@@ -138,8 +146,8 @@ class Register extends React.Component {
                         onChange={this.streetChange}
                         />
                     </div>
-                    </div>
-                    <div className="col-auto form-lines p-0">
+                  </div>
+                  <div className="col-auto form-lines p-0">
                     <label htmlFor="link" className="sr-only">City</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
@@ -154,8 +162,8 @@ class Register extends React.Component {
                         onChange={this.cityChange}
                         />
                     </div>
-                    </div>
-                    <div className="col-auto form-lines p-0">
+                  </div>
+                  <div className="col-auto form-lines p-0">
                     <label htmlFor="link" className="sr-only">State</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
@@ -170,8 +178,8 @@ class Register extends React.Component {
                         onChange={this.stateChange}
                         />
                     </div>
-                    </div>
-                    <div className="col-auto form-lines p-0">
+                  </div>
+                  <div className="col-auto form-lines p-0">
                     <label htmlFor="link" className="sr-only">Zip Code</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
@@ -186,8 +194,8 @@ class Register extends React.Component {
                         onChange={this.zipCodeChange}
                         />
                     </div>
-                    </div>
-                    <div className="col-auto form-lines p-0">
+                  </div>
+                  <div className="col-auto form-lines p-0">
                     <label htmlFor="link" className="sr-only">Phone Number</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
@@ -202,13 +210,13 @@ class Register extends React.Component {
                         onChange={this.phoneNumberChange}
                         />
                     </div>
-                    </div>
+                  </div>
                 </div>
-                <button type="submit" className="btn user-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
-                    <i className="fas fa-plus-circle" />
-                </button>
-                </form>
-            </div>
+              <button type="submit" className="btn user-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
+                  <i className="fas fa-plus-circle" />
+              </button>
+              </form>
+          </div>
         );
       }
 }

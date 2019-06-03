@@ -30,11 +30,11 @@ class Properties extends React.Component {
     return (
       <div className="properties d-flex">
         <div id="lighthouses" onClick={this.pageView}>
-          <h3>LightHouse({lightHouse.length})</h3>
+          <h3 className="property-title">LightHouse({lightHouse.length})</h3>
           <img className="lighthouse-img" src="https://www.millerheimangroup.com/wp-content/uploads/2018/09/lighthouse.jpg" alt="lighthouse" width = "500"/>
         </div>
         <div id="siloNuclears" onClick={this.pageView}>
-          <h3>SiloNuclear({siloNuclear.length})</h3>
+          <h3 className="property-title">SiloNuclear({siloNuclear.length})</h3>
           <img className="siloNuclear-img" src="http://2.bp.blogspot.com/_88RoabsTacs/TJGk5wVnmoI/AAAAAAAADyg/J-Ve5gCymdg/s1600/IMG_5560.JPG" alt="siloNuclear" width = "500"/>
         </div>
       </div>

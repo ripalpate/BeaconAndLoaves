@@ -2,14 +2,14 @@ import React from 'react';
 import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
 
+import './Profile.scss';
+
 class Profile extends React.Component {
   state = {
-    paymentAccounts: [],
     currentUser: {
       userPayments: [],
       properties: [],
     },
-    accountId: '',
   }
 
   changeView = (e) => {
@@ -75,36 +75,36 @@ class Profile extends React.Component {
       if (currentUser.isOwner === true) {
         return (
           <div>
-          <button id='renting' type="button" className="btn renter-history-btn btn-success m-5" onClick={this.changeView}>
+          <button id='renting' type="button" className="btn renter-history-btn btn-success text-center" onClick={this.changeView}>
             See My Renting History
           </button>
-          <button id='rental' type="button" className="btn rental-history-btn btn-success m-5" onClick={this.changeView}>
+          <button id='rental' type="button" className="btn rental-history-btn btn-success text-center" onClick={this.changeView}>
             See My Renting History
           </button>
           </div>
         );
       }
       return (<div>
-            <button id='renting' type="button" className="btn renter-history-btn btn-success m-5" onClick={this.changeView}>
+            <button id='renting' type="button" className="btn renter-history-btn btn-success mx-auto" onClick={this.changeView}>
               See My Renting History
             </button>
           </div>);
     };
 
     return (
-      <div className="profileDiv d-flex align-center">
-        <div id="profile">
-          <h3>{currentUser.name}</h3>
-          <div>{currentUser.email}</div>
-          <div>{currentUser.street}</div>
-          <div>{currentUser.city}</div>
-          <div>{currentUser.state}</div>
-          <div>{currentUser.zipcode}</div>
-          <div>{currentUser.phonenumber}</div>
-          <div>
+      <div className="profileDiv d-flex mx-auto">
+        <div className="card" id="profile">
+          <h3 className="text-center">{currentUser.name}</h3>
+          <div className="ml-1">Email: {currentUser.email}</div>
+          <div className="ml-1">Street: {currentUser.street}</div>
+          <div className="ml-1">City: {currentUser.city}</div>
+          <div className="ml-1">State: {currentUser.state}</div>
+          <div className="ml-1">Zipcode: {currentUser.zipCode}</div>
+          <div className="ml-1">Phone Number: {currentUser.phoneNumber}</div>
+          <div className="ml-1">
             {makeDropdowns()}
           </div>
-          <div>
+          <div className="ml-1">
             {makeButtons()}
           </div>
         </div>

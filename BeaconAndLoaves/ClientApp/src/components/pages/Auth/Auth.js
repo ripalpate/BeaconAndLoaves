@@ -1,8 +1,8 @@
 import React from 'react';
 import authRequests from '../../../helpers/data/authRequests';
+import './Auth.scss';
 
 class Auth extends React.Component {
-
   authenticateUser = (e) => {
     e.preventDefault();
     authRequests.authenticate()
@@ -14,8 +14,13 @@ class Auth extends React.Component {
 
   render() {
     return (
-          <div className="Auth mx-auto">
-            <div className="btn-container mt-5">
+          <div className="Auth">
+            <div className="title-container">
+              <p className="title text-center">Beacon and Loaves</p>
+              <h3 className="sub-title text-center">Vacation rentals for lighthouse enthusiasts</h3>
+              <h6 className="sub-title text-center">***(Expanding soon to nuclear silo rentals)***</h6>
+            </div>
+            <div className="btn-container">
               <button className="bttn-pill bttn-lg bttn-danger" onClick={this.authenticateUser}>
                 <i className="fab fa-google"></i> Sign In w/Google
               </button>
