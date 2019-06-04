@@ -57,6 +57,8 @@ class AddEditProperty extends React.Component {
 
       priceChange = e => this.formFieldStringState('price', e);
     
+      typeChange = e => this.formFieldNumberState('type', e);
+
       formSubmitEvent = (newProperty) => {
         propertiesRequests.createProperty(newProperty)
           .then(() => {
@@ -68,7 +70,7 @@ class AddEditProperty extends React.Component {
         e.preventDefault();
         const myProperty = { ...this.state.newProperty };
         myProperty.ownerId = this.state.currentUser.id;
-        myProperty.type = 0;
+        //myProperty.type = 0;
         this.formSubmitEvent(myProperty);
         this.setState({ newProperty: defaultProperty });
       }
@@ -91,6 +93,18 @@ class AddEditProperty extends React.Component {
                   value= {newProperty.propertyName}
                   onChange= {this.propertyNameChange}
                 />
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Property Type</label>
+                    <select 
+                    class="form-control" 
+                    id="type"
+                    value= {newProperty.type}
+                    onChange= {this.typeChange}
+                    >
+                        <option value="0">Lighthouse</option>
+                        <option value="1">Silo Nuclear</option>
+                    </select>
               </div>
               <div className="form-group">
                 <label htmlFor="street">Street:</label>
@@ -142,15 +156,13 @@ class AddEditProperty extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="description">Description:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="description"
-                  aria-describedby="descriptionHelp"
-                  placeholder="Rock Bean Lighthouse"
+                <textarea 
+                  className="form-control"   
+                  id="description"  
                   value= {newProperty.description}
-                  onChange= {this.descriptionChange}
-                />
+                  onChange= {this.descriptionChange} 
+                  rows="5">
+                </textarea>
               </div>
               <div className="form-group">
                 <label htmlFor="image">Image:</label>
