@@ -83,9 +83,8 @@ class Profile extends React.Component {
     const makeProfileCard = () => {
       if (isEditing) {
         return (
-          <div className="card">
-              <form className="row form-container rounded mx-auto mt-5" onSubmit={this.formSubmit}>
-                <h3 className="mx-auto">Edit Profile</h3>
+              <form className="row edit-form-container border border-dark rounded" onSubmit={this.formSubmit}>
+                <h3 className="mx-auto edit-profile-title">Edit Profile</h3>
                 <div className="form col-11 mt-2">
                   <div className="col-auto form-lines p-0">
                     <label htmlFor="link" className="sr-only">Email</label>
@@ -200,20 +199,19 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="text-center">
-                    <button type="submit" className="btn user-add-btn btn-success m-5" onClick={this.formSubmit}>
-                      <i className="fas fa-check-square"/>
+                    <button type="submit" className="btn user-add-btn m-5" onClick={this.formSubmit}>
+                      <i className="fas fa-check-square fa-2x"/>
                     </button>
-                    <button id='cancel' type="button" className="btn back-btn btn-warning m-5" onClick={this.cancel}>
-                      <i className="far fa-window-close"/>
+                    <button id='cancel' type="button" className="btn back-btn m-5" onClick={this.cancel}>
+                      <i className="far fa-window-close fa-2x"/>
                     </button>
                   </div>
                 </div>
               </form>
-          </div>
         );
       }
       return (
-        <div className="card" id={currentUser.id}>
+        <div className="profile-card border border-dark rounded" id={currentUser.id}>
           <h3 className="text-center">{currentUser.name}</h3>
           <div className="ml-1">Email: {currentUser.email}</div>
           <div className="ml-1">Street: {currentUser.street}</div>
@@ -226,12 +224,6 @@ class Profile extends React.Component {
           </div>
           <div className="text-center">
             {makeHistoryButtons()}
-            <button id='renting' type="button" className="btn renter-history-btn btn-success m-5" onClick={this.changeView}>
-              See My Renting History
-            </button>
-            <button id='profile-edit' type="button" className="btn profile-edit-btn btn-warning m-5" onClick={this.editProfile}>
-              <i className="far fa-edit"/>
-            </button>
           </div>
         </div>
       );
@@ -276,13 +268,28 @@ class Profile extends React.Component {
       if (currentUser.isOwner === true) {
         return (
           <div>
-          <button id='renting' type="button" className="btn renter-history-btn btn-success text-center" onClick={this.changeView}>
-            See My Renting History
-          </button>
+            <button id='renting' type="button" className="btn renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
+              See My Renting History
+            </button>
+            <button id='rental' type="button" className="btn renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
+              See My Rentals' History
+            </button>
+            <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
+              <i className="far fa-edit fa-2x"/>
+            </button>
           </div>
         );
       }
-      return (<div></div>);
+      return (
+        <div>
+            <button id='renting' type="button" className="btn renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
+              See My Renting History
+            </button>
+            <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
+              <i className="far fa-edit fa-2x"/>
+            </button>
+        </div>
+      );
     };
 
     return (
