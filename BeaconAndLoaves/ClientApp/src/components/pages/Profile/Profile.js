@@ -63,7 +63,7 @@ class Profile extends React.Component {
     if (e.target.id === 'account') {
       const selectedAccount = e.target.value;
       this.setState({ selectedAccount });
-    } if (e.target.id === 'property') {
+    } else if (e.target.id === 'property') {
       const selectedProperty = e.target.value;
       this.setState({ selectedProperty });
     }
@@ -242,18 +242,18 @@ class Profile extends React.Component {
         return (
           <div>
             <span>Payment Accounts:
-              <select className="custom-select mb-2" onChange={this.dropdownSelect}>
+              <select id="account" className="custom-select mb-2" onChange={this.dropdownSelect}>
               <option defaultValue>Select Payment Account</option>
                 {
-                currentUser.userPayments.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
+                currentUser.userPayments.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
                 }
               </select>
             </span>
             <span>My Properties:
-              <select className="custom-select mb-2" onChange={this.propertySelect}>
+              <select className="custom-select mb-2" id="property" onChange={this.propertySelect}>
               <option defaultValue>Select Property</option>
                 {
-                currentUser.properties.map((property, i) => (<option id="property" value={property.id} key={i}>{property.propertyName}</option>))
+                currentUser.properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
                 }
               </select>
             </span>
@@ -262,7 +262,7 @@ class Profile extends React.Component {
       }
       return (<div>
            <span>Payment Accounts:
-              <select className="custom-select mb-2" onChange={this.dropdownSelect}>
+              <select className="custom-select mb-2" id="account" onChange={this.dropdownSelect}>
               <option defaultValue>Select Payment Account</option>
                 {
                 currentUser.userPayments.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
