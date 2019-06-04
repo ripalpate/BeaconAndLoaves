@@ -63,8 +63,8 @@ class PaymentMethod extends React.Component {
       };
 
       selectPaymentType = (e) => {
-        // this.setState({selectedPaymentType: e.target.key})
-        console.log(e.target.key)
+        this.setState({selectedPaymentType: e.target.value})
+        console.log(e.target.value)
       }
   
 
@@ -86,7 +86,7 @@ class PaymentMethod extends React.Component {
                   <select className="custom-select mb-2" onChange={this.selectPaymentType}>
                   <option defaultValue>Select Payment Type</option>
                     {
-                      paymentTypes.map((paymentType) => (<option key={counter++}>{paymentType}</option>))
+                      paymentTypes.map((paymentType) => (<option key={counter++}value={counter}>{paymentType}</option>))
                     }
                   </select>
                 </span>
