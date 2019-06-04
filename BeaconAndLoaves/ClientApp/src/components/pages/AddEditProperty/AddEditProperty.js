@@ -1,6 +1,7 @@
 import React from 'react';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import authRequests from '../../../helpers/data/authRequests';
+import userRequests from '../../../helpers/data/userRequests';
 
 const defaultProperty = {
     propertyName: '',
@@ -16,6 +17,15 @@ const defaultProperty = {
 class AddEditProperty extends React.Component {
     state = {
         newProperty: defaultProperty,
+        currentUser: []
+      }
+
+      componentDidMount(){
+        const uid = authRequests.getCurrentUid();
+        userRequests.getSingleUser(uid)
+          .then((currentUser) => {
+            this.setState({ currentUser:currentUser.data });
+          });
       }
     
       formFieldStringState = (name, e) => {
@@ -57,7 +67,8 @@ class AddEditProperty extends React.Component {
       formSubmit = (e) => {
         e.preventDefault();
         const myProperty = { ...this.state.newProperty };
-        myProperty.ownerId = authRequests.getCurrentUid();
+        myProperty.ownerId = this.state.currentUser.id;
+        myProperty.type = 0;
         this.formSubmitEvent(myProperty);
         this.setState({ newProperty: defaultProperty });
       }
