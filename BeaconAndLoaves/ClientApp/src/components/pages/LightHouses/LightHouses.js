@@ -9,9 +9,6 @@ class LightHouses extends React.Component {
     ascendingOrder: false
   }
 
-  getProperties = () => {
-
-  }
   componentDidMount()
   {
     propertiesRequests.getProperties()
@@ -27,12 +24,11 @@ class LightHouses extends React.Component {
     const {ascendingOrder, lightHouses} = this.state;
     if(ascendingOrder === false){
       lightHouses.sort((x, y) => ('' + y.createdOn).localeCompare(x.createdOn));
-     // console.log(newestLightHouses);
       this.setState({ lightHouses });
-  } else {
-      lightHouses.sort((x, y) => ('' + x.createdOn).localeCompare(y.createdOn));
-      this.setState({ lightHouses });
-  }
+      } else {
+          lightHouses.sort((x, y) => ('' + x.createdOn).localeCompare(y.createdOn));
+          this.setState({ lightHouses });
+      }
   }
 
   lightHouseDetailView = (lightHouseId) => {
@@ -45,8 +41,10 @@ class LightHouses extends React.Component {
     this.setState({ascendingOrder: !ascendingOrder});
     this.sortProperties();
   }
+
   render() {
      const {  ascendingOrder, lightHouses } = this.state;
+     
      const singleLightHouseComponent = lightHouses.map(lightHouse => (
       <SingleLightHouse
       lightHouse={lightHouse}
@@ -54,6 +52,7 @@ class LightHouses extends React.Component {
       lightHouseDetailView = {this.lightHouseDetailView}
       />
     ));
+
     const makeLatestButton = () => {
       if(ascendingOrder) {
         return(
