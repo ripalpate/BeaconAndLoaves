@@ -2,11 +2,24 @@ import axios from 'axios';
 
 const apiUrl = "/api/UserPayment/";
 
+const apiUrlPaymentType = "/api/PaymentType/";
+
 const getAllUserPayments = () => new Promise((resolve, reject) => {
   axios.get(apiUrl)
     .then((results) => {
       const userPaymentsObject = results.data;
       resolve(userPaymentsObject);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
+
+const getAllPaymentTypes = () => new Promise((resolve, reject) => {
+  axios.get(apiUrlPaymentType)
+    .then((results) => {
+      const paymentTypesObject = results.data;
+      resolve(paymentTypesObject);
     })
     .catch((error) => {
       reject(error);
@@ -26,5 +39,6 @@ export default {
   createUserPayment,
   deleteUserPayment,
   updateUserPayment,
-  getSingleUserPayment
+  getSingleUserPayment,
+  getAllPaymentTypes
 };

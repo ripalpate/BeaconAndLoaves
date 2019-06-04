@@ -15,7 +15,15 @@ const defaultPaymentMethod = {
 
 class PaymentMethod extends React.Component {
     state = {
-        newPaymentMethod : defaultPaymentMethod
+        newPaymentMethod : defaultPaymentMethod,
+        paymentTypes: []
+      }
+
+      paymentTypes = () => {
+        paymentMethodRequests.getAllPaymentTypes()
+        .then((paymentTypes) => {
+          this.setState({paymentTypes})
+        })
       }
 
       formFieldStringState = (accountName, e) => {
@@ -55,13 +63,30 @@ class PaymentMethod extends React.Component {
   
 
       componentDidMount() {
-
+        this.paymentTypes();
       }
  
     render() {
         const {
           newPaymentMethod,
+          paymentTypes
         } = this.state;
+
+        const makeDropdowns = () => {
+          let counter = 0;
+            return (
+              <div>
+                <span>Payment Types:
+                  <select className="custom-select mb-2">
+                  <option defaultValue>Select Payment Type</option>
+                    {
+                      paymentTypes.map((paymentType,i) => (<option key={counter++}>{paymentType}</option>))
+                    }
+                  </select>
+                </span>
+              </div>
+            );
+                  }
 
         return (
             <div>
@@ -84,20 +109,7 @@ class PaymentMethod extends React.Component {
                     </div>
                     </div>
                     <div className="col-auto form-lines p-0">
-                    <label htmlFor="paymentTypeId" className="sr-only">Payment Type</label>
-                    <div className="input-group mb-2">
-                        <div className="input-group-prepend">
-                        <div className="input-group-text">Payment Type</div>
-                        </div>
-                        <input
-                        type="text"
-                        className="form-control"
-                        id="paymentTypeId"
-                        placeholder="0"
-                        value={newPaymentMethod.paymentTypeId}
-                        onChange={this.paymentTypeIdChange}
-                        />
-                    </div>
+                        {makeDropdowns()}
                     </div>
                     <div className="col-auto form-lines p-0">
                     <label htmlFor="link" className="sr-only">Account Number</label>
