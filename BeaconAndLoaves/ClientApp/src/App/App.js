@@ -16,6 +16,7 @@ import LightHouses from '../components/pages/LightHouses/LightHouses';
 import SiloNuclears from '../components/pages/SiloNuclears/SiloNuclears';
 import LightHouseDetail from '../components/pages/LightHouseDetail/LightHouseDetail';
 import SiloNuclearDetail from '../components/pages/SiloNuclearDetail/SiloNuclearDetail';
+import AddEditProperty from '../components/pages/AddEditProperty/AddEditProperty';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
 import LikedProperties from '../components/pages/LikedProperties/LikedProperties';
 import authRequests from '../helpers/data/authRequests';
@@ -99,6 +100,7 @@ export default class App extends Component {
                   <PrivateRoute path="/properties/siloNuclears" component={SiloNuclears} authed={this.state.authed}/>
                   <PrivateRoute exact path="/siloNuclears/:id" authed={this.state.authed} component={SiloNuclearDetail}/>
                   <PrivateRoute path="/likedProperties" authed={this.state.authed} component={LikedProperties}/>
+                  <PrivateRoute path="/addProperty" authed={this.state.authed} component={AddEditProperty}/>
                 </Switch>
           </React.Fragment>
         </BrowserRouter>
