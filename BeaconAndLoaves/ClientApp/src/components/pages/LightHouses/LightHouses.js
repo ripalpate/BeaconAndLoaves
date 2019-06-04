@@ -33,7 +33,6 @@ class LightHouses extends React.Component {
           <h3 className = "lightHouseContainer d-flex mx-auto mt-5">{singleLightHouseComponent}</h3>
         </div>
     );
-  // }
 }
 }
 export default LightHouses;

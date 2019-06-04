@@ -17,11 +17,6 @@ class LightHouseDetail extends React.Component {
     }).catch(err => console.error(err));
   }
 
-  // likedPropertyView = (e) => {
-  //   const view = e.currentTarget.id;
-  //   this.props.history.push(`/${view}`);
-  // }
-
   backButton = () => {
     this.props.history.push('/properties/lightHouses');
   }
@@ -31,6 +26,13 @@ class LightHouseDetail extends React.Component {
   }
   render() {
     const{lightHouse}= this.state;
+    const makeLikedPropertyButton = () => {
+      if(lightHouse.isOwner === false){
+        return(
+        <button className="btn btn-success" id="likedProperties">Liked Property</button>
+        );
+      }    
+    }
     return (
       <div>
         <div className="back-button">
@@ -48,7 +50,7 @@ class LightHouseDetail extends React.Component {
             <p>${lightHouse.price}/per night</p>
             <p>Owned By: {lightHouse.name}</p>
             <button className="btn btn-primary mr-2">Rent</button>
-            <button className="btn btn-success" id="likedProperties">Liked Property</button>
+            {makeLikedPropertyButton()}
           </div>
         </div>
       </div>

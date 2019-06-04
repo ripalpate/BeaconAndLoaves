@@ -94,10 +94,10 @@ class AddEditProperty extends React.Component {
                   required
                 />
               </div>
-              <div class="form-group">
-                <label for="exampleFormControlSelect1">Property Type</label>
+              <div className="form-group">
+                <label htmlFor="type">Property Type</label>
                     <select 
-                    class="form-control" 
+                    className="form-control" 
                     id="type"
                     value= {newProperty.type}
                     onChange= {this.typeChange}
