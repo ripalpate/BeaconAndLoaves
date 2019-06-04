@@ -10,7 +10,6 @@ const getAllPropertiesWithOwnerInfo = () => new Promise((resolve, reject) => {
         .then((properties) => {
           const propertiesObject = properties.map(property => Object.assign({ ...users.find(x => x.id === property.ownerId), ...property }));
           resolve(propertiesObject);
-          //console.log(propertiesObject);
         });
     })
     .catch(err => reject(err));
