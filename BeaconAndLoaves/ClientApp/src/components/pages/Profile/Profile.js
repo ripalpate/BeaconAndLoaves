@@ -40,6 +40,10 @@ class Profile extends React.Component {
     this.setState({ userId: currentUser.id });
   }
 
+  cancel = () => {
+    this.setState({ isEditing: false });
+  }
+
   changeView = (e) => {
     const view = e.currentTarget.id;
     this.props.history.push(`/${view}`);
@@ -194,10 +198,15 @@ class Profile extends React.Component {
                         />
                     </div>
                   </div>
+                  <div className="text-center">
+                    <button type="submit" className="btn user-add-btn btn-success m-5" onClick={this.formSubmit}>
+                      <i className="fas fa-check-square"/>
+                    </button>
+                    <button id='cancel' type="button" className="btn back-btn btn-warning m-5" onClick={this.cancel}>
+                      <i className="far fa-window-close"/>
+                    </button>
+                  </div>
                 </div>
-              <button type="submit" className="btn user-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
-                  <i className="fas fa-plus-circle" />
-              </button>
               </form>
           </div>
         );
@@ -214,13 +223,13 @@ class Profile extends React.Component {
           <div className="ml-1">
             {makeDropdowns()}
           </div>
-          <div className="ml-1">
+          <div className="text-center">
             {makeHistoryButtons()}
-            <button id='renting' type="button" className="btn renter-history-btn btn-success mx-auto" onClick={this.changeView}>
+            <button id='renting' type="button" className="btn renter-history-btn btn-success m-5" onClick={this.changeView}>
               See My Renting History
             </button>
-            <button id='profile-edit' type="button" className="btn profile-edit-btn btn-warning mx-auto" onClick={this.editProfile}>
-              Edit
+            <button id='profile-edit' type="button" className="btn profile-edit-btn btn-warning m-5" onClick={this.editProfile}>
+              <i className="far fa-edit"/>
             </button>
           </div>
         </div>
