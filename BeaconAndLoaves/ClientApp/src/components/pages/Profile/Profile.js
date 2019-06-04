@@ -5,9 +5,7 @@ import authRequests from '../../../helpers/data/authRequests';
 import './Profile.scss';
 
 class Profile extends React.Component {
-  paymentView = () => {
-    this.props.history.push('/paymentMethod');
-  }
+
   state = {
     currentUser: {
       userPayments: [],
@@ -30,6 +28,10 @@ class Profile extends React.Component {
 
   setSelect = (selectedAccount) => {
     this.setState({ accountId: selectedAccount });
+  }
+
+  paymentView = () => {
+    this.props.history.push('/paymentMethod');
   }
 
   componentDidMount() {

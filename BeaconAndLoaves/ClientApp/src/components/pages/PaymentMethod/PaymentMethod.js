@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import paymentMethodRequests from '../../../helpers/data/userRequests';
+import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import authRequests from '../../../helpers/data/authRequests';
 
 const defaultPaymentMethod = {
     accountName: '',
-    userId: '',
-    paymentType: '',
+    userId: 1,
+    paymentTypeId: 0,
     accountNumber: '',
-    expDate: '',
+    expirationDate: '',
     CVV: '',
     isActive: ''
   };
@@ -24,14 +24,20 @@ class PaymentMethod extends React.Component {
         tempPaymentMethod[accountName] = e.target.value;
         this.setState({ newPaymentMethod: tempPaymentMethod });
       }
+
+      formFieldNumberState = (name, e) => {
+        const tempPaymentMethod = { ...this.state.newPaymentMethod };
+        tempPaymentMethod[name] = e.target.value * 1;
+        this.setState({ newPaymentMethod: tempPaymentMethod });
+      }
     
       accountNameChange = e => this.formFieldStringState('accountName', e);
     
-      paymentTypeChange = e => this.formFieldStringState('paymentType', e);
+      paymentTypeIdChange = e => this.formFieldNumberState('paymentTypeId', e);
     
       accountNumberChange = e => this.formFieldStringState('accountNumber', e);
     
-      expDateChange = e => this.formFieldStringState('expDate', e);
+      expirationDateChange = e => this.formFieldStringState('expirationDate', e);
 
       CVVChange = e => this.formFieldStringState('CVV', e);
 
@@ -40,7 +46,7 @@ class PaymentMethod extends React.Component {
         const myPaymentMethod = { ...this.state.newPaymentMethod };
         myPaymentMethod.isActive = true;
         this.setState({ newPaymentMethod: defaultPaymentMethod });
-        console.log(myPaymentMethod)
+        // console.log(myPaymentMethod)
         paymentMethodRequests.createUserPayment(myPaymentMethod)
         .then(() => {
             this.props.history.push('/home');
@@ -78,7 +84,7 @@ class PaymentMethod extends React.Component {
                     </div>
                     </div>
                     <div className="col-auto form-lines p-0">
-                    <label htmlFor="paymentType" className="sr-only">Payment Type</label>
+                    <label htmlFor="paymentTypeId" className="sr-only">Payment Type</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Payment Type</div>
@@ -86,10 +92,10 @@ class PaymentMethod extends React.Component {
                         <input
                         type="text"
                         className="form-control"
-                        id="paymentType"
-                        placeholder="Visa"
-                        value={newPaymentMethod.paymentType}
-                        onChange={this.paymentTypeChange}
+                        id="paymentTypeId"
+                        placeholder="0"
+                        value={newPaymentMethod.paymentTypeId}
+                        onChange={this.paymentTypeIdChange}
                         />
                     </div>
                     </div>
@@ -118,10 +124,10 @@ class PaymentMethod extends React.Component {
                         <input
                         type="text"
                         className="form-control"
-                        id="expDate"
+                        id="expirationDate"
                         placeholder="12/11/2023"
-                        value={newPaymentMethod.expDate}
-                        onChange={this.expDateChange}
+                        value={newPaymentMethod.expirationDate}
+                        onChange={this.expirationDateChange}
                         />
                     </div>
                     </div>
