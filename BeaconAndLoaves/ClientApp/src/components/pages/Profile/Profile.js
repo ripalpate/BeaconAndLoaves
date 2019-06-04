@@ -83,8 +83,9 @@ class Profile extends React.Component {
     const makeProfileCard = () => {
       if (isEditing) {
         return (
-          <div className="reg-container mx-auto">
-              <form className="row form-container border border-dark rounded mt-5 mx-auto" onSubmit={this.formSubmit}>
+          <div className="card">
+              <form className="row form-container rounded mx-auto mt-5" onSubmit={this.formSubmit}>
+                <h3 className="mx-auto">Edit Profile</h3>
                 <div className="form col-11 mt-2">
                   <div className="col-auto form-lines p-0">
                     <label htmlFor="link" className="sr-only">Email</label>
