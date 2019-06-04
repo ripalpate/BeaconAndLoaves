@@ -70,7 +70,6 @@ class AddEditProperty extends React.Component {
         e.preventDefault();
         const myProperty = { ...this.state.newProperty };
         myProperty.ownerId = this.state.currentUser.id;
-        //myProperty.type = 0;
         this.formSubmitEvent(myProperty);
         this.setState({ newProperty: defaultProperty });
       }
@@ -92,6 +91,7 @@ class AddEditProperty extends React.Component {
                   placeholder="Rock Bean Lighthouse"
                   value= {newProperty.propertyName}
                   onChange= {this.propertyNameChange}
+                  required
                 />
               </div>
               <div class="form-group">
@@ -101,6 +101,7 @@ class AddEditProperty extends React.Component {
                     id="type"
                     value= {newProperty.type}
                     onChange= {this.typeChange}
+                    required
                     >
                         <option value="0">Lighthouse</option>
                         <option value="1">Silo Nuclear</option>
@@ -116,6 +117,7 @@ class AddEditProperty extends React.Component {
                   placeholder="123 Main St"
                   value= {newProperty.street}
                   onChange= {this.streetChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -128,6 +130,7 @@ class AddEditProperty extends React.Component {
                   placeholder="Nashville"
                   value= {newProperty.city}
                   onChange= {this.cityChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -140,6 +143,7 @@ class AddEditProperty extends React.Component {
                   placeholder="TN"
                   value= {newProperty.state}
                   onChange= {this.stateChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -152,6 +156,7 @@ class AddEditProperty extends React.Component {
                   placeholder="12345"
                   value= {newProperty.zipCode}
                   onChange= {this.zipCodeChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -161,7 +166,9 @@ class AddEditProperty extends React.Component {
                   id="description"  
                   value= {newProperty.description}
                   onChange= {this.descriptionChange} 
-                  rows="5">
+                  rows="5"
+                  required
+                  >
                 </textarea>
               </div>
               <div className="form-group">
@@ -174,6 +181,7 @@ class AddEditProperty extends React.Component {
                   placeholder="www.jrekjr.jpg"
                   value= {newProperty.imageUrl}
                   onChange= {this.imageChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -186,6 +194,7 @@ class AddEditProperty extends React.Component {
                   placeholder="1000.50"
                   value = {newProperty.price}
                   onChange = {this.priceChange}
+                  required
                 />
               </div>
               <button className="btn btn-success">Save Property</button>
