@@ -27,8 +27,8 @@ class Register extends React.Component {
     }
 
     static propTypes = {
-      users: PropTypes.arrayOf(userShape.userShape),
-      currentUser: userShape.userShape,
+      users: PropTypes.arrayOf(userShape.currentUserShape),
+      currentUser: userShape.currentUserShape,
     }
 
       formFieldStringState = (name, e) => {

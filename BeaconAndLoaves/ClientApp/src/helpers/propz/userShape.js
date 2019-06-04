@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const userShape = PropTypes.shape({
+const currentUserShape = PropTypes.shape({
   email: PropTypes.string.isRequired,
   firebaseId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -9,6 +9,9 @@ const userShape = PropTypes.shape({
   state: PropTypes.string.isRequired,
   zipCode: PropTypes.string.isRequired,
   phoneNumber: PropTypes.string.isRequired,
+  properties: PropTypes.array.isRequired,
+  rentals: PropTypes.array.isRequired,
+  userPayments: PropTypes.array.isRequired,
 });
 
-export default userShape;
+export default currentUserShape;
