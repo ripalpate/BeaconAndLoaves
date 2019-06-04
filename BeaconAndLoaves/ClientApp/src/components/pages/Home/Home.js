@@ -28,7 +28,7 @@ class Home extends React.Component {
           <div className="card border-dark" id='likedProperties' onClick={this.changeView}>
             <div className="card-body home text-center">
               <h4 className="card-title"><i className="fas fa-heart fa-6x home-likedProperties"></i></h4>
-              <h5 className="card-subtitle mb-2 text-muted">Properties</h5>
+              <h5 className="card-subtitle mb-2 text-muted">Liked Properties</h5>
               <p className="card-text">Saved Properties that I like most</p>
             </div>
           </div>
