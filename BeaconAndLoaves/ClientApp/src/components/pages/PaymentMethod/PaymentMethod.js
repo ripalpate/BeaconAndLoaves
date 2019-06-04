@@ -16,7 +16,8 @@ const defaultPaymentMethod = {
 class PaymentMethod extends React.Component {
     state = {
         newPaymentMethod : defaultPaymentMethod,
-        paymentTypes: []
+        paymentTypes: [],
+        selectedPaymentType: ''
       }
 
       paymentTypes = () => {
@@ -60,6 +61,11 @@ class PaymentMethod extends React.Component {
             this.props.history.push('/home');
         })
       };
+
+      selectPaymentType = (e) => {
+        // this.setState({selectedPaymentType: e.target.key})
+        console.log(e.target.key)
+      }
   
 
       componentDidMount() {
@@ -77,10 +83,10 @@ class PaymentMethod extends React.Component {
             return (
               <div>
                 <span>Payment Types:
-                  <select className="custom-select mb-2">
+                  <select className="custom-select mb-2" onClick={this.selectPaymentType}>
                   <option defaultValue>Select Payment Type</option>
                     {
-                      paymentTypes.map((paymentType,i) => (<option key={counter++}>{paymentType}</option>))
+                      paymentTypes.map((paymentType) => (<option key={counter++}>{paymentType}</option>))
                     }
                   </select>
                 </span>
