@@ -27,11 +27,11 @@ class LightHouseDetail extends React.Component {
   render() {
     const{lightHouse}= this.state;
     const makeLikedPropertyButton = () => {
-     // if(lightHouse.isOwner === false){
+      if(lightHouse.isOwner === false){
         return(
         <button className="btn btn-success" id="likedProperties"><i className="far fa-heart fa-2x"/></button>
         );
-    //  }    
+     }    
     }
     return (
       <div>
