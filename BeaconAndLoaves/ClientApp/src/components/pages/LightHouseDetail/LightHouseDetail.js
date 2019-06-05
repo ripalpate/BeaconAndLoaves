@@ -1,6 +1,8 @@
 import React from 'react';
 import './LightHouseDetail.scss';
 import smashRequests from '../../../helpers/data/smashRequests';
+import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
+import LikedProperties from '../LikedProperties/LikedProperties';
 
 class LightHouseDetail extends React.Component {
   state = {
@@ -23,9 +25,17 @@ class LightHouseDetail extends React.Component {
   }
 
   addLikedProperty = (e) => {
-    const {isLiked} = this.state;
+    // const {isLiked} = this.state;
     e.preventDefault();
-    this.setState({isLiked: !isLiked});
+    // this.setState({isLiked: !isLiked});
+    const x = {
+      "userId" : this.state.lightHouse.ownerId,
+      "propertyId" : this.state.lightHouse.id
+    };
+    likedPropertyRequests.createLikedProperty(x)
+    .then(()=>{
+
+    });
   }
 
   componentDidMount() {
