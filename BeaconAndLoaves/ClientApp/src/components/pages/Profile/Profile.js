@@ -92,12 +92,11 @@ class Profile extends React.Component {
   formSubmit = (e) => {
     e.preventDefault();
     const { currentUser } = this.state;
-    const userId = currentUser.Id;
-    console.log(currentUser);
-    // userRequests.updateUser(userId, basicUser)
-    //   .then(() => {
-    //     this.setState({ isEditing: false });
-    //   });
+    const userId = currentUser.id;
+    userRequests.updateUser(userId, currentUser)
+      .then(() => {
+        this.setState({ isEditing: false });
+      });
   }
 
   componentDidMount() {
