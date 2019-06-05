@@ -55,18 +55,34 @@ namespace BeaconAndLoaves.Controllers
             return Ok(singleUser);
         }
 
-        [HttpPut("update/{id}")]
+        [HttpGet("payment/{id}")]
+        public ActionResult GetUserPaymentAccounts(string id)
+        {
+            var paymentAccounts = _repository.GetUserPaymentAccounts(id);
+
+            return Ok(paymentAccounts);
+        }
+
+        [HttpGet("property/{id}")]
+        public ActionResult GetUserProperties(string id)
+        {
+            var userProperties = _repository.GetUserProperties(id);
+
+            return Ok(userProperties);
+        }
+
+        [HttpPut("{id}")]
         public ActionResult UpdateUser(int id, User userToUpdate)
         {
             if (id != userToUpdate.Id)
             {
                 return BadRequest();
             }
-            var updatedUser = _repository.UpdateUser(userToUpdate);
+            var updatedUser = _repository.UpdateUser(id, userToUpdate);
             return Ok(updatedUser);
         }
 
-        [HttpPut("{id}")]
+        [HttpDelete("{id}")]
         public ActionResult DeleteUser(int id)
         {
             _repository.DeleteUser(id);
