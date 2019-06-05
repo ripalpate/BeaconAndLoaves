@@ -4,15 +4,17 @@ import authRequests from '../../../helpers/data/authRequests';
 
 import './Profile.scss';
 
+
 class Profile extends React.Component {
 
   state = {
-    currentUser: {
-      userPayments: [],
-      properties: [],
-    },
+    currentUser: {},
+    paymentAccounts: [],
+    properties: [],
     isEditing: false,
     userId: 0,
+    selectedAccount: 0,
+    selectedProperty: 0,
   }
 
   formFieldStringState = (name, e) => {
@@ -55,11 +57,37 @@ class Profile extends React.Component {
     userRequests.getSingleUser(uid)
       .then((currentUser) => {
         this.setState({ currentUser: currentUser.data });
+        this.getUserPaymentAccounts();
+        this.getUserProperties();
       });
   };
 
-  setSelect = (selectedAccount) => {
-    this.setState({ accountId: selectedAccount });
+  getUserPaymentAccounts = () => {
+    const { currentUser } = this.state;
+    const uid = currentUser.id;
+    userRequests.getUserPaymentAccounts(uid)
+      .then((paymentAccounts) => {
+        this.setState({ paymentAccounts });
+      });
+  };
+
+  getUserProperties = () => {
+    const { currentUser } = this.state;
+    const uid = currentUser.id;
+    userRequests.getUserProperties(uid)
+      .then((properties) => {
+        this.setState({ properties });
+      });
+  };
+
+  dropdownSelect = (e) => {
+    if (e.target.id === 'account') {
+      const selectedAccount = e.target.value;
+      this.setState({ selectedAccount });
+    } else if (e.target.id === 'property') {
+      const selectedProperty = e.target.value;
+      this.setState({ selectedProperty });
+    }
   }
 
   paymentView = () => {
@@ -68,7 +96,8 @@ class Profile extends React.Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    const { userId, currentUser } = this.state;
+    const { currentUser } = this.state;
+    const userId = currentUser.id;
     userRequests.updateUser(userId, currentUser)
       .then(() => {
         this.setState({ isEditing: false });
@@ -83,6 +112,8 @@ class Profile extends React.Component {
     const {
       currentUser,
       isEditing,
+      properties,
+      paymentAccounts,
     } = this.state;
 
     const makeProfileCard = () => {
@@ -239,18 +270,18 @@ class Profile extends React.Component {
         return (
           <div>
             <span>Payment Accounts:
-              <select className="custom-select mb-2">
+              <select id="account" className="custom-select mb-2" onChange={this.dropdownSelect}>
               <option defaultValue>Select Payment Account</option>
                 {
-                currentUser.userPayments.map((account, i) => (<option key={i}>{account.accountName}</option>))
+                paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
                 }
               </select>
             </span>
             <span>My Properties:
-              <select className="custom-select mb-2">
+              <select className="custom-select mb-2" id="property" onChange={this.dropdownSelect}>
               <option defaultValue>Select Property</option>
                 {
-                currentUser.properties.map((property, i) => (<option key={i}>{property.propertyName}</option>))
+                properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
                 }
               </select>
             </span>
@@ -259,10 +290,10 @@ class Profile extends React.Component {
       }
       return (<div>
            <span>Payment Accounts:
-              <select className="custom-select mb-2">
+              <select className="custom-select mb-2" id="account" onChange={this.dropdownSelect}>
               <option defaultValue>Select Payment Account</option>
                 {
-                currentUser.userPayments.map((account, i) => (<option key={i}>{account.accountName}</option>))
+                paymentAccounts.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
                 }
               </select>
             </span>
