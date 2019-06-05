@@ -224,21 +224,15 @@ class Register extends React.Component {
                     <button type="submit" className="btn user-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
                       <i className="fas fa-plus-circle" />
                     </button>
+                    {/* <button type="button" className="btn payment-add-btn my-auto mx-auto" onClick={this.paymentView}>
+                    <i className="fab fa-cc-visa fa-2x"></i>
+                </button>
+                <button type="button" className="btn payment-add-btn my-auto mx-auto" onClick={this.paymentViewBTC}>
+                    <i className="fab fa-bitcoin fa-2x"></i>
+                </button> */}
                   </div>
                 </div>
-                <button type="submit" className="btn user-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
-                  <i className="fas fa-plus-circle" />
-              </button>
               </form>
-
-                <div className="d-flex flex-row">                
-                    <button type="button" className="btn payment-add-btn my-auto mx-auto d-flex justify-content-center" onClick={this.paymentView}>
-                    <i className="fab fa-cc-visa"></i>
-                </button>
-                <button type="button" className="btn payment-add-btn my-auto mx-auto d-flex justify-content-center" onClick={this.paymentViewBTC}>
-                    <i className="fab fa-bitcoin"></i>
-                </button>
-                </div>
             </div>
         );
       }

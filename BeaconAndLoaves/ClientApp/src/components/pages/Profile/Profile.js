@@ -296,8 +296,8 @@ class Profile extends React.Component {
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
             </button>
-            <button type="button" className="btn payment-add-btn my-auto mx-auto d-flex justify-content-center" onClick={this.paymentView}>
-                    <i className="fab fa-cc-visa"></i>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
+                    <i className="fab fa-cc-visa fa-2x"></i>
             </button>
         </div>
       );
