@@ -24,7 +24,6 @@ class PaymentMethod extends React.Component {
 
       getUser = () => {
         const uid = authRequests.getCurrentUid();
-        console.log(uid);
         userRequests.getSingleUser(uid)
           .then((currentUser) => {
             this.setState({ currentUser: currentUser.data });
@@ -69,17 +68,14 @@ class PaymentMethod extends React.Component {
         myPaymentMethod.userId = this.state.currentUser.id;
         myPaymentMethod.paymentTypeId = this.state.selectedPaymentType*1;
         this.setState({ newPaymentMethod: defaultPaymentMethod });
-        console.log(myPaymentMethod)
         paymentMethodRequests.createUserPayment(myPaymentMethod)
         .then(() => {
             this.props.history.push('/home');
         })
-        console.log(myPaymentMethod)
       };
 
       selectPaymentType = (e) => {
         this.setState({selectedPaymentType: e.target.value})
-        console.log(e.target.value)
       }
   
 
@@ -90,8 +86,7 @@ class PaymentMethod extends React.Component {
     render() {
         const {
           newPaymentMethod,
-          paymentTypes,
-          currentUser
+          paymentTypes
         } = this.state;
 
         const makeDropdowns = () => {
@@ -127,6 +122,7 @@ class PaymentMethod extends React.Component {
                         placeholder="My card"
                         value={newPaymentMethod.accountName}
                         onChange={this.accountNameChange}
+                        required
                         />
                     </div>
                     </div>
@@ -146,6 +142,7 @@ class PaymentMethod extends React.Component {
                         placeholder="987654321"
                         value={newPaymentMethod.accountNumber}
                         onChange={this.accountNumberChange}
+                        required
                         />
                     </div>
                     </div>
@@ -162,6 +159,7 @@ class PaymentMethod extends React.Component {
                         placeholder="12/11/2023"
                         value={newPaymentMethod.expirationDate}
                         onChange={this.expirationDateChange}
+                        required
                         />
                     </div>
                     </div>
@@ -178,11 +176,12 @@ class PaymentMethod extends React.Component {
                         placeholder="333"
                         value={newPaymentMethod.CVV}
                         onChange={this.CVVChange}
+                        required
                         />
                     </div>
                     </div>
                 </div>
-                <button type="submit" className="btn paymentMethod-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
+                <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
                     <i className="fas fa-plus-circle" />
                 </button>
                 </form>
