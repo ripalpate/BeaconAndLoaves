@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import authRequests from '../../../helpers/data/authRequests';
+import userRequests from '../../../helpers/data/userRequests';
 
 const defaultPaymentMethod = {
     accountName: '',
-    userId: 1,
+    userId: 0,
     paymentTypeId: 0,
     accountNumber: '',
     expirationDate: '',
@@ -17,13 +18,24 @@ class PaymentMethod extends React.Component {
     state = {
         newPaymentMethod : defaultPaymentMethod,
         paymentTypes: [],
-        selectedPaymentType: ''
+        selectedPaymentType: '',
+        currentUser: {},
       }
+
+      getUser = () => {
+        const uid = authRequests.getCurrentUid();
+        console.log(uid);
+        userRequests.getSingleUser(uid)
+          .then((currentUser) => {
+            this.setState({ currentUser: currentUser.data });
+          });
+      };
 
       paymentTypes = () => {
         paymentMethodRequests.getAllPaymentTypes()
         .then((paymentTypes) => {
-          this.setState({paymentTypes})
+          this.setState({paymentTypes});
+          this.getUser();
         })
       }
 
@@ -54,12 +66,15 @@ class PaymentMethod extends React.Component {
         e.preventDefault();
         const myPaymentMethod = { ...this.state.newPaymentMethod };
         myPaymentMethod.isActive = true;
+        myPaymentMethod.userId = this.state.currentUser.id;
+        myPaymentMethod.paymentTypeId = this.state.selectedPaymentType*1;
         this.setState({ newPaymentMethod: defaultPaymentMethod });
-        // console.log(myPaymentMethod)
+        console.log(myPaymentMethod)
         paymentMethodRequests.createUserPayment(myPaymentMethod)
         .then(() => {
             this.props.history.push('/home');
         })
+        console.log(myPaymentMethod)
       };
 
       selectPaymentType = (e) => {
@@ -69,13 +84,14 @@ class PaymentMethod extends React.Component {
   
 
       componentDidMount() {
-        this.paymentTypes();
+        this.paymentTypes();        
       }
  
     render() {
         const {
           newPaymentMethod,
-          paymentTypes
+          paymentTypes,
+          currentUser
         } = this.state;
 
         const makeDropdowns = () => {
