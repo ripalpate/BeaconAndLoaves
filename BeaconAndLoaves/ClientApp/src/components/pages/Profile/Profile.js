@@ -250,7 +250,7 @@ class Profile extends React.Component {
               </select>
             </span>
             <span>My Properties:
-              <select className="custom-select mb-2" id="property" onChange={this.propertySelect}>
+              <select className="custom-select mb-2" id="property" onChange={this.dropdownSelect}>
               <option defaultValue>Select Property</option>
                 {
                 currentUser.properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
