@@ -209,7 +209,7 @@ class Profile extends React.Component {
                     </button>
                     <button id='cancel' type="button" className="btn back-btn m-5" onClick={this.cancel}>
                       <i className="far fa-window-close fa-2x"/>
-                    </button>
+                    </button>                    
                   </div>
                 </div>
               </form>
@@ -282,6 +282,9 @@ class Profile extends React.Component {
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
             </button>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
+                    <i className="fab fa-cc-visa fa-2x"></i>
+            </button>
           </div>
         );
       }
@@ -293,12 +296,15 @@ class Profile extends React.Component {
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
             </button>
+            <button type="button" className="btn payment-add-btn my-auto mx-auto d-flex justify-content-center" onClick={this.paymentView}>
+                    <i className="fab fa-cc-visa"></i>
+            </button>
         </div>
       );
     };
 
     return (
-      <div className="profileDiv d-flex mx-auto">       
+      <div className="profileDiv d-flex mx-auto">
         {makeProfileCard()}
       </div>
     );
