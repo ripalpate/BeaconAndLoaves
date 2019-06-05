@@ -17,6 +17,8 @@ class LightHouseDetail extends React.Component {
       const lightHouses = properties.filter(property => property.type === 0);
       const lightHouse= lightHouses.find(property => property.id == lightHouseId);
       this.setState( {lightHouse});
+    }).then(() => {
+      this.checkExistingProperty();
     }).catch(err => console.error(err));
   }
 
@@ -25,19 +27,33 @@ class LightHouseDetail extends React.Component {
   }
 
   addLikedProperty = (e) => {
-    // const {isLiked} = this.state;
+    const {lightHouse, isLiked} = this.state;
     e.preventDefault();
-    // this.setState({isLiked: !isLiked});
-    const x = {
-      "userId" : this.state.lightHouse.ownerId,
-      "propertyId" : this.state.lightHouse.id
+    const myLikedProperty = {
+      "userId" : lightHouse.ownerId,
+      "propertyId" : lightHouse.id
     };
-    likedPropertyRequests.createLikedProperty(x)
+    likedPropertyRequests.createLikedProperty(myLikedProperty)
     .then(()=>{
-
+      this.setState({isLiked: !isLiked});
     });
+    // if(isLiked){
+    //   likedPropertyRequests.deleteLikedProperty(myLikedProperty.)
+    // }
   }
 
+  checkExistingProperty = () => {
+    const {lightHouse, isLiked} = this.state;
+    likedPropertyRequests.getAllLikedProperties()
+    .then((likedProperties) => {
+      const currentProperty = likedProperties.filter(x => x.propertyId === lightHouse.id && x.userId === lightHouse.ownerId);
+      if(currentProperty.length === 1){
+        this.setState({isLiked: !isLiked});
+      } else {
+        this.setState({isLiked: isLiked});
+      }
+    });
+  }
   componentDidMount() {
       this.getPropertyWithOwnerName();
   }
