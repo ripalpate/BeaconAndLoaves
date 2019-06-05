@@ -4,7 +4,8 @@ import smashRequests from '../../../helpers/data/smashRequests';
 
 class LightHouseDetail extends React.Component {
   state = {
-    lightHouse: []
+    lightHouse: [],
+    isLiked: false
   }
 
   getPropertyWithOwnerName = () => {
@@ -21,15 +22,25 @@ class LightHouseDetail extends React.Component {
     this.props.history.push('/properties/lightHouses');
   }
 
+  addLikedProperty = (e) => {
+    const {isLiked} = this.state;
+    e.preventDefault();
+    this.setState({isLiked: !isLiked});
+  }
+
   componentDidMount() {
       this.getPropertyWithOwnerName();
   }
   render() {
-    const{lightHouse}= this.state;
+    const{lightHouse, isLiked}= this.state;
     const makeLikedPropertyButton = () => {
-      if(lightHouse.isOwner === false){
+      if(lightHouse.isOwner === false && isLiked === false){
         return(
-        <button className="btn btn-success" id="likedProperties"><i className="far fa-heart fa-2x"/></button>
+          <button className="btn" onClick={this.addLikedProperty}><i id="!isLiked" className="far fa-heart fa-2x"/></button>
+        );
+     } else if(lightHouse.isOwner === false && isLiked === true){
+        return(
+          <button className="btn" onClick={this.addLikedProperty}><i id="isLiked" className="far fa-heart fa-2x"/></button>
         );
      }    
     }
