@@ -27,8 +27,8 @@ class Register extends React.Component {
     }
 
     static propTypes = {
-      users: PropTypes.arrayOf(userShape.userShape),
-      currentUser: userShape.userShape,
+      users: PropTypes.arrayOf(userShape.currentUserShape),
+      currentUser: userShape.currentUserShape,
     }
 
       formFieldStringState = (name, e) => {
@@ -104,8 +104,9 @@ class Register extends React.Component {
         } = this.state;
 
         return (
-          <div className="reg-container mx-auto">
+          <div className="reg-container d-flex">
               <form className="row form-container border border-dark rounded mt-5 mx-auto" onSubmit={this.formSubmit}>
+                <h3 className="reg-title mx-auto">Please Register:</h3>
                 <div className="form col-11 mt-2">
                   <div className="col-auto form-lines p-0">
                     <label htmlFor="link" className="sr-only">Email</label>
@@ -133,7 +134,7 @@ class Register extends React.Component {
                         type="text"
                         className="form-control"
                         id="name"
-                        placeholder="Sumatra Wet Process Gunung Tujuh"
+                        placeholder="First Last"
                         value={newUser.name}
                         onChange={this.nameChange}
                         />
@@ -218,6 +219,11 @@ class Register extends React.Component {
                         onChange={this.phoneNumberChange}
                         />
                     </div>
+                  </div>
+                  <div className="text-center">
+                    <button type="submit" className="btn user-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
+                      <i className="fas fa-plus-circle" />
+                    </button>
                   </div>
                 </div>
                 <button type="submit" className="btn user-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>

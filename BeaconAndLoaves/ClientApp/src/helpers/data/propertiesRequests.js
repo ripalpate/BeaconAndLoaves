@@ -22,7 +22,10 @@ const getSingleProperty = propertyId => new Promise((resolve, reject) => {
     }).catch(err => reject(err));
 });
 
+const createProperty = property => axios.post(`${apiUrl}`, property);
+
 export default {
   getProperties,
-  getSingleProperty
+  getSingleProperty,
+  createProperty
 };

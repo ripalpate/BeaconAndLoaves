@@ -55,6 +55,11 @@ namespace BeaconAndLoaves.Data
 
                 if (newProperty != null)
                 {
+                        var updateSql = @"Update Users 
+                                      Set IsOwner = 1
+                                      Where Id = @ownerId";
+                        var updateParameter = new { ownerId };
+                        var updateUser = db.Execute(updateSql, updateParameter);
                     return newProperty;
                 }
             }

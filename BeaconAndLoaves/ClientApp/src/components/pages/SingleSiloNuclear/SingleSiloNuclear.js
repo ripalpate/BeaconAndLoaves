@@ -20,7 +20,7 @@ class SingleSiloNuclear extends React.Component {
   render() {
     const {siloNuclear} = this.props;
     return (
-        <div className="card ml-4 bg-light mb-3 singleSiloNuclear" onClick={this.changeSiloNuclearToDetailView}>
+        <div className="card ml-4 bg-light mb-3 mt-3 singleSiloNuclear" onClick={this.changeSiloNuclearToDetailView}>
           <div className="imgHolder">
             <img className="singleSiloNuclearImg"src={siloNuclear.imageUrl} alt="siloNuclear site"/>
           </div>
