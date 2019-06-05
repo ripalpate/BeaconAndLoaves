@@ -94,7 +94,7 @@ class PaymentMethod extends React.Component {
             return (
               <div>
                 <span>Payment Types:
-                  <select className="custom-select mb-2" onChange={this.selectPaymentType}>
+                  <select required className="custom-select mb-2" onChange={this.selectPaymentType}>
                   <option defaultValue>Select Payment Type</option>
                     {
                       paymentTypes.map((paymentType) => (<option key={counter++}value={counter}>{paymentType}</option>))

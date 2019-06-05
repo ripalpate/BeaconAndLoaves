@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const apiUrl = "/api/UserPayment/";
+const apiUrl = "/api/UserPayment";
 
-const apiUrlPaymentType = "/api/PaymentType/";
+const apiUrlPaymentType = "/api/PaymentType";
 
 const getAllUserPayments = () => new Promise((resolve, reject) => {
   axios.get(apiUrl)
