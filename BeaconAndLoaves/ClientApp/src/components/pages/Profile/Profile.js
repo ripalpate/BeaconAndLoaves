@@ -4,12 +4,12 @@ import authRequests from '../../../helpers/data/authRequests';
 
 import './Profile.scss';
 
+
 class Profile extends React.Component {
   state = {
-    currentUser: {
-      userPayments: [],
-      properties: [],
-    },
+    currentUser: {},
+    paymentAccounts: [],
+    properties: [],
     isEditing: false,
     userId: 0,
     selectedAccount: 0,
@@ -56,6 +56,26 @@ class Profile extends React.Component {
     userRequests.getSingleUser(uid)
       .then((currentUser) => {
         this.setState({ currentUser: currentUser.data });
+        this.getUserPaymentAccounts();
+        this.getUserProperties();
+      });
+  };
+
+  getUserPaymentAccounts = () => {
+    const { currentUser } = this.state;
+    const uid = currentUser.id;
+    userRequests.getUserPaymentAccounts(uid)
+      .then((paymentAccounts) => {
+        this.setState({ paymentAccounts });
+      });
+  };
+
+  getUserProperties = () => {
+    const { currentUser } = this.state;
+    const uid = currentUser.id;
+    userRequests.getUserProperties(uid)
+      .then((properties) => {
+        this.setState({ properties });
       });
   };
 
@@ -71,11 +91,13 @@ class Profile extends React.Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    const { userId, currentUser } = this.state;
-    userRequests.updateUser(userId, currentUser)
-      .then(() => {
-        this.setState({ isEditing: false });
-      });
+    const { currentUser } = this.state;
+    const userId = currentUser.Id;
+    console.log(currentUser);
+    // userRequests.updateUser(userId, basicUser)
+    //   .then(() => {
+    //     this.setState({ isEditing: false });
+    //   });
   }
 
   componentDidMount() {
@@ -86,6 +108,8 @@ class Profile extends React.Component {
     const {
       currentUser,
       isEditing,
+      properties,
+      paymentAccounts,
     } = this.state;
 
     const makeProfileCard = () => {
@@ -245,7 +269,7 @@ class Profile extends React.Component {
               <select id="account" className="custom-select mb-2" onChange={this.dropdownSelect}>
               <option defaultValue>Select Payment Account</option>
                 {
-                currentUser.userPayments.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
+                paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
                 }
               </select>
             </span>
@@ -253,7 +277,7 @@ class Profile extends React.Component {
               <select className="custom-select mb-2" id="property" onChange={this.dropdownSelect}>
               <option defaultValue>Select Property</option>
                 {
-                currentUser.properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
+                properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
                 }
               </select>
             </span>
@@ -265,7 +289,7 @@ class Profile extends React.Component {
               <select className="custom-select mb-2" id="account" onChange={this.dropdownSelect}>
               <option defaultValue>Select Payment Account</option>
                 {
-                currentUser.userPayments.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
+                paymentAccounts.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
                 }
               </select>
             </span>
