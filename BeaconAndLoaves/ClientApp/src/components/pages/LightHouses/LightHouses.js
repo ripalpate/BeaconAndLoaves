@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleLightHouse from '../SingleLightHouse/SingleLightHouse';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
-import './LightHouse.scss';
+import './LightHouses.scss';
 
 class LightHouses extends React.Component {
   state = {
