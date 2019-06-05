@@ -181,7 +181,7 @@ class PaymentMethod extends React.Component {
                     </div>
                     </div>
                 </div>
-                <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
+                <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
                     <i className="fas fa-plus-circle" />
                 </button>
                 </form>
