@@ -86,7 +86,10 @@ class SinglePaymentMethodScreen extends React.Component {
   formSubmit = (e) => {
     e.preventDefault();
     const { currentPaymentMethod } = this.state;
+    currentPaymentMethod.isActive = true;
     const userId = currentUser.id;
+    currentPaymentMethod.userId = this.state.currentUser.id;
+    currentPaymentMethod.paymentTypeId = this.state.selectedPaymentType*1;
     paymentMethodRequests.updateUserPayment(userId, currentPaymentMethod)
       .then(() => {
         this.setState({ isEditing: false });
@@ -128,101 +131,56 @@ class SinglePaymentMethodScreen extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="name" className="sr-only">Name</label>
+                        {makeDropdowns()}
+                    </div>
+                  <div className="col-auto form-lines p-0">
+                    <label htmlFor="name" className="sr-only">Account Number</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
-                        <div className="input-group-text">Name</div>
+                        <div className="input-group-text">Account Number</div>
                         </div>
                         <input
                         type="text"
                         className="form-control"
-                        id="name"
-                        placeholder="Sumatra Wet Process Gunung Tujuh"
-                        value={currentUser.name}
-                        onChange={this.nameChange}
+                        id="accountNumber"
+                        placeholder="9876543212345678"
+                        value={currentPaymentMethod.accountNumber}
+                        onChange={this.accountNumberChange}
                         />
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Street</label>
+                    <label htmlFor="link" className="sr-only">Exp Date</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
-                        <div className="input-group-text">Street</div>
+                        <div className="input-group-text">Exp Date</div>
                         </div>
                         <input
                         type="text"
                         className="form-control"
-                        id="street"
-                        placeholder="123 Main St."
-                        value={currentUser.street}
-                        onChange={this.streetChange}
+                        id="expDate"
+                        placeholder="12/2020"
+                        value={currentPaymentMethod.expirationDate}
+                        onChange={this.expirationDateChange}
                         />
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">City</label>
+                    <label htmlFor="link" className="sr-only">CVV</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
-                        <div className="input-group-text">City</div>
+                        <div className="input-group-text">CVV</div>
                         </div>
                         <input
                         type="text"
                         className="form-control"
-                        id="city"
-                        placeholder="Springfield"
-                        value={currentUser.city}
-                        onChange={this.cityChange}
+                        id="CVV"
+                        placeholder="987"
+                        value={currentPaymentMethod.CVV}
+                        onChange={this.CVVChange}
                         />
                     </div>
-                  </div>
-                  <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">State</label>
-                    <div className="input-group mb-2">
-                        <div className="input-group-prepend">
-                        <div className="input-group-text">State</div>
-                        </div>
-                        <input
-                        type="text"
-                        className="form-control"
-                        id="state"
-                        placeholder="TN"
-                        value={currentUser.state}
-                        onChange={this.stateChange}
-                        />
-                    </div>
-                  </div>
-                  <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Zip Code</label>
-                    <div className="input-group mb-2">
-                        <div className="input-group-prepend">
-                        <div className="input-group-text">Zip Code</div>
-                        </div>
-                        <input
-                        type="text"
-                        className="form-control"
-                        id="zipCode"
-                        placeholder="12345"
-                        value={currentUser.zipCode}
-                        onChange={this.zipCodeChange}
-                        />
-                    </div>
-                  </div>
-                  <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Phone Number</label>
-                    <div className="input-group mb-2">
-                        <div className="input-group-prepend">
-                        <div className="input-group-text">Phone Number</div>
-                        </div>
-                        <input
-                        type="text"
-                        className="form-control"
-                        id="phoneNumber"
-                        placeholder="615-333-4444"
-                        value={currentUser.phoneNumber}
-                        onChange={this.phoneNumberChange}
-                        />
-                    </div>
-                  </div>
+                  </div>                  
                   <div className="text-center">
                     <button type="submit" className="btn user-add-btn m-5" onClick={this.formSubmit}>
                       <i className="fas fa-check-square fa-2x"/>
@@ -236,89 +194,11 @@ class SinglePaymentMethodScreen extends React.Component {
         );
       }
       return (
-        <div className="paymentMethod-card border border-dark rounded" id={currentUser.id}>
-          <h3 className="text-center">{currentUser.name}</h3>
-          <div className="ml-1">Email: {currentUser.email}</div>
-          <div className="ml-1">Street: {currentUser.street}</div>
-          <div className="ml-1">City: {currentUser.city}</div>
-          <div className="ml-1">State: {currentUser.state}</div>
-          <div className="ml-1">Zipcode: {currentUser.zipCode}</div>
-          <div className="ml-1">Phone Number: {currentUser.phoneNumber}</div>
-          <div className="ml-1">
-            {makeDropdowns()}
-          </div>
-          <div className="text-center">
-            {makeHistoryButtons()}
-          </div>
-        </div>
-      );
-    };
-
-    const makeDropdowns = () => {
-      if (currentUser.isOwner === true) {
-        return (
-          <div>
-            <span>Payment Accounts:
-              <select id="account" className="custom-select mb-2" onChange={this.dropdownSelect}>
-              <option defaultValue>Select Payment Account</option>
-                {
-                paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
-                }
-              </select>
-            </span>
-            <span>My Properties:
-              <select className="custom-select mb-2" id="property" onChange={this.dropdownSelect}>
-              <option defaultValue>Select Property</option>
-                {
-                properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
-                }
-              </select>
-            </span>
-          </div>
-        );
-      }
-      return (<div>
-           <span>Payment Accounts:
-              <select className="custom-select mb-2" id="account" onChange={this.dropdownSelect}>
-              <option defaultValue>Select Payment Account</option>
-                {
-                paymentAccounts.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
-                }
-              </select>
-            </span>
-          </div>);
-    };
-
-    const makeHistoryButtons = () => {
-      if (currentUser.isOwner === true) {
-        return (
-          <div>
-            <button id='renting' type="button" className="btn renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
-              See My Renting History
-            </button>
-            <button id='rental' type="button" className="btn renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
-              See My Rentals' History
-            </button>
-            <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
-              <i className="far fa-edit fa-2x"/>
-            </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
-                <i class="far fa-credit-card fa-2x"></i>
-            </button>
-          </div>
-        );
-      }
-      return (
-        <div>
-            <button id='renting' type="button" className="btn renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
-              See My Renting History
-            </button>
-            <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
-              <i className="far fa-edit fa-2x"/>
-            </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
-                <i class="far fa-credit-card fa-2x"></i>
-            </button>
+        <div className="paymentMethod-card border border-dark rounded" id={currentPaymentMethod.id}>
+          <h3 className="text-center">{currentPaymentMethod.accountName}</h3>
+          <div className="ml-1">Account Number: {currentPaymentMethod.accountNumber}</div>
+          <div className="ml-1">Exp Date: {currentPaymentMethod.expirationDate}</div>
+          <div className="ml-1">CVV: {currentPaymentMethod.CVV}</div>
         </div>
       );
     };
