@@ -9,9 +9,6 @@ const currentUserShape = PropTypes.shape({
   state: PropTypes.string.isRequired,
   zipCode: PropTypes.string.isRequired,
   phoneNumber: PropTypes.string.isRequired,
-  properties: PropTypes.array.isRequired,
-  rentals: PropTypes.array.isRequired,
-  userPayments: PropTypes.array.isRequired,
 });
 
 export default currentUserShape;
