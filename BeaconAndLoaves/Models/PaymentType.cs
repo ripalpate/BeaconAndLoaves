@@ -8,10 +8,10 @@ namespace BeaconAndLoaves.Models
     public class PaymentType
     {
         public int Id { get; set; }
-        public Type Type { get; set; }
+        public TypeName Type { get; set; }
     }
 
-    public enum Type
+    public enum TypeName
     {
         Visa,
         Mastercard,

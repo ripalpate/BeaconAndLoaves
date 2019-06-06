@@ -17,13 +17,20 @@ namespace BeaconAndLoaves.Data
         {
             _connectionString = dbConfig.Value.ConnectionString;
         }
-        public IEnumerable<PaymentType> GetAll()
+        public List<string> GetAll()
         {
             using (var db = new SqlConnection(_connectionString))
             {
                 var paymentTypes = db.Query<PaymentType>("Select * from PaymentTypes").ToList();
+                var typeNames = new List<string>();  
 
-                return paymentTypes;
+                for (int i = 0; i<paymentTypes.Count; i++)
+                {
+                    var typeName = Enum.GetName(typeof(TypeName), i);
+                    typeNames.Add(typeName);
+                };
+
+                return typeNames;
 
             }
 

@@ -11,7 +11,7 @@ namespace BeaconAndLoaves.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentTypeController : SecureControllerBase
+    public class PaymentTypeController : ControllerBase
     {
 
         readonly PaymentTypeRepository _paymentTypeRepository;
@@ -24,9 +24,9 @@ namespace BeaconAndLoaves.Controllers
         [HttpGet]
         public ActionResult GetAllPaymentTypes()
         {
-            var users = _paymentTypeRepository.GetAll();
+            var paymentTypeNames = _paymentTypeRepository.GetAll();
 
-            return Ok(users);
+            return Ok(paymentTypeNames);
         }
 
     }
