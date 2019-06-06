@@ -113,6 +113,7 @@ class Register extends React.Component {
                         placeholder="bob@xxx.com"
                         value={newUser.email}
                         onChange={this.emailChange}
+                        required
                         />
                     </div>
                   </div>
@@ -129,6 +130,7 @@ class Register extends React.Component {
                         placeholder="First Last"
                         value={newUser.name}
                         onChange={this.nameChange}
+                        required
                         />
                     </div>
                   </div>
@@ -145,6 +147,7 @@ class Register extends React.Component {
                         placeholder="123 Main St."
                         value={newUser.street}
                         onChange={this.streetChange}
+                        required
                         />
                     </div>
                   </div>
@@ -161,6 +164,7 @@ class Register extends React.Component {
                         placeholder="Springfield"
                         value={newUser.city}
                         onChange={this.cityChange}
+                        required
                         />
                     </div>
                   </div>
@@ -177,6 +181,7 @@ class Register extends React.Component {
                         placeholder="TN"
                         value={newUser.state}
                         onChange={this.stateChange}
+                        required
                         />
                     </div>
                   </div>
@@ -193,6 +198,7 @@ class Register extends React.Component {
                         placeholder="12345"
                         value={newUser.zipCode}
                         onChange={this.zipCodeChange}
+                        required
                         />
                     </div>
                   </div>
@@ -209,11 +215,12 @@ class Register extends React.Component {
                         placeholder="615-333-4444"
                         value={newUser.phoneNumber}
                         onChange={this.phoneNumberChange}
+                        required
                         />
                     </div>
                   </div>
                   <div className="text-center">
-                    <button type="submit" className="btn user-add-btn btn-success my-auto mx-auto" onClick={this.formSubmit}>
+                    <button className="btn user-add-btn btn-success my-auto mx-auto">
                       <i className="fas fa-plus-circle" />
                     </button>
                   </div>
