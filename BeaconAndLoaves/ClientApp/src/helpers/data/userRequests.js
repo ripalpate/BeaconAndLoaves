@@ -13,7 +13,31 @@ const getAllUsers = () => new Promise((resolve, reject) => {
     });
 });
 
+const getUserPaymentAccounts = id => new Promise((resolve, reject) => {
+  axios.get(`${apiUrl}/payment/${id}`)
+    .then((results) => {
+      const userPaymentAccountsObject = results.data;
+      resolve(userPaymentAccountsObject);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
+
+const getUserProperties = id => new Promise((resolve, reject) => {
+  axios.get(`${apiUrl}/property/${id}`)
+    .then((results) => {
+      const userPropertiesObject = results.data;
+      resolve(userPropertiesObject);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
+
 const getSingleUser = userId => axios.get(`${apiUrl}/${userId}`);
+
+const getBasicSingleUser = userId => axios.get(`${apiUrl}/basic/${userId}`);
 
 const deleteUser = userId => axios.put(`${apiUrl}/${userId}`);
 
@@ -29,5 +53,8 @@ export default {
   deleteUser,
   updateUser,
   getSingleUser,
+  getBasicSingleUser,
   getSingleUserPayment,
+  getUserPaymentAccounts,
+  getUserProperties,
 };

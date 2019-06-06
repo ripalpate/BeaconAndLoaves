@@ -4,14 +4,17 @@ import authRequests from '../../../helpers/data/authRequests';
 
 import './Profile.scss';
 
+
 class Profile extends React.Component {
+
   state = {
-    currentUser: {
-      userPayments: [],
-      properties: [],
-    },
+    currentUser: {},
+    paymentAccounts: [],
+    properties: [],
     isEditing: false,
     userId: 0,
+    selectedAccount: 0,
+    selectedProperty: 0,
   }
 
   formFieldStringState = (name, e) => {
@@ -54,16 +57,47 @@ class Profile extends React.Component {
     userRequests.getSingleUser(uid)
       .then((currentUser) => {
         this.setState({ currentUser: currentUser.data });
+        this.getUserPaymentAccounts();
+        this.getUserProperties();
       });
   };
 
-  setSelect = (selectedAccount) => {
-    this.setState({ accountId: selectedAccount });
+  getUserPaymentAccounts = () => {
+    const { currentUser } = this.state;
+    const uid = currentUser.id;
+    userRequests.getUserPaymentAccounts(uid)
+      .then((paymentAccounts) => {
+        this.setState({ paymentAccounts });
+      });
+  };
+
+  getUserProperties = () => {
+    const { currentUser } = this.state;
+    const uid = currentUser.id;
+    userRequests.getUserProperties(uid)
+      .then((properties) => {
+        this.setState({ properties });
+      });
+  };
+
+  dropdownSelect = (e) => {
+    if (e.target.id === 'account') {
+      const selectedAccount = e.target.value;
+      this.setState({ selectedAccount });
+    } else if (e.target.id === 'property') {
+      const selectedProperty = e.target.value;
+      this.setState({ selectedProperty });
+    }
+  }
+
+  paymentView = () => {
+    this.props.history.push('/paymentMethod');
   }
 
   formSubmit = (e) => {
     e.preventDefault();
-    const { userId, currentUser } = this.state;
+    const { currentUser } = this.state;
+    const userId = currentUser.id;
     userRequests.updateUser(userId, currentUser)
       .then(() => {
         this.setState({ isEditing: false });
@@ -78,6 +112,8 @@ class Profile extends React.Component {
     const {
       currentUser,
       isEditing,
+      properties,
+      paymentAccounts,
     } = this.state;
 
     const makeProfileCard = () => {
@@ -204,7 +240,7 @@ class Profile extends React.Component {
                     </button>
                     <button id='cancel' type="button" className="btn back-btn m-5" onClick={this.cancel}>
                       <i className="far fa-window-close fa-2x"/>
-                    </button>
+                    </button>                    
                   </div>
                 </div>
               </form>
@@ -234,18 +270,18 @@ class Profile extends React.Component {
         return (
           <div>
             <span>Payment Accounts:
-              <select className="custom-select mb-2">
+              <select id="account" className="custom-select mb-2" onChange={this.dropdownSelect}>
               <option defaultValue>Select Payment Account</option>
                 {
-                currentUser.userPayments.map((account, i) => (<option key={i}>{account.accountName}</option>))
+                paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
                 }
               </select>
             </span>
             <span>My Properties:
-              <select className="custom-select mb-2">
+              <select className="custom-select mb-2" id="property" onChange={this.dropdownSelect}>
               <option defaultValue>Select Property</option>
                 {
-                currentUser.properties.map((property, i) => (<option key={i}>{property.propertyName}</option>))
+                properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
                 }
               </select>
             </span>
@@ -254,10 +290,10 @@ class Profile extends React.Component {
       }
       return (<div>
            <span>Payment Accounts:
-              <select className="custom-select mb-2">
+              <select className="custom-select mb-2" id="account" onChange={this.dropdownSelect}>
               <option defaultValue>Select Payment Account</option>
                 {
-                currentUser.userPayments.map((account, i) => (<option key={i}>{account.accountName}</option>))
+                paymentAccounts.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
                 }
               </select>
             </span>
@@ -277,6 +313,9 @@ class Profile extends React.Component {
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
             </button>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
+                <i class="far fa-credit-card fa-2x"></i>
+            </button>
           </div>
         );
       }
@@ -287,6 +326,9 @@ class Profile extends React.Component {
             </button>
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
+            </button>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
+                <i class="far fa-credit-card fa-2x"></i>
             </button>
         </div>
       );
