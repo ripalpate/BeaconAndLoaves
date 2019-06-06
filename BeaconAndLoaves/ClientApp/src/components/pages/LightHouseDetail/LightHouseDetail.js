@@ -115,7 +115,7 @@ class LightHouseDetail extends React.Component {
             <p>{lightHouse.city}, {lightHouse.state} - {lightHouse.zipCode}</p>
             <p>{lightHouse.description}</p>
             <p>${lightHouse.price}/per night</p>
-            <p onClick = {this.OwnerProductView}>Owned By: {lightHouse.name}</p>
+            <p className="owner-name" onClick = {this.OwnerProductView}>Owned By: {lightHouse.name}</p>
             <button className="btn btn-primary mr-2">Rent</button>
             {makeLikedPropertyButton()}
           </div>
