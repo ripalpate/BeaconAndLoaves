@@ -13,7 +13,7 @@ namespace BeaconAndLoaves.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserPaymentController : SecureControllerBase
+    public class UserPaymentController : ControllerBase
     {
 
         readonly UserPaymentRepository _repository;

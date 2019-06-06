@@ -1,12 +1,12 @@
 import React from 'react';
 import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
+import WarningModal from '../WarningModal/WarningModal';
 
 import './Profile.scss';
 
 
 class Profile extends React.Component {
-
   state = {
     currentUser: {},
     paymentAccounts: [],
@@ -15,6 +15,14 @@ class Profile extends React.Component {
     userId: 0,
     selectedAccount: 0,
     selectedProperty: 0,
+    modal: false,
+  }
+
+  toggleModal = () => {
+    const { modal } = this.state;
+    this.setState({
+      modal: !modal,
+    });
   }
 
   formFieldStringState = (name, e) => {
@@ -41,6 +49,15 @@ class Profile extends React.Component {
     const { currentUser } = this.state;
     this.setState({ isEditing: true });
     this.setState({ userId: currentUser.id });
+  }
+
+  deleteProfile = (e) => {
+    const { currentUser } = this.state;
+    userRequests.deleteUser(currentUser.id)
+      .then(() => {
+        this.props.history.push('/register');
+      });
+    this.props.history.push('/register');
   }
 
   cancel = () => {
@@ -114,6 +131,7 @@ class Profile extends React.Component {
       isEditing,
       properties,
       paymentAccounts,
+      modal,
     } = this.state;
 
     const makeProfileCard = () => {
@@ -240,7 +258,7 @@ class Profile extends React.Component {
                     </button>
                     <button id='cancel' type="button" className="btn back-btn m-5" onClick={this.cancel}>
                       <i className="far fa-window-close fa-2x"/>
-                    </button>                    
+                    </button>
                   </div>
                 </div>
               </form>
@@ -314,7 +332,10 @@ class Profile extends React.Component {
               <i className="far fa-edit fa-2x"/>
             </button>
             <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
-                <i class="far fa-credit-card fa-2x"></i>
+                <i className="far fa-credit-card fa-2x"></i>
+            </button>
+            <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
+              <i className="fas fa-trash fa-2x"></i>
             </button>
           </div>
         );
@@ -328,16 +349,30 @@ class Profile extends React.Component {
               <i className="far fa-edit fa-2x"/>
             </button>
             <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
-                <i class="far fa-credit-card fa-2x"></i>
+                <i className="far fa-credit-card fa-2x"></i>
+            </button>
+            <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
+              <i className="fas fa-trash fa-2x"></i>
             </button>
         </div>
       );
     };
 
     return (
+      <div>
+      <div>
+        <WarningModal
+        isEditing={isEditing}
+        modal={modal}
+        toggleModal={this.toggleModal}
+        deleteProfile={this.deleteProfile}
+         />
+      </div>
       <div className="profileDiv d-flex mx-auto">
         {makeProfileCard()}
       </div>
+      </div>
+
     );
   }
 }
