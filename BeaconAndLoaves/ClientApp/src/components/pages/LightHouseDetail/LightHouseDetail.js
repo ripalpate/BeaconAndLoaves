@@ -32,10 +32,10 @@ class LightHouseDetail extends React.Component {
     e.preventDefault();
     const{ isLiked} = this.state;
     this.setState({ isLiked: !isLiked });
-    this.addAndDeleteLikedProperties();
+    this.addLikedProperties();
   }
 
-  addAndDeleteLikedProperties = () => {
+  addLikedProperties = () => {
     const{ lightHouse, isLiked} = this.state;
     const myLikedProperty = {
       "userId" : lightHouse.ownerId,
@@ -44,50 +44,22 @@ class LightHouseDetail extends React.Component {
     if(!isLiked){
     likedPropertyRequests.createLikedProperty(myLikedProperty)
       .then((myLikedProperty)=>{
-        //console.log(myLikedProperty);
         this.setState({ currentLikedProperty: myLikedProperty.data});
         this.setState({isLiked: true});
       });
     }else {
-      const{currentLikedProperty} = this.state;
-     // console.log(currentLikedProperty);
-      const likedPropertyId = currentLikedProperty[0].id;
-     // console.log(likedPropertyId);
-      likedPropertyRequests.deleteLikedProperty(likedPropertyId)
-      .then(()=>{
-        this.setState({isLiked: false});
-      })
+      this.deleteLikedProperties();
     }
   }
 
-  // deleteLikedProperties = () => {
-
-  // }
-  // addLikedProperty = (e) => {
-  //   const {lightHouse, isLiked} = this.state;
-  //   e.preventDefault();
-  //   const myLikedProperty = {
-  //     "userId" : lightHouse.ownerId,
-  //     "propertyId" : lightHouse.id
-  //   };
-  //   if(!isLiked){
-  //   likedPropertyRequests.createLikedProperty(myLikedProperty)
-  //   .then(()=>{
-  //     this.setState({isLiked: !isLiked});
-  //   });
-  //   }else{
-  //     likedPropertyRequests.deleteLikedProperty(lightHouse.id)
-  //     .then(()=>{
-  //       this.setState({isLiked: isLiked});
-  //     })
-  //   }
-    // if(isLiked){
-    //   likedPropertyRequests.deleteLikedProperty(myLikedProperty.id)
-    //   .then(()=> {
-    //    // this.setState({isLiked: isLiked});
-    //   })
-    //}
-  //}
+  deleteLikedProperties = () => {
+    const{currentLikedProperty} = this.state;
+     const likedPropertyId = currentLikedProperty[0].id;
+     likedPropertyRequests.deleteLikedProperty(likedPropertyId)
+     .then(()=>{
+       this.setState({isLiked: false});
+     })
+  }
 
   checkExistingProperty = () => {
     const {lightHouse, isLiked} = this.state;
@@ -102,6 +74,7 @@ class LightHouseDetail extends React.Component {
       }
     });
   }
+  
   componentDidMount() {
       this.getPropertyWithOwnerName();
   }
