@@ -314,7 +314,7 @@ class Profile extends React.Component {
               <i className="far fa-edit fa-2x"/>
             </button>
             <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
-                    <i className="fab fa-cc-visa fa-2x"></i>
+                <i class="far fa-credit-card fa-2x"></i>
             </button>
           </div>
         );
@@ -328,7 +328,7 @@ class Profile extends React.Component {
               <i className="far fa-edit fa-2x"/>
             </button>
             <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
-                    <i className="fab fa-cc-visa fa-2x"></i>
+                <i class="far fa-credit-card fa-2x"></i>
             </button>
         </div>
       );
