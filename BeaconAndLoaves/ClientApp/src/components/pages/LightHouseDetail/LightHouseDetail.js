@@ -6,6 +6,7 @@ import LikedProperties from '../LikedProperties/LikedProperties';
 
 class LightHouseDetail extends React.Component {
   state = {
+    currentLikedProperty:[],
     lightHouse: [],
     isLiked: false
   }
@@ -20,35 +21,82 @@ class LightHouseDetail extends React.Component {
     }).then(() => {
       this.checkExistingProperty();
     }).catch(err => console.error(err));
+
   }
 
   backButton = () => {
     this.props.history.push('/properties/lightHouses');
   }
 
-  addLikedProperty = (e) => {
-    const {lightHouse, isLiked} = this.state;
+  changeIsLikedState = (e) => {
     e.preventDefault();
+    const{ isLiked} = this.state;
+    this.setState({ isLiked: !isLiked });
+    this.addAndDeleteLikedProperties();
+  }
+
+  addAndDeleteLikedProperties = () => {
+    const{ lightHouse, isLiked} = this.state;
     const myLikedProperty = {
       "userId" : lightHouse.ownerId,
       "propertyId" : lightHouse.id
     };
+    if(!isLiked){
     likedPropertyRequests.createLikedProperty(myLikedProperty)
-    .then(()=>{
-      this.setState({isLiked: !isLiked});
-    });
-    // if(isLiked){
-    //   likedPropertyRequests.deleteLikedProperty(myLikedProperty.)
-    // }
+      .then((myLikedProperty)=>{
+        //console.log(myLikedProperty);
+        this.setState({ currentLikedProperty: myLikedProperty.data});
+        this.setState({isLiked: true});
+      });
+    }else {
+      const{currentLikedProperty} = this.state;
+     // console.log(currentLikedProperty);
+      const likedPropertyId = currentLikedProperty[0].id;
+     // console.log(likedPropertyId);
+      likedPropertyRequests.deleteLikedProperty(likedPropertyId)
+      .then(()=>{
+        this.setState({isLiked: false});
+      })
+    }
   }
+
+  // deleteLikedProperties = () => {
+
+  // }
+  // addLikedProperty = (e) => {
+  //   const {lightHouse, isLiked} = this.state;
+  //   e.preventDefault();
+  //   const myLikedProperty = {
+  //     "userId" : lightHouse.ownerId,
+  //     "propertyId" : lightHouse.id
+  //   };
+  //   if(!isLiked){
+  //   likedPropertyRequests.createLikedProperty(myLikedProperty)
+  //   .then(()=>{
+  //     this.setState({isLiked: !isLiked});
+  //   });
+  //   }else{
+  //     likedPropertyRequests.deleteLikedProperty(lightHouse.id)
+  //     .then(()=>{
+  //       this.setState({isLiked: isLiked});
+  //     })
+  //   }
+    // if(isLiked){
+    //   likedPropertyRequests.deleteLikedProperty(myLikedProperty.id)
+    //   .then(()=> {
+    //    // this.setState({isLiked: isLiked});
+    //   })
+    //}
+  //}
 
   checkExistingProperty = () => {
     const {lightHouse, isLiked} = this.state;
     likedPropertyRequests.getAllLikedProperties()
     .then((likedProperties) => {
-      const currentProperty = likedProperties.filter(x => x.propertyId === lightHouse.id && x.userId === lightHouse.ownerId);
-      if(currentProperty.length === 1){
+      const currentLikedProperty = likedProperties.filter(x => x.propertyId === lightHouse.id && x.userId === lightHouse.ownerId);
+      if(currentLikedProperty.length === 1){
         this.setState({isLiked: !isLiked});
+        this.setState({currentLikedProperty});
       } else {
         this.setState({isLiked: isLiked});
       }
@@ -57,16 +105,17 @@ class LightHouseDetail extends React.Component {
   componentDidMount() {
       this.getPropertyWithOwnerName();
   }
+
   render() {
     const{lightHouse, isLiked}= this.state;
     const makeLikedPropertyButton = () => {
       if(lightHouse.isOwner === false && isLiked === false){
         return(
-          <button className="btn" onClick={this.addLikedProperty}><i id="!isLiked" className="far fa-heart fa-2x"/></button>
+          <button className="btn" onClick={this.changeIsLikedState}><i id="!isLiked" className="far fa-heart fa-2x"/></button>
         );
      } else if(lightHouse.isOwner === false && isLiked === true){
         return(
-          <button className="btn" onClick={this.addLikedProperty}><i id="isLiked" className="far fa-heart fa-2x"/></button>
+          <button className="btn" onClick={this.changeIsLikedState}><i id="isLiked" className="far fa-heart fa-2x"/></button>
         );
      }    
     }

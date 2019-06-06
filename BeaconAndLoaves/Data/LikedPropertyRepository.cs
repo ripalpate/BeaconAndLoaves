@@ -36,11 +36,11 @@ namespace BeaconAndLoaves.Data
             throw new Exception("No likedProperty created");
         }
 
-        public void DeleteLikedProperty(int userId)
+        public void DeleteLikedProperty(int id)
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var parameter = new { Id = userId };
+                var parameter = new { Id = id };
 
                 var deleteQuery = "Delete From LikedProperties where Id = @id";
 
