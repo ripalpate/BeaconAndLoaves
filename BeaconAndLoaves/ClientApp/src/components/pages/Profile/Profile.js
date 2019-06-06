@@ -6,6 +6,7 @@ import './Profile.scss';
 
 
 class Profile extends React.Component {
+
   state = {
     currentUser: {},
     paymentAccounts: [],
@@ -87,6 +88,10 @@ class Profile extends React.Component {
       const selectedProperty = e.target.value;
       this.setState({ selectedProperty });
     }
+  }
+
+  paymentView = () => {
+    this.props.history.push('/paymentMethod');
   }
 
   formSubmit = (e) => {
@@ -235,7 +240,7 @@ class Profile extends React.Component {
                     </button>
                     <button id='cancel' type="button" className="btn back-btn m-5" onClick={this.cancel}>
                       <i className="far fa-window-close fa-2x"/>
-                    </button>
+                    </button>                    
                   </div>
                 </div>
               </form>
@@ -308,6 +313,9 @@ class Profile extends React.Component {
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
             </button>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
+                <i class="far fa-credit-card fa-2x"></i>
+            </button>
           </div>
         );
       }
@@ -318,6 +326,9 @@ class Profile extends React.Component {
             </button>
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
+            </button>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
+                <i class="far fa-credit-card fa-2x"></i>
             </button>
         </div>
       );

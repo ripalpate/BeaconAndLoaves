@@ -65,6 +65,14 @@ class Register extends React.Component {
           });
       };
 
+      paymentView = () => {
+        this.props.history.push('/paymentMethod');
+      }
+
+      paymentViewBTC = () => {
+        this.props.history.push('/paymentMethodBTC');
+      }
+    
       getUsers = () => {
         userRequests.getAllUsers()
           .then((users) => {
@@ -223,10 +231,16 @@ class Register extends React.Component {
                     <button className="btn user-add-btn btn-success my-auto mx-auto">
                       <i className="fas fa-plus-circle" />
                     </button>
+                    {/* <button type="button" className="btn payment-add-btn my-auto mx-auto" onClick={this.paymentView}>
+                    <i className="fab fa-cc-visa fa-2x"></i>
+                </button>
+                <button type="button" className="btn payment-add-btn my-auto mx-auto" onClick={this.paymentViewBTC}>
+                    <i className="fab fa-bitcoin fa-2x"></i>
+                </button> */}
                   </div>
                 </div>
               </form>
-          </div>
+            </div>
         );
       }
 }
