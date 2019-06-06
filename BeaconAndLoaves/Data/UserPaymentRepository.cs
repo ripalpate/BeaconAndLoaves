@@ -19,7 +19,7 @@ namespace BeaconAndLoaves.Data
             _connectionString = dbConfig.Value.ConnectionString;
         }
 
-        public UserPayment AddUserPayment(int paymentTypeId, int userId, int accountNumber, DateTime expirationDate, int cvv,
+        public UserPayment AddUserPayment(int paymentTypeId, int userId, long accountNumber, DateTime expirationDate, int cvv,
                             string accountName, bool isActive)
         {
             using (var db = new SqlConnection(_connectionString))
