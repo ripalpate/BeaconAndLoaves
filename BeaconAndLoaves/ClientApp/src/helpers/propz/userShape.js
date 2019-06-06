@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 
 const currentUserShape = PropTypes.shape({
   email: PropTypes.string.isRequired,
-  firebaseId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   street: PropTypes.string.isRequired,
   city: PropTypes.string.isRequired,
