@@ -22,10 +22,11 @@ class Rental extends React.Component {
 
     render() {
       return (
-        <div>
+        <div className="text-center rental-div">
             <div id="start">
                 <label>Start Date </label>
                 <DatePicker
+                    className="ml-3"
                     selected={this.state.startDate}
                     onChange={this.handleStartChange}
                 />
@@ -33,6 +34,7 @@ class Rental extends React.Component {
             <div id="end">
                 <label>End Date </label>
                 <DatePicker
+                    className="ml-3"
                     selected={this.state.endDate}
                     onChange={this.handleEndChange}
                 />

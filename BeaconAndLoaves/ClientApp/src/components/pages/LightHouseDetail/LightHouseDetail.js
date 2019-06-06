@@ -4,35 +4,41 @@ import smashRequests from '../../../helpers/data/smashRequests';
 
 class LightHouseDetail extends React.Component {
   state = {
-    lightHouse: []
+    lightHouse: [],
   }
 
   getPropertyWithOwnerName = () => {
     const lightHouseId = this.props.match.params.id;
     smashRequests.getAllPropertiesWithOwnerInfo()
-    .then((properties) => {
-      const lightHouses = properties.filter(property => property.type === 0);
-      const lightHouse= lightHouses.find(property => property.id == lightHouseId);
-      this.setState( {lightHouse});
-    }).catch(err => console.error(err));
+      .then((properties) => {
+        const lightHouses = properties.filter(property => property.type === 0);
+        const lightHouse = lightHouses.find(property => property.id == lightHouseId);
+        this.setState({ lightHouse });
+      }).catch(err => console.error(err));
   }
 
   backButton = () => {
     this.props.history.push('/properties/lightHouses');
   }
 
-  componentDidMount() {
-      this.getPropertyWithOwnerName();
+  rentProperty = (e) => {
+    const propertyId = e.target.id;
+    this.props.history.push(`/rental/${propertyId}`);
   }
+
+  componentDidMount() {
+    this.getPropertyWithOwnerName();
+  }
+
   render() {
-    const{lightHouse}= this.state;
+    const { lightHouse } = this.state;
     const makeLikedPropertyButton = () => {
-      if(lightHouse.isOwner === false){
-        return(
+      if (lightHouse.isOwner === false) {
+        return (
         <button className="btn btn-success" id="likedProperties"><i className="far fa-heart fa-2x"/></button>
         );
-      }    
-    }
+      }
+    };
     return (
       <div>
         <div className="back-button">
@@ -49,7 +55,7 @@ class LightHouseDetail extends React.Component {
             <p>{lightHouse.description}</p>
             <p>${lightHouse.price}/per night</p>
             <p>Owned By: {lightHouse.name}</p>
-            <button className="btn btn-primary mr-2">Rent</button>
+            <button id={lightHouse.id} className="btn btn-primary mr-2" onClick={this.rentProperty}>Rent</button>
             {makeLikedPropertyButton()}
           </div>
         </div>
