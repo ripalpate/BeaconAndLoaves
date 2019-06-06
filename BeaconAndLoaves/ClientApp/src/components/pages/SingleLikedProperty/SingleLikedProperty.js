@@ -19,7 +19,7 @@ class SingleLikedProperty extends React.Component {
       <div className="card-body">
         <h5>{likedProperty.propertyName}</h5>
         <p>{likedProperty.street}</p>
-        <p>{likedProperty.city}, {siloNuclear.state} - {siloNuclear.zipCode}</p>
+        <p>{likedProperty.city}, {likedProperty.state} - {likedProperty.zipCode}</p>
         <p>{likedProperty.description}</p>
         <p>${likedProperty.price}/per night</p>
         <button className="btn btn-primary mr-2">Rent</button>
