@@ -12,19 +12,19 @@ class SingleLikedProperty extends React.Component {
   render() {
     const {likedProperty} = this.props;
     return (
-      <div className="card mx-auto bg-light">
-      <div className="imgHolder">
-        <img className="singleLightHouseImg" src={likedProperty.imageUrl} alt="liked Property"/>
+      <div className="card bg-light mr-4 mb-4 singleLikedProperty">
+        <div className="imgHolder">
+          <img className="singleLightHouseImg" src={likedProperty.imageUrl} alt="liked Property"/>
+        </div>
+        <div className="card-body">
+          <h5>{likedProperty.propertyName}</h5>
+          <p>{likedProperty.street}</p>
+          <p>{likedProperty.city}, {likedProperty.state} - {likedProperty.zipCode}</p>
+          <p>{likedProperty.description}</p>
+          <p>${likedProperty.price}/per night</p>
+          <button className="btn btn-primary mr-2">Rent</button>
+        </div>
       </div>
-      <div className="card-body">
-        <h5>{likedProperty.propertyName}</h5>
-        <p>{likedProperty.street}</p>
-        <p>{likedProperty.city}, {likedProperty.state} - {likedProperty.zipCode}</p>
-        <p>{likedProperty.description}</p>
-        <p>${likedProperty.price}/per night</p>
-        <button className="btn btn-primary mr-2">Rent</button>
-      </div>
-    </div>
     );
   }
 }

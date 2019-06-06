@@ -53,13 +53,18 @@ namespace BeaconAndLoaves.Data
             }
         }
 
-        public IEnumerable<LikedProperty> GetAllLikedProperties()
+        public IEnumerable<Object> GetAllLikedProperties()
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var likedProperties = db.Query<LikedProperty>(@"
-                    select * 
-                    from likedProperties
+                var likedProperties = db.Query<Object>(@"
+                    Select lp.id, lp.userId, lp.propertyId, p.type as propertyType, p.street, p. city, p.state, 
+                    p.zipCode, p.description,p.imageUrl, p.propertyName, p.price, u.Name
+                    from LikedProperties as lp
+                    Join Properties as P
+	                    On p.id = lp.PropertyId
+                    Join Users as u
+	                    On u.Id = lp.UserId;
                     ").ToList();
 
                 return likedProperties;
