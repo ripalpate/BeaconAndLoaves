@@ -2,7 +2,6 @@ import React from 'react';
 import './LightHouseDetail.scss';
 import smashRequests from '../../../helpers/data/smashRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
-import LikedProperties from '../LikedProperties/LikedProperties';
 
 class LightHouseDetail extends React.Component {
   state = {

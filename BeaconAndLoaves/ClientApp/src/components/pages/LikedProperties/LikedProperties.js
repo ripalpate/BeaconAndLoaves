@@ -13,13 +13,19 @@ class LikedProperties extends React.Component {
       })
   }
   render(){
+    const singleLikedPropertyComponent = likedProperties.map(likeProperty => (
+      <SingleLikedProperty
+      likeProperty={likeProperty}
+      key = {likePropertye.id}
+      />
+    ));
+
     return(
-      <div>
-        <h4>Liked Property</h4>
+      <div className="likedProperty row">
+          <div className = "d-flex mx-auto mt-5">{singleLikedPropertyComponent}</div>
       </div>
     )
   }
-
 }
 
 export default LikedProperties;
