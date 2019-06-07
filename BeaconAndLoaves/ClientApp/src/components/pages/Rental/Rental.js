@@ -1,15 +1,16 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
+import propertiesRequests from '../../../helpers/data/propertiesRequests';
 
 
 import './Rental.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 
-
 class Rental extends React.Component {
     state = {
       startDate: new Date(),
       endDate: new Date(),
+      propertyToRent: {},
     }
 
     handleStartChange = (date) => {
@@ -18,6 +19,18 @@ class Rental extends React.Component {
 
     handleEndChange = (date) => {
       this.setState({ endDate: date });
+    }
+
+    getPropertyToRent = () => {
+      const propertyId = this.props.match.params.id;
+      propertiesRequests.getSingleProperty(propertyId)
+        .then((property) => {
+          this.setState({ propertyToRent: property });
+        });
+    }
+
+    componentDidMount() {
+      this.getPropertyToRent();
     }
 
     render() {
