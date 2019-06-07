@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleLightHouse from '../SingleLightHouse/SingleLightHouse';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
-import './LightHouse.scss';
+import './LightHouses.scss';
 
 class LightHouses extends React.Component {
   state = {
@@ -74,7 +74,7 @@ class LightHouses extends React.Component {
       <div>
         {makeLatestButton()}
         <div className="lightHouses row">
-          <h3 className = "lightHouseContainer d-flex mx-auto mt-5">{singleLightHouseComponent}</h3>
+          <div className = "lightHouseContainer d-flex mx-auto mt-5">{singleLightHouseComponent}</div>
         </div>
       </div>
     );
