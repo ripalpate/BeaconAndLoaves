@@ -1,6 +1,7 @@
 import React from 'react';
 import './LightHouseDetail.scss';
 import smashRequests from '../../../helpers/data/smashRequests';
+import userRequests from '../../../helpers/data/userRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 
 class LightHouseDetail extends React.Component {
@@ -83,7 +84,13 @@ class LightHouseDetail extends React.Component {
       this.getPropertyWithOwnerName();
   }
 
-  OwnerProductView = () => {
+  OwnerProductView = (e) => {
+    const getOwnerId = e.target.dataset.owner;
+    userRequests.getUserProperties(getOwnerId)
+    .then((user)=>{
+      console.log(user);
+    })
+
     this.props.history.push(`/ownerProducts`);
   }
 
@@ -115,7 +122,7 @@ class LightHouseDetail extends React.Component {
             <p>{lightHouse.city}, {lightHouse.state} - {lightHouse.zipCode}</p>
             <p>{lightHouse.description}</p>
             <p>${lightHouse.price}/per night</p>
-            <p className="owner-name" onClick = {this.OwnerProductView}>Owned By: {lightHouse.name}</p>
+            <p className="owner-name" onClick = {this.OwnerProductView} data-owner={lightHouse.ownerId}>Owned By: {lightHouse.name}</p>
             <button className="btn btn-primary mr-2">Rent</button>
             {makeLikedPropertyButton()}
           </div>
