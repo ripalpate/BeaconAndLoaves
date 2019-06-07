@@ -21,6 +21,9 @@ class OwnerPropducts extends React.Component{
         this.getOwnerProperties();
     }
 
+    backButton = () => {
+        this.props.history.push('/properties');
+    }
 render(){
     const {properties} = this.state;
 
@@ -32,7 +35,12 @@ render(){
       ));
     return(
         <div>
-           {ownerPropertyComponent}
+            <div className="back-button">
+              <button className = "btn btn-warning" onClick = {this.backButton}>Back</button>
+            </div>
+            <div className = "row">
+            {ownerPropertyComponent}
+            </div>
         </div>
     )
 }
