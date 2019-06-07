@@ -1,8 +1,9 @@
 import React from 'react';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
+
 class OwnerPropducts extends React.Component{
     state = {
-        ownerPropducts: [],
+        ownerProperties: [],
     }
 
     getOwnerProducts = () => {
@@ -13,8 +14,8 @@ class OwnerPropducts extends React.Component{
                             .map((property, i, final) => final.indexOf(property) !== i && i)
                             .filter(obj=> properties[obj])
                             .map(property => properties[property]["ownerId"])
-            const ownerPropducts = properties.filter(property=> getduplicateOwnerIds.includes(property.ownerId));
-            this.setState({ownerPropducts});
+            const ownerProperties = properties.filter(property=> getduplicateOwnerIds.includes(property.ownerId));
+            this.setState({ownerProperties});
         }).catch(err => console.error(err));
     }
 
@@ -24,7 +25,7 @@ class OwnerPropducts extends React.Component{
 
 render(){
     return(
-        <div>Welcome
+        <div>
 
         </div>
     )
