@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
-import userShape from '../../../helpers/propz/userShape';
 
 import './Register.scss';
 
@@ -15,8 +13,6 @@ const defaultUser = {
   state: '',
   zipCode: '',
   phoneNumber: '',
-  isOwner: '',
-  isActive: '',
 };
 
 class Register extends React.Component {
@@ -24,11 +20,6 @@ class Register extends React.Component {
       users: [],
       currentUser: [],
       newUser: defaultUser,
-    }
-
-    static propTypes = {
-      users: PropTypes.arrayOf(userShape.currentUserShape),
-      currentUser: userShape.currentUserShape,
     }
 
       formFieldStringState = (name, e) => {
@@ -72,7 +63,7 @@ class Register extends React.Component {
       paymentViewBTC = () => {
         this.props.history.push('/paymentMethodBTC');
       }
-    
+
       getUsers = () => {
         userRequests.getAllUsers()
           .then((users) => {
