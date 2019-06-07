@@ -15,6 +15,7 @@ class Rental extends React.Component {
       propertyToRent: {},
       paymentAccounts: [],
       currentUser: {},
+      paymentAccount: 0,
     }
 
     handleStartChange = (date) => {
@@ -23,6 +24,11 @@ class Rental extends React.Component {
 
     handleEndChange = (date) => {
       this.setState({ endDate: date });
+    }
+
+    handlePaymentAccountChange = (e) => {
+      const paymentAccount = e.target.value;
+      this.setState({ paymentAccount });
     }
 
     getUserPaymentAccounts = () => {
@@ -61,7 +67,7 @@ class Rental extends React.Component {
 
       const makeDropdowns = () => (<div>
              <span>Payment Accounts:
-                <select className="custom-select mb-2" id="account" onChange={this.dropdownSelect}>
+                <select className="custom-select mb-2" id="account" onChange={this.handlePaymentAccountChange}>
                 <option defaultValue>Select Payment Account</option>
                   {
                   paymentAccounts.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
