@@ -1,6 +1,8 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
+import authRequests from '../../../helpers/data/authRequests';
+import userRequests from '../../../helpers/data/userRequests';
 
 
 import './Rental.scss';
@@ -11,6 +13,8 @@ class Rental extends React.Component {
       startDate: new Date(),
       endDate: new Date(),
       propertyToRent: {},
+      paymentAccounts: [],
+      currentUser: {},
     }
 
     handleStartChange = (date) => {
@@ -20,6 +24,24 @@ class Rental extends React.Component {
     handleEndChange = (date) => {
       this.setState({ endDate: date });
     }
+
+    getUserPaymentAccounts = () => {
+      const { currentUser } = this.state;
+      const uid = currentUser.id;
+      userRequests.getUserPaymentAccounts(uid)
+        .then((paymentAccounts) => {
+          this.setState({ paymentAccounts });
+        });
+    };
+
+    getUser = () => {
+      const uid = authRequests.getCurrentUid();
+      userRequests.getSingleUser(uid)
+        .then((currentUser) => {
+          this.setState({ currentUser: currentUser.data });
+          this.getUserPaymentAccounts();
+        });
+    };
 
     getPropertyToRent = () => {
       const propertyId = this.props.match.params.id;
@@ -31,10 +53,23 @@ class Rental extends React.Component {
 
     componentDidMount() {
       this.getPropertyToRent();
+      this.getUser();
     }
 
     render() {
-      const { propertyToRent } = this.state;
+      const { propertyToRent, paymentAccounts } = this.state;
+
+      const makeDropdowns = () => (<div>
+             <span>Payment Accounts:
+                <select className="custom-select mb-2" id="account" onChange={this.dropdownSelect}>
+                <option defaultValue>Select Payment Account</option>
+                  {
+                  paymentAccounts.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
+                  }
+                </select>
+              </span>
+            </div>);
+
       return (
         <div className="text-center rental-div mx-auto">
             <div className="profile-card border border-dark rounded" id={propertyToRent.id}>
@@ -61,6 +96,7 @@ class Rental extends React.Component {
                     />
                 </div>
                 <div className="ml-1">Total: $</div>
+                <div>{makeDropdowns()}</div>
             </div>
         </div>
       );
