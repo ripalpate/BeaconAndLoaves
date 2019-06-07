@@ -1,21 +1,18 @@
 import React from 'react';
-import propertiesRequests from '../../../helpers/data/propertiesRequests';
-import userRequests from '../../../helpers/data/userRequests';
 import propertiesShape from '../../../helpers/propz/propertiesShape';
-import smashRequests from '../../../helpers/data/smashRequests';
+import PropTypes from 'prop-types';
 
 class OwnerPropducts extends React.Component{
-    state = {
-        ownerProperties: [],
-    }
-
-    componentDidMount(){
+    static propTypes = {
+        property: propertiesShape
     }
 
 render(){
+    const {property} = this.props;
+    console.log(property);
     return(
         <div>
-
+           
         </div>
     )
 }
