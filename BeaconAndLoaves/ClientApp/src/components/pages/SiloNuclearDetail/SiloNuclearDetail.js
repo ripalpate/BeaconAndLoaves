@@ -77,8 +77,9 @@ class SiloNuclearDetail extends React.Component {
     this.props.history.push('/properties/siloNuclears');
   }
   
-  OwnerProductView = () => {
-    this.props.history.push(`/ownerProducts`);
+  OwnerProductView = (e) => {
+    const ownerId = e.target.dataset.owner;
+    this.props.history.push(`/ownerProperties/${ownerId}`);
   }
 
   render() {
@@ -109,7 +110,7 @@ class SiloNuclearDetail extends React.Component {
             <p>{siloNuclear.city}, {siloNuclear.state} - {siloNuclear.zipCode}</p>
             <p>{siloNuclear.description}</p>
             <p>${siloNuclear.price}/per night</p>
-            <p className="owner-name" onClick = {this.OwnerProductView}>Owned By: {siloNuclear.name}</p>
+            <p className="owner-name" onClick = {this.OwnerProductView} data-owner={siloNuclear.ownerId}>Owned By: {siloNuclear.name}</p>
             <button className="btn btn-primary mr-2">Rent</button>
             {makeLikedPropertyButton()}
           </div>

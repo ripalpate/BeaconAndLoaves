@@ -23,7 +23,7 @@ import MyNavbar from '../components/MyNavbar/MyNavbar';
 import LikedProperties from '../components/pages/LikedProperties/LikedProperties';
 import authRequests from '../helpers/data/authRequests';
 import connection from '../helpers/data/connection';
-import OwnerPropducts from '../components/pages/OwnerProducts/OwnerProducts';
+import OwnerProperties from '../components/pages/OwnerProperties/OwnerProperties';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
@@ -106,7 +106,7 @@ export default class App extends Component {
                   <PrivateRoute exact path="/siloNuclears/:id" authed={this.state.authed} component={SiloNuclearDetail}/>
                   <PrivateRoute path="/likedProperties" authed={this.state.authed} component={LikedProperties}/>
                   <PrivateRoute path="/addProperty" authed={this.state.authed} component={AddEditProperty}/>
-                  <PrivateRoute exact path="/ownerProducts" component={OwnerPropducts} authed={this.state.authed}/>
+                  <PrivateRoute exact path="/ownerProperties/:id" component={OwnerProperties} authed={this.state.authed}/>
                 </Switch>
           </React.Fragment>
         </BrowserRouter>

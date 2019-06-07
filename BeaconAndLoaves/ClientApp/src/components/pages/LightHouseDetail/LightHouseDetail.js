@@ -1,16 +1,13 @@
 import React from 'react';
 import './LightHouseDetail.scss';
 import smashRequests from '../../../helpers/data/smashRequests';
-import userRequests from '../../../helpers/data/userRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
-import OwnerPropducts from '../OwnerProducts/OwnerProducts';
 
 class LightHouseDetail extends React.Component {
   state = {
     currentLikedProperty:[],
     lightHouse: [],
-    isLiked: false,
-    properties: []
+    isLiked: false
   }
 
   //get Propertydetails with owner name and hold isLiked state
@@ -87,24 +84,12 @@ class LightHouseDetail extends React.Component {
   }
 
   OwnerProductView = (e) => {
-    const getOwnerId = e.target.dataset.owner;
-    userRequests.getUserProperties(getOwnerId)
-    .then((properties)=> {
-      this.setState({properties});
-      console.log(properties);
-      this.props.history.push('/ownerProducts');
-    })
+    const ownerId = e.target.dataset.owner;
+    this.props.history.push(`/ownerProperties/${ownerId}`);
   }
 
   render() {
-    const{lightHouse, isLiked, properties}= this.state;
-
-    const singleOwnerPropertyComponent = properties.map(property => (
-      <OwnerPropducts
-      property={property}
-      key = {property.id}
-      />
-    ));
+    const{lightHouse, isLiked}= this.state;
 
     const makeLikedPropertyButton = () => {
       if(lightHouse.isOwner === false && isLiked === false){
@@ -136,7 +121,6 @@ class LightHouseDetail extends React.Component {
             <button className="btn btn-primary mr-2">Rent</button>
             {makeLikedPropertyButton()}
           </div>
-          <div>{singleOwnerPropertyComponent}</div>
         </div>
       </div>
     );
