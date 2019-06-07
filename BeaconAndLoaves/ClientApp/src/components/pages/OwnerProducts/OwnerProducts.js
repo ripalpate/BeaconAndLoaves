@@ -1,12 +1,16 @@
 import React from 'react';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
+import propertiesShape from '../../../helpers/propz/propertiesShape';
 
 class OwnerPropducts extends React.Component{
     state = {
         ownerProperties: [],
+        properties: propertiesShape
     }
 
     getOwnerProducts = () => {
+        const {properties} = this.props;
+        console.log(properties);
         propertiesRequests.getProperties()
         .then((properties)=>{
            const getduplicateOwnerIds = properties
