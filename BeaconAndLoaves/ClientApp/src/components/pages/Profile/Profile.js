@@ -2,6 +2,7 @@ import React from 'react';
 import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import WarningModal from '../WarningModal/WarningModal';
+import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 
 import './Profile.scss';
 
@@ -110,6 +111,19 @@ class Profile extends React.Component {
   paymentView = () => {
     this.props.history.push('/paymentMethod');
   }
+
+  singlePaymentView = () => {
+    this.props.history.push('/SinglePaymentMethodScreen');
+  }
+
+  getUserPaymentAccount = (e) => {
+    const id = e.target.value;
+    paymentMethodRequests.getSingleUserPayment(id)
+      .then((paymentAccount) => {
+        this.setState({ paymentAccount })
+        console.log(paymentAccount.data);
+      });
+  };
 
   formSubmit = (e) => {
     e.preventDefault();
@@ -288,7 +302,7 @@ class Profile extends React.Component {
         return (
           <div>
             <span>Payment Accounts:
-              <select id="account" className="custom-select mb-2" onChange={this.dropdownSelect}>
+              <select id="account" className="custom-select mb-2" onChange={this.getUserPaymentAccount}>
               <option defaultValue>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
