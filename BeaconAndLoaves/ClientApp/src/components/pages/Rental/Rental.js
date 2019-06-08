@@ -42,7 +42,8 @@ class Rental extends React.Component {
       this.setState({ rentalTotal });
     }
 
-    rentProperty = () => {
+    rentProperty = (e) => {
+      e.preventDefault();
       const {
         rental,
         propertyToRent,
@@ -95,7 +96,7 @@ class Rental extends React.Component {
 
       const makeDropdowns = () => (<div>
              <span>Payment Accounts:
-                <select className="custom-select mb-2" id="account" onChange={this.handlePaymentAccountChange}>
+                <select name="account" className="custom-select mb-2" required id="account" onChange={this.handlePaymentAccountChange}>
                 <option defaultValue>Select Payment Account</option>
                   {
                   paymentAccounts.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
@@ -116,6 +117,9 @@ class Rental extends React.Component {
                 <div id="start">
                     <label>Start Date </label>
                     <DatePicker
+                        selectsStart
+                        startDate={this.state.startDate}
+                        endDate={this.state.endDate}                    
                         className="ml-3"
                         selected={this.state.startDate}
                         onChange={this.handleStartChange}
@@ -124,6 +128,10 @@ class Rental extends React.Component {
                 <div id="end">
                     <label>End Date </label>
                     <DatePicker
+                        selectsEnd
+                        startDate={this.state.startDate}
+                        endDate={this.state.endDate}
+                        minDate={this.state.startDate}
                         className="ml-3"
                         selected={this.state.endDate}
                         onChange={this.handleEndChange}
