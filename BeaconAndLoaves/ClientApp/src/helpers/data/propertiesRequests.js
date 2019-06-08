@@ -15,7 +15,7 @@ const getProperties = () => new Promise((resolve, reject) => {
 const getSingleProperty = propertyId => new Promise((resolve, reject) => {
   axios.get(`${apiUrl}/${propertyId}`)
     .then((result) => {
-\      const singleProperty = result.data;
+      const singleProperty = result.data;
       singleProperty.id = propertyId;
       resolve(singleProperty);
     }).catch(err => reject(err));
