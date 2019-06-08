@@ -120,6 +120,7 @@ class SinglePaymentMethodScreen extends React.Component {
       currentPaymentMethod,
       isEditing,
       paymentTypes,
+      paymentAccount
     } = this.state;
 
     const {
@@ -143,25 +144,7 @@ class SinglePaymentMethodScreen extends React.Component {
         );
               }
 
-const makeModal = () => {
-              return (
-                <div>
-                  <Modal isOpen={modal} toggle={this.toggleEvent} className="modal-lg">
-                    <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>Achtung!!!</ModalHeader>
-                    <ModalBody className="text-center modal-body">
-                        Are you sure you want to do that?
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button onClick={deleteProfile}>
-                          <i className="fas fa-trash fa-2x"></i>
-                      </Button>
-                    </ModalFooter>
-                  </Modal>
-                </div>
-              );
-}
-
-    const makePaymentMethodCard = () => {
+    const makePaymentMethodCard = (currentPaymentMethod) => {
       if (isEditing) {
         return (
               <form className="row edit-form-container border border-dark rounded" onSubmit={this.formSubmit}>
@@ -247,7 +230,7 @@ const makeModal = () => {
         );
       }
       return (
-        <Modal isOpen={modal} toggle={this.toggleEvent} className="modal-lg">
+        <Modal isOpen={modal} toggle={this.toggleEvent} paymentAccount={paymentAccount} className="modal-lg">
         <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>{currentPaymentMethod.accountName}}</ModalHeader>
         <ModalBody className="text-center modal-body">
         <div className="paymentMethod-card border border-dark rounded" id={currentPaymentMethod.id}>

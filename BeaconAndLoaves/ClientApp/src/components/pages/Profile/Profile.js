@@ -3,18 +3,8 @@ import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import WarningModal from '../WarningModal/WarningModal';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
-import SinglePaymentMethodScreen from '../SinglePaymentMethod/SinglePaymentMethod';
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from 'reactstrap';
-import PropTypes from 'prop-types';
 
 import './Profile.scss';
-
 
 class Profile extends React.Component {
   state = {
@@ -121,17 +111,12 @@ class Profile extends React.Component {
     this.props.history.push('/paymentMethod');
   }
 
-  singlePaymentView = () => {
-    this.props.history.push('/SinglePaymentMethodScreen');
-  }
-
   getUserPaymentAccount = (e) => {
     const id = e.target.value;
     paymentMethodRequests.getSingleUserPayment(id)
       .then((paymentAccount) => {
         this.setState({ paymentAccount })
         console.log(paymentAccount.data);
-        SinglePaymentMethodScreen.makePaymentMethodCard();
       });
   };
 
