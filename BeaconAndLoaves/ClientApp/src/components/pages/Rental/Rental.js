@@ -113,6 +113,9 @@ class Rental extends React.Component {
                 </div>
                 <div className="ml-1">Total: ${rentalTotal}</div>
                 <div>{makeDropdowns()}</div>
+                <div>
+                <button className="bttn-pill bttn-md bttn-primary mb-3">Rent It!</button>
+                </div>
             </div>
         </div>
       );
