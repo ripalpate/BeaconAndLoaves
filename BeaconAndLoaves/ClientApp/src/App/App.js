@@ -24,6 +24,7 @@ import LikedProperties from '../components/pages/LikedProperties/LikedProperties
 import Rental from '../components/pages/Rental/Rental';
 import authRequests from '../helpers/data/authRequests';
 import connection from '../helpers/data/connection';
+import OwnerProperties from '../components/pages/OwnerProperties/OwnerProperties';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
@@ -107,6 +108,7 @@ export default class App extends Component {
                   <PrivateRoute path="/likedProperties" authed={this.state.authed} component={LikedProperties}/>
                   <PrivateRoute path="/addProperty" authed={this.state.authed} component={AddEditProperty}/>
                   <PrivateRoute exact path="/rental/:id" authed={this.state.authed} component={Rental}/>
+                  <PrivateRoute exact path="/ownerProperties/:id" component={OwnerProperties} authed={this.state.authed}/>
                 </Switch>
           </React.Fragment>
         </BrowserRouter>

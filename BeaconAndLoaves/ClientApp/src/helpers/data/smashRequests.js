@@ -15,6 +15,25 @@ const getAllPropertiesWithOwnerInfo = () => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
+// const getProducts = () => new Promise((resolve,reject) => {
+//   let users = [];
+//   userRequests.getAllUsers()
+//     .then((usrs) => {
+//       users = usrs;
+//      // console.log(users);
+//       propertiesRequests.getProperties()
+//       .then((properties)=>{
+//         users.forEach((user) => {
+//           const matchingProp = properties.filter(x => x.ownerId === user.id);
+//           users.push(matchingProp);     
+//       })
+//       console.log(users);
+// })
+//    })
+// });
+
+
 export default {
-  getAllPropertiesWithOwnerInfo
+  getAllPropertiesWithOwnerInfo,
+ // getProducts
 }
