@@ -60,7 +60,7 @@ class LightHouses extends React.Component {
 
   onEnter = () => {
     const { lightHouses } = this.state;
-    this.setState({ isSearching: false, filteredLightHouses: lightHouses });
+    this.setState({ isSearching: false, filteredLightHouses:lightHouses });
   }
   sortProperties =() => {
     const {ascendingOrder, lightHouses} = this.state;
@@ -97,7 +97,7 @@ class LightHouses extends React.Component {
               placeholder="Search By name, city or state"
               onChange={ this.onChange }
               searchText=""
-              classNames="test-class w-50 animated slideInRight"
+              classNames="test-class w-50"
               onEnter={this.onEnter}
             />
           );
@@ -132,24 +132,22 @@ class LightHouses extends React.Component {
     }
     return (
       <div>
-        <div>
-        <button
-              id="search-btn"
-              type="button"
-              className="bttn-material-circle bttn-sm bttn-primary ml-2"
-              onClick={this.toggleSearch}>
-              <i className="fas fa-search" />
-            </button>
-            <Tooltip placement="right" isOpen={this.state.searchTipOpen} target="search-btn" toggle={this.toggleSearchTip}>
-              Search lightHouses
-            </Tooltip>
-        </div>
-        <div>
-          {makeLatestButton()}
-          {makeSearch()}
+        <div className="serach-sort-container">
+          <button
+            id="search-btn"
+            type="button"
+            className="bttn-material-circle bttn-sm bttn-primary ml-2"
+            onClick={this.toggleSearch}>
+            <i className="fas fa-search" />
+          </button>
+          <Tooltip placement="right" isOpen={this.state.searchTipOpen} target="search-btn" toggle={this.toggleSearchTip}>
+            Search lightHouses
+          </Tooltip>
+            {makeLatestButton()}
+            {makeSearch()}
         </div>
         <div className="lightHouses row">
-          <div className = "lightHouseContainer d-flex mx-auto mt-5">{singleLightHouseComponent}</div>
+          <div className = "lightHouseContainer d-flex mx-auto mt-3">{singleLightHouseComponent}</div>
         </div>
       </div>
     );
