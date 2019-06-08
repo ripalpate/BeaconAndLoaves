@@ -14,10 +14,11 @@ const defaultProperty = {
     price: '',
   };
 
-class AddEditProperty extends React.Component {
+class EditProperty extends React.Component {
     state = {
-      newProperty: defaultProperty,
+      editedProperty: defaultProperty,
       currentUser: [],
+      editId: '-1',
       }
 
       componentDidMount(){
@@ -25,20 +26,30 @@ class AddEditProperty extends React.Component {
         userRequests.getSingleUser(uid)
           .then((currentUser) => {
             this.setState({ currentUser:currentUser.data });
-          });
+          })
+        this.getSinglePropertyToEdit();
       }
     
+      getSinglePropertyToEdit = () => {
+          const propertyId = this.props.match.params.id;
+          propertiesRequests.getSingleProperty(propertyId)
+          .then((property)=>{
+              this.setState({editedProperty: property});
+              this.setState({editId: propertyId});
+          }).catch(err => console.error(err));
+      }
+
       formFieldStringState = (name, e) => {
         e.preventDefault();
-        const tempProperty = { ...this.state.newProperty };
+        const tempProperty = { ...this.state.editedProperty };
         tempProperty[name] = e.target.value;
-        this.setState({ newProperty: tempProperty });
+        this.setState({ editedProperty: tempProperty });
       }
     
       formFieldNumberState = (number, e) => {
-        const tempProperty = { ...this.state.newProperty };
+        const tempProperty = { ...this.state.editedProperty };
         tempProperty[number] = e.target.value * 1;
-        this.setState({ newProperty: tempProperty });
+        this.setState({ editedProperty: tempProperty });
       }
 
       propertyNameChange = e => this.formFieldStringState('propertyName', e);
@@ -59,8 +70,9 @@ class AddEditProperty extends React.Component {
     
       typeChange = e => this.formFieldNumberState('type', e);
 
-      formSubmitEvent = (newProperty) => {
-        propertiesRequests.createProperty(newProperty)
+      formSubmitEvent = (editedProperty) => {
+        const { editId } = this.state;
+        propertiesRequests.updateProperty(editId, editedProperty)
           .then(() => {
             this.props.history.push('/properties');
           }).catch(err => console.error(err));
@@ -68,15 +80,15 @@ class AddEditProperty extends React.Component {
     
       formSubmit = (e) => {
         e.preventDefault();
-        const myProperty = { ...this.state.newProperty };
+        const myProperty = { ...this.state.editedProperty };
+        //delete myProperty.id;
         myProperty.ownerId = this.state.currentUser.id;
         this.formSubmitEvent(myProperty);
-        this.setState({ newProperty: defaultProperty });
+        this.setState({ editedProperty: defaultProperty });
       }
-    
-    
+
       render() {
-        const { newProperty } = this.state;
+        const { editedProperty } = this.state;
         return (
           <div className="NewProperty">
             <h3>Add Property</h3>
@@ -89,9 +101,8 @@ class AddEditProperty extends React.Component {
                   id="propertyName"
                   aria-describedby="nameHelp"
                   placeholder="Rock Bean Lighthouse"
-                  value= {newProperty.propertyName}
+                  value= {editedProperty.propertyName}
                   onChange= {this.propertyNameChange}
-                  required
                 />
               </div>
               <div className="form-group">
@@ -99,9 +110,8 @@ class AddEditProperty extends React.Component {
                     <select 
                     className="form-control" 
                     id="type"
-                    value= {newProperty.type}
+                    value= {editedProperty.type}
                     onChange= {this.typeChange}
-                    required
                     >
                         <option value="0">Lighthouse</option>
                         <option value="1">Silo Nuclear</option>
@@ -115,7 +125,7 @@ class AddEditProperty extends React.Component {
                   id="street"
                   aria-describedby="streetHelp"
                   placeholder="123 Main St"
-                  value= {newProperty.street}
+                  value= {editedProperty.street}
                   onChange= {this.streetChange}
                   required
                 />
@@ -128,7 +138,7 @@ class AddEditProperty extends React.Component {
                   id="city"
                   aria-describedby="cityHelp"
                   placeholder="Nashville"
-                  value= {newProperty.city}
+                  value= {editedProperty.city}
                   onChange= {this.cityChange}
                   required
                 />
@@ -141,7 +151,7 @@ class AddEditProperty extends React.Component {
                   id="state"
                   aria-describedby="stateHelp"
                   placeholder="TN"
-                  value= {newProperty.state}
+                  value= {editedProperty.state}
                   onChange= {this.stateChange}
                   required
                 />
@@ -154,7 +164,7 @@ class AddEditProperty extends React.Component {
                   id="zipCode"
                   aria-describedby="zipCodeHelp"
                   placeholder="12345"
-                  value= {newProperty.zipCode}
+                  value= {editedProperty.zipCode}
                   onChange= {this.zipCodeChange}
                   required
                 />
@@ -164,7 +174,7 @@ class AddEditProperty extends React.Component {
                 <textarea 
                   className="form-control"   
                   id="description"  
-                  value= {newProperty.description}
+                  value= {editedProperty.description}
                   onChange= {this.descriptionChange} 
                   rows="5"
                   required
@@ -179,7 +189,7 @@ class AddEditProperty extends React.Component {
                   id="imageUrl"
                   aria-describedby="imageHelp"
                   placeholder="www.jrekjr.jpg"
-                  value= {newProperty.imageUrl}
+                  value= {editedProperty.imageUrl}
                   onChange= {this.imageChange}
                   required
                 />
@@ -192,16 +202,16 @@ class AddEditProperty extends React.Component {
                   id="price"
                   aria-describedby="priceHelp"
                   placeholder="1000.50"
-                  value = {newProperty.price}
+                  value = {editedProperty.price}
                   onChange = {this.priceChange}
                   required
                 />
               </div>
-              <button className="btn btn-success">Save Property</button>
+              <button className="btn btn-success"> <i className="fas fa-check-square fa-2x"/></button>
             </form>
           </div>
         );
       }
 }
 
-export default AddEditProperty;
+export default EditProperty;

@@ -87,10 +87,17 @@ class LightHouseDetail extends React.Component {
     this.getPropertyWithOwnerName();
   }
 
-  OwnerProductView = (e) => {
+  OwnerPropertiesView = (e) => {
     const ownerId = e.target.dataset.owner;
     this.props.history.push(`/ownerProperties/${ownerId}`);
   }
+
+  editEvent = (e) => {
+    e.preventDefault();
+    const propertyId = e.target.dataset.propertyId;
+    this.props.history.push(`/editProperty/${propertyId}`);
+  }
+
 
   render() {
     const { lightHouse, isLiked } = this.state;
@@ -110,7 +117,7 @@ class LightHouseDetail extends React.Component {
     const makebutton = () => {
       if(lightHouse.isOwner === true){
         return(
-          <i className="far fa-edit edit-icon fa-2x float-right"/>
+          <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x float-right"/>
         );
       }
     }
@@ -129,7 +136,7 @@ class LightHouseDetail extends React.Component {
             <p>{lightHouse.city}, {lightHouse.state} - {lightHouse.zipCode}</p>
             <p>{lightHouse.description}</p>
             <p>${lightHouse.price}/per night</p>
-            <p className="owner-name" onClick = {this.OwnerProductView} data-owner={lightHouse.ownerId}>Owned By: {lightHouse.name}</p>
+            <p className="owner-name" onClick = {this.OwnerPropertiesView} data-owner={lightHouse.ownerId}>Owned By: {lightHouse.name}</p>
             <button id={lightHouse.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.rentProperty}>Rent Me!!!</button>
             {makebutton()}
             {makeLikedPropertyButton()}

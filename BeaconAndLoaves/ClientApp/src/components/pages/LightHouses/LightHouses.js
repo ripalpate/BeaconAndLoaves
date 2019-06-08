@@ -11,7 +11,7 @@ class LightHouses extends React.Component {
     ascendingOrder: false,
     filteredLightHouses: [],
     isSearching: false,
-    searchTipOpen: false
+    searchTipOpen: false,
   }
 
   getAllLightHouses = () => {
@@ -58,7 +58,7 @@ class LightHouses extends React.Component {
     }
   }
 
-  onEnter = () => {
+  searchOnEnter = () => {
     const { lightHouses } = this.state;
     this.setState({ isSearching: false, filteredLightHouses:lightHouses });
   }
@@ -85,6 +85,7 @@ class LightHouses extends React.Component {
     this.sortProperties();
   }
 
+
   render() {
      const {  
       ascendingOrder,
@@ -99,7 +100,7 @@ class LightHouses extends React.Component {
               onChange={ this.onChange }
               searchText=""
               classNames="test-class w-50"
-              onEnter={this.onEnter}
+              onEnter={this.searchOnEnter}
             />
           );
         }
