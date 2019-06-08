@@ -98,7 +98,7 @@ class LightHouseDetail extends React.Component {
     const makeLikedPropertyButton = () => {
       if (lightHouse.isOwner === false && isLiked === false) {
         return (
-          <button className="btn" onClick={this.changeIsLikedState}><i id="!isLiked" className="far fa-heart fa-2x"/></button>
+          <button className="btn float-right" onClick={this.changeIsLikedState}><i id="!isLiked" className="far fa-heart fa-2x"/></button>
         );
       } if (lightHouse.isOwner === false && isLiked === true) {
         return (
@@ -121,13 +121,8 @@ class LightHouseDetail extends React.Component {
             <p>{lightHouse.city}, {lightHouse.state} - {lightHouse.zipCode}</p>
             <p>{lightHouse.description}</p>
             <p>${lightHouse.price}/per night</p>
-<<<<<<< HEAD
-            <p>Owned By: {lightHouse.name}</p>
-            <button id={lightHouse.id} className="btn btn-primary mr-2" onClick={this.rentProperty}>Rent</button>
-=======
             <p className="owner-name" onClick = {this.OwnerProductView} data-owner={lightHouse.ownerId}>Owned By: {lightHouse.name}</p>
-            <button className="btn btn-primary mr-2">Rent</button>
->>>>>>> master
+            <button id={lightHouse.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.rentProperty}>Rent Me!!!</button>
             {makeLikedPropertyButton()}
           </div>
         </div>

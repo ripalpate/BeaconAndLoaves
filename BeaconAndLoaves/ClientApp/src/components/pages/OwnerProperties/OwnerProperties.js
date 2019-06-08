@@ -7,6 +7,10 @@ class OwnerPropducts extends React.Component{
         properties: [],
     }
 
+    rentProperty = (propertyId) => {
+        this.props.history.push(`/rental/${propertyId}`);
+      }
+
     getOwnerProperties =() => {
         const ownerId =  this.props.match.params.id;
         userRequests.getUserProperties(ownerId)
@@ -29,6 +33,7 @@ render(){
         <SingleOwnerProperty
         property={property}
         key = {property.id}
+        rentProperty ={this.rentProperty}
         />
       ));
     return(
