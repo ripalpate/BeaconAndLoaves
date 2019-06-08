@@ -16,6 +16,7 @@ class Rental extends React.Component {
       paymentAccounts: [],
       currentUser: {},
       paymentAccount: 0,
+      rentalTotal: 0,
     }
 
     handleStartChange = (date) => {
@@ -24,11 +25,20 @@ class Rental extends React.Component {
 
     handleEndChange = (date) => {
       this.setState({ endDate: date });
+      this.figureTotal();
     }
 
     handlePaymentAccountChange = (e) => {
       const paymentAccount = e.target.value;
       this.setState({ paymentAccount });
+    }
+
+    figureTotal = () => {
+      const { startDate, endDate, propertyToRent } = this.state;
+      const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      const rentalTotal = diffDays * propertyToRent.price;
+      this.setState({ rentalTotal });
     }
 
     getUserPaymentAccounts = () => {
@@ -63,7 +73,7 @@ class Rental extends React.Component {
     }
 
     render() {
-      const { propertyToRent, paymentAccounts } = this.state;
+      const { propertyToRent, paymentAccounts, rentalTotal } = this.state;
 
       const makeDropdowns = () => (<div>
              <span>Payment Accounts:
@@ -101,7 +111,7 @@ class Rental extends React.Component {
                         onChange={this.handleEndChange}
                     />
                 </div>
-                <div className="ml-1">Total: $</div>
+                <div className="ml-1">Total: ${rentalTotal}</div>
                 <div>{makeDropdowns()}</div>
             </div>
         </div>
