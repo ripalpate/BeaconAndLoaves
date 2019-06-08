@@ -1,22 +1,68 @@
 import React from 'react';
 import SingleSiloNuclear from '../SingleSiloNuclear/SingleSiloNuclear';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
+import SearchField from 'react-search-field';
+import { Tooltip } from 'reactstrap';
+import './SiloNuclears.scss';
 
 class SiloNuclears extends React.Component {
   state = {
     siloNuclears: [],
-    ascendingOrder: false
+    ascendingOrder: false,
+    filteredSiloNuclears: [],
+    isSearching: false,
+    searchTipOpen: false
   }
 
-  componentDidMount()
-  {
+  getSiloNuclears = () => {
     propertiesRequests.getProperties()
       .then((properties) => {
         const siloNuclears = properties.filter(property => property.type === 1);
         this.setState({ siloNuclears });
+        this.setState({ filteredSiloNuclears: siloNuclears });
       }).catch(err => console.error(err));
+  }
 
-      this.sortProperties();
+  componentDidMount()
+  {
+    this.getSiloNuclears();
+    this.sortProperties();
+  }
+
+  toggleSearch = () => {
+    const { isSearching, siloNuclears } = this.state;
+    this.setState({ isSearching: !isSearching, filteredSiloNuclears: siloNuclears });
+  }
+
+  toggleSearchTip = () => {
+    const { searchTipOpen } = this.state;
+    this.setState({
+      searchTipOpen: !searchTipOpen,
+    });
+  }
+
+  
+  onChange = (value, event) => {
+    const { siloNuclears } = this.state;
+    const filteredSiloNuclears = [];
+    event.preventDefault();
+    if (!value) {
+      this.setState({ filteredSiloNuclears: siloNuclears });
+    } else {
+      siloNuclears.forEach((siloNuclear) => {
+        if (siloNuclear.propertyName.toLowerCase().includes(value.toLowerCase()) || siloNuclear.city.toLowerCase().includes(value.toLowerCase()) 
+        || siloNuclear.state.toLowerCase().includes(value.toLowerCase())) {
+          filteredSiloNuclears.push(siloNuclear);
+        }
+        this.setState({ filteredSiloNuclears });
+      });
+    }
+  }
+
+  
+  onEnter = () => {
+    const { siloNuclears } = this.state;
+    this.setState({ isSearching: false, filteredSiloNuclears: siloNuclears });
   }
 
   sortProperties =() => {
@@ -42,8 +88,24 @@ class SiloNuclears extends React.Component {
   }
 
   render() {
-    const { ascendingOrder, siloNuclears } = this.state;
-    const singleSiloNuclearComponent = siloNuclears.map(siloNuclear => (
+    const { ascendingOrder, filteredSiloNuclears, isSearching } = this.state;
+
+    const makeSearch = () => {
+      if (isSearching) {
+        return (
+          <SearchField
+            placeholder="Search By name, city or state"
+            onChange={ this.onChange }
+            searchText=""
+            classNames="test-class w-50"
+            onEnter={this.onEnter}
+          />
+        );
+      }
+
+      return (<div></div>);
+    };
+    const singleSiloNuclearComponent = filteredSiloNuclears.map(siloNuclear => (
       <SingleSiloNuclear
       siloNuclear={siloNuclear}
       key = {siloNuclear.id}
@@ -70,7 +132,20 @@ class SiloNuclears extends React.Component {
     }
     return (
       <div>
-        {makeLatestButton()}
+        <div className="serach-sort-container">
+          <button
+            id="search-btn"
+            type="button"
+            className="bttn-material-circle bttn-sm bttn-primary ml-2"
+            onClick={this.toggleSearch}>
+            <i className="fas fa-search" />
+          </button>
+          <Tooltip placement="right" isOpen={this.state.searchTipOpen} target="search-btn" toggle={this.toggleSearchTip}>
+            Search Silo Nuclears
+          </Tooltip>
+            {makeLatestButton()}
+            {makeSearch()}
+        </div>
         <div className="siloNuclears row mt-5">
           <h3 className = "d-flex mx-auto mt-5">{ singleSiloNuclearComponent}</h3>
         </div>

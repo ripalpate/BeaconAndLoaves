@@ -62,6 +62,7 @@ class LightHouses extends React.Component {
     const { lightHouses } = this.state;
     this.setState({ isSearching: false, filteredLightHouses:lightHouses });
   }
+  
   sortProperties =() => {
     const {ascendingOrder, lightHouses} = this.state;
     if(ascendingOrder === false){
