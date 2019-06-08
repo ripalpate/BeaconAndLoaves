@@ -2,6 +2,14 @@ import React from 'react';
 import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from 'reactstrap';
+import PropTypes from 'prop-types';
 
 import './SinglePaymentMethod.scss';
 
@@ -16,7 +24,6 @@ const defaultPaymentMethod = {
 };
 
 class SinglePaymentMethodScreen extends React.Component {
-
   state = {
     currentUser: {},
     currentPaymentMethod: {},
@@ -81,12 +88,12 @@ class SinglePaymentMethodScreen extends React.Component {
       });
   };
 
-  getUserPaymentAccounts = () => {
-    const { currentUser } = this.state;
-    const uid = currentUser.id;
-    userRequests.getUserPaymentAccounts(uid)
-      .then((paymentAccounts) => {
-        this.setState({ paymentAccounts });
+  getUserPaymentAccount = (e) => {
+    const id = e.target.value;
+    paymentMethodRequests.getSingleUserPayment(id)
+      .then((paymentAccount) => {
+        this.setState({ paymentAccount })
+        console.log(paymentAccount);
       });
   };
 
@@ -115,6 +122,11 @@ class SinglePaymentMethodScreen extends React.Component {
       paymentTypes,
     } = this.state;
 
+    const {
+      modal,
+      deleteProfile,
+    } = this.props;
+
     const makeDropdowns = () => {
       let counter = 0;
         return (
@@ -130,6 +142,24 @@ class SinglePaymentMethodScreen extends React.Component {
           </div>
         );
               }
+
+const makeModal = () => {
+              return (
+                <div>
+                  <Modal isOpen={modal} toggle={this.toggleEvent} className="modal-lg">
+                    <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>Achtung!!!</ModalHeader>
+                    <ModalBody className="text-center modal-body">
+                        Are you sure you want to do that?
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button onClick={deleteProfile}>
+                          <i className="fas fa-trash fa-2x"></i>
+                      </Button>
+                    </ModalFooter>
+                  </Modal>
+                </div>
+              );
+}
 
     const makePaymentMethodCard = () => {
       if (isEditing) {
@@ -217,12 +247,16 @@ class SinglePaymentMethodScreen extends React.Component {
         );
       }
       return (
+        <Modal isOpen={modal} toggle={this.toggleEvent} className="modal-lg">
+        <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>{currentPaymentMethod.accountName}}</ModalHeader>
+        <ModalBody className="text-center modal-body">
         <div className="paymentMethod-card border border-dark rounded" id={currentPaymentMethod.id}>
-          <h3 className="text-center">{currentPaymentMethod.accountName}</h3>
           <div className="ml-1">Account Number: {currentPaymentMethod.accountNumber}</div>
           <div className="ml-1">Exp Date: {currentPaymentMethod.expirationDate}</div>
-          <div className="ml-1">CVV: {currentPaymentMethod.CVV}</div>
-        </div>
+          <div className="ml-1">CVV: {currentPaymentMethod.CVV}</div>  
+          </div>      
+        </ModalBody>
+        </Modal>        
       );
     };
 

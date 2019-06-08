@@ -13,7 +13,7 @@ import Home from '../components/pages/Home/Home';
 import Profile from '../components/pages/Profile/Profile';
 import Properties from '../components/pages/Properties/Properties';
 import PaymentMethod from '../components/pages/PaymentMethod/PaymentMethod';
-import SinglePaymentMethodScreen from '../components/pages/SinglePaymentMethod/SinglePaymentMethodv2';
+import SinglePaymentMethodScreen from '../components/pages/SinglePaymentMethod/SinglePaymentMethod';
 import PaymentMethodBTC from '../components/pages/PaymentMethod/PaymentMethodBTC';
 import LightHouses from '../components/pages/LightHouses/LightHouses';
 import SiloNuclears from '../components/pages/SiloNuclears/SiloNuclears';

@@ -3,6 +3,15 @@ import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import WarningModal from '../WarningModal/WarningModal';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
+import SinglePaymentMethodScreen from '../SinglePaymentMethod/SinglePaymentMethod';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from 'reactstrap';
+import PropTypes from 'prop-types';
 
 import './Profile.scss';
 
@@ -122,6 +131,7 @@ class Profile extends React.Component {
       .then((paymentAccount) => {
         this.setState({ paymentAccount })
         console.log(paymentAccount.data);
+        SinglePaymentMethodScreen.makePaymentMethodCard();
       });
   };
 
