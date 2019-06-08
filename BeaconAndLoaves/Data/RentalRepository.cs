@@ -31,6 +31,20 @@ namespace BeaconAndLoaves.Data
             }
         }
 
+        public IEnumerable<Rental> GetRentalsByPropertyId(int propertyId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var rentals = db.Query<Rental>(@"
+                    select * 
+                    from rentals,
+                    where rentals.propertyId = @propertyId
+                    ").ToList();
+
+                return rentals;
+            }
+        }
+
 
         public Rental AddRental(int propertyId, int userId, int userPaymentId,
             DateTime startDate, DateTime endDate, decimal rentalAmount)

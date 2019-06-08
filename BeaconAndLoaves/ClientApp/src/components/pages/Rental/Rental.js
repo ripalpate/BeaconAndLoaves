@@ -27,6 +27,7 @@ class Rental extends React.Component {
       paymentAccount: 0,
       rentalTotal: 0,
       rental: defaultRental,
+      rentals: [],
     }
 
     handleStartChange = (date) => {
@@ -92,6 +93,14 @@ class Rental extends React.Component {
         });
     };
 
+    getAllRentalsByProperty = () => {
+      const propertyId = this.props.match.params.id;
+      rentalRequests.getAllRentalsByPropertyId(propertyId)
+        .then((rentals) => {
+          this.setState({ rentals });
+        });
+    }
+
     getPropertyToRent = () => {
       const propertyId = this.props.match.params.id;
       propertiesRequests.getSingleProperty(propertyId)
@@ -103,10 +112,16 @@ class Rental extends React.Component {
     componentDidMount() {
       this.getPropertyToRent();
       this.getUser();
+      this.getAllRentalsByProperty();
     }
 
     render() {
-      const { propertyToRent, paymentAccounts, rentalTotal } = this.state;
+      const {
+        propertyToRent,
+        paymentAccounts,
+        rentalTotal,
+        rentals,
+      } = this.state;
 
       const makeDropdowns = () => (
         <div>
@@ -119,6 +134,10 @@ class Rental extends React.Component {
             </select>
           </span>
         </div>);
+
+      const bookedDays = () => {
+        
+      };
 
       return (
         <div className="text-center rental-div mx-auto">
@@ -137,6 +156,7 @@ class Rental extends React.Component {
                         selectsStart
                         startDate={this.state.startDate}
                         endDate={this.state.endDate}
+                        excludeDates={[new Date(), bookedDays()]}
                         onChange={this.handleStartChange}
                     />
                 </div>

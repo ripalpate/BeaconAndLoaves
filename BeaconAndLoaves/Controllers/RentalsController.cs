@@ -60,12 +60,20 @@ namespace BeaconAndLoaves.Controllers
             return Ok(rentals);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("property/{id}")]
         public ActionResult GetSingleRental(int id)
         {
             var rentalById = _repository.GetSingleRental(id);
 
             return Ok(rentalById);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetRentalsByPropertyId(int id)
+        {
+            var rentalsByPropertyId = _repository.GetRentalsByPropertyId(id);
+
+            return Ok(rentalsByPropertyId);
         }
 
 
