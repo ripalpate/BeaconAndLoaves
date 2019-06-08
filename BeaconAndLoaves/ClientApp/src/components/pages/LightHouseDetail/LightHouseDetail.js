@@ -100,20 +100,18 @@ class LightHouseDetail extends React.Component {
         return (
           <button className="btn float-right" onClick={this.changeIsLikedState}><i id="!isLiked" className="far fa-heart fa-2x"/></button>
         );
-      } if (lightHouse.isOwner === false && isLiked === true) {
+      } else if (lightHouse.isOwner === false && isLiked === true) {
         return (
-          <button className="btn" onClick={this.changeIsLikedState}><i id="isLiked" className="far fa-heart fa-2x"/></button>
+          <button className="btn float-right" onClick={this.changeIsLikedState}><i id="isLiked" className="far fa-heart fa-2x"/></button>
         );
-      }
+      } 
     };
 
     const makebutton = () => {
       if(lightHouse.isOwner === true){
         return(
-          <button id='lightHouse-edit' className="btn m-1">
-              <i className="far fa-edit fa-2x"/>
-            </button>
-        )
+          <i className="far fa-edit edit-icon fa-2x float-right"/>
+        );
       }
     }
     return (
