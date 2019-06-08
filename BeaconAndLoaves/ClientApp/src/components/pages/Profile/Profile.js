@@ -3,6 +3,7 @@ import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import WarningModal from '../WarningModal/WarningModal';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
+import SinglePaymentMethodModal from '../SinglePaymentMethodModal/SinglePaymentMethodModal';
 
 import './Profile.scss';
 
@@ -16,12 +17,33 @@ class Profile extends React.Component {
     selectedAccount: 0,
     selectedProperty: 0,
     modal: false,
+    paymentModal: false,
+    paymentAccount: {},
   }
+
+  
+paymentAccount = {
+  accountName: '',
+  userId: 0,
+  paymentTypeId: 0,
+  accountNumber: '',
+  expirationDate: '',
+  CVV: '',
+  isActive: ''
+};
 
   toggleModal = () => {
     const { modal } = this.state;
     this.setState({
       modal: !modal,
+    });
+  }
+
+  
+  togglePaymentModal = (e) => {
+    const { paymentModal } = this.state;
+    this.setState({
+      paymentModal: !paymentModal,
     });
   }
 
@@ -115,7 +137,7 @@ class Profile extends React.Component {
     const id = e.target.value;
     paymentMethodRequests.getSingleUserPayment(id)
       .then((paymentAccount) => {
-        this.setState({ paymentAccount })
+        this.setState({ paymentAccount: paymentAccount.data }, this.togglePaymentModal)
         console.log(paymentAccount.data);
       });
   };
@@ -141,6 +163,8 @@ class Profile extends React.Component {
       properties,
       paymentAccounts,
       modal,
+      paymentModal,
+      paymentAccount,
     } = this.state;
 
     const makeProfileCard = () => {
@@ -297,7 +321,7 @@ class Profile extends React.Component {
         return (
           <div>
             <span>Payment Accounts:
-              <select id="account" className="custom-select mb-2" onChange={this.getUserPaymentAccount}>
+              <select id="account" className="custom-select mb-2" onChange={this.togglePaymentModal} onChange={this.getUserPaymentAccount}>
               <option defaultValue>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
@@ -377,13 +401,21 @@ class Profile extends React.Component {
         deleteProfile={this.deleteProfile}
          />
       </div>
+      <div>      
+      <SinglePaymentMethodModal 
+      paymentModal={paymentModal}
+      togglePaymentModal={this.togglePaymentModal}
+      paymentAccount={paymentAccount}      
+      /> 
+      </div>
       <div className="profileDiv d-flex mx-auto">
         {makeProfileCard()}
       </div>
       </div>
 
     );
+  };
   }
-}
+
 
 export default Profile;

@@ -7,32 +7,46 @@ import {
   ModalFooter,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
+import './SinglePaymentMethodModal.scss';
 
-class MyModal extends React.Component {
+class SinglePaymentMethodModal extends React.Component {
   static propTypes = {
-    toggleModal: PropTypes.func,
-    modal: PropTypes.bool,
+    togglePaymentModal: PropTypes.func,
+    paymentModal: PropTypes.bool,
   }
 
-  toggleEvent = () => {
-    const { toggleModal } = this.props;
-    toggleModal();
+  togglePaymentEvent = () => {
+    const { togglePaymentModal } = this.props;
+    togglePaymentModal();
+  }
+
+  //   getUserPaymentAccount = () => {
+  //   paymentMethodRequests.getSingleUserPayment(this.props.selectedAccount)
+  //     .then((paymentAccount) => {
+  //       this.setState({ paymentAccount: paymentAccount.data })
+  //       console.log(paymentAccount.data);
+  //     });
+  // };
+
+  componentDidMount(){
   }
 
   render() {
     const {
-      modal,
+      paymentModal,    
+      paymentAccount,  
     } = this.props;
 
     return (
       <div>
-        <Modal isOpen={modal} toggle={this.toggleEvent} paymentAccount={paymentAccount} className="modal-lg">
-        <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>{paymentAccount.accountName}}</ModalHeader>
+        <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
+        <ModalHeader class-name="modal-header" toggle={this.togglePaymentEvent}>{paymentAccount.accountName}</ModalHeader>
         <ModalBody className="text-center modal-body">
-        <div className="paymentMethod-card border border-dark rounded" id={paymentAccount.id}>
+        <div className="border border-dark rounded" id={paymentAccount.id}>
           <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
           <div className="ml-1">Exp Date: {paymentAccount.expirationDate}</div>
-          <div className="ml-1">CVV: {paymentAccount.CVV}</div>
+          <div className="ml-1">CVV: {paymentAccount.cvv}</div>
           </div>
         </ModalBody>
         </Modal>
@@ -41,4 +55,4 @@ class MyModal extends React.Component {
   }
 }
 
-export default MyModal;
+export default SinglePaymentMethodModal;
