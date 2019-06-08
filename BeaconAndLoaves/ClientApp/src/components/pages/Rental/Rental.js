@@ -17,6 +17,7 @@ class Rental extends React.Component {
       currentUser: {},
       paymentAccount: 0,
       rentalTotal: 0,
+      rental: {},
     }
 
     handleStartChange = (date) => {
@@ -39,6 +40,23 @@ class Rental extends React.Component {
       const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
       const rentalTotal = diffDays * propertyToRent.price;
       this.setState({ rentalTotal });
+    }
+
+    rentProperty = () => {
+      const {
+        rental,
+        propertyToRent,
+        paymentAccount,
+        startDate,
+        endDate,
+        rentalTotal,
+      } = this.state;
+      rental.propertyId = propertyToRent.id;
+      rental.userPaymentId = paymentAccount;
+      rental.startDate = startDate;
+      rental.endDate = endDate;
+      rental.rentalAmount = rentalTotal;
+      console.log(rental);
     }
 
     getUserPaymentAccounts = () => {
@@ -88,7 +106,7 @@ class Rental extends React.Component {
 
       return (
         <div className="text-center rental-div mx-auto">
-            <div className="profile-card border border-dark rounded" id={propertyToRent.id}>
+            <form className="profile-card border border-dark rounded" id={propertyToRent.id}>
                 <h3 className="text-center">{propertyToRent.propertyName}</h3>
                 <div className="ml-1">Street: {propertyToRent.street}</div>
                 <div className="ml-1">City: {propertyToRent.city}</div>
@@ -114,9 +132,9 @@ class Rental extends React.Component {
                 <div className="ml-1">Total: ${rentalTotal}</div>
                 <div>{makeDropdowns()}</div>
                 <div>
-                <button className="bttn-pill bttn-md bttn-primary mb-3">Rent It!</button>
+                <button className="bttn-pill bttn-md bttn-primary mb-3" onClick={this.rentProperty}>Rent It!</button>
                 </div>
-            </div>
+            </form>
         </div>
       );
     }
