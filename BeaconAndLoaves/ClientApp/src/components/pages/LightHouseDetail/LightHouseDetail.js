@@ -10,6 +10,7 @@ class LightHouseDetail extends React.Component {
     isLiked: false
   }
 
+  //get Propertydetails with owner name and hold isLiked state
   getPropertyWithOwnerName = () => {
     const lightHouseId = this.props.match.params.id;
     smashRequests.getAllPropertiesWithOwnerInfo()
@@ -27,6 +28,7 @@ class LightHouseDetail extends React.Component {
     this.props.history.push('/properties/lightHouses');
   }
 
+  //clicking onheart icon changes isLiked state
   changeIsLikedState = (e) => {
     e.preventDefault();
     const{ isLiked} = this.state;
@@ -34,6 +36,7 @@ class LightHouseDetail extends React.Component {
     this.addLikedProperties();
   }
 
+  //adding property to liked property
   addLikedProperties = () => {
     const{ lightHouse, isLiked} = this.state;
     const myLikedProperty = {
@@ -51,6 +54,7 @@ class LightHouseDetail extends React.Component {
     }
   }
 
+  // deleting property from liked property upon clicking heart icon again
   deleteLikedProperties = () => {
     const{currentLikedProperty} = this.state;
      const likedPropertyId = currentLikedProperty[0].id;
@@ -60,6 +64,7 @@ class LightHouseDetail extends React.Component {
      })
   }
 
+  //check property exist in the state to hold the state of isLiked property
   checkExistingProperty = () => {
     const {lightHouse, isLiked} = this.state;
     likedPropertyRequests.getAllLikedProperties()
@@ -78,8 +83,14 @@ class LightHouseDetail extends React.Component {
       this.getPropertyWithOwnerName();
   }
 
+  OwnerProductView = (e) => {
+    const ownerId = e.target.dataset.owner;
+    this.props.history.push(`/ownerProperties/${ownerId}`);
+  }
+
   render() {
     const{lightHouse, isLiked}= this.state;
+
     const makeLikedPropertyButton = () => {
       if(lightHouse.isOwner === false && isLiked === false){
         return(
@@ -106,7 +117,7 @@ class LightHouseDetail extends React.Component {
             <p>{lightHouse.city}, {lightHouse.state} - {lightHouse.zipCode}</p>
             <p>{lightHouse.description}</p>
             <p>${lightHouse.price}/per night</p>
-            <p>Owned By: {lightHouse.name}</p>
+            <p className="owner-name" onClick = {this.OwnerProductView} data-owner={lightHouse.ownerId}>Owned By: {lightHouse.name}</p>
             <button className="btn btn-primary mr-2">Rent</button>
             {makeLikedPropertyButton()}
           </div>
