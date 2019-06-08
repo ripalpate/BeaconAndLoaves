@@ -4,16 +4,14 @@ import SingleOwnerProperty from '../SingleOwnerProperty/SingleOwnerProperty';
 
 class OwnerPropducts extends React.Component{
     state = {
-        properties: []
+        properties: [],
     }
 
     getOwnerProperties =() => {
         const ownerId =  this.props.match.params.id;
-        console.log(ownerId);
         userRequests.getUserProperties(ownerId)
         .then((properties)=> {
         this.setState({properties});
-        console.log(properties);
     });
     }
 
