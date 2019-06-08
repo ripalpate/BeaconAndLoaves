@@ -1,16 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import propertiesShape from '../../../helpers/propz/propertiesShape';
 import './SingleOwnerProperty.scss';
 
-
-
 class SingleOwnerProperty extends React.Component {
   static propTypes = {
-    property: propertiesShape
+    property: propertiesShape,
+    rentProperty: PropTypes.func.isRequired,
   }
 
+  toggleRent = (e) => {
+    const propertyId = e.target.id;
+    this.props.rentProperty(propertyId);
+  }
   render() {
-    const {property} = this.props;
+    const { property, rentProperty } = this.props;
 
     return (
         <div className="card mx-auto bg-light detail">
@@ -23,7 +27,7 @@ class SingleOwnerProperty extends React.Component {
                 <p>{property.city}, {property.state} - {property.zipCode}</p>
                 <p>{property.description}</p>
                 <p>${property.price}/per night</p>
-                <button className="btn btn-primary mr-2">Rent</button>
+                <button id={property.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.toggleRent}>Rent Me!!!</button>
             </div>
         </div>
     );

@@ -37,7 +37,7 @@ const getUserProperties = id => new Promise((resolve, reject) => {
 
 const getSingleUser = userId => axios.get(`${apiUrl}/${userId}`);
 
-const deleteUser = userId => axios.put(`${apiUrl}/${userId}`);
+const deleteUser = userId => axios.delete(`${apiUrl}/${userId}`);
 
 const createUser = userObject => axios.post(`${apiUrl}/register`, (userObject));
 
@@ -53,5 +53,5 @@ export default {
   getSingleUser,
   getSingleUserPayment,
   getUserPaymentAccounts,
-  getUserProperties
+  getUserProperties,
 };
