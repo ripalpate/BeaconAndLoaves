@@ -9,11 +9,9 @@ class OwnerPropducts extends React.Component{
 
     getOwnerProperties =() => {
         const ownerId =  this.props.match.params.id;
-        console.log(ownerId);
         userRequests.getUserProperties(ownerId)
         .then((properties)=> {
         this.setState({properties});
-        console.log(properties);
     });
     }
 
