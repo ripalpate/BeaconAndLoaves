@@ -106,6 +106,16 @@ class LightHouseDetail extends React.Component {
         );
       }
     };
+
+    const makebutton = () => {
+      if(lightHouse.isOwner === true){
+        return(
+          <button id='lightHouse-edit' className="btn m-1">
+              <i className="far fa-edit fa-2x"/>
+            </button>
+        )
+      }
+    }
     return (
       <div>
         <div className="back-button">
@@ -123,6 +133,7 @@ class LightHouseDetail extends React.Component {
             <p>${lightHouse.price}/per night</p>
             <p className="owner-name" onClick = {this.OwnerProductView} data-owner={lightHouse.ownerId}>Owned By: {lightHouse.name}</p>
             <button id={lightHouse.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.rentProperty}>Rent Me!!!</button>
+            {makebutton()}
             {makeLikedPropertyButton()}
           </div>
         </div>
