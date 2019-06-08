@@ -2,6 +2,7 @@ import React from 'react';
 import SingleLightHouse from '../SingleLightHouse/SingleLightHouse';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import SearchField from 'react-search-field';
+import { Tooltip } from 'reactstrap';
 import './LightHouses.scss';
 
 class LightHouses extends React.Component {
@@ -10,6 +11,7 @@ class LightHouses extends React.Component {
     ascendingOrder: false,
     filteredLightHouses: [],
     isSearching: false,
+    searchTipOpen: false
   }
 
   getAllLightHouses = () => {
@@ -30,6 +32,13 @@ class LightHouses extends React.Component {
   toggleSearch = () => {
     const { isSearching, lightHouses } = this.state;
     this.setState({ isSearching: !isSearching, filteredLightHouses: lightHouses });
+  }
+
+  toggleSearchTip = () => {
+    const { searchTipOpen } = this.state;
+    this.setState({
+      searchTipOpen: !searchTipOpen,
+    });
   }
 
   onChange = (value, event) => {
@@ -123,6 +132,18 @@ class LightHouses extends React.Component {
     }
     return (
       <div>
+        <div>
+        <button
+              id="search-btn"
+              type="button"
+              className="bttn-material-circle bttn-sm bttn-primary ml-2"
+              onClick={this.toggleSearch}>
+              <i className="fas fa-search" />
+            </button>
+            <Tooltip placement="right" isOpen={this.state.searchTipOpen} target="search-btn" toggle={this.toggleSearchTip}>
+              Search lightHouses
+            </Tooltip>
+        </div>
         <div>
           {makeLatestButton()}
           {makeSearch()}
