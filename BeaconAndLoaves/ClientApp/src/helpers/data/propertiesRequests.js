@@ -15,10 +15,8 @@ const getProperties = () => new Promise((resolve, reject) => {
 const getSingleProperty = propertyId => new Promise((resolve, reject) => {
   axios.get(`${apiUrl}/${propertyId}`)
     .then((result) => {
-      console.log(result)
       const singleProperty = result.data;
       singleProperty.id = propertyId;
-      console.log(singleProperty);
       resolve(singleProperty);
     }).catch(err => reject(err));
 });
@@ -28,5 +26,5 @@ const createProperty = property => axios.post(`${apiUrl}`, property);
 export default {
   getProperties,
   getSingleProperty,
-  createProperty
+  createProperty,
 };

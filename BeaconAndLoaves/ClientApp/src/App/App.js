@@ -21,6 +21,7 @@ import SiloNuclearDetail from '../components/pages/SiloNuclearDetail/SiloNuclear
 import AddEditProperty from '../components/pages/AddEditProperty/AddEditProperty';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
 import LikedProperties from '../components/pages/LikedProperties/LikedProperties';
+import Rental from '../components/pages/Rental/Rental';
 import authRequests from '../helpers/data/authRequests';
 import connection from '../helpers/data/connection';
 import OwnerProperties from '../components/pages/OwnerProperties/OwnerProperties';
@@ -106,6 +107,7 @@ export default class App extends Component {
                   <PrivateRoute exact path="/siloNuclears/:id" authed={this.state.authed} component={SiloNuclearDetail}/>
                   <PrivateRoute path="/likedProperties" authed={this.state.authed} component={LikedProperties}/>
                   <PrivateRoute path="/addProperty" authed={this.state.authed} component={AddEditProperty}/>
+                  <PrivateRoute exact path="/rental/:id" authed={this.state.authed} component={Rental}/>
                   <PrivateRoute exact path="/ownerProperties/:id" component={OwnerProperties} authed={this.state.authed}/>
                 </Switch>
           </React.Fragment>
