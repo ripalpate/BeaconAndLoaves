@@ -29,6 +29,7 @@ class Rental extends React.Component {
       rental: defaultRental,
       rentals: [],
       rentedDates: [],
+      excludedDates: Date(),
     }
 
     handleStartChange = (date) => {
@@ -107,12 +108,13 @@ class Rental extends React.Component {
       const propertyId = this.props.match.params.id;
       propertiesRequests.getSingleProperty(propertyId)
         .then((property) => {
-          this.setState({ propertyToRent: property });
+          this.setState({ propertyToRent: property }, this.getAllRentalsByProperty());
         });
     }
 
      getDates = () => {
        const { rentedDates, rentals } = this.state;
+       rentedDates.push(new Date());
        rentals.forEach((rental) => {
          const startDate = new Date(rental.startDate);
          const endDate = new Date(rental.endDate);
@@ -127,7 +129,6 @@ class Rental extends React.Component {
      componentDidMount() {
        this.getPropertyToRent();
        this.getUser();
-       this.getAllRentalsByProperty();
      }
 
      render() {
@@ -135,7 +136,7 @@ class Rental extends React.Component {
          propertyToRent,
          paymentAccounts,
          rentalTotal,
-         rentals,
+         rentedDates,
        } = this.state;
 
        const makeDropdowns = () => (
@@ -162,15 +163,15 @@ class Rental extends React.Component {
                 <div id="start">
                     <label>Start Date </label>
                     <DatePicker
-                        className="ml-3"
-                        selected={this.state.startDate}
-                        selectsStart
-                        startDate={this.state.startDate}
-                        endDate={this.state.endDate}
-                        // excludeDates={[new Date(), bookedDays()]}
-                        onChange={this.handleStartChange}
-                    />
-                </div>
+                      className="ml-3"
+                      selected={this.state.startDate}
+                      selectsStart
+                      startDate={this.state.startDate}
+                      endDate={this.state.endDate}
+                      onChange={this.handleStartChange}
+                      excludeDates={ rentedDates }
+                      />
+                  </div>
                 <div id="end">
                     <label>End Date </label>
                     <DatePicker
