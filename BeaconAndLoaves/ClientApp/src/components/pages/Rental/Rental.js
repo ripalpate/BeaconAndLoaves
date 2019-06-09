@@ -1,5 +1,6 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
+import ConfirmationModal from '../ConfirmationModal/ConfrimationModal';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import userRequests from '../../../helpers/data/userRequests';
@@ -15,6 +16,7 @@ const defaultRental = {
   startDate: '',
   endDate: '',
   rentalAmount: 0,
+  modal: false,
 };
 
 class Rental extends React.Component {
@@ -29,6 +31,16 @@ class Rental extends React.Component {
       rental: defaultRental,
       rentals: [],
       rentedDates: [],
+      accountName: '',
+    }
+
+    toggleModal = () => {
+      if (this.state.paymentAccount !== 0) {
+        const { modal } = this.state;
+        this.setState({
+          modal: !modal,
+        });
+      }
     }
 
     handleStartChange = (date) => {
@@ -41,7 +53,8 @@ class Rental extends React.Component {
 
     handlePaymentAccountChange = (e) => {
       const paymentAccount = e.target.value;
-      this.setState({ paymentAccount });
+      const accountName = e.target.Id;
+      this.setState({ paymentAccount, accountName });
     }
 
     figureTotal = () => {
@@ -136,6 +149,8 @@ class Rental extends React.Component {
          paymentAccounts,
          rentalTotal,
          rentedDates,
+         modal,
+         rental,
        } = this.state;
 
        const makeDropdowns = () => (
@@ -144,7 +159,7 @@ class Rental extends React.Component {
             <select name="account" required className="custom-select mb-2 ml-2" id="account" onChange={this.handlePaymentAccountChange}>
               <option value="">Select Payment Account</option>
                 {
-                paymentAccounts.map((account, i) => (<option id={account.id} value={account.id} key={i}>{account.accountName}</option>))
+                paymentAccounts.map((account, i) => (<option id={account.accountName} value={account.id} key={i}>{account.accountName}</option>))
                 }
             </select>
           </span>
@@ -152,7 +167,7 @@ class Rental extends React.Component {
 
        return (
         <div className="text-center rental-div mx-auto">
-            <form className="rental-form border border-dark rounded" id={propertyToRent.id} onSubmit={this.rentProperty}>
+            <form className="rental-form border border-dark rounded" id={propertyToRent.id}>
                 <h3 className="text-center">{propertyToRent.propertyName}</h3>
                 <div className="ml-1">Street: {propertyToRent.street}</div>
                 <div className="ml-1">City: {propertyToRent.city}</div>
@@ -187,9 +202,18 @@ class Rental extends React.Component {
                 <div className="ml-1">Total: ${rentalTotal}</div>
                 <div>{makeDropdowns()}</div>
                 <div>
-                <button className="bttn-pill bttn-md bttn-primary mb-3">Rent Me!!!</button>
+                <button className="bttn-pill bttn-md bttn-primary mb-3" onClick={this.toggleModal}>Confirm Rental</button>
                 </div>
             </form>
+            <div>
+              <ConfirmationModal
+              modal={modal}
+              toggleModal={this.toggleModal}
+              rentProperty={this.rentProperty}
+              propertyToRent={propertyToRent}
+              rental={rental}
+              />
+        </div>
         </div>
        );
      }
