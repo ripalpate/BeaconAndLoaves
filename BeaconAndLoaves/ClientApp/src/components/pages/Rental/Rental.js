@@ -29,7 +29,6 @@ class Rental extends React.Component {
       rental: defaultRental,
       rentals: [],
       rentedDates: [],
-      excludedDates: Date(),
     }
 
     handleStartChange = (date) => {
