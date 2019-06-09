@@ -37,9 +37,9 @@ namespace BeaconAndLoaves.Data
             {
                 var rentals = db.Query<Rental>(@"
                     select * 
-                    from rentals,
+                    from rentals
                     where rentals.propertyId = @propertyId
-                    ").ToList();
+                    ", new { propertyId }).ToList();
 
                 return rentals;
             }

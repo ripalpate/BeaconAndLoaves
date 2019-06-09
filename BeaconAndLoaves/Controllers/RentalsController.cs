@@ -60,7 +60,7 @@ namespace BeaconAndLoaves.Controllers
             return Ok(rentals);
         }
 
-        [HttpGet("property/{id}")]
+        [HttpGet("{id}")]
         public ActionResult GetSingleRental(int id)
         {
             var rentalById = _repository.GetSingleRental(id);
@@ -68,7 +68,7 @@ namespace BeaconAndLoaves.Controllers
             return Ok(rentalById);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("property/{id}")]
         public ActionResult GetRentalsByPropertyId(int id)
         {
             var rentalsByPropertyId = _repository.GetRentalsByPropertyId(id);
