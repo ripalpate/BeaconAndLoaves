@@ -26,7 +26,7 @@ class Rental extends React.Component {
       currentUser: {},
       paymentAccount: 0,
       rentalTotal: 0,
-      rental: defaultRental,
+      rental: defaultRental
     }
 
     handleStartChange = (date) => {
@@ -103,10 +103,10 @@ class Rental extends React.Component {
     componentDidMount() {
       this.getPropertyToRent();
       this.getUser();
-    }
+    }  
 
     render() {
-      const { propertyToRent, paymentAccounts, rentalTotal } = this.state;
+      const { propertyToRent, paymentAccounts, rentalTotal, rentedDates } = this.state;
 
       const makeDropdowns = () => (
         <div>
@@ -120,6 +120,7 @@ class Rental extends React.Component {
           </span>
         </div>);
 
+
       return (
         <div className="text-center rental-div mx-auto">
             <form className="rental-form border border-dark rounded" id={propertyToRent.id} onSubmit={this.rentProperty}>
@@ -131,6 +132,7 @@ class Rental extends React.Component {
                 <div className="ml-1">Rate: ${propertyToRent.price}/Day</div>
                 <div id="start">
                     <label>Start Date </label>
+
                     <DatePicker
                         className="ml-3"
                         selected={this.state.startDate}
