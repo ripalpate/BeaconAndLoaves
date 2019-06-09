@@ -166,6 +166,7 @@ class Rental extends React.Component {
                       className="ml-3"
                       selected={this.state.startDate}
                       selectsStart
+                      minDate={this.state.startDate}
                       startDate={this.state.startDate}
                       endDate={this.state.endDate}
                       onChange={this.handleStartChange}
