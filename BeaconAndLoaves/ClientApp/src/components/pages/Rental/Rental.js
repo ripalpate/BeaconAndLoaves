@@ -141,7 +141,7 @@ class Rental extends React.Component {
        const makeDropdowns = () => (
         <div>
           <span>Payment Accounts:
-            <select name="account" required className="custom-select mb-2" id="account" onChange={this.handlePaymentAccountChange}>
+            <select name="account" required className="custom-select mb-2 ml-2" id="account" onChange={this.handlePaymentAccountChange}>
               <option value="">Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option id={account.id} value={account.id} key={i}>{account.accountName}</option>))
@@ -160,7 +160,7 @@ class Rental extends React.Component {
                 <div className="ml-1">Zipcode: {propertyToRent.zipCode}</div>
                 <div className="ml-1">Rate: ${propertyToRent.price}/Day</div>
                 <div id="start">
-                    <label>Start Date </label>
+                    <label>Start Date: </label>
                     <DatePicker
                       className="ml-3"
                       selected={this.state.startDate}
@@ -173,7 +173,7 @@ class Rental extends React.Component {
                       />
                   </div>
                 <div id="end">
-                    <label>End Date </label>
+                    <label>End Date: </label>
                     <DatePicker
                         className="ml-3"
                         selected={this.state.endDate}
