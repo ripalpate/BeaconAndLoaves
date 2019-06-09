@@ -74,14 +74,17 @@ class EditProperty extends React.Component {
         const { editId } = this.state;
         propertiesRequests.updateProperty(editId, editedProperty)
           .then(() => {
-            this.props.history.push('/properties');
+            if(editedProperty.type === 0){
+              this.props.history.push(`/lightHouses/${editId}`);
+            } else if (editedProperty.type ===1){
+              this.props.history.push(`/siloNuclears/${editId}`);
+            }
           }).catch(err => console.error(err));
       }
     
       formSubmit = (e) => {
         e.preventDefault();
         const myProperty = { ...this.state.editedProperty };
-        //delete myProperty.id;
         myProperty.ownerId = this.state.currentUser.id;
         this.formSubmitEvent(myProperty);
         this.setState({ editedProperty: defaultProperty });
