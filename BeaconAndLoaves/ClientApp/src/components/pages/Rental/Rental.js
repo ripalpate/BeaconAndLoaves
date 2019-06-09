@@ -28,6 +28,7 @@ class Rental extends React.Component {
       rentalTotal: 0,
       rental: defaultRental,
       rentals: [],
+      rentedDates: [],
     }
 
     handleStartChange = (date) => {
@@ -98,6 +99,7 @@ class Rental extends React.Component {
       rentalRequests.getAllRentalsByPropertyId(propertyId)
         .then((rentals) => {
           this.setState({ rentals });
+          this.getDates();
         });
     }
 
@@ -109,21 +111,34 @@ class Rental extends React.Component {
         });
     }
 
-    componentDidMount() {
-      this.getPropertyToRent();
-      this.getUser();
-      this.getAllRentalsByProperty();
-    }
+     getDates = () => {
+       const { rentedDates, rentals } = this.state;
+       rentals.forEach((rental) => {
+         const startDate = new Date(rental.startDate);
+         const endDate = new Date(rental.endDate);
+         while (startDate <= endDate) {
+           rentedDates.push(new Date(startDate));
+           startDate.setDate(startDate.getDate() + 1);
+         }
+       });
+       this.setState({ rentedDates });
+     }
 
-    render() {
-      const {
-        propertyToRent,
-        paymentAccounts,
-        rentalTotal,
-        rentals,
-      } = this.state;
+     componentDidMount() {
+       this.getPropertyToRent();
+       this.getUser();
+       this.getAllRentalsByProperty();
+     }
 
-      const makeDropdowns = () => (
+     render() {
+       const {
+         propertyToRent,
+         paymentAccounts,
+         rentalTotal,
+         rentals,
+       } = this.state;
+
+       const makeDropdowns = () => (
         <div>
           <span>Payment Accounts:
             <select name="account" required className="custom-select mb-2" id="account" onChange={this.handlePaymentAccountChange}>
@@ -135,11 +150,7 @@ class Rental extends React.Component {
           </span>
         </div>);
 
-      const bookedDays = () => {
-        
-      };
-
-      return (
+       return (
         <div className="text-center rental-div mx-auto">
             <form className="rental-form border border-dark rounded" id={propertyToRent.id} onSubmit={this.rentProperty}>
                 <h3 className="text-center">{propertyToRent.propertyName}</h3>
@@ -156,7 +167,7 @@ class Rental extends React.Component {
                         selectsStart
                         startDate={this.state.startDate}
                         endDate={this.state.endDate}
-                        excludeDates={[new Date(), bookedDays()]}
+                        // excludeDates={[new Date(), bookedDays()]}
                         onChange={this.handleStartChange}
                     />
                 </div>
@@ -179,8 +190,8 @@ class Rental extends React.Component {
                 </div>
             </form>
         </div>
-      );
-    }
+       );
+     }
 }
 
 export default Rental;
