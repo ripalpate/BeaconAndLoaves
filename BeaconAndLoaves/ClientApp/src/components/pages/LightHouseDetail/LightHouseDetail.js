@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './LightHouseDetail.scss';
 import smashRequests from '../../../helpers/data/smashRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
+import LikeButton from '../LikeButton/LikeButton';
 
 class LightHouseDetail extends React.Component {
   state = {
@@ -32,7 +34,7 @@ class LightHouseDetail extends React.Component {
     this.props.history.push(`/rental/${propertyId}`);
   }
 
-  //clicking onheart icon changes isLiked state
+ // clicking onheart icon changes isLiked state
   changeIsLikedState = (e) => {
     e.preventDefault();
     const { isLiked } = this.state;

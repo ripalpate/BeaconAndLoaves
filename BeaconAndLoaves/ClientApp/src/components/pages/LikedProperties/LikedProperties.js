@@ -1,11 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import SingleLikedProperty from '../SingleLikedProperty/SingleLikedProperty';
-import propertiesRequests from '../../../helpers/data/propertiesRequests';
+import LikeButton from '../LikeButton/LikeButton';
 
 class LikedProperties extends React.Component {
   state = {
-    likedProperties:[]
+    likedProperties:[],
+  }
+
+  static propTypes = {
+    isLiked:PropTypes.bool
   }
 
   componentDidMount(){
@@ -19,7 +24,7 @@ class LikedProperties extends React.Component {
     })
   } 
   render(){
-    const {likedProperties} = this.state;
+    const {likedProperties,isLiked} = this.state;
     const singleLikedPropertyComponent = likedProperties.map(likedProperty => (
       <SingleLikedProperty
       likedProperty={likedProperty}
@@ -30,6 +35,9 @@ class LikedProperties extends React.Component {
     return(
       <div className="likedProperty row">
           <div className = "d-flex mx-auto mt-5">{singleLikedPropertyComponent}</div>
+          <LikeButton
+          isLiked={isLiked}
+          />
       </div>
     )
   }
