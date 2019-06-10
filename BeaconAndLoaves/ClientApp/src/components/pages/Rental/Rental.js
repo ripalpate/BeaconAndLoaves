@@ -111,7 +111,6 @@ class Rental extends React.Component {
         });
     }
 
-<<<<<<< HEAD
      getDates = () => {
        const { rentedDates, rentals } = this.state;
        rentedDates.push(new Date());
@@ -140,17 +139,6 @@ class Rental extends React.Component {
        } = this.state;
 
        const makeDropdowns = () => (
-=======
-    componentDidMount() {
-      this.getPropertyToRent();
-      this.getUser();
-    }  
-
-    render() {
-      const { propertyToRent, paymentAccounts, rentalTotal, rentedDates } = this.state;
-
-      const makeDropdowns = () => (
->>>>>>> master
         <div>
           <span>Payment Accounts:
             <select name="account" required className="custom-select mb-2 ml-2" id="account" onChange={this.handlePaymentAccountChange}>
@@ -162,12 +150,7 @@ class Rental extends React.Component {
           </span>
         </div>);
 
-<<<<<<< HEAD
-       return (
-=======
-
       return (
->>>>>>> master
         <div className="text-center rental-div mx-auto">
             <form className="rental-form border border-dark rounded" id={propertyToRent.id} onSubmit={this.rentProperty}>
                 <h3 className="text-center">{propertyToRent.propertyName}</h3>
@@ -177,12 +160,7 @@ class Rental extends React.Component {
                 <div className="ml-1">Zipcode: {propertyToRent.zipCode}</div>
                 <div className="ml-1">Rate: ${propertyToRent.price}/Day</div>
                 <div id="start">
-<<<<<<< HEAD
-                    <label>Start Date: </label>
-=======
                     <label>Start Date </label>
-
->>>>>>> master
                     <DatePicker
                       className="ml-3"
                       selected={this.state.startDate}

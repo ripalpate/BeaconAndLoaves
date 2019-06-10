@@ -68,10 +68,6 @@ namespace BeaconAndLoaves.Controllers
             return Ok(rentalById);
         }
 
-<<<<<<< HEAD
-=======
-        //Delete this code
->>>>>>> master
         [HttpGet("property/{id}")]
         public ActionResult GetRentalsByPropertyId(int id)
         {
@@ -79,10 +75,5 @@ namespace BeaconAndLoaves.Controllers
 
             return Ok(rentalsByPropertyId);
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> master
-
     }
 }
