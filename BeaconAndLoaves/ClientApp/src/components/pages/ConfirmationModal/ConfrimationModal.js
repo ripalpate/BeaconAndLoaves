@@ -41,10 +41,10 @@ class MyModal extends React.Component {
                 <div className="ml-1">City: {propertyToRent.city}</div>
                 <div className="ml-1">State: {propertyToRent.state}</div>
                 <div className="ml-1">Zipcode: {propertyToRent.zipCode}</div>
-                <div className="ml-1">Start Date: {rental.startDate}/Day</div>
-                <div className="ml-1">End Date: {rental.endDate}/Day</div>
-                <div className="ml-1">Price: ${rental.price}/Day</div>
-                <div className="ml-1">From Account: {rental.price}/Day</div>
+                <div className="ml-1">Start Date: {rental.startDate}</div>
+                <div className="ml-1">End Date: {rental.endDate}</div>
+                <div className="ml-1">Price: ${rental.price}</div>
+                <div className="ml-1">From Account: {rental.price}</div>
 
           </ModalBody>
           <ModalFooter>

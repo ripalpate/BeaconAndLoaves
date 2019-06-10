@@ -32,16 +32,22 @@ class Rental extends React.Component {
       rentals: [],
       rentedDates: [],
       accountName: '',
+      modal: false,
     }
 
     toggleModal = () => {
-      if (this.state.paymentAccount !== 0) {
-        const { modal } = this.state;
-        this.setState({
-          modal: !modal,
-        });
-      }
+      const { modal } = this.state;
+      this.setState({
+        modal: !modal,
+      });
     }
+
+    // rentalValidation = () => {
+    //   console.log('validating!');
+    //   if (this.state.paymentAccount !== 0 && this.state.rentalTotal !== 0) {
+    //     this.toggleModal();
+    //   }
+    // }
 
     handleStartChange = (date) => {
       this.setState({ startDate: date }, this.figureTotal);
