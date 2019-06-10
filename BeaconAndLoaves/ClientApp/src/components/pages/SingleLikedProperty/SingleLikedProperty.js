@@ -2,8 +2,6 @@ import React from 'react';
 import propertiesShape from '../../../helpers/propz/propertiesShape';
 import './SingleLikedProperty.scss';
 
-
-
 class SingleLikedProperty extends React.Component {
   static propTypes = {
     likedProperty: propertiesShape
@@ -12,7 +10,7 @@ class SingleLikedProperty extends React.Component {
   render() {
     const {likedProperty} = this.props;
     return (
-      <div className="card bg-light mr-4 mb-4 singleLikedProperty">
+      <div className="card bg-light mr-4 mb-4 singleLikedProperty text-center">
         <div className="imgHolder">
           <img className="singleLightHouseImg" src={likedProperty.imageUrl} alt="liked Property"/>
         </div>
@@ -22,7 +20,7 @@ class SingleLikedProperty extends React.Component {
           <p>{likedProperty.city}, {likedProperty.state} - {likedProperty.zipCode}</p>
           <p>{likedProperty.description}</p>
           <p>${likedProperty.price}/per night</p>
-          <button className="btn btn-primary mr-2">Rent</button>
+          <button className="bttn-pill bttn-md bttn-primary">Rent Me!!!</button>
         </div>
       </div>
     );
