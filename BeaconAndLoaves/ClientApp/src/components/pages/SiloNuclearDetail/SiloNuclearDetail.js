@@ -82,6 +82,13 @@ class SiloNuclearDetail extends React.Component {
     this.props.history.push(`/ownerProperties/${ownerId}`);
   }
 
+  editEvent = (e) => {
+    e.preventDefault();
+    const propertyId = e.target.dataset.propertyId;
+    this.props.history.push(`/editProperty/${propertyId}`);
+  }
+
+
   render() {
     const{siloNuclear,isLiked}= this.state;
     const makeLikedPropertyButton = () => {
@@ -95,6 +102,15 @@ class SiloNuclearDetail extends React.Component {
         );
      }    
     }
+
+    const makebutton = () => {
+      if(siloNuclear.isOwner === true){
+        return(
+          <i onClick= {this.editEvent} data-property-id={siloNuclear.id} className="far fa-edit edit-icon fa-2x float-right"/>
+        );
+      }
+    }
+
     return (
       <div>
         <div className="back-button">
@@ -112,6 +128,7 @@ class SiloNuclearDetail extends React.Component {
             <p>${siloNuclear.price}/per night</p>
             <p className="owner-name" onClick = {this.OwnerProductView} data-owner={siloNuclear.ownerId}>Owned By: {siloNuclear.name}</p>
             <button className="btn btn-primary mr-2">Rent</button>
+            {makebutton()}
             {makeLikedPropertyButton()}
           </div>
         </div>

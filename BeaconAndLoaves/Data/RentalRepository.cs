@@ -102,6 +102,22 @@ namespace BeaconAndLoaves.Data
                 }
                 throw new Exception("Could not update rental");
             }
+
+        }
+
+        //Delete this code
+        public IEnumerable<Rental> GetRentalsByPropertyId(int propertyId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var rentals = db.Query<Rental>(@"
+                    select * 
+                    from rentals
+                    where rentals.propertyId = @propertyId
+                    ", new { propertyId }).ToList();
+
+                return rentals;
+            }
         }
     }
 }

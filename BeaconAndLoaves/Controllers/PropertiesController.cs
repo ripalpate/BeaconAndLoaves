@@ -65,7 +65,7 @@ namespace BeaconAndLoaves.Controllers
         }
 
         //Update Property
-        [HttpPut("update/{id}")]
+        [HttpPut("{id}")]
         public ActionResult UpdateProperty(int id, Property propertyToUpdate)
         {
             if(id != propertyToUpdate.Id)
@@ -77,7 +77,7 @@ namespace BeaconAndLoaves.Controllers
         }
 
         //Updating isActive status of Property
-        [HttpPut("{id}")]
+        [HttpDelete("{id}")]
         public ActionResult DeleteProperty(int id)
         {
             _repo.DeleteProperty(id);

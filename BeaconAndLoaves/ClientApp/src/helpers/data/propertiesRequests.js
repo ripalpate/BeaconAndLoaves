@@ -23,8 +23,11 @@ const getSingleProperty = propertyId => new Promise((resolve, reject) => {
 
 const createProperty = property => axios.post(`${apiUrl}`, property);
 
+const updateProperty = (propertyId, property) => axios.put(`${apiUrl}/${propertyId}`, property);
+
 export default {
   getProperties,
   getSingleProperty,
   createProperty,
+  updateProperty
 };
