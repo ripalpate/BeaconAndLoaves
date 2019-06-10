@@ -1,13 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './LikeButton.scss';
 
 class LikeButton extends React.Component {
     state = {
         isLiked: false,
+        
     }
     
-
     changeIsLikedState = (e) => {
+        const {addLikedProperties} = this.props;
         e.preventDefault();
         const { isLiked } = this.state;
         this.setState({ isLiked: !isLiked });
