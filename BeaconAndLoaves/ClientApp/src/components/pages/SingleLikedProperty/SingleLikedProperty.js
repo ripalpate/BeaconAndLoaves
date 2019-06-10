@@ -8,7 +8,6 @@ import LikeButton from '../LikeButton/LikeButton';
 class SingleLikedProperty extends React.Component {
   static propTypes = {
     likedProperty: propertiesShape,
-    isLiked: PropTypes.bool
   }
 
   render() {
@@ -25,9 +24,6 @@ class SingleLikedProperty extends React.Component {
           <p>{likedProperty.description}</p>
           <p>${likedProperty.price}/per night</p>
           <button className="btn btn-primary mr-2">Rent</button>
-          <LikeButton
-          isLiked={isLiked}
-          />
         </div>
       </div>
     );
