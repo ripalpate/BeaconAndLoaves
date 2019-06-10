@@ -52,9 +52,12 @@ class MyModal extends React.Component {
 
           </ModalBody>
           <ModalFooter>
-            <Button onClick={rentProperty} className="bttn-pill bttn-md bttn-primary mb-3">
+            <button onClick={this.toggleEvent} className="bttn-pill bttn-md bttn-danger mb-3 ml-auto">
+                Go Back
+            </button>
+            <button onClick={rentProperty} className="bttn-pill bttn-md bttn-primary mb-3">
                 Rent Me!!!
-            </Button>
+            </button>
           </ModalFooter>
         </Modal>
       </div>

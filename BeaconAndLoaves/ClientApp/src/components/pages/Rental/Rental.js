@@ -182,8 +182,8 @@ class Rental extends React.Component {
         </div>);
 
        return (
-        <div className="text-center rental-div mx-auto">
-            <form className="rental-form border border-dark rounded" id={propertyToRent.id}>
+        <div className="text-center rental-div mx-auto border border-dark rounded">
+            <form className="rental-form" id={propertyToRent.id}>
                 <h3 className="text-center">{propertyToRent.propertyName}</h3>
                 <div className="ml-1">Street: {propertyToRent.street}</div>
                 <div className="ml-1">City: {propertyToRent.city}</div>
@@ -219,7 +219,7 @@ class Rental extends React.Component {
                 <div>{makeDropdowns()}</div>
             </form>
             <div>
-                <button className="bttn-pill bttn-md bttn-primary mb-3" onClick={this.rentalValidation}>Confirm Rental</button>
+              <button className="bttn-pill bttn-md bttn-primary mb-3" onClick={this.rentalValidation}>Confirm Rental</button>
             </div>
             <div>
               <ConfirmationModal
