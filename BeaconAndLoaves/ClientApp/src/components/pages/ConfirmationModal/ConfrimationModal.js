@@ -15,6 +15,7 @@ class MyModal extends React.Component {
     toggleModal: PropTypes.func,
     modal: PropTypes.bool,
     rentProperty: PropTypes.func,
+    rental: PropTypes.object,
   }
 
   toggleEvent = () => {
@@ -26,8 +27,11 @@ class MyModal extends React.Component {
     const {
       modal,
       rentProperty,
-      rental,
+      startDate,
+      endDate,
+      rentalTotal,
       propertyToRent,
+      accountName,
     } = this.props;
 
     return (
@@ -35,16 +39,16 @@ class MyModal extends React.Component {
         <Modal isOpen={modal} toggle={this.toggleEvent} className="modal-lg">
           <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>Rental Confirmation</ModalHeader>
           <ModalBody className="text-center modal-body">
-              <h3>Please Confirm Your Inormation</h3>
+              <h3>Please Confirm Your Information</h3>
               <h6 className="text-center">{propertyToRent.propertyName}</h6>
                 <div className="ml-1">Street: {propertyToRent.street}</div>
                 <div className="ml-1">City: {propertyToRent.city}</div>
                 <div className="ml-1">State: {propertyToRent.state}</div>
                 <div className="ml-1">Zipcode: {propertyToRent.zipCode}</div>
-                <div className="ml-1">Start Date: {rental.startDate}</div>
-                <div className="ml-1">End Date: {rental.endDate}</div>
-                <div className="ml-1">Price: ${rental.price}</div>
-                <div className="ml-1">From Account: {rental.price}</div>
+                <div className="ml-1">Start Date: {startDate}</div>
+                <div className="ml-1">End Date: {endDate}</div>
+                <div className="ml-1">Price: ${rentalTotal}</div>
+                <div className="ml-1">From Account: {accountName}</div>
 
           </ModalBody>
           <ModalFooter>

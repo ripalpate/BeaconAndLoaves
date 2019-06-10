@@ -5,6 +5,8 @@ import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import userRequests from '../../../helpers/data/userRequests';
 import rentalRequests from '../../../helpers/data/rentalRequests';
+import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
+
 
 import './Rental.scss';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -17,6 +19,7 @@ const defaultRental = {
   endDate: '',
   rentalAmount: 0,
   modal: false,
+  accountName: '',
 };
 
 class Rental extends React.Component {
@@ -42,12 +45,11 @@ class Rental extends React.Component {
       });
     }
 
-    // rentalValidation = () => {
-    //   console.log('validating!');
-    //   if (this.state.paymentAccount !== 0 && this.state.rentalTotal !== 0) {
-    //     this.toggleModal();
-    //   }
-    // }
+    rentalValidation = () => {
+      if (this.state.paymentAccount !== 0 && this.state.rentalTotal !== 0) {
+        this.toggleModal();
+      }
+    }
 
     handleStartChange = (date) => {
       this.setState({ startDate: date }, this.figureTotal);
@@ -59,8 +61,14 @@ class Rental extends React.Component {
 
     handlePaymentAccountChange = (e) => {
       const paymentAccount = e.target.value;
-      const accountName = e.target.Id;
-      this.setState({ paymentAccount, accountName });
+      this.setState({ paymentAccount }, this.setAccountName(paymentAccount * 1));
+    }
+
+    setAccountName = (paymentAccount) => {
+      paymentMethodRequests.getSingleUserPayment(paymentAccount)
+        .then((account) => {
+          this.setState({ accountName: account.data.accountName });
+        });
     }
 
     figureTotal = () => {
@@ -156,7 +164,9 @@ class Rental extends React.Component {
          rentalTotal,
          rentedDates,
          modal,
-         rental,
+         startDate,
+         endDate,
+         accountName,
        } = this.state;
 
        const makeDropdowns = () => (
@@ -165,13 +175,13 @@ class Rental extends React.Component {
             <select name="account" required className="custom-select mb-2 ml-2" id="account" onChange={this.handlePaymentAccountChange}>
               <option value="">Select Payment Account</option>
                 {
-                paymentAccounts.map((account, i) => (<option id={account.accountName} value={account.id} key={i}>{account.accountName}</option>))
+                paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
                 }
             </select>
           </span>
         </div>);
 
-      return (
+       return (
         <div className="text-center rental-div mx-auto">
             <form className="rental-form border border-dark rounded" id={propertyToRent.id}>
                 <h3 className="text-center">{propertyToRent.propertyName}</h3>
@@ -207,20 +217,23 @@ class Rental extends React.Component {
                 </div>
                 <div className="ml-1">Total: ${rentalTotal}</div>
                 <div>{makeDropdowns()}</div>
-                <div>
-                <button className="bttn-pill bttn-md bttn-primary mb-3" onClick={this.toggleModal}>Confirm Rental</button>
-                </div>
             </form>
+            <div>
+                <button className="bttn-pill bttn-md bttn-primary mb-3" onClick={this.rentalValidation}>Confirm Rental</button>
+            </div>
             <div>
               <ConfirmationModal
               modal={modal}
               toggleModal={this.toggleModal}
               rentProperty={this.rentProperty}
               propertyToRent={propertyToRent}
-              rental={rental}
+              startDate={`${startDate.getMonth() + 1}/${startDate.getDate()}/${startDate.getFullYear()}`}
+              endDate={`${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}`}
+              rentalTotal={rentalTotal}
+              accountName={accountName}
               />
-        </div>
-        </div>
+            </div>
+      </div>
        );
      }
 }
