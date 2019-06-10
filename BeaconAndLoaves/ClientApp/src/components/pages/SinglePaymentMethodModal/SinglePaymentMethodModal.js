@@ -16,6 +16,28 @@ class SinglePaymentMethodModal extends React.Component {
     paymentModal: PropTypes.bool,
   }
 
+  state = {
+    isEditing: false,
+  }
+
+  editPaymentMethod = (e) => {
+    this.setState({ isEditing: true });
+  }
+
+  cancel = () => {
+    this.setState({ isEditing: false });
+  }
+
+  // formSubmit = (e) => {
+  //   e.preventDefault();
+  //   const { currentUser } = this.state;
+  //   const userId = currentUser.id;
+  //   userRequests.updateUser(userId, currentUser)
+  //     .then(() => {
+  //       this.setState({ isEditing: false });
+  //     });
+  // }
+
   togglePaymentEvent = () => {
     const { togglePaymentModal } = this.props;
     togglePaymentModal();
@@ -36,7 +58,9 @@ class SinglePaymentMethodModal extends React.Component {
     const {
       paymentModal,    
       paymentAccount,  
+      isEditing,
     } = this.props;
+
 
     return (
       <div>

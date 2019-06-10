@@ -28,8 +28,15 @@ class SinglePaymentMethodScreen extends React.Component {
     currentUser: {},
     currentPaymentMethod: {},
     paymentTypes: [],
-    isEditing: false,
     userId: 0,
+    modal: false,
+  }
+
+  toggleModal = () => {
+    const { modal } = this.state;
+    this.setState({
+      modal: !modal,
+    });
   }
 
   formFieldStringState = (accountName, e) => {
@@ -65,21 +72,6 @@ class SinglePaymentMethodScreen extends React.Component {
     this.setState({selectedPaymentType: e.target.value})
   }
 
-  editPaymentMethod = (e) => {
-    const { currentPaymentMethod } = this.state;
-    this.setState({ isEditing: true });
-    this.setState({ paymentMethodId: currentPaymentMethod.id });
-  }
-
-  cancel = () => {
-    this.setState({ isEditing: false });
-  }
-
-  changeView = (e) => {
-    const view = e.currentTarget.id;
-    this.props.history.push(`/${view}`);
-  }
-
   getUser = () => {
     const uid = authRequests.getCurrentUid();
     userRequests.getSingleUser(uid)
@@ -97,18 +89,6 @@ class SinglePaymentMethodScreen extends React.Component {
       });
   };
 
-  formSubmit = (e) => {
-    e.preventDefault();
-    const { currentPaymentMethod } = this.state;
-    currentPaymentMethod.isActive = true;
-    currentPaymentMethod.userId = this.state.currentUser.id;
-    currentPaymentMethod.paymentTypeId = this.state.selectedPaymentType*1;
-    paymentMethodRequests.updateUserPayment(currentPaymentMethod.userId, currentPaymentMethod)
-      .then(() => {
-        this.setState({ isEditing: false });
-      });
-  }
-
   componentDidMount() {
     this.getUser();
     this.getUserPaymentAccounts();
@@ -118,15 +98,9 @@ class SinglePaymentMethodScreen extends React.Component {
     const {
       currentUser,
       currentPaymentMethod,
-      isEditing,
       paymentTypes,
-      paymentAccount
+      paymentAccount,
     } = this.state;
-
-    const {
-      modal,
-      deleteProfile,
-    } = this.props;
 
     const makeDropdowns = () => {
       let counter = 0;
@@ -145,7 +119,6 @@ class SinglePaymentMethodScreen extends React.Component {
               }
 
     const makePaymentMethodCard = (currentPaymentMethod) => {
-      if (isEditing) {
         return (
               <form className="row edit-form-container border border-dark rounded" onSubmit={this.formSubmit}>
                 <h3 className="mx-auto edit-paymentMethod-title">Edit Payment Method</h3>
@@ -228,19 +201,6 @@ class SinglePaymentMethodScreen extends React.Component {
                 </div>
               </form>
         );
-      }
-      return (
-        <Modal isOpen={modal} toggle={this.toggleEvent} paymentAccount={paymentAccount} className="modal-lg">
-        <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>{currentPaymentMethod.accountName}}</ModalHeader>
-        <ModalBody className="text-center modal-body">
-        <div className="paymentMethod-card border border-dark rounded" id={currentPaymentMethod.id}>
-          <div className="ml-1">Account Number: {currentPaymentMethod.accountNumber}</div>
-          <div className="ml-1">Exp Date: {currentPaymentMethod.expirationDate}</div>
-          <div className="ml-1">CVV: {currentPaymentMethod.CVV}</div>  
-          </div>      
-        </ModalBody>
-        </Modal>        
-      );
     };
 
     return (
