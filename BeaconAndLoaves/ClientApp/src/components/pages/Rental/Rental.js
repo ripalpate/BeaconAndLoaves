@@ -26,7 +26,9 @@ class Rental extends React.Component {
       currentUser: {},
       paymentAccount: 0,
       rentalTotal: 0,
-      rental: defaultRental
+      rental: defaultRental,
+      rentals: [],
+      rentedDates: [],
     }
 
     handleStartChange = (date) => {
@@ -92,26 +94,54 @@ class Rental extends React.Component {
         });
     };
 
+    getAllRentalsByProperty = () => {
+      const propertyId = this.props.match.params.id;
+      rentalRequests.getAllRentalsByPropertyId(propertyId)
+        .then((rentals) => {
+          this.setState({ rentals });
+          this.getDates();
+        });
+    }
+
     getPropertyToRent = () => {
       const propertyId = this.props.match.params.id;
       propertiesRequests.getSingleProperty(propertyId)
         .then((property) => {
-          this.setState({ propertyToRent: property });
+          this.setState({ propertyToRent: property }, this.getAllRentalsByProperty());
         });
     }
 
-    componentDidMount() {
-      this.getPropertyToRent();
-      this.getUser();
-    }  
+     getDates = () => {
+       const { rentedDates, rentals } = this.state;
+       rentedDates.push(new Date());
+       rentals.forEach((rental) => {
+         const startDate = new Date(rental.startDate);
+         const endDate = new Date(rental.endDate);
+         while (startDate <= endDate) {
+           rentedDates.push(new Date(startDate));
+           startDate.setDate(startDate.getDate() + 1);
+         }
+       });
+       this.setState({ rentedDates });
+     }
 
-    render() {
-      const { propertyToRent, paymentAccounts, rentalTotal, rentedDates } = this.state;
+     componentDidMount() {
+       this.getPropertyToRent();
+       this.getUser();
+     }
 
-      const makeDropdowns = () => (
+     render() {
+       const {
+         propertyToRent,
+         paymentAccounts,
+         rentalTotal,
+         rentedDates,
+       } = this.state;
+
+       const makeDropdowns = () => (
         <div>
           <span>Payment Accounts:
-            <select name="account" required className="custom-select mb-2" id="account" onChange={this.handlePaymentAccountChange}>
+            <select name="account" required className="custom-select mb-2 ml-2" id="account" onChange={this.handlePaymentAccountChange}>
               <option value="">Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option id={account.id} value={account.id} key={i}>{account.accountName}</option>))
@@ -119,7 +149,6 @@ class Rental extends React.Component {
             </select>
           </span>
         </div>);
-
 
       return (
         <div className="text-center rental-div mx-auto">
@@ -132,18 +161,19 @@ class Rental extends React.Component {
                 <div className="ml-1">Rate: ${propertyToRent.price}/Day</div>
                 <div id="start">
                     <label>Start Date </label>
-
                     <DatePicker
-                        className="ml-3"
-                        selected={this.state.startDate}
-                        selectsStart
-                        startDate={this.state.startDate}
-                        endDate={this.state.endDate}
-                        onChange={this.handleStartChange}
-                    />
-                </div>
+                      className="ml-3"
+                      selected={this.state.startDate}
+                      selectsStart
+                      minDate={this.state.startDate}
+                      startDate={this.state.startDate}
+                      endDate={this.state.endDate}
+                      onChange={this.handleStartChange}
+                      excludeDates={ rentedDates }
+                      />
+                  </div>
                 <div id="end">
-                    <label>End Date </label>
+                    <label>End Date: </label>
                     <DatePicker
                         className="ml-3"
                         selected={this.state.endDate}
@@ -161,8 +191,8 @@ class Rental extends React.Component {
                 </div>
             </form>
         </div>
-      );
-    }
+       );
+     }
 }
 
 export default Rental;
