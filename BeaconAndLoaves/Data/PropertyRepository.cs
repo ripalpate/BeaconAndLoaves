@@ -104,6 +104,7 @@ namespace BeaconAndLoaves.Data
                 var sql =
                     @"update Properties 
                       set Type= @type,
+                        OwnerId = @ownerId,
 	                    PropertyName= @propertyName,
 	                    Street= @street, 
 	                    City= @city, 
@@ -112,7 +113,8 @@ namespace BeaconAndLoaves.Data
 	                    Description = @description,
 	                    ImageUrl= @imageUrl, 
 	                    Price =  @price,
-                        IsActive = @isActive
+                        IsActive = 1,
+                        CreatedOn = GETDATE()
                      Where Id = @id";
 
                 var rowsAffected = db.Execute(sql, propertyToUpdate);

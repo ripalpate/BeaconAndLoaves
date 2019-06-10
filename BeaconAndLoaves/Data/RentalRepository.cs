@@ -102,6 +102,7 @@ namespace BeaconAndLoaves.Data
                 }
                 throw new Exception("Could not update rental");
             }
+
         }
     }
 }

@@ -75,7 +75,5 @@ namespace BeaconAndLoaves.Controllers
 
             return Ok(rentalsByPropertyId);
         }
-
-
     }
 }

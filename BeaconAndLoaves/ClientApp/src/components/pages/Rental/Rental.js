@@ -171,7 +171,7 @@ class Rental extends React.Component {
           </span>
         </div>);
 
-       return (
+      return (
         <div className="text-center rental-div mx-auto">
             <form className="rental-form border border-dark rounded" id={propertyToRent.id}>
                 <h3 className="text-center">{propertyToRent.propertyName}</h3>
@@ -181,7 +181,7 @@ class Rental extends React.Component {
                 <div className="ml-1">Zipcode: {propertyToRent.zipCode}</div>
                 <div className="ml-1">Rate: ${propertyToRent.price}/Day</div>
                 <div id="start">
-                    <label>Start Date: </label>
+                    <label>Start Date </label>
                     <DatePicker
                       className="ml-3"
                       selected={this.state.startDate}
