@@ -5,21 +5,22 @@ import propertiesRequests from '../../../helpers/data/propertiesRequests';
 
 class LikedProperties extends React.Component {
   state = {
-    likedProperties:[]
+    likedProperties: [],
   }
 
-  componentDidMount(){
-   this.getAllLikedProperties();
+  componentDidMount() {
+    this.getAllLikedProperties();
   }
 
   getAllLikedProperties= () => {
     likedPropertyRequests.getAllLikedProperties()
-    .then((likedProperties) => {
-      this.setState({likedProperties});
-    })
-  } 
-  render(){
-    const {likedProperties} = this.state;
+      .then((likedProperties) => {
+        this.setState({ likedProperties });
+      });
+  }
+
+  render() {
+    const { likedProperties } = this.state;
     const singleLikedPropertyComponent = likedProperties.map(likedProperty => (
       <SingleLikedProperty
       likedProperty={likedProperty}
@@ -27,11 +28,11 @@ class LikedProperties extends React.Component {
       />
     ));
 
-    return(
+    return (
       <div className="likedProperty row">
           <div className = "d-flex mx-auto mt-5">{singleLikedPropertyComponent}</div>
       </div>
-    )
+    );
   }
 }
 
