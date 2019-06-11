@@ -1,27 +1,116 @@
 import React from 'react';
 import smashRequests from '../../../helpers/data/smashRequests';
+import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import './SiloNuclearDetail.scss';
+
 class SiloNuclearDetail extends React.Component {
   state = {
-    siloNuclear: []
+    currentLikedProperty:[],
+    siloNuclear: [],
+    isLiked: false
   }
 
-  componentDidMount() {
+  getPropertyWithOwnerName = () => {
     const siloNuclearId = this.props.match.params.id;
     smashRequests.getAllPropertiesWithOwnerInfo()
     .then((properties) => {
       const siloNuclears = properties.filter(property => property.type === 1);
       const siloNuclear= siloNuclears.find(property => property.id == siloNuclearId);
       this.setState( {siloNuclear});
+    }).then(() => {
+      this.checkExistingProperty();
     }).catch(err => console.error(err));
+  }
+
+  changeIsLikedState = (e) => {
+    e.preventDefault();
+    const{ isLiked} = this.state;
+    this.setState({ isLiked: !isLiked });
+    this.addLikedProperties();
+  }
+
+  addLikedProperties = () => {
+    const{ siloNuclear, isLiked} = this.state;
+    const myLikedProperty = {
+      "userId" : siloNuclear.ownerId,
+      "propertyId" : siloNuclear.id
+    };
+    if(!isLiked){
+    likedPropertyRequests.createLikedProperty(myLikedProperty)
+      .then((myLikedProperty)=>{
+        this.setState({ currentLikedProperty: myLikedProperty.data});
+        this.setState({isLiked: true});
+      });
+    }else {
+      this.deleteLikedProperties();
+    }
+  }
+
+  deleteLikedProperties = () => {
+    const{currentLikedProperty} = this.state;
+     const likedPropertyId = currentLikedProperty[0].id;
+     likedPropertyRequests.deleteLikedProperty(likedPropertyId)
+     .then(()=>{
+       this.setState({isLiked: false});
+     })
+  }
+
+  checkExistingProperty = () => {
+    const {siloNuclear, isLiked} = this.state;
+    likedPropertyRequests.getAllLikedProperties()
+    .then((likedProperties) => {
+      const currentLikedProperty = likedProperties.filter(x => x.propertyId === siloNuclear.id && x.userId === siloNuclear.ownerId);
+      if(currentLikedProperty.length === 1){
+        this.setState({isLiked: !isLiked});
+        this.setState({currentLikedProperty});
+      } else {
+        this.setState({isLiked: isLiked});
+      }
+    });
+  }
+
+  componentDidMount() {
+    this.getPropertyWithOwnerName();
   }
 
   backButton = () => {
     this.props.history.push('/properties/siloNuclears');
   }
+  
+  OwnerProductView = (e) => {
+    const ownerId = e.target.dataset.owner;
+    this.props.history.push(`/ownerProperties/${ownerId}`);
+  }
+
+  editEvent = (e) => {
+    e.preventDefault();
+    const propertyId = e.target.dataset.propertyId;
+    this.props.history.push(`/editProperty/${propertyId}`);
+  }
+
 
   render() {
-    const{siloNuclear}= this.state;
+    const{siloNuclear,isLiked}= this.state;
+    const makeLikedPropertyButton = () => {
+      if(siloNuclear.isOwner === false && isLiked === false){
+        return(
+          <button className="btn" onClick={this.changeIsLikedState}><i id="!isLiked" className="far fa-heart fa-2x"/></button>
+        );
+     } else if(siloNuclear.isOwner === false && isLiked === true){
+        return(
+          <button className="btn" onClick={this.changeIsLikedState}><i id="isLiked" className="far fa-heart fa-2x"/></button>
+        );
+     }    
+    }
+
+    const makebutton = () => {
+      if(siloNuclear.isOwner === true){
+        return(
+          <i onClick= {this.editEvent} data-property-id={siloNuclear.id} className="far fa-edit edit-icon fa-2x float-right"/>
+        );
+      }
+    }
+
     return (
       <div>
         <div className="back-button">
@@ -37,9 +126,10 @@ class SiloNuclearDetail extends React.Component {
             <p>{siloNuclear.city}, {siloNuclear.state} - {siloNuclear.zipCode}</p>
             <p>{siloNuclear.description}</p>
             <p>${siloNuclear.price}/per night</p>
-            <p>Owned By: {siloNuclear.name}</p>
+            <p className="owner-name" onClick = {this.OwnerProductView} data-owner={siloNuclear.ownerId}>Owned By: {siloNuclear.name}</p>
             <button className="btn btn-primary mr-2">Rent</button>
-            <button className="btn btn-success"id="likedProperties">Liked Property</button>
+            {makebutton()}
+            {makeLikedPropertyButton()}
           </div>
         </div>
       </div>

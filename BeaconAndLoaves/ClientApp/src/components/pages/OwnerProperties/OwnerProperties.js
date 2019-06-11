@@ -1,0 +1,52 @@
+import React from 'react';
+import userRequests from '../../../helpers/data/userRequests';
+import SingleOwnerProperty from '../SingleOwnerProperty/SingleOwnerProperty';
+
+class OwnerPropducts extends React.Component{
+    state = {
+        properties: [],
+    }
+
+    rentProperty = (propertyId) => {
+        this.props.history.push(`/rental/${propertyId}`);
+      }
+
+    getOwnerProperties =() => {
+        const ownerId =  this.props.match.params.id;
+        userRequests.getUserProperties(ownerId)
+        .then((properties)=> {
+        this.setState({properties});
+    });
+    }
+
+    componentDidMount(){
+        this.getOwnerProperties();
+    }
+
+    backButton = () => {
+        this.props.history.push('/properties');
+    }
+render(){
+    const {properties} = this.state;
+
+    const ownerPropertyComponent = properties.map(property => (
+        <SingleOwnerProperty
+        property={property}
+        key = {property.id}
+        rentProperty ={this.rentProperty}
+        />
+      ));
+    return(
+        <div>
+            <div className="back-button">
+              <button className = "btn btn-warning" onClick = {this.backButton}>Back</button>
+            </div>
+            <div className = "row">
+            {ownerPropertyComponent}
+            </div>
+        </div>
+    )
+}
+}
+
+export default OwnerPropducts;

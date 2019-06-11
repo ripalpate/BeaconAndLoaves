@@ -20,10 +20,13 @@ import SiloNuclears from '../components/pages/SiloNuclears/SiloNuclears';
 import LightHouseDetail from '../components/pages/LightHouseDetail/LightHouseDetail';
 import SiloNuclearDetail from '../components/pages/SiloNuclearDetail/SiloNuclearDetail';
 import AddEditProperty from '../components/pages/AddEditProperty/AddEditProperty';
+import EditProperty from '../components/pages/EditProperty/EditProperty';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
 import LikedProperties from '../components/pages/LikedProperties/LikedProperties';
+import Rental from '../components/pages/Rental/Rental';
 import authRequests from '../helpers/data/authRequests';
 import connection from '../helpers/data/connection';
+import OwnerProperties from '../components/pages/OwnerProperties/OwnerProperties';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
@@ -93,7 +96,7 @@ export default class App extends Component {
                     component={Auth}
                     authed={ authed }
                   />
-                  <PrivateRoute path='/' exact component={Auth} authed={this.state.authed} />
+                  <PrivateRoute path='/' exact component={Home} authed={this.state.authed} />
                   <PrivateRoute path='/register' exact component={Register} authed={this.state.authed} />
                   <PrivateRoute path="/home" component={Home} authed={this.state.authed}/>
                   <PrivateRoute exact path="/profile" component={Profile} authed={this.state.authed}/>
@@ -107,6 +110,9 @@ export default class App extends Component {
                   <PrivateRoute exact path="/siloNuclears/:id" authed={this.state.authed} component={SiloNuclearDetail}/>
                   <PrivateRoute path="/likedProperties" authed={this.state.authed} component={LikedProperties}/>
                   <PrivateRoute path="/addProperty" authed={this.state.authed} component={AddEditProperty}/>
+                  <PrivateRoute path="/editProperty/:id" authed={this.state.authed} component={EditProperty}/>
+                  <PrivateRoute exact path="/rental/:id" authed={this.state.authed} component={Rental}/>
+                  <PrivateRoute exact path="/ownerProperties/:id" component={OwnerProperties} authed={this.state.authed}/>
                 </Switch>
           </React.Fragment>
         </BrowserRouter>

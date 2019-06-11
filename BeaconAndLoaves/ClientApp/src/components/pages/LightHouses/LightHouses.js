@@ -1,25 +1,68 @@
 import React from 'react';
 import SingleLightHouse from '../SingleLightHouse/SingleLightHouse';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
-import './LightHouse.scss';
+import SearchField from 'react-search-field';
+import { Tooltip } from 'reactstrap';
+import './LightHouses.scss';
 
 class LightHouses extends React.Component {
   state = {
     lightHouses: [],
-    ascendingOrder: false
+    ascendingOrder: false,
+    filteredLightHouses: [],
+    isSearching: false,
+    searchTipOpen: false,
+  }
+
+  getAllLightHouses = () => {
+    propertiesRequests.getProperties()
+    .then((properties) => {
+      const lightHouses = properties.filter(property => property.type === 0);
+      this.setState({ lightHouses});
+      this.setState({ filteredLightHouses: lightHouses });
+    }).catch(err => console.error(err));
   }
 
   componentDidMount()
   {
-    propertiesRequests.getProperties()
-      .then((properties) => {
-        const lightHouses = properties.filter(property => property.type === 0);
-        this.setState({ lightHouses});
-      }).catch(err => console.error(err));
-
-      this.sortProperties();
+    this.getAllLightHouses(); 
+    this.sortProperties();
   }
 
+  toggleSearch = () => {
+    const { isSearching, lightHouses } = this.state;
+    this.setState({ isSearching: !isSearching, filteredLightHouses: lightHouses });
+  }
+
+  toggleSearchTip = () => {
+    const { searchTipOpen } = this.state;
+    this.setState({
+      searchTipOpen: !searchTipOpen,
+    });
+  }
+
+  onChange = (value, event) => {
+    const { lightHouses } = this.state;
+    const filteredLightHouses = [];
+    event.preventDefault();
+    if (!value) {
+      this.setState({ filteredLightHouses: lightHouses });
+    } else {
+      lightHouses.forEach((lightHouse) => {
+        if (lightHouse.propertyName.toLowerCase().includes(value.toLowerCase()) || lightHouse.city.toLowerCase().includes(value.toLowerCase()) 
+        || lightHouse.state.toLowerCase().includes(value.toLowerCase())) {
+          filteredLightHouses.push(lightHouse);
+        }
+        this.setState({ filteredLightHouses });
+      });
+    }
+  }
+
+  searchOnEnter = () => {
+    const { lightHouses } = this.state;
+    this.setState({ isSearching: false, filteredLightHouses:lightHouses });
+  }
+  
   sortProperties =() => {
     const {ascendingOrder, lightHouses} = this.state;
     if(ascendingOrder === false){
@@ -42,10 +85,29 @@ class LightHouses extends React.Component {
     this.sortProperties();
   }
 
+
   render() {
-     const {  ascendingOrder, lightHouses } = this.state;
+     const {  
+      ascendingOrder,
+      isSearching,
+      filteredLightHouses } = this.state;
      
-     const singleLightHouseComponent = lightHouses.map(lightHouse => (
+      const makeSearch = () => {
+        if (isSearching) {
+          return (
+            <SearchField
+              placeholder="Search By name, city or state"
+              onChange={ this.onChange }
+              searchText=""
+              classNames="test-class w-50"
+              onEnter={this.searchOnEnter}
+            />
+          );
+        }
+        return (<div></div>);
+      };
+
+     const singleLightHouseComponent = filteredLightHouses.map(lightHouse => (
       <SingleLightHouse
       lightHouse={lightHouse}
       key = {lightHouse.id}
@@ -72,9 +134,22 @@ class LightHouses extends React.Component {
     }
     return (
       <div>
-        {makeLatestButton()}
+        <div className="serach-sort-container">
+          <button
+            id="search-btn"
+            type="button"
+            className="bttn-material-circle bttn-sm bttn-primary ml-2"
+            onClick={this.toggleSearch}>
+            <i className="fas fa-search" />
+          </button>
+          <Tooltip placement="right" isOpen={this.state.searchTipOpen} target="search-btn" toggle={this.toggleSearchTip}>
+            Search lightHouses
+          </Tooltip>
+            {makeLatestButton()}
+            {makeSearch()}
+        </div>
         <div className="lightHouses row">
-          <h3 className = "lightHouseContainer d-flex mx-auto mt-5">{singleLightHouseComponent}</h3>
+          <div className = "lightHouseContainer d-flex mx-auto mt-3">{singleLightHouseComponent}</div>
         </div>
       </div>
     );

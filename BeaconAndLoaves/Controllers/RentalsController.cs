@@ -68,6 +68,12 @@ namespace BeaconAndLoaves.Controllers
             return Ok(rentalById);
         }
 
+        [HttpGet("property/{id}")]
+        public ActionResult GetRentalsByPropertyId(int id)
+        {
+            var rentalsByPropertyId = _repository.GetRentalsByPropertyId(id);
 
+            return Ok(rentalsByPropertyId);
+        }
     }
 }
