@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import propertiesShape from '../../../helpers/propz/propertiesShape';
 import LikeButton from '../LikeButton/LikeButton';
-import userShape from '../../../helpers/propz/userShape';
+import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import './SingleOwnerProperty.scss';
 
 class SingleOwnerProperty extends React.Component {
   state = {
     isLiked: false,
+    currentLikedProperty: []
   }
 
   static propTypes = {
@@ -20,6 +21,32 @@ class SingleOwnerProperty extends React.Component {
     this.props.rentProperty(propertyId);
   }
 
+  // clicking onheart icon changes isLiked state
+  changeIsLikedState = () => {
+    const { isLiked } = this.state;
+    this.setState({ isLiked: !isLiked });
+  }
+
+  //check property exist in the state to hold the state of isLiked property
+  checkExistingProperty = () => {
+    const { property } = this.props;
+    const { isLiked } = this.state;
+    likedPropertyRequests.getAllLikedProperties()
+      .then((likedProperties) => {
+        const currentLikedProperty = likedProperties.filter(lp => lp.propertyId === property.id && lp.userId === property.ownerId);
+        console.log(currentLikedProperty);
+        if (currentLikedProperty.length >= 1) {
+          this.setState({ isLiked: !isLiked });
+          this.setState({ currentLikedProperty });
+        } else {
+          this.setState({ isLiked });
+        }
+      });
+  }
+
+  componentDidMount() {
+    this.checkExistingProperty();
+  }
   render() {
     const { property } = this.props;
     const { isLiked } = this.state;
