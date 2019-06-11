@@ -11,6 +11,10 @@ class LightHouseDetail extends React.Component {
     isLiked: false,
   }
 
+  componentDidMount() {
+    this.getPropertyWithOwnerName();
+  }
+
   //get Propertydetails with owner name and hold isLiked state
   getPropertyWithOwnerName = () => {
     const lightHouseId = this.props.match.params.id;
@@ -54,10 +58,6 @@ class LightHouseDetail extends React.Component {
       });
   }
 
-  componentDidMount() {
-    this.getPropertyWithOwnerName();
-  }
-
   OwnerPropertiesView = (e) => {
     const ownerId = e.target.dataset.owner;
     this.props.history.push(`/ownerProperties/${ownerId}`);
@@ -71,7 +71,7 @@ class LightHouseDetail extends React.Component {
 
 
   render() {
-    const { lightHouse,isLiked } = this.state;
+    const { lightHouse, isLiked } = this.state;
     const makeLikedPropertyButton = () => {
       if (lightHouse.isOwner === false) {
         return (
