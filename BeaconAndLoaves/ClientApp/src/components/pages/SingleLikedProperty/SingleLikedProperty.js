@@ -4,11 +4,17 @@ import './SingleLikedProperty.scss';
 
 class SingleLikedProperty extends React.Component {
   static propTypes = {
-    likedProperty: propertiesShape
+    likedProperty: propertiesShape,
   }
 
+rentButtonClickEvent = (e) => {
+  const propertyId = e.target.id * 1;
+  this.props.rentProperty(propertyId);
+
+}
+
   render() {
-    const {likedProperty} = this.props;
+    const { likedProperty } = this.props;
     return (
       <div className="card bg-light mr-4 mb-4 singleLikedProperty text-center">
         <div className="imgHolder">
@@ -17,10 +23,10 @@ class SingleLikedProperty extends React.Component {
         <div className="card-body">
           <h5>{likedProperty.propertyName}</h5>
           <p>{likedProperty.street}</p>
-          <p>{likedProperty.city}, {likedProperty.state} - {likedProperty.zipCode}</p>
+          <p>{likedProperty.city}, {likedProperty.state}, {likedProperty.zipCode}</p>
           <p>{likedProperty.description}</p>
           <p>${likedProperty.price}/per night</p>
-          <button className="bttn-pill bttn-md bttn-primary">Rent Me!!!</button>
+          <button className="bttn-pill bttn-md bttn-primary" id={likedProperty.propertyId} onClick={this.rentButtonClickEvent}>Rent Me!!!</button>
         </div>
       </div>
     );
