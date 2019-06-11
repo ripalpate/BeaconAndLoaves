@@ -17,18 +17,14 @@ class LikedProperties extends React.Component {
       this.setState({likedProperties});
     });
   } 
-
-  refreshLikedProperties = () => {
-    this.getAllLikedProperties();
-  }
-
+ 
   render(){
     const {likedProperties} = this.state;
     const singleLikedPropertyComponent = likedProperties.map(likedProperty => (
       <SingleLikedProperty
       likedProperty={likedProperty}
       key = {likedProperty.id}
-      refreshLikedProperties = {this.refreshLikedProperties}
+      getAllLikedProperties = {this.getAllLikedProperties}
       />
     ));
 
