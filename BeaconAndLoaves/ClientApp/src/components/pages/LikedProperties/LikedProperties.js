@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import SingleLikedProperty from '../SingleLikedProperty/SingleLikedProperty';
-import LikeButton from '../LikeButton/LikeButton';
 
 class LikedProperties extends React.Component {
   state = {
@@ -20,18 +18,25 @@ class LikedProperties extends React.Component {
     });
   } 
 
+  refreshLikedProperties = () => {
+    this.getAllLikedProperties();
+  }
+
   render(){
-    const {likedProperties,isLiked} = this.state;
+    const {likedProperties} = this.state;
     const singleLikedPropertyComponent = likedProperties.map(likedProperty => (
       <SingleLikedProperty
       likedProperty={likedProperty}
       key = {likedProperty.id}
+      refreshLikedProperties = {this.refreshLikedProperties}
       />
     ));
 
     return(
       <div className="likedProperty row">
-          <div className = "d-flex mx-auto mt-5">{singleLikedPropertyComponent}</div>
+          <div className = "d-flex mx-auto mt-5">
+          {singleLikedPropertyComponent}
+          </div>
       </div>
     )
   }

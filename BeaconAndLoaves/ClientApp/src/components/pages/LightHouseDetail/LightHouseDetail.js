@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './LightHouseDetail.scss';
 import smashRequests from '../../../helpers/data/smashRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
@@ -35,39 +34,9 @@ class LightHouseDetail extends React.Component {
   }
 
  // clicking onheart icon changes isLiked state
-  changeIsLikedState = (e) => {
-    e.preventDefault();
+  changeIsLikedState = () => {
     const { isLiked } = this.state;
     this.setState({ isLiked: !isLiked });
-    this.addLikedProperties();
-  }
-
-  //adding property to liked property
-  addLikedProperties = () => {
-    const { lightHouse, isLiked } = this.state;
-    const myLikedProperty = {
-      userId: lightHouse.ownerId,
-      propertyId: lightHouse.id,
-    };
-    if (!isLiked) {
-      likedPropertyRequests.createLikedProperty(myLikedProperty)
-        .then((myLikedProperty) => {
-          this.setState({ currentLikedProperty: myLikedProperty.data });
-          this.setState({ isLiked: true });
-        });
-    } else {
-      this.deleteLikedProperties();
-    }
-  }
-
-  // deleting property from liked property upon clicking heart icon again
-  deleteLikedProperties = () => {
-    const { currentLikedProperty } = this.state;
-    const likedPropertyId = currentLikedProperty[0].id;
-    likedPropertyRequests.deleteLikedProperty(likedPropertyId)
-      .then(() => {
-        this.setState({ isLiked: false });
-      });
   }
 
   //check property exist in the state to hold the state of isLiked property
@@ -104,13 +73,15 @@ class LightHouseDetail extends React.Component {
   render() {
     const { lightHouse,isLiked } = this.state;
     const makeLikedPropertyButton = () => {
-      if (lightHouse.isOwner === false && isLiked === false) {
+      if (lightHouse.isOwner === false) {
         return (
-          <button className="btn float-right" onClick={this.changeIsLikedState}><i id="!isLiked" className="far fa-heart fa-2x"/></button>
-        );
-      } else if (lightHouse.isOwner === false && isLiked === true) {
-        return (
-          <button className="btn float-right" onClick={this.changeIsLikedState}><i id="isLiked" className="far fa-heart fa-2x"/></button>
+          <LikeButton
+          isLiked={isLiked}
+          changeIsLikedState= {this.changeIsLikedState}
+          lightHouse = {lightHouse}
+          userId = {lightHouse.ownerId}
+          propertyId = {lightHouse.id}
+          />
         );
       } 
     };
