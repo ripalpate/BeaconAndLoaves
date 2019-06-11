@@ -360,17 +360,17 @@ class Profile extends React.Component {
 
     return (
       <div>
-      <div>
-        <WarningModal
-        isEditing={isEditing}
-        modal={modal}
-        toggleModal={this.toggleModal}
-        deleteProfile={this.deleteProfile}
-         />
-      </div>
-      <div className="profileDiv d-flex mx-auto">
-        {makeProfileCard()}
-      </div>
+        <div>
+          <WarningModal
+          isEditing={isEditing}
+          modal={modal}
+          toggleModal={this.toggleModal}
+          deleteProfile={this.deleteProfile}
+          />
+        </div>
+        <div className="profileDiv d-flex mx-auto">
+          {makeProfileCard()}
+        </div>
       </div>
 
     );
