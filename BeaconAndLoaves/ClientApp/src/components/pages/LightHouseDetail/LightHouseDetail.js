@@ -2,12 +2,17 @@ import React from 'react';
 import './LightHouseDetail.scss';
 import smashRequests from '../../../helpers/data/smashRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
+import LikeButton from '../LikeButton/LikeButton';
 
 class LightHouseDetail extends React.Component {
   state = {
     currentLikedProperty: [],
     lightHouse: [],
     isLiked: false,
+  }
+
+  componentDidMount() {
+    this.getPropertyWithOwnerName();
   }
 
   //get Propertydetails with owner name and hold isLiked state
@@ -32,40 +37,10 @@ class LightHouseDetail extends React.Component {
     this.props.history.push(`/rental/${propertyId}`);
   }
 
-  //clicking onheart icon changes isLiked state
-  changeIsLikedState = (e) => {
-    e.preventDefault();
+ // clicking onheart icon changes isLiked state
+  changeIsLikedState = () => {
     const { isLiked } = this.state;
     this.setState({ isLiked: !isLiked });
-    this.addLikedProperties();
-  }
-
-  //adding property to liked property
-  addLikedProperties = () => {
-    const { lightHouse, isLiked } = this.state;
-    const myLikedProperty = {
-      userId: lightHouse.ownerId,
-      propertyId: lightHouse.id,
-    };
-    if (!isLiked) {
-      likedPropertyRequests.createLikedProperty(myLikedProperty)
-        .then((myLikedProperty) => {
-          this.setState({ currentLikedProperty: myLikedProperty.data });
-          this.setState({ isLiked: true });
-        });
-    } else {
-      this.deleteLikedProperties();
-    }
-  }
-
-  // deleting property from liked property upon clicking heart icon again
-  deleteLikedProperties = () => {
-    const { currentLikedProperty } = this.state;
-    const likedPropertyId = currentLikedProperty[0].id;
-    likedPropertyRequests.deleteLikedProperty(likedPropertyId)
-      .then(() => {
-        this.setState({ isLiked: false });
-      });
   }
 
   //check property exist in the state to hold the state of isLiked property
@@ -83,10 +58,6 @@ class LightHouseDetail extends React.Component {
       });
   }
 
-  componentDidMount() {
-    this.getPropertyWithOwnerName();
-  }
-
   OwnerPropertiesView = (e) => {
     const ownerId = e.target.dataset.owner;
     this.props.history.push(`/ownerProperties/${ownerId}`);
@@ -101,15 +72,16 @@ class LightHouseDetail extends React.Component {
 
   render() {
     const { lightHouse, isLiked } = this.state;
-
     const makeLikedPropertyButton = () => {
-      if (lightHouse.isOwner === false && isLiked === false) {
+      if (lightHouse.isOwner === false) {
         return (
-          <button className="btn float-right" onClick={this.changeIsLikedState}><i id="!isLiked" className="far fa-heart fa-2x"/></button>
-        );
-      } else if (lightHouse.isOwner === false && isLiked === true) {
-        return (
-          <button className="btn float-right" onClick={this.changeIsLikedState}><i id="isLiked" className="far fa-heart fa-2x"/></button>
+          <LikeButton
+          isLiked={isLiked}
+          changeIsLikedState= {this.changeIsLikedState}
+          lightHouse = {lightHouse}
+          userId = {lightHouse.ownerId}
+          propertyId = {lightHouse.id}
+          />
         );
       } 
     };

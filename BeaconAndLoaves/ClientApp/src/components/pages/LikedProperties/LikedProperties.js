@@ -1,7 +1,6 @@
 import React from 'react';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import SingleLikedProperty from '../SingleLikedProperty/SingleLikedProperty';
-import propertiesRequests from '../../../helpers/data/propertiesRequests';
 
 class LikedProperties extends React.Component {
   state = {
@@ -25,12 +24,15 @@ class LikedProperties extends React.Component {
       <SingleLikedProperty
       likedProperty={likedProperty}
       key = {likedProperty.id}
+      getAllLikedProperties = {this.getAllLikedProperties}
       />
     ));
 
     return (
       <div className="likedProperty row">
-          <div className = "d-flex mx-auto mt-5">{singleLikedPropertyComponent}</div>
+          <div className = "d-flex mx-auto mt-5">
+          {singleLikedPropertyComponent}
+          </div>
       </div>
     );
   }
