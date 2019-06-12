@@ -9,6 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import './SinglePaymentMethodModal.scss';
+import PaymentMethod from '../PaymentMethod/PaymentMethod';
 
 class SinglePaymentMethodModal extends React.Component {
   static propTypes = {
@@ -21,7 +22,8 @@ class SinglePaymentMethodModal extends React.Component {
   }
 
   editPaymentMethod = (e) => {
-    this.setState({ isEditing: true });
+    const {isEditing}=this.state;
+    this.setState({ isEditing: !isEditing });
   }
 
   cancel = () => {
@@ -70,18 +72,46 @@ class SinglePaymentMethodModal extends React.Component {
       return formattedDate;
     }
 
-    return (
+const makeModal = () => {
+  const {isEditing}=this.state;
+  if(isEditing===false){
+    return (      
+    <div>
+      <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
+      <ModalHeader class-name="modal-header" toggle={this.togglePaymentEvent}>{paymentAccount.accountName}</ModalHeader>
+      <ModalBody className="text-center modal-body">
+      <div className="border border-dark rounded" id={paymentAccount.id}>
+        <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
+        <div className="ml-1">Exp Date: {formatDate()}</div>
+        <div className="ml-1">CVV: {paymentAccount.cvv}</div>
+        <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={this.editPaymentMethod}>
+            <i className="far fa-edit fa-2x"/>
+        </button>
+        </div>
+      </ModalBody>
+      </Modal>
+    </div>
+  );
+}
+else{
+  return(
+    <div>
+    <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
+    <ModalHeader class-name="modal-header" toggle={this.togglePaymentEvent}>{paymentAccount.accountName}</ModalHeader>
+    <ModalBody className="text-center modal-body">
+<PaymentMethod>
+  
+</PaymentMethod>
+    </ModalBody>
+    </Modal>
+  </div>
+  )
+}
+}
+
+    return (      
       <div>
-        <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
-        <ModalHeader class-name="modal-header" toggle={this.togglePaymentEvent}>{paymentAccount.accountName}</ModalHeader>
-        <ModalBody className="text-center modal-body">
-        <div className="border border-dark rounded" id={paymentAccount.id}>
-          <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
-          <div className="ml-1">Exp Date: {formatDate()}</div>
-          <div className="ml-1">CVV: {paymentAccount.cvv}</div>
-          </div>
-        </ModalBody>
-        </Modal>
+        {makeModal()}
       </div>
     );
   }
