@@ -213,6 +213,7 @@ class Rental extends React.Component {
                         endDate={this.state.endDate}
                         minDate={this.state.startDate}
                         onChange={this.handleEndChange}
+                        excludeDates={ rentedDates }
                     />
                 </div>
                 <div className="ml-1">Total: ${rentalTotal}</div>

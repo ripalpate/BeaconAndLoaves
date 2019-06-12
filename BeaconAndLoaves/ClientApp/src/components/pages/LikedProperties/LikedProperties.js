@@ -11,6 +11,10 @@ class LikedProperties extends React.Component {
     this.getAllLikedProperties();
   }
 
+  rentProperty = (propertyId) => {
+    this.props.history.push(`/rental/${propertyId}`);
+  }
+
   getAllLikedProperties= () => {
     likedPropertyRequests.getAllLikedProperties()
       .then((likedProperties) => {
@@ -24,6 +28,7 @@ class LikedProperties extends React.Component {
       <SingleLikedProperty
       likedProperty={likedProperty}
       key = {likedProperty.id}
+      rentProperty = {this.rentProperty}
       getAllLikedProperties = {this.getAllLikedProperties}
       />
     ));
