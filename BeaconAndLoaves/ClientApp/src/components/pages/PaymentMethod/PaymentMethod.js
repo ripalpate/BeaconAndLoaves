@@ -79,9 +79,13 @@ class PaymentMethod extends React.Component {
       }
   
 
-      componentDidMount() {
-        this.paymentTypes();        
-      }
+      componentDidMount(prevProps) {
+        this.paymentTypes();
+        const { isEditing, paymentAccount } = this.props;
+        if (prevProps !== this.props && isEditing) {
+              this.setState({ newPaymentMethod: paymentAccount });
+            }
+        }
  
     render() {
         const {
@@ -89,12 +93,35 @@ class PaymentMethod extends React.Component {
           paymentTypes
         } = this.state;
 
+        const {isEditing}=this.props;
+
+        const makeButtons = () => {
+          if(isEditing===false){
+            return(
+          <div>
+              <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
+                <i className="fas fa-plus-circle" />
+              </button>
+          </div>
+            )
+          }
+          else {
+            return(
+          <div>
+              <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
+                <i className="fas fa-check-square" />
+              </button>
+          </div>
+            )
+          }
+        }
+
         const makeDropdowns = () => {
           let counter = 0;
             return (
               <div>
                 <span>Payment Types:
-                  <select name="payment" required className="custom-select mb-2" onChange={this.selectPaymentType}>
+                  <select name="payment" required className="custom-select mb-2" value={newPaymentMethod.paymentTypeId} onChange={this.selectPaymentType}>
                   <option value="">Select Payment Type</option>
                     {
                       paymentTypes.map((paymentType) => (<option key={counter++}value={counter}>{paymentType}</option>))
@@ -174,16 +201,14 @@ class PaymentMethod extends React.Component {
                         className="form-control"
                         id="CVV"
                         placeholder="333"
-                        value={newPaymentMethod.CVV}
+                        value={newPaymentMethod.cvv}
                         onChange={this.CVVChange}
                         required
                         />
                     </div>
                     </div>
                 </div>
-                <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
-                    <i className="fas fa-plus-circle" />
-                </button>
+                  {makeButtons()}
                 </form>
             </div>
         );

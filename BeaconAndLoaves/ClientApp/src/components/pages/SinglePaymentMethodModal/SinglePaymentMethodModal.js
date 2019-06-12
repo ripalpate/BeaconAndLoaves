@@ -99,9 +99,10 @@ else{
     <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
     <ModalHeader class-name="modal-header" toggle={this.togglePaymentEvent}>{paymentAccount.accountName}</ModalHeader>
     <ModalBody className="text-center modal-body">
-<PaymentMethod>
-  
-</PaymentMethod>
+<PaymentMethod
+isEditing={isEditing}
+paymentAccount={paymentAccount}
+/>
     </ModalBody>
     </Modal>
   </div>
