@@ -65,6 +65,20 @@ namespace BeaconAndLoaves.Data
             }
         }
 
+        public IEnumerable<UserPayment> GetSingleUserPaymentAccount(string id, string accountName)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var paymentAccounts = db.Query<UserPayment>(@"
+                    select *
+                    from userpayment
+                    where userid = @id and accountName = @accountName",
+                    new { id, accountName });
+
+                return paymentAccounts;
+            }
+        }
+
 
         public UserPayment UpdateUserPayment(UserPayment userPaymentUpdating)
         {

@@ -55,6 +55,14 @@ namespace BeaconAndLoaves.Controllers
             return Ok(userPaymentById);
         }
 
+        [HttpGet("userPayment/{id}/{accountName}")]
+        public ActionResult GetUserPaymentAccounts(string id, string accountName)
+        {
+            var paymentAccount = _repository.GetSingleUserPaymentAccount(id,accountName);
+
+            return Ok(paymentAccount);
+        }
+
         [HttpPut("{id}")]
         public ActionResult UpdateUserPayment(int id, UserPayment userPaymentUpdating)
         {
