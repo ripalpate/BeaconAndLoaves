@@ -81,7 +81,7 @@ namespace BeaconAndLoaves.Data
                 var userProperties = db.Query<Property>(@"
                     select *
                     from properties
-                    where ownerid = @id",
+                    where ownerid = @id and isActive = 1",
                     new { id });
 
                 return userProperties;
@@ -102,21 +102,6 @@ namespace BeaconAndLoaves.Data
             }
         }
 
-        //public User GetSingleUserWithProperties(int id) {
-        //    using (var db = new SqlConnection(_connectionString))
-        //    {
-        //        var properties = _propertyRepository.GetAllProperties();
-        //        var singleUser = db.QueryFirstOrDefault<User>(@"
-        //            select *
-        //            from users
-        //            where firebaseid = @id",
-        //            new { id });
-
-        //        var matchingProperties = properties.Where(p => p.OwnerId == singleUser.Id).ToList();
-        //        singleUser.Properties = matchingProperties;
-        //        return singleUser;
-        //    }
-        //}
 
         public User UpdateUser(int id, User userToUpdate)
         {
