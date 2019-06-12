@@ -341,7 +341,7 @@ paymentAccount = {
       }
       return (<div>
            <span>Payment Accounts:
-              <select className="custom-select mb-2" id="account" onChange={this.dropdownSelect}>
+              <select className="custom-select mb-2" id="account" onChange={this.togglePaymentModal} onChange={this.getUserPaymentAccount}>
               <option defaultValue>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
