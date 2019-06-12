@@ -39,7 +39,6 @@ paymentAccount = {
     });
   }
 
-  
   togglePaymentModal = (e) => {
     const { paymentModal } = this.state;
     this.setState({
@@ -89,6 +88,10 @@ paymentAccount = {
   changeView = (e) => {
     const view = e.currentTarget.id;
     this.props.history.push(`/${view}`);
+  }
+
+  changeEditView = () => {
+    this.props.history.push('/profile');
   }
 
   getUser = () => {
@@ -321,7 +324,7 @@ paymentAccount = {
           <div>
             <span>Payment Accounts:
               <select id="account" className="custom-select mb-2" onChange={this.togglePaymentModal} onChange={this.getUserPaymentAccount}>
-              <option defaultValue>Select Payment Account</option>
+              <option value=''>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
                 }
@@ -405,6 +408,7 @@ paymentAccount = {
       paymentModal={paymentModal}
       togglePaymentModal={this.togglePaymentModal}
       paymentAccount={paymentAccount}      
+      changeEditView={this.changeEditView}
       /> 
       </div>
       <div className="profileDiv d-flex mx-auto">

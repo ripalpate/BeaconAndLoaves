@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import userRequests from '../../../helpers/data/userRequests';
@@ -10,7 +9,7 @@ const defaultPaymentMethod = {
     paymentTypeId: 0,
     accountNumber: '',
     expirationDate: '',
-    CVV: '',
+    cvv: 0,
     isActive: ''
   };
 
@@ -59,19 +58,27 @@ class PaymentMethod extends React.Component {
     
       expirationDateChange = e => this.formFieldStringState('expirationDate', e);
 
-      CVVChange = e => this.formFieldStringState('CVV', e);
+      CVVChange = e => this.formFieldNumberState('cvv', e);
 
       formSubmit = (e) => {
         e.preventDefault();
+        const {isEditing}=this.props;
         const myPaymentMethod = { ...this.state.newPaymentMethod };
+        if(isEditing===false){
         myPaymentMethod.isActive = true;
         myPaymentMethod.userId = this.state.currentUser.id;
         myPaymentMethod.paymentTypeId = this.state.selectedPaymentType*1;
         this.setState({ newPaymentMethod: defaultPaymentMethod });
         paymentMethodRequests.createUserPayment(myPaymentMethod)
         .then(() => {
-            this.props.history.push('/home');
+            this.props.togglePaymentModal();
         })
+      }else{
+        paymentMethodRequests.updateUserPayment(myPaymentMethod.id, myPaymentMethod)
+        .then(() => {
+          this.props.togglePaymentModal();
+      })
+      }
       };
 
       selectPaymentType = (e) => {
@@ -79,9 +86,13 @@ class PaymentMethod extends React.Component {
       }
   
 
-      componentDidMount() {
-        this.paymentTypes();        
-      }
+      componentDidMount(prevProps) {
+        this.paymentTypes();
+        const { isEditing, paymentAccount } = this.props;
+        if (prevProps !== this.props && isEditing) {
+              this.setState({ newPaymentMethod: paymentAccount });
+            }
+        }
  
     render() {
         const {
@@ -89,12 +100,35 @@ class PaymentMethod extends React.Component {
           paymentTypes
         } = this.state;
 
+        const {isEditing}=this.props;
+
+        const makeButtons = () => {
+          if(isEditing===false){
+            return(
+          <div>
+              <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
+                <i className="fas fa-plus-circle" />
+              </button>
+          </div>
+            )
+          }
+          else {
+            return(
+          <div>
+              <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
+                <i className="fas fa-check-square" />
+              </button>
+          </div>
+            )
+          }
+        }
+
         const makeDropdowns = () => {
           let counter = 0;
             return (
               <div>
                 <span>Payment Types:
-                  <select name="payment" required className="custom-select mb-2" onChange={this.selectPaymentType}>
+                  <select name="payment" required className="custom-select mb-2" value={newPaymentMethod.paymentTypeId} onChange={this.selectPaymentType}>
                   <option value="">Select Payment Type</option>
                     {
                       paymentTypes.map((paymentType) => (<option key={counter++}value={counter}>{paymentType}</option>))
@@ -174,16 +208,14 @@ class PaymentMethod extends React.Component {
                         className="form-control"
                         id="CVV"
                         placeholder="333"
-                        value={newPaymentMethod.CVV}
+                        value={newPaymentMethod.cvv}
                         onChange={this.CVVChange}
                         required
                         />
                     </div>
                     </div>
                 </div>
-                <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
-                    <i className="fas fa-plus-circle" />
-                </button>
+                  {makeButtons()}
                 </form>
             </div>
         );
