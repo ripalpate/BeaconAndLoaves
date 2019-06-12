@@ -1,26 +1,29 @@
 import React from 'react';
 import userRequests from '../../../helpers/data/userRequests';
 import SingleOwnerProperty from '../SingleOwnerProperty/SingleOwnerProperty';
+import smashRequests from '../../../helpers/data/smashRequests';
 
 class OwnerPropducts extends React.Component{
     state = {
-        properties: [],
+        properties: []
     }
 
     rentProperty = (propertyId) => {
         this.props.history.push(`/rental/${propertyId}`);
       }
 
-    getOwnerProperties =() => {
+    getOwnerPropertiesWithOwnerInfo =() => {
         const ownerId =  this.props.match.params.id;
-        userRequests.getUserProperties(ownerId)
-        .then((properties)=> {
-        this.setState({properties});
-    });
+        const convertOwnerIdToNumber= parseInt(ownerId);
+        smashRequests.getAllPropertiesWithOwnerInfo()
+        .then((props)=>{
+            const properties = props.filter(prop => prop.ownerId === convertOwnerIdToNumber);
+            this.setState({properties});
+        })
     }
 
     componentDidMount(){
-        this.getOwnerProperties();
+        this.getOwnerPropertiesWithOwnerInfo()
     }
 
     backButton = () => {
@@ -28,13 +31,13 @@ class OwnerPropducts extends React.Component{
     }
 
 render(){
-    const {properties} = this.state;
+    const {properties, singleUser} = this.state;
 
     const ownerPropertyComponent = properties.map(property => (
         <SingleOwnerProperty
-        property={property}
+        property = { property }
         key = {property.id}
-        rentProperty ={this.rentProperty}
+        rentProperty = { this.rentProperty }
         />
       ));
     return(
