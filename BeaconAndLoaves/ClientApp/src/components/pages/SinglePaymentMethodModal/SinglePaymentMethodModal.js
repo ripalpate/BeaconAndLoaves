@@ -21,6 +21,10 @@ class SinglePaymentMethodModal extends React.Component {
     isEditing: false,
   }
 
+  toggleIsEditing = () => {
+    this.setState({isEditing: false});
+  }
+
   editPaymentMethod = (e) => {
     const {isEditing}=this.state;
     this.setState({ isEditing: !isEditing });
@@ -53,14 +57,15 @@ class SinglePaymentMethodModal extends React.Component {
   //     });
   // };
 
-  componentDidMount(){
+  componentWillUnmount(){
+    this.setState({isEditing: false});
   }
 
   render() {
     const {
       paymentModal,    
       paymentAccount,  
-      isEditing,
+      changeEditView,
     } = this.props;
 
     const formatDate = () => {
@@ -102,6 +107,8 @@ else{
 <PaymentMethod
 isEditing={isEditing}
 paymentAccount={paymentAccount}
+toggleIsEditing={this.toggleIsEditing}
+changeEditView={changeEditView}
 />
     </ModalBody>
     </Modal>

@@ -39,7 +39,6 @@ paymentAccount = {
     });
   }
 
-  
   togglePaymentModal = (e) => {
     const { paymentModal } = this.state;
     this.setState({
@@ -89,6 +88,10 @@ paymentAccount = {
   changeView = (e) => {
     const view = e.currentTarget.id;
     this.props.history.push(`/${view}`);
+  }
+
+  changeEditView = () => {
+    this.props.history.push('/home');
   }
 
   getUser = () => {
@@ -405,6 +408,7 @@ paymentAccount = {
       paymentModal={paymentModal}
       togglePaymentModal={this.togglePaymentModal}
       paymentAccount={paymentAccount}      
+      changeEditView={this.changeEditView}
       /> 
       </div>
       <div className="profileDiv d-flex mx-auto">

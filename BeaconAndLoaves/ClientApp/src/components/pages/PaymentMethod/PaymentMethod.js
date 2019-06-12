@@ -10,7 +10,7 @@ const defaultPaymentMethod = {
     paymentTypeId: 0,
     accountNumber: '',
     expirationDate: '',
-    CVV: '',
+    cvv: 0,
     isActive: ''
   };
 
@@ -59,11 +59,13 @@ class PaymentMethod extends React.Component {
     
       expirationDateChange = e => this.formFieldStringState('expirationDate', e);
 
-      CVVChange = e => this.formFieldStringState('CVV', e);
+      CVVChange = e => this.formFieldNumberState('cvv', e);
 
       formSubmit = (e) => {
         e.preventDefault();
+        const {isEditing}=this.props;
         const myPaymentMethod = { ...this.state.newPaymentMethod };
+        if(isEditing===false){
         myPaymentMethod.isActive = true;
         myPaymentMethod.userId = this.state.currentUser.id;
         myPaymentMethod.paymentTypeId = this.state.selectedPaymentType*1;
@@ -72,6 +74,13 @@ class PaymentMethod extends React.Component {
         .then(() => {
             this.props.history.push('/home');
         })
+      }else{
+        paymentMethodRequests.updateUserPayment(myPaymentMethod.id, myPaymentMethod)
+        .then(() => {
+          this.props.changeEditView();
+          // this.props.toggleIsEditing();
+      })
+      }
       };
 
       selectPaymentType = (e) => {
