@@ -71,12 +71,12 @@ class PaymentMethod extends React.Component {
         this.setState({ newPaymentMethod: defaultPaymentMethod });
         paymentMethodRequests.createUserPayment(myPaymentMethod)
         .then(() => {
-            this.props.history.push('/profile');
+            this.props.togglePaymentModal();
         })
       }else{
         paymentMethodRequests.updateUserPayment(myPaymentMethod.id, myPaymentMethod)
         .then(() => {
-          this.props.changeEditView();
+          this.props.togglePaymentModal();
       })
       }
       };

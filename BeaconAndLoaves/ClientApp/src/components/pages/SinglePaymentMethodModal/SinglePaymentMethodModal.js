@@ -45,6 +45,7 @@ class SinglePaymentMethodModal extends React.Component {
       paymentModal,    
       paymentAccount,  
       changeEditView,
+      togglePaymentModal,
     } = this.props;
 
     const formatDate = () => {
@@ -88,6 +89,7 @@ isEditing={isEditing}
 paymentAccount={paymentAccount}
 toggleIsEditing={this.toggleIsEditing}
 changeEditView={changeEditView}
+togglePaymentModal={togglePaymentModal}
 />
     </ModalBody>
     </Modal>
