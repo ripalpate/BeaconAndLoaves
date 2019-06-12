@@ -1,4 +1,5 @@
 import React from 'react';
+import accountShape from '../../../helpers/propz/accountShape';
 import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import WarningModal from '../WarningModal/WarningModal';
@@ -9,6 +10,10 @@ import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import './Profile.scss';
 
 class Profile extends React.Component {
+  static propTypes = {
+    paymentAccount: accountShape,
+  }
+
   state = {
     currentUser: {},
     paymentAccounts: [],
@@ -22,16 +27,15 @@ class Profile extends React.Component {
     paymentAccount: {},
   }
 
-  
-paymentAccount = {
-  accountName: '',
-  userId: 0,
-  paymentTypeId: 0,
-  accountNumber: '',
-  expirationDate: '',
-  CVV: '',
-  isActive: ''
-};
+  paymentAccount = {
+    accountName: '',
+    userId: 0,
+    paymentTypeId: 0,
+    accountNumber: '',
+    expirationDate: '',
+    cvv: '',
+    isActive: '',
+  };
 
   toggleModal = () => {
     const { modal } = this.state;
@@ -78,13 +82,13 @@ paymentAccount = {
   deletePropertiesAssociatedWithOwner = () => {
     const { properties } = this.state;
     const propertyIds = properties.map(prop => prop.id);
-    propertyIds.forEach(propertyId => {
+    propertyIds.forEach((propertyId) => {
       propertiesRequests.deleteProperty(propertyId)
-      .then(()=>{
-      });
-    })
-
+        .then(() => {
+        });
+    });
   }
+
   deleteProfile = (e) => {
     const { currentUser } = this.state;
     userRequests.deleteUser(currentUser.id)
@@ -154,7 +158,7 @@ paymentAccount = {
     const id = e.target.value;
     paymentMethodRequests.getSingleUserPayment(id)
       .then((paymentAccount) => {
-        this.setState({ paymentAccount: paymentAccount.data }, this.togglePaymentModal)
+        this.setState({ paymentAccount: paymentAccount.data }, this.togglePaymentModal);
       });
   };
 
@@ -418,13 +422,13 @@ paymentAccount = {
         deleteProfile={this.deleteProfile}
          />
       </div>
-      <div>      
-      <SinglePaymentMethodModal 
+      <div>
+      <SinglePaymentMethodModal
       paymentModal={paymentModal}
       togglePaymentModal={this.togglePaymentModal}
-      paymentAccount={paymentAccount}      
+      paymentAccount={paymentAccount}
       changeEditView={this.changeEditView}
-      /> 
+      />
       </div>
       <div className="profileDiv d-flex mx-auto">
         {makeProfileCard()}
@@ -432,8 +436,8 @@ paymentAccount = {
       </div>
 
     );
-  };
   }
+}
 
 
 export default Profile;
