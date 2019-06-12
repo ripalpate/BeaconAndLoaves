@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import userRequests from '../../../helpers/data/userRequests';
@@ -78,7 +77,6 @@ class PaymentMethod extends React.Component {
         paymentMethodRequests.updateUserPayment(myPaymentMethod.id, myPaymentMethod)
         .then(() => {
           this.props.changeEditView();
-          // this.props.toggleIsEditing();
       })
       }
       };

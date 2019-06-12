@@ -1,13 +1,10 @@
 import React from 'react';
 import {
-  Button,
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import './SinglePaymentMethodModal.scss';
 import PaymentMethod from '../PaymentMethod/PaymentMethod';
 
@@ -34,28 +31,10 @@ class SinglePaymentMethodModal extends React.Component {
     this.setState({ isEditing: false });
   }
 
-  // formSubmit = (e) => {
-  //   e.preventDefault();
-  //   const { currentUser } = this.state;
-  //   const userId = currentUser.id;
-  //   userRequests.updateUser(userId, currentUser)
-  //     .then(() => {
-  //       this.setState({ isEditing: false });
-  //     });
-  // }
-
   togglePaymentEvent = () => {
     const { togglePaymentModal } = this.props;
     togglePaymentModal();
   }
-
-  //   getUserPaymentAccount = () => {
-  //   paymentMethodRequests.getSingleUserPayment(this.props.selectedAccount)
-  //     .then((paymentAccount) => {
-  //       this.setState({ paymentAccount: paymentAccount.data })
-  //       console.log(paymentAccount.data);
-  //     });
-  // };
 
   componentWillUnmount(){
     this.setState({isEditing: false});
