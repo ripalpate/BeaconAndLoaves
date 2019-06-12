@@ -41,9 +41,11 @@ paymentAccount = {
 
   togglePaymentModal = (e) => {
     const { paymentModal } = this.state;
+    const dropDown = document.getElementById('account');
     this.setState({
       paymentModal: !paymentModal,
     });
+    dropDown.selectedIndex = 0;
   }
 
   formFieldStringState = (name, e) => {
@@ -167,6 +169,7 @@ paymentAccount = {
       modal,
       paymentModal,
       paymentAccount,
+      selectedAccount,
     } = this.state;
 
     const makeProfileCard = () => {
@@ -323,8 +326,8 @@ paymentAccount = {
         return (
           <div>
             <span>Payment Accounts:
-              <select id="account" className="custom-select mb-2" onChange={this.togglePaymentModal} onChange={this.getUserPaymentAccount}>
-              <option value=''>Select Payment Account</option>
+              <select id="account" value={selectedAccount} className="custom-select mb-2" onChange={this.togglePaymentModal} onChange={this.getUserPaymentAccount}>
+              <option defaultValue>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
                 }
