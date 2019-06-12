@@ -25,9 +25,12 @@ const createProperty = property => axios.post(`${apiUrl}`, property);
 
 const updateProperty = (propertyId, property) => axios.put(`${apiUrl}/${propertyId}`, property);
 
+const deleteProperty = propertyId => axios.delete(`${apiUrl}/${propertyId}`);
+
 export default {
   getProperties,
   getSingleProperty,
   createProperty,
-  updateProperty
+  updateProperty,
+  deleteProperty
 };

@@ -4,6 +4,7 @@ import authRequests from '../../../helpers/data/authRequests';
 import WarningModal from '../WarningModal/WarningModal';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import SinglePaymentMethodModal from '../SinglePaymentMethodModal/SinglePaymentMethodModal';
+import propertiesRequests from '../../../helpers/data/propertiesRequests';
 
 import './Profile.scss';
 
@@ -74,10 +75,21 @@ paymentAccount = {
     this.setState({ userId: currentUser.id });
   }
 
+  deletePropertiesAssociatedWithOwner = () => {
+    const { properties } = this.state;
+    const propertyIds = properties.map(prop => prop.id);
+    propertyIds.forEach(propertyId => {
+      propertiesRequests.deleteProperty(propertyId)
+      .then(()=>{
+      });
+    })
+
+  }
   deleteProfile = (e) => {
     const { currentUser } = this.state;
     userRequests.deleteUser(currentUser.id)
       .then(() => {
+        this.deletePropertiesAssociatedWithOwner();
         this.props.history.push('/register');
       });
     this.props.history.push('/register');
