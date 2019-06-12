@@ -26,6 +26,7 @@ class OwnerPropducts extends React.Component{
     backButton = () => {
         this.props.history.push('/properties');
     }
+
 render(){
     const {properties} = this.state;
 
