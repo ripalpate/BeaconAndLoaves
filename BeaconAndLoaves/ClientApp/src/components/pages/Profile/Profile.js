@@ -138,7 +138,6 @@ paymentAccount = {
     paymentMethodRequests.getSingleUserPayment(id)
       .then((paymentAccount) => {
         this.setState({ paymentAccount: paymentAccount.data }, this.togglePaymentModal)
-        console.log(paymentAccount.data);
       });
   };
 
