@@ -91,7 +91,7 @@ paymentAccount = {
   }
 
   changeEditView = () => {
-    this.props.history.push('/home');
+    this.props.history.push('/profile');
   }
 
   getUser = () => {

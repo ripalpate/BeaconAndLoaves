@@ -64,7 +64,7 @@ class SinglePaymentMethodScreen extends React.Component {
     this.setState({ newPaymentMethod: defaultPaymentMethod });
     paymentMethodRequests.createUserPayment(myPaymentMethod)
     .then(() => {
-        this.props.history.push('/home');
+        this.props.history.push('/profile');
     })
   };
 

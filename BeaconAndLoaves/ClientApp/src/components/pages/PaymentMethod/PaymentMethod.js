@@ -71,7 +71,7 @@ class PaymentMethod extends React.Component {
         this.setState({ newPaymentMethod: defaultPaymentMethod });
         paymentMethodRequests.createUserPayment(myPaymentMethod)
         .then(() => {
-            this.props.history.push('/home');
+            this.props.history.push('/profile');
         })
       }else{
         paymentMethodRequests.updateUserPayment(myPaymentMethod.id, myPaymentMethod)
