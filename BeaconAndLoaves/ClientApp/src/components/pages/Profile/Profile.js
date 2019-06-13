@@ -142,7 +142,13 @@ paymentAccount = {
     } else if (e.target.id === 'property') {
       const selectedProperty = e.target.value;
       this.setState({ selectedProperty });
-      this.props.history.push(`/lightHouses/${selectedProperty}`);
+      const convertIdtoNumber = parseInt(selectedProperty, 10);
+      const getSingleProperty = this.state.properties.find(prop => prop.id === convertIdtoNumber);
+      if (getSingleProperty.type === 0) {
+        this.props.history.push(`/lightHouses/${selectedProperty}`);
+      } else {
+        this.props.history.push(`/siloNuclears/${selectedProperty}`);
+      }
     }
   }
 
