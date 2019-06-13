@@ -76,7 +76,6 @@ class PaymentMethod extends React.Component {
           paymentMethodRequests.updateUserPayment(myPaymentMethod.id, myPaymentMethod)
             .then(() => {
               this.props.cancelPaymentModalEvent();
-              this.props.editPaymentMethod();
             });
         }
       };

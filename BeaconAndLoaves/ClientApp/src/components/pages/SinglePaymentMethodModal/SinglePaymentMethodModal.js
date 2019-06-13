@@ -15,35 +15,12 @@ class SinglePaymentMethodModal extends React.Component {
     isAdding: PropTypes.bool,
   }
 
-  state = {
-    isEditing: false,
-  }
-
-  toggleIsEditing = () => {
-    this.setState({ isEditing: false });
-  }
-
   cancelPaymentModalEvent = () => {
     this.props.cancelPaymentModal();
   }
 
   formSubmitEvent = () => {
     this.props.formSubmit();
-  }
-
-  editPaymentMethod = (e) => {
-    const { isEditing } = this.state;
-    this.setState({ isEditing: !isEditing });
-  }
-
-  togglePaymentEvent = () => {
-    const { togglePaymentModal } = this.props;
-    togglePaymentModal();
-    this.setState({ isEditing: false });
-  }
-
-  componentWillUnmount() {
-    this.setState({ isEditing: false });
   }
 
   render() {
@@ -66,7 +43,6 @@ class SinglePaymentMethodModal extends React.Component {
     };
 
     const makeModal = () => {
-      const { isEditing } = this.state;
       if (isEditingAccount === false && isAddingAccount === false) {
         return (
     <div>
@@ -96,7 +72,6 @@ class SinglePaymentMethodModal extends React.Component {
             paymentAccount={paymentAccount}
             toggleIsEditing={this.toggleIsEditing}
             changeEditView={changeEditView}
-            editPaymentMethod={this.editPaymentMethod}
             cancelPaymentModalEvent={this.cancelPaymentModalEvent}
             />
           </ModalBody>
@@ -114,7 +89,6 @@ class SinglePaymentMethodModal extends React.Component {
       paymentAccount={paymentAccount}
       toggleIsEditing={this.toggleIsEditing}
       changeEditView={changeEditView}
-      editPaymentMethod={this.editPaymentMethod}
       cancelPaymentModalEvent={this.cancelPaymentModalEvent}
       />
     </ModalBody>
