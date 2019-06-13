@@ -9,7 +9,7 @@ const defaultPaymentMethod = {
   paymentTypeId: 0,
   accountNumber: '',
   expirationDate: '',
-  cvv: 0,
+  cvv: '',
   isActive: '',
 };
 
@@ -46,7 +46,7 @@ class PaymentMethod extends React.Component {
 
       formFieldNumberState = (name, e) => {
         const tempPaymentMethod = { ...this.state.newPaymentMethod };
-        tempPaymentMethod[name] = e.target.value * 1;
+        tempPaymentMethod[name] = e.target.value;
         this.setState({ newPaymentMethod: tempPaymentMethod });
       }
 
@@ -67,7 +67,6 @@ class PaymentMethod extends React.Component {
         if (isEditingAccount === false) {
           myPaymentMethod.isActive = true;
           myPaymentMethod.userId = this.state.currentUser.id;
-          // myPaymentMethod.paymentTypeId = this.state.selectedPaymentType * 1;
           this.setState({ newPaymentMethod: defaultPaymentMethod });
           paymentMethodRequests.createUserPayment(myPaymentMethod)
             .then(() => {
