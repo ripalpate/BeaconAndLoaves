@@ -90,6 +90,7 @@ class SinglePaymentMethodModal extends React.Component {
       toggleIsEditing={this.toggleIsEditing}
       changeEditView={changeEditView}
       togglePaymentModal={togglePaymentModal}
+      editPaymentMethod={this.editPaymentMethod}
     />
     </ModalBody>
     </Modal>
