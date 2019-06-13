@@ -19,11 +19,11 @@ class SinglePaymentMethodModal extends React.Component {
   }
 
   toggleIsEditing = () => {
-    this.setState({isEditing: false});
+    this.setState({ isEditing: false });
   }
 
   editPaymentMethod = (e) => {
-    const {isEditing}=this.state;
+    const { isEditing } = this.state;
     this.setState({ isEditing: !isEditing });
   }
 
@@ -34,16 +34,17 @@ class SinglePaymentMethodModal extends React.Component {
   togglePaymentEvent = () => {
     const { togglePaymentModal } = this.props;
     togglePaymentModal();
+    this.setState({ isEditing: false });
   }
 
-  componentWillUnmount(){
-    this.setState({isEditing: false});
+  componentWillUnmount() {
+    this.setState({ isEditing: false });
   }
 
   render() {
     const {
-      paymentModal,    
-      paymentAccount,  
+      paymentModal,
+      paymentAccount,
       changeEditView,
       togglePaymentModal,
     } = this.props;
@@ -55,9 +56,9 @@ class SinglePaymentMethodModal extends React.Component {
       const year = expirationDate.getFullYear();
       const formattedDate = `${month}/${day}/${year}`;
       return formattedDate;
-    }
+    };
 
-const makeModal = () => {
+    const makeModal = () => {
   const {isEditing}=this.state;
   if(isEditing===false){
     return (      
@@ -78,7 +79,7 @@ const makeModal = () => {
     </div>
   );
 }
-else{
+
   return(
     <div>
     <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
@@ -96,10 +97,10 @@ editPaymentMethod={this.editPaymentMethod}
     </Modal>
   </div>
   )
-}
-}
 
-    return (      
+};
+
+    return (
       <div>
         {makeModal()}
       </div>
