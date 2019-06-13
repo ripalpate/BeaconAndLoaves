@@ -16,7 +16,7 @@ class Profile extends React.Component {
     isEditing: false,
     userId: 0,
     selectedAccount: 0,
-    selectedProperty: 0,
+    selectedProperty: '',
     modal: false,
     paymentModal: false,
     paymentAccount: {},
@@ -142,8 +142,14 @@ paymentAccount = {
     } else if (e.target.id === 'property') {
       const selectedProperty = e.target.value;
       this.setState({ selectedProperty });
+      this.props.history.push(`/lightHouses/${selectedProperty}`);
     }
   }
+
+  // changeViewToPropertyDetail = (e) => {
+  //   const { selectedProperty } = this.state;
+  //   console.log(selectedProperty);
+  // }
 
   paymentView = () => {
     this.props.history.push('/paymentMethod');
@@ -345,7 +351,7 @@ paymentAccount = {
               </select>
             </span>
             <span>My Properties:
-              <select className="custom-select mb-2" id="property" onChange={this.dropdownSelect}>
+              <select className="custom-select mb-2" id="property" onChange={(event) => { this.dropdownSelect(event); }}>
               <option defaultValue>Select Property</option>
                 {
                 properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
@@ -432,7 +438,7 @@ paymentAccount = {
 
     );
   }
-  }
+}
 
 
 export default Profile;
