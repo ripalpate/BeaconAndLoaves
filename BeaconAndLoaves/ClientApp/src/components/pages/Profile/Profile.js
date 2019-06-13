@@ -22,7 +22,6 @@ class Profile extends React.Component {
     paymentAccount: {},
   }
 
-  
 paymentAccount = {
   accountName: '',
   userId: 0,
@@ -30,7 +29,7 @@ paymentAccount = {
   accountNumber: '',
   expirationDate: '',
   CVV: '',
-  isActive: ''
+  isActive: '',
 };
 
   toggleModal = () => {
@@ -78,13 +77,13 @@ paymentAccount = {
   deletePropertiesAssociatedWithOwner = () => {
     const { properties } = this.state;
     const propertyIds = properties.map(prop => prop.id);
-    propertyIds.forEach(propertyId => {
+    propertyIds.forEach((propertyId) => {
       propertiesRequests.deleteProperty(propertyId)
-      .then(()=>{
-      });
-    })
-
+        .then(() => {
+        });
+    });
   }
+
   deleteProfile = (e) => {
     const { currentUser } = this.state;
     userRequests.deleteUser(currentUser.id)
@@ -154,7 +153,7 @@ paymentAccount = {
     const id = e.target.value;
     paymentMethodRequests.getSingleUserPayment(id)
       .then((paymentAccount) => {
-        this.setState({ paymentAccount: paymentAccount.data }, this.togglePaymentModal)
+        this.setState({ paymentAccount: paymentAccount.data }, this.togglePaymentModal);
       });
   };
 
@@ -418,13 +417,13 @@ paymentAccount = {
         deleteProfile={this.deleteProfile}
          />
       </div>
-      <div>      
-      <SinglePaymentMethodModal 
+      <div>
+      <SinglePaymentMethodModal
       paymentModal={paymentModal}
       togglePaymentModal={this.togglePaymentModal}
-      paymentAccount={paymentAccount}      
+      paymentAccount={paymentAccount}
       changeEditView={this.changeEditView}
-      /> 
+      />
       </div>
       <div className="profileDiv d-flex mx-auto">
         {makeProfileCard()}
@@ -432,7 +431,7 @@ paymentAccount = {
       </div>
 
     );
-  };
+  }
   }
 
 
