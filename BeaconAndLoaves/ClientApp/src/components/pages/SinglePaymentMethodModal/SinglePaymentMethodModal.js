@@ -23,13 +23,13 @@ class SinglePaymentMethodModal extends React.Component {
     this.setState({ isEditing: false });
   }
 
+  cancelPaymentModalEvent = () => {
+    this.props.cancelPaymentModal();
+  }
+
   editPaymentMethod = (e) => {
     const { isEditing } = this.state;
     this.setState({ isEditing: !isEditing });
-  }
-
-  cancel = () => {
-    this.setState({ isEditing: false });
   }
 
   togglePaymentEvent = () => {
@@ -47,7 +47,6 @@ class SinglePaymentMethodModal extends React.Component {
       paymentModal,
       paymentAccount,
       changeEditView,
-      togglePaymentModal,
       isEditingAccount,
       isAddingAccount,
     } = this.props;
@@ -67,7 +66,7 @@ class SinglePaymentMethodModal extends React.Component {
         return (
     <div>
       <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
-      <ModalHeader class-name="modal-header" toggle={this.togglePaymentEvent}>{paymentAccount.accountName}</ModalHeader>
+      <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>{paymentAccount.accountName}</ModalHeader>
       <ModalBody className="text-center modal-body">
       <div className="border border-dark rounded" id={paymentAccount.id}>
         <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
@@ -86,14 +85,13 @@ class SinglePaymentMethodModal extends React.Component {
       return (
     <div>
     <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
-    <ModalHeader class-name="modal-header" toggle={this.togglePaymentEvent}>{paymentAccount.accountName}</ModalHeader>
+    <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>{paymentAccount.accountName}</ModalHeader>
     <ModalBody className="text-center modal-body">
       <PaymentMethod
       isEditing={isEditing}
       paymentAccount={paymentAccount}
       toggleIsEditing={this.toggleIsEditing}
       changeEditView={changeEditView}
-      togglePaymentModal={togglePaymentModal}
       editPaymentMethod={this.editPaymentMethod}
       />
     </ModalBody>

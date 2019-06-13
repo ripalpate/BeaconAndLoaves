@@ -46,13 +46,26 @@ class Profile extends React.Component {
     });
   }
 
-  togglePaymentModal = (e) => {
+  togglePaymentDetailModal = (e) => {
     const { paymentModal } = this.state;
     const dropDown = document.getElementById('account');
     this.setState({
       paymentModal: !paymentModal,
     });
     dropDown.selectedIndex = 0;
+  }
+
+  toggleAddPaymentModal = () => {
+    const { paymentModal } = this.state;
+    this.setState({
+      isAddingAccount: true,
+      paymentModal: !paymentModal,
+    });
+  }
+  
+  cancelPaymentModal = () => {
+    const { paymentModal } = this.state;
+    this.setState({ paymentModal: !paymentModal });
   }
 
   formFieldStringState = (name, e) => {
@@ -145,7 +158,7 @@ class Profile extends React.Component {
   dropdownSelect = (e) => {
     if (e.target.id === 'account') {
       const selectedAccount = e.target.value;
-      this.setState({ selectedAccount }, this.togglePaymentModal());
+      this.setState({ selectedAccount }, this.togglePaymentDetailModal());
     } else if (e.target.id === 'property') {
       const selectedProperty = e.target.value;
       this.setState({ selectedProperty });
@@ -388,7 +401,7 @@ class Profile extends React.Component {
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
             </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddEditPaymentModal}>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddPaymentModal}>
                 <i className="far fa-credit-card fa-2x"></i>
             </button>
             <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
@@ -405,7 +418,7 @@ class Profile extends React.Component {
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
             </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddEditPaymentModal}>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddPaymentModal}>
                 <i className="far fa-credit-card fa-2x"></i>
             </button>
             <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
@@ -428,11 +441,11 @@ class Profile extends React.Component {
       <div>
       <SinglePaymentMethodModal
       paymentModal={paymentModal}
-      togglePaymentModal={this.togglePaymentModal}
       paymentAccount={paymentAccount}
       changeEditView={this.changeEditView}
       isAddingAccount={isAddingAccount}
       isEditingAccount={isEditingAccount}
+      cancelPaymentModal={this.cancelPaymentModal}
       />
       </div>
       <div className="profileDiv d-flex mx-auto">
