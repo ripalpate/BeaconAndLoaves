@@ -73,6 +73,7 @@ class SinglePaymentMethodModal extends React.Component {
             toggleIsEditing={this.toggleIsEditing}
             changeEditView={changeEditView}
             cancelPaymentModalEvent={this.cancelPaymentModalEvent}
+            formatDate={formatDate}
             />
           </ModalBody>
           </Modal>

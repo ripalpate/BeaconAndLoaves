@@ -14,7 +14,7 @@ const defaultPaymentMethod = {
   isActive: '',
 };
 
-class PaymentMethod extends React.Component {
+class PaymentMethodForm extends React.Component {
   static propTypes = {
     isEditingAccount: PropTypes.bool,
   }
@@ -230,4 +230,4 @@ class PaymentMethod extends React.Component {
   }
 }
 
-export default PaymentMethod;
+export default PaymentMethodForm;
