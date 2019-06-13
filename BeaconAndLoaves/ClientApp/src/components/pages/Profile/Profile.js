@@ -62,10 +62,14 @@ class Profile extends React.Component {
       paymentModal: !paymentModal,
     });
   }
-  
+
   cancelPaymentModal = () => {
-    const { paymentModal } = this.state;
-    this.setState({ paymentModal: !paymentModal });
+    const { paymentModal, isAddingAccount, isEditingAccount } = this.state;
+    this.setState({
+      paymentModal: !paymentModal,
+      isAddingAccount: false,
+      isEditingAccount: false,
+    }, this.getUserPaymentAccounts());
   }
 
   formFieldStringState = (name, e) => {

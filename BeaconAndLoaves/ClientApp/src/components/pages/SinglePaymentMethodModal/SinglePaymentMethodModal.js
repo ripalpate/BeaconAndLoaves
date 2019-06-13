@@ -27,6 +27,10 @@ class SinglePaymentMethodModal extends React.Component {
     this.props.cancelPaymentModal();
   }
 
+  formSubmitEvent = () => {
+    this.props.formSubmit();
+  }
+
   editPaymentMethod = (e) => {
     const { isEditing } = this.state;
     this.setState({ isEditing: !isEditing });
@@ -72,7 +76,7 @@ class SinglePaymentMethodModal extends React.Component {
         <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
         <div className="ml-1">Exp Date: {formatDate()}</div>
         <div className="ml-1">CVV: {paymentAccount.cvv}</div>
-        <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={this.editPaymentMethod}>
+        <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={this.formSubmitEvent}>
             <i className="far fa-edit fa-2x"/>
         </button>
         </div>
@@ -93,6 +97,7 @@ class SinglePaymentMethodModal extends React.Component {
       toggleIsEditing={this.toggleIsEditing}
       changeEditView={changeEditView}
       editPaymentMethod={this.editPaymentMethod}
+      cancelPaymentModalEvent={this.cancelPaymentModalEvent}
       />
     </ModalBody>
     </Modal>

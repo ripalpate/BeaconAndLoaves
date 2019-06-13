@@ -71,7 +71,7 @@ class PaymentMethod extends React.Component {
           this.setState({ newPaymentMethod: defaultPaymentMethod });
           paymentMethodRequests.createUserPayment(myPaymentMethod)
             .then(() => {
-              // this.props.togglePaymentModal();
+              this.props.cancelPaymentModalEvent();
             });
         } else {
           paymentMethodRequests.updateUserPayment(myPaymentMethod.id, myPaymentMethod)
@@ -85,7 +85,6 @@ class PaymentMethod extends React.Component {
       selectPaymentType = (e) => {
         this.setState({ selectedPaymentType: e.target.value });
       }
-
 
       componentDidMount(prevProps) {
         this.paymentTypes();
