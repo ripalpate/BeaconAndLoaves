@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import userRequests from '../../../helpers/data/userRequests';
@@ -19,6 +20,10 @@ class PaymentMethod extends React.Component {
       paymentTypes: [],
       selectedPaymentType: '',
       currentUser: {},
+    }
+
+    static propTypes = {
+      isEditing: PropTypes.bool,
     }
 
       getUser = () => {

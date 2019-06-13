@@ -12,6 +12,8 @@ class SinglePaymentMethodModal extends React.Component {
   static propTypes = {
     togglePaymentModal: PropTypes.func,
     paymentModal: PropTypes.bool,
+    changeEditView: PropTypes.func,
+    paymentAccount: PropTypes.object,
   }
 
   state = {
