@@ -48,7 +48,8 @@ class SinglePaymentMethodModal extends React.Component {
       paymentAccount,
       changeEditView,
       togglePaymentModal,
-      isAdding,
+      isEditingAccount,
+      isAddingAccount,
     } = this.props;
 
     const formatDate = () => {
@@ -62,7 +63,7 @@ class SinglePaymentMethodModal extends React.Component {
 
     const makeModal = () => {
       const { isEditing } = this.state;
-      if (isEditing === false && isAdding === false) {
+      if (isEditingAccount === false && isAddingAccount === false) {
         return (
     <div>
       <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">

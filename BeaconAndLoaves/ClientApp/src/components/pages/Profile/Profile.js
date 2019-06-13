@@ -19,7 +19,8 @@ class Profile extends React.Component {
     paymentAccounts: [],
     properties: [],
     isEditing: false,
-    isAdding: false,
+    isAddingAccount: false,
+    isEditingAccount: false,
     userId: 0,
     selectedAccount: 0,
     selectedProperty: 0,
@@ -45,12 +46,11 @@ class Profile extends React.Component {
     });
   }
 
-  toggleAddEditPaymentModal = (e) => {
+  togglePaymentModal = (e) => {
     const { paymentModal } = this.state;
     const dropDown = document.getElementById('account');
     this.setState({
       paymentModal: !paymentModal,
-      isAdding: true,
     });
     dropDown.selectedIndex = 0;
   }
@@ -145,7 +145,7 @@ class Profile extends React.Component {
   dropdownSelect = (e) => {
     if (e.target.id === 'account') {
       const selectedAccount = e.target.value;
-      this.setState({ selectedAccount });
+      this.setState({ selectedAccount }, this.togglePaymentModal());
     } else if (e.target.id === 'property') {
       const selectedProperty = e.target.value;
       this.setState({ selectedProperty });
@@ -187,7 +187,8 @@ class Profile extends React.Component {
       modal,
       paymentModal,
       paymentAccount,
-      selectedAccount,
+      isAddingAccount,
+      isEditingAccount,
     } = this.state;
 
     const makeProfileCard = () => {
@@ -430,6 +431,8 @@ class Profile extends React.Component {
       togglePaymentModal={this.togglePaymentModal}
       paymentAccount={paymentAccount}
       changeEditView={this.changeEditView}
+      isAddingAccount={isAddingAccount}
+      isEditingAccount={isEditingAccount}
       />
       </div>
       <div className="profileDiv d-flex mx-auto">
