@@ -19,6 +19,7 @@ class Profile extends React.Component {
     paymentAccounts: [],
     properties: [],
     isEditing: false,
+    isAdding: false,
     userId: 0,
     selectedAccount: 0,
     selectedProperty: 0,
@@ -44,11 +45,12 @@ class Profile extends React.Component {
     });
   }
 
-  togglePaymentModal = (e) => {
+  toggleAddEditPaymentModal = (e) => {
     const { paymentModal } = this.state;
     const dropDown = document.getElementById('account');
     this.setState({
       paymentModal: !paymentModal,
+      isAdding: true,
     });
     dropDown.selectedIndex = 0;
   }
@@ -158,7 +160,7 @@ class Profile extends React.Component {
     const id = e.target.value;
     paymentMethodRequests.getSingleUserPayment(id)
       .then((paymentAccount) => {
-        this.setState({ paymentAccount: paymentAccount.data }, this.togglePaymentModal);
+        this.setState({ paymentAccount: paymentAccount.data });
       });
   };
 
@@ -342,7 +344,7 @@ class Profile extends React.Component {
         return (
           <div>
             <span>Payment Accounts:
-              <select id="account" value={selectedAccount} className="custom-select mb-2" onChange={this.togglePaymentModal} onChange={this.getUserPaymentAccount}>
+              <select id="account" className="custom-select mb-2" onChange={(event) => { this.getUserPaymentAccount(event); this.dropdownSelect(event); }}>
               <option defaultValue>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
@@ -362,7 +364,7 @@ class Profile extends React.Component {
       }
       return (<div>
            <span>Payment Accounts:
-              <select className="custom-select mb-2" id="account" onChange={this.togglePaymentModal} onChange={this.getUserPaymentAccount}>
+              <select className="custom-select mb-2" id="account" onChange={this.dropdownSelect} onChange={this.getUserPaymentAccount}>
               <option defaultValue>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
@@ -385,7 +387,7 @@ class Profile extends React.Component {
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
             </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddEditPaymentModal}>
                 <i className="far fa-credit-card fa-2x"></i>
             </button>
             <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
@@ -402,7 +404,7 @@ class Profile extends React.Component {
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
             </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddEditPaymentModal}>
                 <i className="far fa-credit-card fa-2x"></i>
             </button>
             <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>

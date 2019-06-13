@@ -12,6 +12,7 @@ class SinglePaymentMethodModal extends React.Component {
   static propTypes = {
     togglePaymentModal: PropTypes.func,
     paymentModal: PropTypes.bool,
+    isAdding: PropTypes.bool,
   }
 
   state = {
@@ -47,6 +48,7 @@ class SinglePaymentMethodModal extends React.Component {
       paymentAccount,
       changeEditView,
       togglePaymentModal,
+      isAdding,
     } = this.props;
 
     const formatDate = () => {
@@ -59,9 +61,9 @@ class SinglePaymentMethodModal extends React.Component {
     };
 
     const makeModal = () => {
-  const {isEditing}=this.state;
-  if(isEditing===false){
-    return (      
+      const { isEditing } = this.state;
+      if (isEditing === false && isAdding === false) {
+        return (
     <div>
       <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
       <ModalHeader class-name="modal-header" toggle={this.togglePaymentEvent}>{paymentAccount.accountName}</ModalHeader>
@@ -77,28 +79,27 @@ class SinglePaymentMethodModal extends React.Component {
       </ModalBody>
       </Modal>
     </div>
-  );
-}
+        );
+      }
 
-  return(
+      return (
     <div>
     <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
     <ModalHeader class-name="modal-header" toggle={this.togglePaymentEvent}>{paymentAccount.accountName}</ModalHeader>
     <ModalBody className="text-center modal-body">
-<PaymentMethod
-isEditing={isEditing}
-paymentAccount={paymentAccount}
-toggleIsEditing={this.toggleIsEditing}
-changeEditView={changeEditView}
-togglePaymentModal={togglePaymentModal}
-editPaymentMethod={this.editPaymentMethod}
-/>
+      <PaymentMethod
+      isEditing={isEditing}
+      paymentAccount={paymentAccount}
+      toggleIsEditing={this.toggleIsEditing}
+      changeEditView={changeEditView}
+      togglePaymentModal={togglePaymentModal}
+      editPaymentMethod={this.editPaymentMethod}
+      />
     </ModalBody>
     </Modal>
   </div>
-  )
-
-};
+      );
+    };
 
     return (
       <div>
