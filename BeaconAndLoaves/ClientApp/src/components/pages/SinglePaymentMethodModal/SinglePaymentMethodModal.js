@@ -6,7 +6,7 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import './SinglePaymentMethodModal.scss';
-import PaymentMethod from '../PaymentMethod/PaymentMethod';
+import PaymentMethodForm from '../PaymentMethodForm/PaymentMethodForm';
 
 class SinglePaymentMethodModal extends React.Component {
   static propTypes = {
@@ -67,7 +67,7 @@ class SinglePaymentMethodModal extends React.Component {
           <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
           <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Edit Payment Account</ModalHeader>
           <ModalBody className="text-center modal-body">
-            <PaymentMethod
+            <PaymentMethodForm
             isEditingAccount={isEditingAccount}
             paymentAccount={paymentAccount}
             toggleIsEditing={this.toggleIsEditing}
@@ -84,7 +84,7 @@ class SinglePaymentMethodModal extends React.Component {
     <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
     <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Add New Account</ModalHeader>
     <ModalBody className="text-center modal-body">
-      <PaymentMethod
+      <PaymentMethodForm
       isEditingAccount={isEditingAccount}
       paymentAccount={paymentAccount}
       toggleIsEditing={this.toggleIsEditing}

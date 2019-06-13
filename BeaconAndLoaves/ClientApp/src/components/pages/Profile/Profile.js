@@ -388,7 +388,7 @@ class Profile extends React.Component {
       }
       return (<div>
            <span>Payment Accounts:
-              <select className="custom-select mb-2" id="account" onChange={this.dropdownSelect} onChange={this.getUserPaymentAccount}>
+           <select id="account" className="custom-select mb-2" onChange={(event) => { this.getUserPaymentAccount(event); this.dropdownSelect(event); }}>
               <option defaultValue>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
