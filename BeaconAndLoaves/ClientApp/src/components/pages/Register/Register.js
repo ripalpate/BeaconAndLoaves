@@ -60,10 +60,6 @@ class Register extends React.Component {
         this.props.history.push('/paymentMethod');
       }
 
-      paymentViewBTC = () => {
-        this.props.history.push('/paymentMethodBTC');
-      }
-
       getUsers = () => {
         userRequests.getAllUsers()
           .then((users) => {

@@ -19,11 +19,11 @@ class SinglePaymentMethodModal extends React.Component {
   }
 
   toggleIsEditing = () => {
-    this.setState({isEditing: false});
+    this.setState({ isEditing: false });
   }
 
   editPaymentMethod = (e) => {
-    const {isEditing}=this.state;
+    const { isEditing } = this.state;
     this.setState({ isEditing: !isEditing });
   }
 
@@ -36,14 +36,14 @@ class SinglePaymentMethodModal extends React.Component {
     togglePaymentModal();
   }
 
-  componentWillUnmount(){
-    this.setState({isEditing: false});
+  componentWillUnmount() {
+    this.setState({ isEditing: false });
   }
 
   render() {
     const {
-      paymentModal,    
-      paymentAccount,  
+      paymentModal,
+      paymentAccount,
       changeEditView,
       togglePaymentModal,
     } = this.props;
@@ -55,12 +55,13 @@ class SinglePaymentMethodModal extends React.Component {
       const year = expirationDate.getFullYear();
       const formattedDate = `${month}/${day}/${year}`;
       return formattedDate;
-    }
+    };
 
-const makeModal = () => {
-  const {isEditing}=this.state;
-  if(isEditing===false){
-    return (      
+    const makeModal = () => {
+      // eslint-disable-next-line object-curly-spacing
+      const {isEditing } = this.state;
+      if (isEditing === false) {
+        return (
     <div>
       <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
       <ModalHeader class-name="modal-header" toggle={this.togglePaymentEvent}>{paymentAccount.accountName}</ModalHeader>
@@ -76,10 +77,10 @@ const makeModal = () => {
       </ModalBody>
       </Modal>
     </div>
-  );
-}
-else{
-  return(
+        );
+      }
+
+      return (
     <div>
     <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
     <ModalHeader class-name="modal-header" toggle={this.togglePaymentEvent}>{paymentAccount.accountName}</ModalHeader>
@@ -95,11 +96,10 @@ editPaymentMethod={this.editPaymentMethod}
     </ModalBody>
     </Modal>
   </div>
-  )
-}
-}
+      );
+    };
 
-    return (      
+    return (
       <div>
         {makeModal()}
       </div>

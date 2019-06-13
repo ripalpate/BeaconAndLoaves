@@ -4,22 +4,22 @@ import authRequests from '../../../helpers/data/authRequests';
 import userRequests from '../../../helpers/data/userRequests';
 
 const defaultPaymentMethod = {
-    accountName: '',
-    userId: 0,
-    paymentTypeId: 0,
-    accountNumber: '',
-    expirationDate: '',
-    cvv: 0,
-    isActive: ''
-  };
+  accountName: '',
+  userId: 0,
+  paymentTypeId: 0,
+  accountNumber: '',
+  expirationDate: '',
+  cvv: 0,
+  isActive: '',
+};
 
 class PaymentMethod extends React.Component {
     state = {
-        newPaymentMethod : defaultPaymentMethod,
-        paymentTypes: [],
-        selectedPaymentType: '',
-        currentUser: {},
-      }
+      newPaymentMethod: defaultPaymentMethod,
+      paymentTypes: [],
+      selectedPaymentType: '',
+      currentUser: {},
+    }
 
       getUser = () => {
         const uid = authRequests.getCurrentUid();
@@ -31,10 +31,10 @@ class PaymentMethod extends React.Component {
 
       paymentTypes = () => {
         paymentMethodRequests.getAllPaymentTypes()
-        .then((paymentTypes) => {
-          this.setState({paymentTypes});
-          this.getUser();
-        })
+          .then((paymentTypes) => {
+            this.setState({ paymentTypes });
+            this.getUser();
+          });
       }
 
       formFieldStringState = (accountName, e) => {
@@ -49,96 +49,95 @@ class PaymentMethod extends React.Component {
         tempPaymentMethod[name] = e.target.value * 1;
         this.setState({ newPaymentMethod: tempPaymentMethod });
       }
-    
+
       accountNameChange = e => this.formFieldStringState('accountName', e);
-    
+
       paymentTypeIdChange = e => this.formFieldNumberState('paymentTypeId', e);
-    
+
       accountNumberChange = e => this.formFieldStringState('accountNumber', e);
-    
+
       expirationDateChange = e => this.formFieldStringState('expirationDate', e);
 
       CVVChange = e => this.formFieldNumberState('cvv', e);
 
       formSubmit = (e) => {
         e.preventDefault();
-        const {isEditing}=this.props;
+        const { isEditing } = this.props;
         const myPaymentMethod = { ...this.state.newPaymentMethod };
-        if(isEditing===false){
-        myPaymentMethod.isActive = true;
-        myPaymentMethod.userId = this.state.currentUser.id;
-        myPaymentMethod.paymentTypeId = this.state.selectedPaymentType*1;
-        this.setState({ newPaymentMethod: defaultPaymentMethod });
-        paymentMethodRequests.createUserPayment(myPaymentMethod)
-        .then(() => {
-            this.props.togglePaymentModal();
-        })
-      }else{
-        paymentMethodRequests.updateUserPayment(myPaymentMethod.id, myPaymentMethod)
-        .then(() => {
-          this.props.togglePaymentModal();
-          this.props.editPaymentMethod();
-      })
-      }
+        if (isEditing === false) {
+          myPaymentMethod.isActive = true;
+          myPaymentMethod.userId = this.state.currentUser.id;
+          myPaymentMethod.paymentTypeId = this.state.selectedPaymentType * 1;
+          this.setState({ newPaymentMethod: defaultPaymentMethod });
+          paymentMethodRequests.createUserPayment(myPaymentMethod)
+            .then(() => {
+              this.props.togglePaymentModal();
+            });
+        } else {
+          paymentMethodRequests.updateUserPayment(myPaymentMethod.id, myPaymentMethod)
+            .then(() => {
+              this.props.togglePaymentModal();
+              this.props.editPaymentMethod();
+            });
+        }
       };
 
       selectPaymentType = (e) => {
-        this.setState({selectedPaymentType: e.target.value})
+        this.setState({ selectedPaymentType: e.target.value });
       }
-  
+
 
       componentDidMount(prevProps) {
         this.paymentTypes();
         const { isEditing, paymentAccount } = this.props;
         if (prevProps !== this.props && isEditing) {
-              this.setState({ newPaymentMethod: paymentAccount });
-            }
+          this.setState({ newPaymentMethod: paymentAccount });
         }
- 
-    render() {
+      }
+
+      render() {
         const {
           newPaymentMethod,
-          paymentTypes
+          paymentTypes,
         } = this.state;
 
-        const {isEditing}=this.props;
+        const { isEditing } = this.props;
 
         const makeButtons = () => {
-          if(isEditing===false){
-            return(
+          if (isEditing === false) {
+            return (
           <div>
               <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
                 <i className="fas fa-plus-circle" />
               </button>
           </div>
-            )
+            );
           }
-          else {
-            return(
+
+          return (
           <div>
               <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
                 <i className="fas fa-check-square" />
               </button>
           </div>
-            )
-          }
-        }
+          );
+        };
 
         const makeDropdowns = () => {
-          let counter = 0;
-            return (
+          const counter = 0;
+          return (
               <div>
                 <span>Payment Types:
                   <select name="payment" required className="custom-select mb-2" value={newPaymentMethod.paymentTypeId} onChange={this.selectPaymentType}>
                   <option value="">Select Payment Type</option>
                     {
-                      paymentTypes.map((paymentType) => (<option key={counter++}value={counter}>{paymentType}</option>))
+                      paymentTypes.map(paymentType => (<option key={counter + 1}value={counter}>{paymentType}</option>))
                     }
                   </select>
                 </span>
               </div>
-            );
-                  }
+          );
+        };
 
         return (
             <div>
@@ -220,7 +219,7 @@ class PaymentMethod extends React.Component {
                 </form>
             </div>
         );
-    }
+      }
 }
 
 export default PaymentMethod;
