@@ -152,11 +152,6 @@ paymentAccount = {
     }
   }
 
-  // changeViewToPropertyDetail = (e) => {
-  //   const { selectedProperty } = this.state;
-  //   console.log(selectedProperty);
-  // }
-
   paymentView = () => {
     this.props.history.push('/paymentMethod');
   }
