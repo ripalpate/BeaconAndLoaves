@@ -8,7 +8,7 @@ import './SingleOwnerProperty.scss';
 class SingleOwnerProperty extends React.Component {
   state = {
     isLiked: false,
-    currentLikedProperty: []
+    currentLikedProperty: [],
   }
 
   static propTypes = {
@@ -27,7 +27,7 @@ class SingleOwnerProperty extends React.Component {
     this.setState({ isLiked: !isLiked });
   }
 
-  //check property exist in the state to hold the state of isLiked property
+  // check property exist in the state to hold the state of isLiked property
   checkExistingProperty = () => {
     const { property } = this.props;
     const { isLiked } = this.state;
@@ -46,6 +46,7 @@ class SingleOwnerProperty extends React.Component {
   componentDidMount() {
     this.checkExistingProperty();
   }
+
   render() {
     const { property } = this.props;
     const { isLiked } = this.state;
@@ -61,7 +62,8 @@ class SingleOwnerProperty extends React.Component {
           propertyId = {property.id}
           />
         );
-      } 
+      }
+      return (<span></span>);
     };
 
     return (

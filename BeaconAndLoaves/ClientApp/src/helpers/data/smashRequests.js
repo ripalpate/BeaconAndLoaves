@@ -15,8 +15,6 @@ const getAllPropertiesWithOwnerInfo = () => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
-
-
 export default {
   getAllPropertiesWithOwnerInfo,
-}
+};

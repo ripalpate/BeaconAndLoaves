@@ -1,46 +1,45 @@
 import React from 'react';
-import userRequests from '../../../helpers/data/userRequests';
 import SingleOwnerProperty from '../SingleOwnerProperty/SingleOwnerProperty';
 import smashRequests from '../../../helpers/data/smashRequests';
 
-class OwnerPropducts extends React.Component{
+class OwnerPropducts extends React.Component {
     state = {
-        properties: []
+      properties: [],
     }
 
     rentProperty = (propertyId) => {
-        this.props.history.push(`/rental/${propertyId}`);
-      }
-
-    getOwnerPropertiesWithOwnerInfo =() => {
-        const ownerId =  this.props.match.params.id;
-        const convertOwnerIdToNumber= parseInt(ownerId);
-        smashRequests.getAllPropertiesWithOwnerInfo()
-        .then((props)=>{
-            const properties = props.filter(prop => prop.ownerId === convertOwnerIdToNumber);
-            this.setState({properties});
-        })
+      this.props.history.push(`/rental/${propertyId}`);
     }
 
-    componentDidMount(){
-        this.getOwnerPropertiesWithOwnerInfo()
+    getOwnerPropertiesWithOwnerInfo =() => {
+      const ownerId = this.props.match.params.id;
+      const convertOwnerIdToNumber = parseInt(ownerId, 10);
+      smashRequests.getAllPropertiesWithOwnerInfo()
+        .then((props) => {
+          const properties = props.filter(prop => prop.ownerId === convertOwnerIdToNumber);
+          this.setState({ properties });
+        });
+    }
+
+    componentDidMount() {
+      this.getOwnerPropertiesWithOwnerInfo();
     }
 
     backButton = () => {
-        this.props.history.push('/properties');
+      this.props.history.push('/properties');
     }
 
-render(){
-    const {properties, singleUser} = this.state;
+    render() {
+      const { properties } = this.state;
 
-    const ownerPropertyComponent = properties.map(property => (
+      const ownerPropertyComponent = properties.map(property => (
         <SingleOwnerProperty
         property = { property }
         key = {property.id}
         rentProperty = { this.rentProperty }
         />
       ));
-    return(
+      return (
         <div>
             <div className="back-button">
               <button className = "btn btn-warning" onClick = {this.backButton}>Back</button>
@@ -49,8 +48,8 @@ render(){
             {ownerPropertyComponent}
             </div>
         </div>
-    )
-}
+      );
+    }
 }
 
 export default OwnerPropducts;

@@ -1,7 +1,4 @@
 import React from 'react';
-import userRequests from '../../../helpers/data/userRequests';
-import authRequests from '../../../helpers/data/authRequests';
-import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import {
   Button,
   Modal,
@@ -9,6 +6,9 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap';
+import userRequests from '../../../helpers/data/userRequests';
+import authRequests from '../../../helpers/data/authRequests';
+import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import PropTypes from 'prop-types';
 
 import './SinglePaymentMethod.scss';
@@ -20,7 +20,7 @@ const defaultPaymentMethod = {
   accountNumber: '',
   expirationDate: '',
   CVV: '',
-  isActive: ''
+  isActive: '',
 };
 
 class SinglePaymentMethodScreen extends React.Component {
@@ -46,7 +46,7 @@ class SinglePaymentMethodScreen extends React.Component {
   }
 
   accountNameChange = e => this.formFieldStringState('accountName', e);
-    
+
   paymentTypeIdChange = e => this.formFieldNumberState('paymentTypeId', e);
 
   accountNumberChange = e => this.formFieldStringState('accountNumber', e);
@@ -60,16 +60,16 @@ class SinglePaymentMethodScreen extends React.Component {
     const myPaymentMethod = { ...this.state.newPaymentMethod };
     myPaymentMethod.isActive = true;
     myPaymentMethod.userId = this.state.currentUser.id;
-    myPaymentMethod.paymentTypeId = this.state.selectedPaymentType*1;
+    myPaymentMethod.paymentTypeId = this.state.selectedPaymentType * 1;
     this.setState({ newPaymentMethod: defaultPaymentMethod });
     paymentMethodRequests.createUserPayment(myPaymentMethod)
-    .then(() => {
+      .then(() => {
         this.props.history.push('/profile');
-    })
+      });
   };
 
   selectPaymentType = (e) => {
-    this.setState({selectedPaymentType: e.target.value})
+    this.setState({ selectedPaymentType: e.target.value });
   }
 
   getUser = () => {
@@ -84,7 +84,7 @@ class SinglePaymentMethodScreen extends React.Component {
     const id = e.target.value;
     paymentMethodRequests.getSingleUserPayment(id)
       .then((paymentAccount) => {
-        this.setState({ paymentAccount })
+        this.setState({ paymentAccount });
         console.log(paymentAccount);
       });
   };
@@ -104,22 +104,21 @@ class SinglePaymentMethodScreen extends React.Component {
 
     const makeDropdowns = () => {
       let counter = 0;
-        return (
+      return (
           <div>
             <span>Payment Types:
               <select name="payment" required className="custom-select mb-2" onChange={this.selectPaymentType}>
               <option value="">Select Payment Type</option>
                 {
-                  paymentTypes.map((paymentType) => (<option key={counter++}value={counter}>{paymentType}</option>))
+                  paymentTypes.map(paymentType => (<option key={counter++}value={counter}>{paymentType}</option>))
                 }
               </select>
             </span>
           </div>
-        );
-              }
+      );
+    };
 
-    const makePaymentMethodCard = (currentPaymentMethod) => {
-        return (
+    const makePaymentMethodCard = (currentPaymentMethod) => (
               <form className="row edit-form-container border border-dark rounded" onSubmit={this.formSubmit}>
                 <h3 className="mx-auto edit-paymentMethod-title">Edit Payment Method</h3>
                 <div className="form col-11 mt-2">
@@ -201,7 +200,6 @@ class SinglePaymentMethodScreen extends React.Component {
                 </div>
               </form>
         );
-    };
 
     return (
       <div className="paymentMethodDiv d-flex mx-auto">
