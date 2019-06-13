@@ -17,10 +17,11 @@ class SiloNuclearDetail extends React.Component {
 
   getPropertyWithOwnerName = () => {
     const siloNuclearId = this.props.match.params.id;
+    const ConvertSiloNuclearIdToNumber = parseInt(siloNuclearId, 10);
     smashRequests.getAllPropertiesWithOwnerInfo()
       .then((properties) => {
         const siloNuclears = properties.filter(property => property.type === 1);
-        const siloNuclear = siloNuclears.find(property => property.id == siloNuclearId);
+        const siloNuclear = siloNuclears.find(property => property.id === ConvertSiloNuclearIdToNumber);
         this.setState({ siloNuclear });
       }).then(() => {
         this.checkExistingProperty();
