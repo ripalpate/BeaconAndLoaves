@@ -53,6 +53,7 @@ class SinglePaymentMethodModal extends React.Component {
       changeEditView,
       isEditingAccount,
       isAddingAccount,
+      toggleEditPaymentModal,
     } = this.props;
 
     const formatDate = () => {
@@ -76,7 +77,7 @@ class SinglePaymentMethodModal extends React.Component {
         <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
         <div className="ml-1">Exp Date: {formatDate()}</div>
         <div className="ml-1">CVV: {paymentAccount.cvv}</div>
-        <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={this.formSubmitEvent}>
+        <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal}>
             <i className="far fa-edit fa-2x"/>
         </button>
         </div>
@@ -84,15 +85,32 @@ class SinglePaymentMethodModal extends React.Component {
       </Modal>
     </div>
         );
+      } if (isEditingAccount === true) {
+        return (
+          <div>
+          <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
+          <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Edit Payment Account</ModalHeader>
+          <ModalBody className="text-center modal-body">
+            <PaymentMethod
+            isEditingAccount={isEditingAccount}
+            paymentAccount={paymentAccount}
+            toggleIsEditing={this.toggleIsEditing}
+            changeEditView={changeEditView}
+            editPaymentMethod={this.editPaymentMethod}
+            cancelPaymentModalEvent={this.cancelPaymentModalEvent}
+            />
+          </ModalBody>
+          </Modal>
+        </div>
+        );
       }
-
       return (
     <div>
     <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
-    <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>{paymentAccount.accountName}</ModalHeader>
+    <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Add New Account</ModalHeader>
     <ModalBody className="text-center modal-body">
       <PaymentMethod
-      isEditing={isEditing}
+      isEditingAccount={isEditingAccount}
       paymentAccount={paymentAccount}
       toggleIsEditing={this.toggleIsEditing}
       changeEditView={changeEditView}

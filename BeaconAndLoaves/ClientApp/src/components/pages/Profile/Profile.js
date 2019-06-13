@@ -63,8 +63,14 @@ class Profile extends React.Component {
     });
   }
 
+  toggleEditPaymentModal = () => {
+    this.setState({
+      isEditingAccount: true,
+    });
+  }
+
   cancelPaymentModal = () => {
-    const { paymentModal, isAddingAccount, isEditingAccount } = this.state;
+    const { paymentModal } = this.state;
     this.setState({
       paymentModal: !paymentModal,
       isAddingAccount: false,
@@ -450,6 +456,7 @@ class Profile extends React.Component {
       isAddingAccount={isAddingAccount}
       isEditingAccount={isEditingAccount}
       cancelPaymentModal={this.cancelPaymentModal}
+      toggleEditPaymentModal={this.toggleEditPaymentModal}
       />
       </div>
       <div className="profileDiv d-flex mx-auto">
