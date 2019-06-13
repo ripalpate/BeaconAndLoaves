@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import userRequests from '../../../helpers/data/userRequests';
@@ -14,121 +15,125 @@ const defaultPaymentMethod = {
 };
 
 class PaymentMethod extends React.Component {
-    state = {
-      newPaymentMethod: defaultPaymentMethod,
-      paymentTypes: [],
-      selectedPaymentType: '',
-      currentUser: {},
+  static propTypes = {
+    isEditingAccount: PropTypes.bool,
+  }
+
+  state = {
+    newPaymentMethod: defaultPaymentMethod,
+    paymentTypes: [],
+    selectedPaymentType: '',
+    currentUser: {},
+  }
+
+  getUser = () => {
+    const uid = authRequests.getCurrentUid();
+    userRequests.getSingleUser(uid)
+      .then((currentUser) => {
+        this.setState({ currentUser: currentUser.data });
+      });
+  };
+
+  paymentTypes = () => {
+    paymentMethodRequests.getAllPaymentTypes()
+      .then((paymentTypes) => {
+        this.setState({ paymentTypes });
+        this.getUser();
+      });
+  }
+
+  formFieldStringState = (accountName, e) => {
+    e.preventDefault();
+    const tempPaymentMethod = { ...this.state.newPaymentMethod };
+    tempPaymentMethod[accountName] = e.target.value;
+    this.setState({ newPaymentMethod: tempPaymentMethod });
+  }
+
+  formFieldNumberState = (name, e) => {
+    const tempPaymentMethod = { ...this.state.newPaymentMethod };
+    tempPaymentMethod[name] = e.target.value;
+    this.setState({ newPaymentMethod: tempPaymentMethod });
+  }
+
+  accountNameChange = e => this.formFieldStringState('accountName', e);
+
+  paymentTypeIdChange = e => this.formFieldNumberState('paymentTypeId', e);
+
+  accountNumberChange = e => this.formFieldStringState('accountNumber', e);
+
+  expirationDateChange = e => this.formFieldStringState('expirationDate', e);
+
+  CVVChange = e => this.formFieldNumberState('cvv', e);
+
+  formSubmit = (e) => {
+    e.preventDefault();
+    const { isEditingAccount } = this.props;
+    const myPaymentMethod = { ...this.state.newPaymentMethod };
+    if (isEditingAccount === false) {
+      myPaymentMethod.isActive = true;
+      myPaymentMethod.userId = this.state.currentUser.id;
+      this.setState({ newPaymentMethod: defaultPaymentMethod });
+      paymentMethodRequests.createUserPayment(myPaymentMethod)
+        .then(() => {
+          this.props.cancelPaymentModalEvent();
+        });
+    } else {
+      paymentMethodRequests.updateUserPayment(myPaymentMethod.id, myPaymentMethod)
+        .then(() => {
+          this.props.cancelPaymentModalEvent();
+        });
     }
+  };
 
-      getUser = () => {
-        const uid = authRequests.getCurrentUid();
-        userRequests.getSingleUser(uid)
-          .then((currentUser) => {
-            this.setState({ currentUser: currentUser.data });
-          });
-      };
+  selectPaymentType = (e) => {
+    const myPaymentMethod = { ...this.state.newPaymentMethod };
+    myPaymentMethod.paymentTypeId = e.target.value;
+    this.setState({ selectedPaymentType: e.target.value });
+  }
 
-      paymentTypes = () => {
-        paymentMethodRequests.getAllPaymentTypes()
-          .then((paymentTypes) => {
-            this.setState({ paymentTypes });
-            this.getUser();
-          });
-      }
+  componentDidMount(prevProps) {
+    this.paymentTypes();
+    const { isEditingAccount, paymentAccount } = this.props;
+    if (prevProps !== this.props && isEditingAccount) {
+      this.setState({
+        newPaymentMethod: paymentAccount,
+        selectedPaymentType: paymentAccount.paymentTypeId,
+      });
+    }
+  }
 
-      formFieldStringState = (accountName, e) => {
-        e.preventDefault();
-        const tempPaymentMethod = { ...this.state.newPaymentMethod };
-        tempPaymentMethod[accountName] = e.target.value;
-        this.setState({ newPaymentMethod: tempPaymentMethod });
-      }
+  render() {
+    const {
+      newPaymentMethod,
+      paymentTypes,
+      selectedPaymentType,
+    } = this.state;
 
-      formFieldNumberState = (name, e) => {
-        const tempPaymentMethod = { ...this.state.newPaymentMethod };
-        tempPaymentMethod[name] = e.target.value;
-        this.setState({ newPaymentMethod: tempPaymentMethod });
-      }
+    const { isEditingAccount } = this.props;
 
-      accountNameChange = e => this.formFieldStringState('accountName', e);
-
-      paymentTypeIdChange = e => this.formFieldNumberState('paymentTypeId', e);
-
-      accountNumberChange = e => this.formFieldStringState('accountNumber', e);
-
-      expirationDateChange = e => this.formFieldStringState('expirationDate', e);
-
-      CVVChange = e => this.formFieldNumberState('cvv', e);
-
-      formSubmit = (e) => {
-        e.preventDefault();
-        const { isEditingAccount } = this.props;
-        const myPaymentMethod = { ...this.state.newPaymentMethod };
-        if (isEditingAccount === false) {
-          myPaymentMethod.isActive = true;
-          myPaymentMethod.userId = this.state.currentUser.id;
-          this.setState({ newPaymentMethod: defaultPaymentMethod });
-          paymentMethodRequests.createUserPayment(myPaymentMethod)
-            .then(() => {
-              this.props.cancelPaymentModalEvent();
-            });
-        } else {
-          paymentMethodRequests.updateUserPayment(myPaymentMethod.id, myPaymentMethod)
-            .then(() => {
-              this.props.cancelPaymentModalEvent();
-            });
-        }
-      };
-
-      selectPaymentType = (e) => {
-        const myPaymentMethod = { ...this.state.newPaymentMethod };
-        myPaymentMethod.paymentTypeId = e.target.value;
-        this.setState({ selectedPaymentType: e.target.value });
-      }
-
-      componentDidMount(prevProps) {
-        this.paymentTypes();
-        const { isEditingAccount, paymentAccount } = this.props;
-        if (prevProps !== this.props && isEditingAccount) {
-          this.setState({
-            newPaymentMethod: paymentAccount,
-            selectedPaymentType: paymentAccount.paymentTypeId,
-          });
-        }
-      }
-
-      render() {
-        const {
-          newPaymentMethod,
-          paymentTypes,
-          selectedPaymentType,
-        } = this.state;
-
-        const { isEditingAccount } = this.props;
-
-        const makeButtons = () => {
-          if (isEditingAccount === false) {
-            return (
+    const makeButtons = () => {
+      if (isEditingAccount === false) {
+        return (
           <div>
               <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
                 <i className="fas fa-plus-circle" />
               </button>
           </div>
-            );
-          }
+        );
+      }
 
-          return (
+      return (
           <div>
               <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
                 <i className="fas fa-check-square" />
               </button>
           </div>
-          );
-        };
+      );
+    };
 
-        const makeDropdowns = () => {
-          let counter = 0;
-          return (
+    const makeDropdowns = () => {
+      let counter = 0;
+      return (
               <div>
                 <span>Payment Types:
                   <select name="payment" required className="custom-select mb-2" value={selectedPaymentType} onChange={(event) => { this.selectPaymentType(event); this.paymentTypeIdChange(event); }}>
@@ -139,10 +144,10 @@ class PaymentMethod extends React.Component {
                   </select>
                 </span>
               </div>
-          );
-        };
+      );
+    };
 
-        return (
+    return (
             <div>
                 <form className="row form-container border border-dark rounded mt-5 mx-auto" onSubmit={this.formSubmit}>
                 <div className="form col-11 mt-2">
@@ -221,8 +226,8 @@ class PaymentMethod extends React.Component {
                   {makeButtons()}
                 </form>
             </div>
-        );
-      }
+    );
+  }
 }
 
 export default PaymentMethod;
