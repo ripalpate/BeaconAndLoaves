@@ -16,85 +16,85 @@ const defaultUser = {
 };
 
 class Register extends React.Component {
-    state = {
-      users: [],
-      currentUser: [],
-      newUser: defaultUser,
+  state = {
+    users: [],
+    currentUser: [],
+    newUser: defaultUser,
+  }
+
+  formFieldStringState = (name, e) => {
+    e.preventDefault();
+    const tempUser = { ...this.state.newUser };
+    tempUser[name] = e.target.value;
+    this.setState({ newUser: tempUser });
+  }
+
+  emailChange = e => this.formFieldStringState('email', e);
+
+  nameChange = e => this.formFieldStringState('name', e);
+
+  streetChange = e => this.formFieldStringState('street', e);
+
+  cityChange = e => this.formFieldStringState('city', e);
+
+  stateChange = e => this.formFieldStringState('state', e);
+
+  zipCodeChange = e => this.formFieldStringState('zipCode', e);
+
+  phoneNumberChange = e => this.formFieldStringState('phoneNumber', e);
+
+  formSubmit = (e) => {
+    e.preventDefault();
+    const myUser = { ...this.state.newUser };
+    myUser.isActive = true;
+    myUser.isOwner = false;
+    myUser.firebaseId = authRequests.getCurrentUid();
+    this.setState({ newUser: defaultUser });
+    userRequests.createUser(myUser)
+      .then(() => {
+        this.props.history.push('/home');
+      });
+  };
+
+  paymentView = () => {
+    this.props.history.push('/paymentMethod');
+  }
+
+  paymentViewBTC = () => {
+    this.props.history.push('/paymentMethodBTC');
+  }
+
+  getUsers = () => {
+    userRequests.getAllUsers()
+      .then((users) => {
+        this.setState({ users });
+      })
+      .then(() => {
+        this.checkRegistration();
+      });
+  };
+
+  checkRegistration = () => {
+    const { users } = this.state;
+    const uid = authRequests.getCurrentUid();
+    const currentUser = users.filter(user => user.firebaseId === uid);
+    if (currentUser.length !== 0) {
+      this.props.history.push('/home');
+    } else {
+      this.setState({ currentUser });
     }
+  }
 
-      formFieldStringState = (name, e) => {
-        e.preventDefault();
-        const tempUser = { ...this.state.newUser };
-        tempUser[name] = e.target.value;
-        this.setState({ newUser: tempUser });
-      }
+  componentDidMount() {
+    this.getUsers();
+  }
 
-      emailChange = e => this.formFieldStringState('email', e);
+  render() {
+    const {
+      newUser,
+    } = this.state;
 
-      nameChange = e => this.formFieldStringState('name', e);
-
-      streetChange = e => this.formFieldStringState('street', e);
-
-      cityChange = e => this.formFieldStringState('city', e);
-
-      stateChange = e => this.formFieldStringState('state', e);
-
-      zipCodeChange = e => this.formFieldStringState('zipCode', e);
-
-      phoneNumberChange = e => this.formFieldStringState('phoneNumber', e);
-
-      formSubmit = (e) => {
-        e.preventDefault();
-        const myUser = { ...this.state.newUser };
-        myUser.isActive = true;
-        myUser.isOwner = false;
-        myUser.firebaseId = authRequests.getCurrentUid();
-        this.setState({ newUser: defaultUser });
-        userRequests.createUser(myUser)
-          .then(() => {
-            this.props.history.push('/home');
-          });
-      };
-
-      paymentView = () => {
-        this.props.history.push('/paymentMethod');
-      }
-
-      paymentViewBTC = () => {
-        this.props.history.push('/paymentMethodBTC');
-      }
-
-      getUsers = () => {
-        userRequests.getAllUsers()
-          .then((users) => {
-            this.setState({ users });
-          })
-          .then(() => {
-            this.checkRegistration();
-          });
-      };
-
-      checkRegistration = () => {
-        const { users } = this.state;
-        const uid = authRequests.getCurrentUid();
-        const currentUser = users.filter(user => user.firebaseId === uid);
-        if (currentUser.length !== 0) {
-          this.props.history.push('/home');
-        } else {
-          this.setState({ currentUser });
-        }
-      }
-
-      componentDidMount() {
-        this.getUsers();
-      }
-
-      render() {
-        const {
-          newUser,
-        } = this.state;
-
-        return (
+    return (
           <div className="reg-container d-flex">
               <form className="row form-container border border-dark rounded mt-5 mx-auto" onSubmit={this.formSubmit}>
                 <h3 className="reg-title mx-auto">Please Register:</h3>
@@ -222,18 +222,12 @@ class Register extends React.Component {
                     <button className="btn user-add-btn btn-success my-auto mx-auto">
                       <i className="fas fa-plus-circle" />
                     </button>
-                    {/* <button type="button" className="btn payment-add-btn my-auto mx-auto" onClick={this.paymentView}>
-                    <i className="fab fa-cc-visa fa-2x"></i>
-                </button>
-                <button type="button" className="btn payment-add-btn my-auto mx-auto" onClick={this.paymentViewBTC}>
-                    <i className="fab fa-bitcoin fa-2x"></i>
-                </button> */}
                   </div>
                 </div>
               </form>
             </div>
-        );
-      }
+    );
+  }
 }
 
 export default Register;
