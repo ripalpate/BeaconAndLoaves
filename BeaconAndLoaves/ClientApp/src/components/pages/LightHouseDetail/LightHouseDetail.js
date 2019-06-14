@@ -15,13 +15,14 @@ class LightHouseDetail extends React.Component {
     this.getPropertyWithOwnerName();
   }
 
-  //get Propertydetails with owner name and hold isLiked state
+  // get Propertydetails with owner name and hold isLiked state
   getPropertyWithOwnerName = () => {
     const lightHouseId = this.props.match.params.id;
+    const ConvertlightHouseIdToNumber = parseInt(lightHouseId, 10);
     smashRequests.getAllPropertiesWithOwnerInfo()
       .then((properties) => {
         const lightHouses = properties.filter(property => property.type === 0);
-        const lightHouse = lightHouses.find(property => property.id == lightHouseId);
+        const lightHouse = lightHouses.find(property => property.id === ConvertlightHouseIdToNumber);
         this.setState({ lightHouse });
       }).then(() => {
         this.checkExistingProperty();
@@ -37,13 +38,13 @@ class LightHouseDetail extends React.Component {
     this.props.history.push(`/rental/${propertyId}`);
   }
 
- // clicking onheart icon changes isLiked state
+  // clicking onheart icon changes isLiked state
   changeIsLikedState = () => {
     const { isLiked } = this.state;
     this.setState({ isLiked: !isLiked });
   }
 
-  //check property exist in the state to hold the state of isLiked property
+  // check property exist in the state to hold the state of isLiked property
   checkExistingProperty = () => {
     const { lightHouse, isLiked } = this.state;
     likedPropertyRequests.getAllLikedProperties()
@@ -65,7 +66,7 @@ class LightHouseDetail extends React.Component {
 
   editEvent = (e) => {
     e.preventDefault();
-    const propertyId = e.target.dataset.propertyId;
+    const { propertyId } = e.target.dataset;
     this.props.history.push(`/editProperty/${propertyId}`);
   }
 
@@ -83,16 +84,16 @@ class LightHouseDetail extends React.Component {
           propertyId = {lightHouse.id}
           />
         );
-      } 
+      } return (<span></span>);
     };
 
     const makebutton = () => {
-      if(lightHouse.isOwner === true){
-        return(
+      if (lightHouse.isOwner === true) {
+        return (
           <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x float-right"/>
         );
-      }
-    }
+      } return (<span></span>);
+    };
     return (
       <div>
         <div className="back-button">

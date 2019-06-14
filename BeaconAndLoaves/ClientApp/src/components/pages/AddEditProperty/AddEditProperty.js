@@ -4,37 +4,37 @@ import authRequests from '../../../helpers/data/authRequests';
 import userRequests from '../../../helpers/data/userRequests';
 
 const defaultProperty = {
-    propertyName: '',
-    street: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    description: '',
-    imageUrl: '',
-    price: '',
-  };
+  propertyName: '',
+  street: '',
+  city: '',
+  state: '',
+  zipCode: '',
+  description: '',
+  imageUrl: '',
+  price: '',
+};
 
 class AddEditProperty extends React.Component {
     state = {
       newProperty: defaultProperty,
       currentUser: [],
-      }
+    }
 
-      componentDidMount(){
-        const uid = authRequests.getCurrentUid();
-        userRequests.getSingleUser(uid)
-          .then((currentUser) => {
-            this.setState({ currentUser:currentUser.data });
-          });
-      }
-    
+    componentDidMount() {
+      const uid = authRequests.getCurrentUid();
+      userRequests.getSingleUser(uid)
+        .then((currentUser) => {
+          this.setState({ currentUser: currentUser.data });
+        });
+    }
+
       formFieldStringState = (name, e) => {
         e.preventDefault();
         const tempProperty = { ...this.state.newProperty };
         tempProperty[name] = e.target.value;
         this.setState({ newProperty: tempProperty });
       }
-    
+
       formFieldNumberState = (number, e) => {
         const tempProperty = { ...this.state.newProperty };
         tempProperty[number] = e.target.value * 1;
@@ -42,7 +42,7 @@ class AddEditProperty extends React.Component {
       }
 
       propertyNameChange = e => this.formFieldStringState('propertyName', e);
-    
+
       streetChange = e => this.formFieldStringState('street', e);
 
       cityChange = e => this.formFieldStringState('city', e);
@@ -56,7 +56,7 @@ class AddEditProperty extends React.Component {
       imageChange = e => this.formFieldStringState('imageUrl', e);
 
       priceChange = e => this.formFieldStringState('price', e);
-    
+
       typeChange = e => this.formFieldNumberState('type', e);
 
       formSubmitEvent = (newProperty) => {
@@ -65,7 +65,7 @@ class AddEditProperty extends React.Component {
             this.props.history.push('/properties');
           }).catch(err => console.error(err));
       }
-    
+
       formSubmit = (e) => {
         e.preventDefault();
         const myProperty = { ...this.state.newProperty };
@@ -73,8 +73,8 @@ class AddEditProperty extends React.Component {
         this.formSubmitEvent(myProperty);
         this.setState({ newProperty: defaultProperty });
       }
-    
-    
+
+
       render() {
         const { newProperty } = this.state;
         return (
@@ -96,8 +96,8 @@ class AddEditProperty extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="type">Property Type</label>
-                    <select 
-                    className="form-control" 
+                    <select
+                    className="form-control"
                     id="type"
                     value= {newProperty.type}
                     onChange= {this.typeChange}
@@ -161,11 +161,11 @@ class AddEditProperty extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="description">Description:</label>
-                <textarea 
-                  className="form-control"   
-                  id="description"  
+                <textarea
+                  className="form-control"
+                  id="description"
                   value= {newProperty.description}
-                  onChange= {this.descriptionChange} 
+                  onChange= {this.descriptionChange}
                   rows="5"
                   required
                   >
