@@ -391,7 +391,7 @@ paymentAccount = {
                 <i className="far fa-credit-card fa-2x"></i>
             </button>
             <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
-              <i className="fas fa-trash fa-2x"></i>
+              <i className="profile-delete-btn fas fa-trash fa-2x"></i>
             </button>
           </div>
         );
@@ -407,8 +407,8 @@ paymentAccount = {
             <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
                 <i className="far fa-credit-card fa-2x"></i>
             </button>
-            <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
-              <i className="fas fa-trash fa-2x"></i>
+            <button id='profile-delete' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
+              <i className="profile-delete-btn fas fa-trash fa-2x"></i>
             </button>
         </div>
       );
