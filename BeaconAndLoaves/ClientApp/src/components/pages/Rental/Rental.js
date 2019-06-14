@@ -23,153 +23,153 @@ const defaultRental = {
 };
 
 class Rental extends React.Component {
-    state = {
-      startDate: new Date(),
-      endDate: new Date(),
-      propertyToRent: {},
-      paymentAccounts: [],
-      currentUser: {},
-      paymentAccount: 0,
-      rentalTotal: 0,
-      rental: defaultRental,
-      rentals: [],
-      rentedDates: [],
-      accountName: '',
-      modal: false,
-    }
+  state = {
+    startDate: new Date(),
+    endDate: new Date(),
+    propertyToRent: {},
+    paymentAccounts: [],
+    currentUser: {},
+    paymentAccount: 0,
+    rentalTotal: 0,
+    rental: defaultRental,
+    rentals: [],
+    rentedDates: [],
+    accountName: '',
+    modal: false,
+  }
 
-    toggleModal = () => {
-      const { modal } = this.state;
-      this.setState({
-        modal: !modal,
+  toggleModal = () => {
+    const { modal } = this.state;
+    this.setState({
+      modal: !modal,
+    });
+  }
+
+  rentalValidation = () => {
+    if (this.state.paymentAccount !== 0 && this.state.rentalTotal !== 0) {
+      this.toggleModal();
+    }
+  }
+
+  handleStartChange = (date) => {
+    this.setState({ startDate: date }, this.figureTotal);
+  }
+
+  handleEndChange = (date) => {
+    this.setState({ endDate: date }, this.figureTotal);
+  }
+
+  handlePaymentAccountChange = (e) => {
+    const paymentAccount = e.target.value;
+    this.setState({ paymentAccount }, this.setAccountName(paymentAccount * 1));
+  }
+
+  setAccountName = (paymentAccount) => {
+    paymentMethodRequests.getSingleUserPayment(paymentAccount)
+      .then((account) => {
+        this.setState({ accountName: account.data.accountName });
       });
-    }
+  }
 
-    rentalValidation = () => {
-      if (this.state.paymentAccount !== 0 && this.state.rentalTotal !== 0) {
-        this.toggleModal();
+  figureTotal = () => {
+    const { startDate, endDate, propertyToRent } = this.state;
+    const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    const rentalTotal = diffDays * propertyToRent.price;
+    this.setState({ rentalTotal });
+  }
+
+  rentProperty = (e) => {
+    e.preventDefault();
+    const myRental = { ...this.state.rental };
+    const {
+      currentUser,
+      propertyToRent,
+      paymentAccount,
+      startDate,
+      endDate,
+      rentalTotal,
+    } = this.state;
+    myRental.userId = currentUser.id * 1;
+    myRental.propertyId = propertyToRent.id * 1;
+    myRental.userPaymentId = paymentAccount * 1;
+    myRental.startDate = startDate;
+    myRental.endDate = endDate;
+    myRental.rentalAmount = rentalTotal * 1;
+    rentalRequests.createRental(myRental)
+      .then(() => {
+        this.setState({ rental: defaultRental });
+        this.props.history.push('/home');
+      });
+  }
+
+  getUserPaymentAccounts = () => {
+    const { currentUser } = this.state;
+    const uid = currentUser.id;
+    userRequests.getUserPaymentAccounts(uid)
+      .then((paymentAccounts) => {
+        this.setState({ paymentAccounts });
+      });
+  };
+
+  getUser = () => {
+    const uid = authRequests.getCurrentUid();
+    userRequests.getSingleUser(uid)
+      .then((currentUser) => {
+        this.setState({ currentUser: currentUser.data });
+        this.getUserPaymentAccounts();
+      });
+  };
+
+  getAllRentalsByProperty = () => {
+    const propertyId = this.props.match.params.id;
+    rentalRequests.getAllRentalsByPropertyId(propertyId)
+      .then((rentals) => {
+        this.setState({ rentals });
+        this.getDates();
+      });
+  }
+
+  getPropertyToRent = () => {
+    const propertyId = this.props.match.params.id;
+    propertiesRequests.getSingleProperty(propertyId)
+      .then((property) => {
+        this.setState({ propertyToRent: property }, this.getAllRentalsByProperty());
+      });
+  }
+
+  getDates = () => {
+    const { rentedDates, rentals } = this.state;
+    rentedDates.push(new Date());
+    rentals.forEach((rental) => {
+      const startDate = new Date(rental.startDate);
+      const endDate = new Date(rental.endDate);
+      while (startDate <= endDate) {
+        rentedDates.push(new Date(startDate));
+        startDate.setDate(startDate.getDate() + 1);
       }
-    }
+    });
+    this.setState({ rentedDates });
+  }
 
-    handleStartChange = (date) => {
-      this.setState({ startDate: date }, this.figureTotal);
-    }
+  componentDidMount() {
+    this.getPropertyToRent();
+    this.getUser();
+  }
 
-    handleEndChange = (date) => {
-      this.setState({ endDate: date }, this.figureTotal);
-    }
+  render() {
+    const {
+      propertyToRent,
+      paymentAccounts,
+      rentalTotal,
+      rentedDates,
+      modal,
+      startDate,
+      endDate,
+      accountName,
+    } = this.state;
 
-    handlePaymentAccountChange = (e) => {
-      const paymentAccount = e.target.value;
-      this.setState({ paymentAccount }, this.setAccountName(paymentAccount * 1));
-    }
-
-    setAccountName = (paymentAccount) => {
-      paymentMethodRequests.getSingleUserPayment(paymentAccount)
-        .then((account) => {
-          this.setState({ accountName: account.data.accountName });
-        });
-    }
-
-    figureTotal = () => {
-      const { startDate, endDate, propertyToRent } = this.state;
-      const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      const rentalTotal = diffDays * propertyToRent.price;
-      this.setState({ rentalTotal });
-    }
-
-    rentProperty = (e) => {
-      e.preventDefault();
-      const myRental = { ...this.state.rental };
-      const {
-        currentUser,
-        propertyToRent,
-        paymentAccount,
-        startDate,
-        endDate,
-        rentalTotal,
-      } = this.state;
-      myRental.userId = currentUser.id * 1;
-      myRental.propertyId = propertyToRent.id * 1;
-      myRental.userPaymentId = paymentAccount * 1;
-      myRental.startDate = startDate;
-      myRental.endDate = endDate;
-      myRental.rentalAmount = rentalTotal * 1;
-      rentalRequests.createRental(myRental)
-        .then(() => {
-          this.setState({ rental: defaultRental });
-          this.props.history.push('/home');
-        });
-    }
-
-    getUserPaymentAccounts = () => {
-      const { currentUser } = this.state;
-      const uid = currentUser.id;
-      userRequests.getUserPaymentAccounts(uid)
-        .then((paymentAccounts) => {
-          this.setState({ paymentAccounts });
-        });
-    };
-
-    getUser = () => {
-      const uid = authRequests.getCurrentUid();
-      userRequests.getSingleUser(uid)
-        .then((currentUser) => {
-          this.setState({ currentUser: currentUser.data });
-          this.getUserPaymentAccounts();
-        });
-    };
-
-    getAllRentalsByProperty = () => {
-      const propertyId = this.props.match.params.id;
-      rentalRequests.getAllRentalsByPropertyId(propertyId)
-        .then((rentals) => {
-          this.setState({ rentals });
-          this.getDates();
-        });
-    }
-
-    getPropertyToRent = () => {
-      const propertyId = this.props.match.params.id;
-      propertiesRequests.getSingleProperty(propertyId)
-        .then((property) => {
-          this.setState({ propertyToRent: property }, this.getAllRentalsByProperty());
-        });
-    }
-
-     getDates = () => {
-       const { rentedDates, rentals } = this.state;
-       rentedDates.push(new Date());
-       rentals.forEach((rental) => {
-         const startDate = new Date(rental.startDate);
-         const endDate = new Date(rental.endDate);
-         while (startDate <= endDate) {
-           rentedDates.push(new Date(startDate));
-           startDate.setDate(startDate.getDate() + 1);
-         }
-       });
-       this.setState({ rentedDates });
-     }
-
-     componentDidMount() {
-       this.getPropertyToRent();
-       this.getUser();
-     }
-
-     render() {
-       const {
-         propertyToRent,
-         paymentAccounts,
-         rentalTotal,
-         rentedDates,
-         modal,
-         startDate,
-         endDate,
-         accountName,
-       } = this.state;
-
-       const makeDropdowns = () => (
+    const makeDropdowns = () => (
         <div>
           <span>Payment Accounts:
             <select name="account" required className="custom-select mb-2 ml-2" id="account" onChange={this.handlePaymentAccountChange}>
@@ -181,7 +181,7 @@ class Rental extends React.Component {
           </span>
         </div>);
 
-       return (
+    return (
         <div className="text-center rental-div mx-auto border border-dark rounded">
             <form className="rental-form" id={propertyToRent.id}>
                 <h3 className="text-center">{propertyToRent.propertyName}</h3>
@@ -235,8 +235,8 @@ class Rental extends React.Component {
               />
             </div>
       </div>
-       );
-     }
+    );
+  }
 }
 
 export default Rental;
