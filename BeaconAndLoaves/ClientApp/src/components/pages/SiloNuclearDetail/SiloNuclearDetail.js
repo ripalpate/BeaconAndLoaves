@@ -17,10 +17,11 @@ class SiloNuclearDetail extends React.Component {
 
   getPropertyWithOwnerName = () => {
     const siloNuclearId = this.props.match.params.id;
+    const ConvertSiloNuclearIdToNumber = parseInt(siloNuclearId, 10);
     smashRequests.getAllPropertiesWithOwnerInfo()
       .then((properties) => {
         const siloNuclears = properties.filter(property => property.type === 1);
-        const siloNuclear = siloNuclears.find(property => property.id == siloNuclearId);
+        const siloNuclear = siloNuclears.find(property => property.id === ConvertSiloNuclearIdToNumber);
         this.setState({ siloNuclear });
       }).then(() => {
         this.checkExistingProperty();
@@ -57,7 +58,7 @@ class SiloNuclearDetail extends React.Component {
 
   editEvent = (e) => {
     e.preventDefault();
-    const {propertyId} = e.target.dataset;
+    const { propertyId } = e.target.dataset;
     this.props.history.push(`/editProperty/${propertyId}`);
   }
 
@@ -76,6 +77,7 @@ class SiloNuclearDetail extends React.Component {
           />
         );
       }
+      return (<span></span>);
     };
 
     const makebutton = () => {
@@ -87,7 +89,7 @@ class SiloNuclearDetail extends React.Component {
             <i className="fas fa-trash fa-2x"></i>
         </div>
         );
-      }
+      }   return (<span></span>);
     };
 
     return (

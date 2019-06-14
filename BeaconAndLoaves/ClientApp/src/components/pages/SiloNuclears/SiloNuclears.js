@@ -1,8 +1,8 @@
 import React from 'react';
-import SingleSiloNuclear from '../SingleSiloNuclear/SingleSiloNuclear';
-import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import SearchField from 'react-search-field';
 import { Tooltip } from 'reactstrap';
+import SingleSiloNuclear from '../SingleSiloNuclear/SingleSiloNuclear';
+import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import './SiloNuclears.scss';
 
 class SiloNuclears extends React.Component {
@@ -11,7 +11,7 @@ class SiloNuclears extends React.Component {
     ascendingOrder: false,
     filteredSiloNuclears: [],
     isSearching: false,
-    searchTipOpen: false
+    searchTipOpen: false,
   }
 
   getSiloNuclears = () => {
@@ -23,8 +23,7 @@ class SiloNuclears extends React.Component {
       }).catch(err => console.error(err));
   }
 
-  componentDidMount()
-  {
+  componentDidMount() {
     this.getSiloNuclears();
     this.sortProperties();
   }
@@ -41,7 +40,7 @@ class SiloNuclears extends React.Component {
     });
   }
 
-  
+
   onChange = (value, event) => {
     const { siloNuclears } = this.state;
     const filteredSiloNuclears = [];
@@ -50,7 +49,7 @@ class SiloNuclears extends React.Component {
       this.setState({ filteredSiloNuclears: siloNuclears });
     } else {
       siloNuclears.forEach((siloNuclear) => {
-        if (siloNuclear.propertyName.toLowerCase().includes(value.toLowerCase()) || siloNuclear.city.toLowerCase().includes(value.toLowerCase()) 
+        if (siloNuclear.propertyName.toLowerCase().includes(value.toLowerCase()) || siloNuclear.city.toLowerCase().includes(value.toLowerCase())
         || siloNuclear.state.toLowerCase().includes(value.toLowerCase())) {
           filteredSiloNuclears.push(siloNuclear);
         }
@@ -59,27 +58,27 @@ class SiloNuclears extends React.Component {
     }
   }
 
-  
+
   onEnter = () => {
     const { siloNuclears } = this.state;
     this.setState({ isSearching: false, filteredSiloNuclears: siloNuclears });
   }
 
   sortProperties =() => {
-    const {ascendingOrder, siloNuclears} = this.state;
-    if(ascendingOrder === false){
-      siloNuclears.sort((x, y) => ('' + y.createdOn).localeCompare(x.createdOn));
+    const { ascendingOrder, siloNuclears } = this.state;
+    if (ascendingOrder === false) {
+      siloNuclears.sort((x, y) => (`${ y.createdOn}`).localeCompare(x.createdOn));
       this.setState({ siloNuclears });
-      } else {
-          siloNuclears.sort((x, y) => ('' + x.createdOn).localeCompare(y.createdOn));
-          this.setState({ siloNuclears });
-      }
+    } else {
+      siloNuclears.sort((x, y) => (`${x.createdOn}`).localeCompare(y.createdOn));
+      this.setState({ siloNuclears });
+    }
   }
 
   handleChange =(e) => {
-    const {ascendingOrder} = this.state;
+    const { ascendingOrder } = this.state;
     e.preventDefault();
-    this.setState({ascendingOrder: !ascendingOrder});
+    this.setState({ ascendingOrder: !ascendingOrder });
     this.sortProperties();
   }
 
@@ -114,22 +113,21 @@ class SiloNuclears extends React.Component {
     ));
 
     const makeLatestButton = () => {
-      if(ascendingOrder) {
-        return(
+      if (ascendingOrder) {
+        return (
           <div className="float-right sort-btn">
             <label htmlFor="sort">Sort By</label>
             <button className="btn" onClick={this.handleChange}><i className="far fa-arrow-alt-circle-up fa-2x" onClick={this.handleChange}></i></button>
           </div>
-        )
-      } else {
-        return(
+        );
+      }
+      return (
           <div className="float-right sort-btn">
             <label htmlFor="sort">Sort By</label>
             <button className="btn" onClick={this.handleChange}><i className="far fa-arrow-alt-circle-down fa-2x" onClick={this.handleChange}></i></button>
         </div>
-        )
-      }
-    }
+      );
+    };
     return (
       <div>
         <div className="serach-sort-container">
@@ -151,7 +149,7 @@ class SiloNuclears extends React.Component {
         </div>
       </div>
     );
-}
+  }
 }
 
 export default SiloNuclears;

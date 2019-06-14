@@ -18,10 +18,11 @@ class LightHouseDetail extends React.Component {
   // get Propertydetails with owner name and hold isLiked state
   getPropertyWithOwnerName = () => {
     const lightHouseId = this.props.match.params.id;
+    const ConvertlightHouseIdToNumber = parseInt(lightHouseId, 10);
     smashRequests.getAllPropertiesWithOwnerInfo()
       .then((properties) => {
         const lightHouses = properties.filter(property => property.type === 0);
-        const lightHouse = lightHouses.find(property => property.id == lightHouseId);
+        const lightHouse = lightHouses.find(property => property.id === ConvertlightHouseIdToNumber);
         this.setState({ lightHouse });
       }).then(() => {
         this.checkExistingProperty();
@@ -83,7 +84,7 @@ class LightHouseDetail extends React.Component {
           propertyId = {lightHouse.id}
           />
         );
-      }
+      } return (<span></span>);
     };
 
     const makebutton = () => {
@@ -95,7 +96,7 @@ class LightHouseDetail extends React.Component {
             <i className="fas fa-trash fa-2x"></i>
           </div>
         );
-      }
+      } return (<span></span>);
     };
 
     return (

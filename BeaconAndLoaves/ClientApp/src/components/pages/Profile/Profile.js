@@ -1,4 +1,5 @@
 import React from 'react';
+import accountShape from '../../../helpers/propz/accountShape';
 import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import WarningModal from '../WarningModal/WarningModal';
@@ -9,11 +10,17 @@ import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import './Profile.scss';
 
 class Profile extends React.Component {
+  static propTypes = {
+    paymentAccount: accountShape,
+  }
+
   state = {
     currentUser: {},
     paymentAccounts: [],
     properties: [],
     isEditing: false,
+    isAddingAccount: false,
+    isEditingAccount: false,
     userId: 0,
     selectedAccount: 0,
     selectedProperty: '',
@@ -22,15 +29,15 @@ class Profile extends React.Component {
     paymentAccount: {},
   }
 
-paymentAccount = {
-  accountName: '',
-  userId: 0,
-  paymentTypeId: 0,
-  accountNumber: '',
-  expirationDate: '',
-  CVV: '',
-  isActive: '',
-};
+  paymentAccount = {
+    accountName: '',
+    userId: 0,
+    paymentTypeId: 0,
+    accountNumber: '',
+    expirationDate: '',
+    cvv: '',
+    isActive: '',
+  };
 
   toggleModal = () => {
     const { modal } = this.state;
@@ -39,13 +46,36 @@ paymentAccount = {
     });
   }
 
-  togglePaymentModal = (e) => {
+  togglePaymentDetailModal = (e) => {
     const { paymentModal } = this.state;
     const dropDown = document.getElementById('account');
     this.setState({
       paymentModal: !paymentModal,
     });
     dropDown.selectedIndex = 0;
+  }
+
+  toggleAddPaymentModal = () => {
+    const { paymentModal } = this.state;
+    this.setState({
+      isAddingAccount: true,
+      paymentModal: !paymentModal,
+    });
+  }
+
+  toggleEditPaymentModal = () => {
+    this.setState({
+      isEditingAccount: true,
+    });
+  }
+
+  cancelPaymentModal = () => {
+    const { paymentModal } = this.state;
+    this.setState({
+      paymentModal: !paymentModal,
+      isAddingAccount: false,
+      isEditingAccount: false,
+    }, this.getUserPaymentAccounts());
   }
 
   formFieldStringState = (name, e) => {
@@ -138,7 +168,7 @@ paymentAccount = {
   dropdownSelect = (e) => {
     if (e.target.id === 'account') {
       const selectedAccount = e.target.value;
-      this.setState({ selectedAccount });
+      this.setState({ selectedAccount }, this.togglePaymentDetailModal());
     } else if (e.target.id === 'property') {
       const selectedProperty = e.target.value;
       this.setState({ selectedProperty });
@@ -160,7 +190,7 @@ paymentAccount = {
     const id = e.target.value;
     paymentMethodRequests.getSingleUserPayment(id)
       .then((paymentAccount) => {
-        this.setState({ paymentAccount: paymentAccount.data }, this.togglePaymentModal);
+        this.setState({ paymentAccount: paymentAccount.data });
       });
   };
 
@@ -187,7 +217,8 @@ paymentAccount = {
       modal,
       paymentModal,
       paymentAccount,
-      selectedAccount,
+      isAddingAccount,
+      isEditingAccount,
     } = this.state;
 
     const makeProfileCard = () => {
@@ -344,7 +375,7 @@ paymentAccount = {
         return (
           <div>
             <span>Payment Accounts:
-              <select id="account" value={selectedAccount} className="custom-select mb-2" onChange={this.togglePaymentModal} onChange={this.getUserPaymentAccount}>
+              <select id="account" className="custom-select mb-2" onChange={(event) => { this.getUserPaymentAccount(event); this.dropdownSelect(event); }}>
               <option defaultValue>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
@@ -364,7 +395,7 @@ paymentAccount = {
       }
       return (<div>
            <span>Payment Accounts:
-              <select className="custom-select mb-2" id="account" onChange={this.togglePaymentModal} onChange={this.getUserPaymentAccount}>
+           <select id="account" className="custom-select mb-2" onChange={(event) => { this.getUserPaymentAccount(event); this.dropdownSelect(event); }}>
               <option defaultValue>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
@@ -387,7 +418,7 @@ paymentAccount = {
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
             </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddPaymentModal}>
                 <i className="far fa-credit-card fa-2x"></i>
             </button>
             <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
@@ -404,7 +435,7 @@ paymentAccount = {
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
               <i className="far fa-edit fa-2x"/>
             </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.paymentView}>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddPaymentModal}>
                 <i className="far fa-credit-card fa-2x"></i>
             </button>
             <button id='profile-delete' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
@@ -427,9 +458,12 @@ paymentAccount = {
       <div>
       <SinglePaymentMethodModal
       paymentModal={paymentModal}
-      togglePaymentModal={this.togglePaymentModal}
       paymentAccount={paymentAccount}
       changeEditView={this.changeEditView}
+      isAddingAccount={isAddingAccount}
+      isEditingAccount={isEditingAccount}
+      cancelPaymentModal={this.cancelPaymentModal}
+      toggleEditPaymentModal={this.toggleEditPaymentModal}
       />
       </div>
       <div className="profileDiv d-flex mx-auto">

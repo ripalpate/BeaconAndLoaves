@@ -6,11 +6,10 @@ class Properties extends React.Component {
   state = {
     properties: [],
     lightHouse: [],
-    siloNuclear: []
+    siloNuclear: [],
   }
 
-  componentDidMount()
-  {
+  componentDidMount() {
     propertiesRequests.getProperties()
       .then((properties) => {
         const lightHouse = properties.filter(property => property.type === 0);
