@@ -62,9 +62,12 @@ class MyNavbar extends React.Component {
           </Nav>
         );
       }
-      return (
-        <Nav className="ml-auto" navbar></Nav>
-      );
+      if (!isAuthed) {
+        return (
+          <Nav className="ml-auto" navbar></Nav>
+        );
+      }
+
     };
 
     return (
