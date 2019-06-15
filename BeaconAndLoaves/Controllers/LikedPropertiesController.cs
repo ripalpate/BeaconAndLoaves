@@ -46,21 +46,29 @@ namespace BeaconAndLoaves.Controllers
                 return Ok("That shit's gone, man.");
             }
 
-        [HttpGet]
-        public ActionResult GetAllLikedProperties()
-        {
-            var likedProperties = _repository.GetAllLikedProperties();
+            [HttpGet("user")]
+            public ActionResult GetAllLikedPropertiesWithUser()
+            {
+                var likedProperties = _repository.GetAllLikedPropertiesWithUser();
 
-            return Ok(likedProperties);
-        }
+                return Ok(likedProperties);
+            }
 
-        [HttpGet("{id}")]
-        public ActionResult GetSingleLikedProperty(int id)
-        {
-            var likedPropertyById = _repository.GetSingleLikedProperty(id);
+            [HttpGet("{id}")]
+            public ActionResult GetSingleLikedProperty(int id)
+            {
+                var likedPropertyById = _repository.GetSingleLikedProperty(id);
 
-            return Ok(likedPropertyById);
-        }
+                return Ok(likedPropertyById);
+            }
+
+            [HttpGet()]
+            public ActionResult GetAllLikedProperties()
+            {
+                var likedProperties = _repository.GetAllLikedProperties();
+
+                return Ok(likedProperties);
+            }
 
     }
 }

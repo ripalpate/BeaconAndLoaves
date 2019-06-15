@@ -16,7 +16,7 @@ class LikedProperties extends React.Component {
   }
 
   getAllLikedProperties= () => {
-    likedPropertyRequests.getAllLikedProperties()
+    likedPropertyRequests.getAllLikedPropertiesWithUser()
       .then((likedProperties) => {
         this.setState({ likedProperties });
       });

@@ -14,13 +14,21 @@ const getAllLikedProperties = () => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
+const getAllLikedPropertiesWithUser = () => new Promise((resolve, reject) => {
+  axios
+    .get(`${apiUrl}/user`)
+    .then((results) => {
+      const likedProperties = results.data;
+      resolve(likedProperties);
+    })
+    .catch(err => reject(err));
+});
+
 const getSingleLikedProperty = likedPropertyId => new Promise((resolve, reject) => {
   axios.get(`${apiUrl}/${likedPropertyId}`)
     .then((result) => {
-      console.log(result);
       const singleLikedProperty = result.data;
       singleLikedProperty.id = likedPropertyId;
-      console.log(singleLikedProperty);
       resolve(singleLikedProperty);
     }).catch(err => reject(err));
 });
@@ -32,5 +40,6 @@ export default {
   createLikedProperty,
   deleteLikedProperty,
   getSingleLikedProperty,
-}
-;
+  getAllLikedPropertiesWithUser,
+};
+
