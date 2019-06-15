@@ -80,19 +80,27 @@ class Register extends React.Component {
       });
   };
 
+  // checkRegistration = () => {
+  //   const { users } = this.state;
+  //   const uid = authRequests.getCurrentUid();
+  //   const currentUser = users.filter(user => user.firebaseId === uid);
+  //   if (currentUser.length !== 0) {
+  //     // this.props.history.push('/home');
+  //   } else {
+  //     this.setState({ currentUser });
+  //   }
+  // }
+
   checkRegistration = () => {
-    const { users } = this.state;
-    const uid = authRequests.getCurrentUid();
-    const currentUser = users.filter(user => user.firebaseId === uid);
-    if (currentUser.length !== 0) {
-      // this.props.history.push('/home');
-    } else {
-      this.setState({ currentUser });
+    const { isRegistered } = this.props;
+    if (isRegistered) {
+      this.props.history.push('/home');
     }
   }
 
   componentDidMount() {
     // this.getUsers();
+    this.checkRegistration();
   }
 
   render() {
