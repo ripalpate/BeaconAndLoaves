@@ -91,9 +91,9 @@ class LightHouseDetail extends React.Component {
       if (lightHouse.isOwner === true) {
         return (
           <div className = "float-right">
-            <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-2"/>
-            <i className="fas fa-ban fa-2x mr-2"></i>
-            <i className="fas fa-trash fa-2x"></i>
+            <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
+            <i className="fas fa-ban fa-2x mr-3" title="Deactivate"></i>
+            <i className="fas fa-trash fa-2x" title="Delete"></i>
           </div>
         );
       } return (<span></span>);
