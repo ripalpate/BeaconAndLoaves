@@ -1,8 +1,8 @@
 import React from 'react';
-import SingleLightHouse from '../SingleLightHouse/SingleLightHouse';
-import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import SearchField from 'react-search-field';
 import { Tooltip } from 'reactstrap';
+import SingleLightHouse from '../SingleLightHouse/SingleLightHouse';
+import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import './LightHouses.scss';
 
 class LightHouses extends React.Component {
@@ -16,16 +16,16 @@ class LightHouses extends React.Component {
 
   getAllLightHouses = () => {
     propertiesRequests.getProperties()
-    .then((properties) => {
-      const lightHouses = properties.filter(property => property.type === 0);
-      this.setState({ lightHouses});
-      this.setState({ filteredLightHouses: lightHouses });
-    }).catch(err => console.error(err));
+      .then((properties) => {
+        const lightHouses = properties.filter(property => property.type === 0);
+        this.setState({ lightHouses });
+        this.setState({ filteredLightHouses: lightHouses });
+      }).catch(err => console.error(err));
   }
 
   componentDidMount()
   {
-    this.getAllLightHouses(); 
+    this.getAllLightHouses();
     this.sortProperties();
   }
 
@@ -49,7 +49,7 @@ class LightHouses extends React.Component {
       this.setState({ filteredLightHouses: lightHouses });
     } else {
       lightHouses.forEach((lightHouse) => {
-        if (lightHouse.propertyName.toLowerCase().includes(value.toLowerCase()) || lightHouse.city.toLowerCase().includes(value.toLowerCase()) 
+        if (lightHouse.propertyName.toLowerCase().includes(value.toLowerCase()) || lightHouse.city.toLowerCase().includes(value.toLowerCase())
         || lightHouse.state.toLowerCase().includes(value.toLowerCase())) {
           filteredLightHouses.push(lightHouse);
         }
@@ -60,18 +60,18 @@ class LightHouses extends React.Component {
 
   searchOnEnter = () => {
     const { lightHouses } = this.state;
-    this.setState({ isSearching: false, filteredLightHouses:lightHouses });
+    this.setState({ isSearching: false, filteredLightHouses: lightHouses });
   }
-  
+
   sortProperties =() => {
-    const {ascendingOrder, lightHouses} = this.state;
-    if(ascendingOrder === false){
-      lightHouses.sort((x, y) => ('' + y.createdOn).localeCompare(x.createdOn));
+    const { ascendingOrder, lightHouses } = this.state;
+    if (ascendingOrder === false) {
+      lightHouses.sort((x, y) => (`${  y.createdOn}`).localeCompare(x.createdOn));
       this.setState({ lightHouses });
-      } else {
-          lightHouses.sort((x, y) => ('' + x.createdOn).localeCompare(y.createdOn));
-          this.setState({ lightHouses });
-      }
+    } else {
+      lightHouses.sort((x, y) => (`${  x.createdOn}`).localeCompare(y.createdOn));
+      this.setState({ lightHouses });
+    }
   }
 
   lightHouseDetailView = (lightHouseId) => {
@@ -79,22 +79,23 @@ class LightHouses extends React.Component {
   }
 
   handleChange =(e) => {
-    const {ascendingOrder} = this.state;
+    const { ascendingOrder } = this.state;
     e.preventDefault();
-    this.setState({ascendingOrder: !ascendingOrder});
+    this.setState({ ascendingOrder: !ascendingOrder });
     this.sortProperties();
   }
 
 
   render() {
-     const {  
+    const {
       ascendingOrder,
       isSearching,
-      filteredLightHouses } = this.state;
-     
-      const makeSearch = () => {
-        if (isSearching) {
-          return (
+      filteredLightHouses 
+} = this.state;
+
+    const makeSearch = () => {
+      if (isSearching) {
+        return (
             <SearchField
               placeholder="Search By name, city or state"
               onChange={ this.onChange }
@@ -102,12 +103,12 @@ class LightHouses extends React.Component {
               classNames="test-class w-50"
               onEnter={this.searchOnEnter}
             />
-          );
-        }
-        return (<div></div>);
-      };
+        );
+      }
+      return (<div></div>);
+    };
 
-     const singleLightHouseComponent = filteredLightHouses.map(lightHouse => (
+    const singleLightHouseComponent = filteredLightHouses.map(lightHouse => (
       <SingleLightHouse
       lightHouse={lightHouse}
       key = {lightHouse.id}
@@ -123,15 +124,15 @@ class LightHouses extends React.Component {
             <button className="btn" onClick={this.handleChange}><i className="far fa-arrow-alt-circle-up fa-2x" onClick={this.handleChange}></i></button>
           </div>
         )
-      } else {
+      } 
         return(
           <div className="float-right sort-btn">
             <label htmlFor="sort">Sort By</label>
             <button className="btn" onClick={this.handleChange}><i className="far fa-arrow-alt-circle-down fa-2x" onClick={this.handleChange}></i></button>
         </div>
         )
-      }
-    }
+      
+    };
     return (
       <div>
         <div className="serach-sort-container">
@@ -153,6 +154,6 @@ class LightHouses extends React.Component {
         </div>
       </div>
     );
-}
+  }
 }
 export default LightHouses;

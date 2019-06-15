@@ -4,38 +4,38 @@ import authRequests from '../../../helpers/data/authRequests';
 import userRequests from '../../../helpers/data/userRequests';
 
 const defaultProperty = {
-    propertyName: '',
-    street: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    description: '',
-    imageUrl: '',
-    price: '',
-  };
+  propertyName: '',
+  street: '',
+  city: '',
+  state: '',
+  zipCode: '',
+  description: '',
+  imageUrl: '',
+  price: '',
+};
 
 class EditProperty extends React.Component {
     state = {
       editedProperty: defaultProperty,
       currentUser: [],
       editId: '-1',
-      }
+    }
 
-      componentDidMount(){
-        const uid = authRequests.getCurrentUid();
-        userRequests.getSingleUser(uid)
-          .then((currentUser) => {
-            this.setState({ currentUser:currentUser.data });
-          })
-        this.getSinglePropertyToEdit();
-      }
-    
+    componentDidMount() {
+      const uid = authRequests.getCurrentUid();
+      userRequests.getSingleUser(uid)
+        .then((currentUser) => {
+          this.setState({ currentUser: currentUser.data });
+        });
+      this.getSinglePropertyToEdit();
+    }
+
       getSinglePropertyToEdit = () => {
-          const propertyId = this.props.match.params.id;
-          propertiesRequests.getSingleProperty(propertyId)
-          .then((property)=>{
-              this.setState({editedProperty: property});
-              this.setState({editId: propertyId});
+        const propertyId = this.props.match.params.id;
+        propertiesRequests.getSingleProperty(propertyId)
+          .then((property) => {
+            this.setState({ editedProperty: property });
+            this.setState({ editId: propertyId });
           }).catch(err => console.error(err));
       }
 
@@ -45,7 +45,7 @@ class EditProperty extends React.Component {
         tempProperty[name] = e.target.value;
         this.setState({ editedProperty: tempProperty });
       }
-    
+
       formFieldNumberState = (number, e) => {
         const tempProperty = { ...this.state.editedProperty };
         tempProperty[number] = e.target.value * 1;
@@ -53,7 +53,7 @@ class EditProperty extends React.Component {
       }
 
       propertyNameChange = e => this.formFieldStringState('propertyName', e);
-    
+
       streetChange = e => this.formFieldStringState('street', e);
 
       cityChange = e => this.formFieldStringState('city', e);
@@ -67,21 +67,21 @@ class EditProperty extends React.Component {
       imageChange = e => this.formFieldStringState('imageUrl', e);
 
       priceChange = e => this.formFieldStringState('price', e);
-    
+
       typeChange = e => this.formFieldNumberState('type', e);
 
       formSubmitEvent = (editedProperty) => {
         const { editId } = this.state;
         propertiesRequests.updateProperty(editId, editedProperty)
           .then(() => {
-            if(editedProperty.type === 0){
+            if (editedProperty.type === 0) {
               this.props.history.push(`/lightHouses/${editId}`);
-            } else if (editedProperty.type ===1){
+            } else if (editedProperty.type === 1) {
               this.props.history.push(`/siloNuclears/${editId}`);
             }
           }).catch(err => console.error(err));
       }
-    
+
       formSubmit = (e) => {
         e.preventDefault();
         const myProperty = { ...this.state.editedProperty };
@@ -110,8 +110,8 @@ class EditProperty extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="type">Property Type</label>
-                    <select 
-                    className="form-control" 
+                    <select
+                    className="form-control"
                     id="type"
                     value= {editedProperty.type}
                     onChange= {this.typeChange}
@@ -174,11 +174,11 @@ class EditProperty extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="description">Description:</label>
-                <textarea 
-                  className="form-control"   
-                  id="description"  
+                <textarea
+                  className="form-control"
+                  id="description"
                   value= {editedProperty.description}
-                  onChange= {this.descriptionChange} 
+                  onChange= {this.descriptionChange}
                   rows="5"
                   required
                   >

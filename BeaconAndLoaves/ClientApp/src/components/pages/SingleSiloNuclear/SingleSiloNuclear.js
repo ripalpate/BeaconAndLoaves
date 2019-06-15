@@ -4,11 +4,10 @@ import propertiesShape from '../../../helpers/propz/propertiesShape';
 import './SingleSiloNuclear.scss';
 
 
-
 class SingleSiloNuclear extends React.Component {
   static propTypes = {
     siloNuclear: propertiesShape,
-    siloNuclearDetailView: PropTypes.func
+    siloNuclearDetailView: PropTypes.func,
   }
 
   changeSiloNuclearToDetailView = (e) => {
@@ -18,7 +17,7 @@ class SingleSiloNuclear extends React.Component {
   }
 
   render() {
-    const {siloNuclear} = this.props;
+    const { siloNuclear } = this.props;
     return (
         <div className="card ml-4 bg-light mb-3 mt-3 singleSiloNuclear" onClick={this.changeSiloNuclearToDetailView}>
           <div className="imgHolder">

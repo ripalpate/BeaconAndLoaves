@@ -32,5 +32,5 @@ export default {
   getSingleProperty,
   createProperty,
   updateProperty,
-  deleteProperty
+  deleteProperty,
 };

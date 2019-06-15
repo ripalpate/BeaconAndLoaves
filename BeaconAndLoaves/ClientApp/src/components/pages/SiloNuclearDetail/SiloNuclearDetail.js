@@ -6,9 +6,9 @@ import './SiloNuclearDetail.scss';
 
 class SiloNuclearDetail extends React.Component {
   state = {
-    currentLikedProperty:[],
+    currentLikedProperty: [],
     siloNuclear: [],
-    isLiked: false
+    isLiked: false,
   }
 
   componentDidMount() {
@@ -17,28 +17,29 @@ class SiloNuclearDetail extends React.Component {
 
   getPropertyWithOwnerName = () => {
     const siloNuclearId = this.props.match.params.id;
+    const ConvertSiloNuclearIdToNumber = parseInt(siloNuclearId, 10);
     smashRequests.getAllPropertiesWithOwnerInfo()
-    .then((properties) => {
-      const siloNuclears = properties.filter(property => property.type === 1);
-      const siloNuclear= siloNuclears.find(property => property.id == siloNuclearId);
-      this.setState( {siloNuclear});
-    }).then(() => {
-      this.checkExistingProperty();
-    }).catch(err => console.error(err));
+      .then((properties) => {
+        const siloNuclears = properties.filter(property => property.type === 1);
+        const siloNuclear = siloNuclears.find(property => property.id === ConvertSiloNuclearIdToNumber);
+        this.setState({ siloNuclear });
+      }).then(() => {
+        this.checkExistingProperty();
+      }).catch(err => console.error(err));
   }
 
   checkExistingProperty = () => {
-    const {siloNuclear, isLiked} = this.state;
+    const { siloNuclear, isLiked } = this.state;
     likedPropertyRequests.getAllLikedProperties()
-    .then((likedProperties) => {
-      const currentLikedProperty = likedProperties.filter(x => x.propertyId === siloNuclear.id && x.userId === siloNuclear.ownerId);
-      if(currentLikedProperty.length === 1){
-        this.setState({isLiked: !isLiked});
-        this.setState({currentLikedProperty});
-      } else {
-        this.setState({isLiked: isLiked});
-      }
-    });
+      .then((likedProperties) => {
+        const currentLikedProperty = likedProperties.filter(x => x.propertyId === siloNuclear.id && x.userId === siloNuclear.ownerId);
+        if (currentLikedProperty.length === 1) {
+          this.setState({ isLiked: !isLiked });
+          this.setState({ currentLikedProperty });
+        } else {
+          this.setState({ isLiked });
+        }
+      });
   }
 
   changeIsLikedState = () => {
@@ -49,7 +50,7 @@ class SiloNuclearDetail extends React.Component {
   backButton = () => {
     this.props.history.push('/properties/siloNuclears');
   }
-  
+
   OwnerPropertiesView = (e) => {
     const ownerId = e.target.dataset.owner;
     this.props.history.push(`/ownerProperties/${ownerId}`);
@@ -57,13 +58,13 @@ class SiloNuclearDetail extends React.Component {
 
   editEvent = (e) => {
     e.preventDefault();
-    const propertyId = e.target.dataset.propertyId;
+    const { propertyId } = e.target.dataset;
     this.props.history.push(`/editProperty/${propertyId}`);
   }
 
 
   render() {
-    const{siloNuclear,isLiked}= this.state;
+    const { siloNuclear, isLiked } = this.state;
     const makeLikedPropertyButton = () => {
       if (siloNuclear.isOwner === false) {
         return (
@@ -75,16 +76,18 @@ class SiloNuclearDetail extends React.Component {
           propertyId = {siloNuclear.id}
           />
         );
-      } 
+      }
+      return (<span></span>);
     };
 
     const makebutton = () => {
-      if(siloNuclear.isOwner === true){
-        return(
+      if (siloNuclear.isOwner === true) {
+        return (
           <i onClick= {this.editEvent} data-property-id={siloNuclear.id} className="far fa-edit edit-icon fa-2x float-right"/>
         );
       }
-    }
+      return (<span></span>);
+    };
 
     return (
       <div>
