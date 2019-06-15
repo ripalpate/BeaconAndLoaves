@@ -205,7 +205,7 @@ class PaymentMethodForm extends React.Component {
                         type="text"
                         className="form-control"
                         id="expirationDate"
-                        placeholder="12/11/2023"
+                        placeholder="MM/YYYY"
                         value={newPaymentMethod.expirationDate}
                         onChange={this.expirationDateChange}
                         required
