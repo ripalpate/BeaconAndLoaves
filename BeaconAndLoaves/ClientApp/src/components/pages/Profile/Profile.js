@@ -367,34 +367,34 @@ class Profile extends React.Component {
       if (currentUser.isOwner === true) {
         return (
           <div>
-            <span>Payment Accounts:
-              <select id="account" className="custom-select mb-2" onChange={(event) => { this.getUserPaymentAccount(event); this.dropdownSelect(event); }}>
+            <p>Payment Accounts:
+              <select id="account" className="custom-select mb-2 ml-2" onChange={(event) => { this.getUserPaymentAccount(event); this.dropdownSelect(event); }}>
               <option defaultValue>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
                 }
               </select>
-            </span>
-            <span>My Properties:
-              <select className="custom-select mb-2" id="property" onChange={this.dropdownSelect}>
+            </p>
+            <p>My Properties:
+              <select id="property" className="custom-select mb-2 ml-2" onChange={this.dropdownSelect}>
               <option defaultValue>Select Property</option>
                 {
                 properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
                 }
               </select>
-            </span>
+            </p>
           </div>
         );
       }
       return (<div>
-           <span>Payment Accounts:
+           <p>Payment Accounts:
            <select id="account" className="custom-select mb-2" onChange={(event) => { this.getUserPaymentAccount(event); this.dropdownSelect(event); }}>
               <option defaultValue>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option id="account" value={account.id} key={i}>{account.accountName}</option>))
                 }
               </select>
-            </span>
+            </p>
           </div>);
     };
 
