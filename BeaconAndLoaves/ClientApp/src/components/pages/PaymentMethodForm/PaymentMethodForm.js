@@ -132,14 +132,14 @@ class PaymentMethodForm extends React.Component {
     };
 
     const makeDropdowns = () => {
-      const counter = 0;
+      let counter = 0;
       return (
               <div>
                 <span>Payment Types:
                   <select name="payment" required className="custom-select mb-2" value={selectedPaymentType} onChange={(event) => { this.selectPaymentType(event); this.paymentTypeIdChange(event); }}>
                   <option value="">Select Payment Type</option>
                     {
-                      paymentTypes.map(paymentType => (<option key={counter + 1}value={counter}>{paymentType}</option>))
+                      paymentTypes.map(paymentType => (<option key={counter++}value={counter}>{paymentType}</option>))
                     }
                   </select>
                 </span>
