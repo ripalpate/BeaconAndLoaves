@@ -14,6 +14,7 @@ class SinglePaymentMethodModal extends React.Component {
     paymentModal: PropTypes.bool,
     isAddingAccount: PropTypes.bool,
     isEditingAccount: PropTypes.bool,
+    currentUser: PropTypes.object,
   }
 
   cancelPaymentModalEvent = () => {
@@ -31,7 +32,10 @@ class SinglePaymentMethodModal extends React.Component {
       changeEditView,
       isEditingAccount,
       isAddingAccount,
+      isRegistering,
       toggleEditPaymentModal,
+      currentUser,
+      checkRegistration,
     } = this.props;
 
     const formatDate = () => {
@@ -75,6 +79,7 @@ class SinglePaymentMethodModal extends React.Component {
             changeEditView={changeEditView}
             cancelPaymentModalEvent={this.cancelPaymentModalEvent}
             formatDate={formatDate}
+            currentUser={currentUser}
             />
           </ModalBody>
           </Modal>
@@ -92,6 +97,9 @@ class SinglePaymentMethodModal extends React.Component {
       toggleIsEditing={this.toggleIsEditing}
       changeEditView={changeEditView}
       cancelPaymentModalEvent={this.cancelPaymentModalEvent}
+      currentUser={currentUser}
+      isRegistering={isRegistering}
+      checkRegistration={checkRegistration}
       />
     </ModalBody>
     </Modal>
