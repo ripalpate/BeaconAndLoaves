@@ -1,6 +1,7 @@
 import React from 'react';
 import './LightHouseDetail.scss';
 import smashRequests from '../../../helpers/data/smashRequests';
+import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import LikeButton from '../LikeButton/LikeButton';
 
@@ -70,8 +71,12 @@ class LightHouseDetail extends React.Component {
     this.props.history.push(`/editProperty/${propertyId}`);
   }
 
-  deleteProperty = () => {
-    
+  deleteProperty = (e) => {
+    const { propertyId } = e.target.dataset;
+    propertiesRequests.deleteProperty(propertyId)
+      .then(() => {
+        this.props.history.push('/properties/lighthouses');
+      });
   }
 
   render() {
@@ -96,7 +101,7 @@ class LightHouseDetail extends React.Component {
           <div className = "float-right">
             <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
             <i className="fas fa-ban fa-2x mr-3" title="Deactivate"></i>
-            <i className="fas fa-trash fa-2x" title="Delete"></i>
+            <i onClick = {this.deleteProperty} className="fas fa-trash fa-2x" data-property-id={lightHouse.id} title="Delete"></i>
           </div>
         );
       } return (<span></span>);
