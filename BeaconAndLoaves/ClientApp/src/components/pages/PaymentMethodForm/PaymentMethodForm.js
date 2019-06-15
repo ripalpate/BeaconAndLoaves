@@ -34,13 +34,13 @@ class PaymentMethodForm extends React.Component {
       });
   };
 
-  // paymentTypes = () => {
-  //   paymentMethodRequests.getAllPaymentTypes()
-  //     .then((paymentTypes) => {
-  //       this.setState({ paymentTypes });
-  //       this.getUser();
-  //     });
-  // }
+  paymentTypes = () => {
+    paymentMethodRequests.getAllPaymentTypes()
+      .then((paymentTypes) => {
+        this.setState({ paymentTypes });
+        this.getUser();
+      });
+  }
 
   formFieldStringState = (accountName, e) => {
     e.preventDefault();
@@ -92,7 +92,7 @@ class PaymentMethodForm extends React.Component {
   }
 
   componentDidMount(prevProps) {
-    // this.paymentTypes();
+    this.paymentTypes();
     const { isEditingAccount, paymentAccount } = this.props;
     if (prevProps !== this.props && isEditingAccount) {
       this.setState({
