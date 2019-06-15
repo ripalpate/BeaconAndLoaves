@@ -56,7 +56,7 @@ export default class App extends Component {
     const uid = authRequests.getCurrentUid();
     userRequests.getSingleUser(uid)
       .then((currentUser) => {
-        if (currentUser.data.isActive === true) { this.setState({ currentUser: currentUser.data }); }
+        if (currentUser.data.isActive === true) { this.setState({ currentUser: currentUser.data, authed: true }); }
       });
   };
 
@@ -110,7 +110,7 @@ export default class App extends Component {
                     authed={ authed }
                   />
                   <PrivateRoute path='/' exact component={Home} authed={this.state.authed} />
-                  <PrivateRoute path='/register' exact component={Register} authed={this.state.authed} />
+                  <PrivateRoute path='/register' exact component={() => <Register getUser={this.getUser} />} authed={this.state.authed} />
                   <PrivateRoute path="/home" component={Home} authed={this.state.authed}/>
                   <PrivateRoute exact path="/profile" component={Profile} authed={this.state.authed}/>
                   <PrivateRoute exact path="/properties" component={Properties} authed={this.state.authed}/>

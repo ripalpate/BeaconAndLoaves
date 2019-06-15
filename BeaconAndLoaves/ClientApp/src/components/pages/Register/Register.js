@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import userRequests from '../../../helpers/data/userRequests';
 import authRequests from '../../../helpers/data/authRequests';
 
@@ -16,6 +17,10 @@ const defaultUser = {
 };
 
 class Register extends React.Component {
+  static propTypes = {
+    getUser: PropTypes.func,
+  }
+
   state = {
     users: [],
     currentUser: [],
@@ -52,7 +57,8 @@ class Register extends React.Component {
     this.setState({ newUser: defaultUser });
     userRequests.createUser(myUser)
       .then(() => {
-        this.props.history.push('/home');
+        // this.props.history.push('/home');
+        this.props.getUser();
       });
   };
 
@@ -79,14 +85,14 @@ class Register extends React.Component {
     const uid = authRequests.getCurrentUid();
     const currentUser = users.filter(user => user.firebaseId === uid);
     if (currentUser.length !== 0) {
-      this.props.history.push('/home');
+      // this.props.history.push('/home');
     } else {
       this.setState({ currentUser });
     }
   }
 
   componentDidMount() {
-    this.getUsers();
+    // this.getUsers();
   }
 
   render() {

@@ -15,6 +15,7 @@ class MyNavbar extends React.Component {
   static propTypes = {
     isAuthed: PropTypes.bool,
     logoutClickEvent: PropTypes.func,
+    currentUser: PropTypes.object,
   }
 
   state = {
@@ -67,7 +68,6 @@ class MyNavbar extends React.Component {
           <Nav className="ml-auto" navbar></Nav>
         );
       }
-
     };
 
     return (
