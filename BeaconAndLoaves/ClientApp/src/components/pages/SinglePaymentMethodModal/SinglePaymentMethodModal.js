@@ -36,9 +36,8 @@ class SinglePaymentMethodModal extends React.Component {
     const formatDate = () => {
       const expirationDate = new Date(paymentAccount.expirationDate);
       const month = expirationDate.getMonth() + 1;
-      const day = expirationDate.getDate();
       const year = expirationDate.getFullYear();
-      const formattedDate = `${month}/${day}/${year}`;
+      const formattedDate = `${month}/${year}`;
       return formattedDate;
     };
 
@@ -51,6 +50,7 @@ class SinglePaymentMethodModal extends React.Component {
       <ModalBody className="text-center modal-body">
       <div className="border border-dark rounded" id={paymentAccount.id}>
         <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
+        <div className="ml-1">Account Type: {paymentAccount.paymentTypeId}</div>
         <div className="ml-1">Exp Date: {formatDate()}</div>
         <div className="ml-1">CVV: {paymentAccount.cvv}</div>
         <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal}>
