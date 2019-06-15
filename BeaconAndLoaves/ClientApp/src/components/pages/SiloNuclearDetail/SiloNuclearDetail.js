@@ -83,10 +83,13 @@ class SiloNuclearDetail extends React.Component {
     const makebutton = () => {
       if (siloNuclear.isOwner === true) {
         return (
-          <i onClick= {this.editEvent} data-property-id={siloNuclear.id} className="far fa-edit edit-icon fa-2x float-right"/>
+          <div className = "float-right">
+            <i onClick= {this.editEvent} data-property-id={siloNuclear.id} className="far fa-edit edit-icon fa-2x mr-2"/>
+            <i className="fas fa-ban fa-2x mr-2"></i>
+            <i className="fas fa-trash fa-2x"></i>
+        </div>
         );
-      }
-      return (<span></span>);
+      }   return (<span></span>);
     };
 
     return (

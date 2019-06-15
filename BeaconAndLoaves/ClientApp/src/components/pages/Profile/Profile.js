@@ -23,7 +23,7 @@ class Profile extends React.Component {
     isEditingAccount: false,
     userId: 0,
     selectedAccount: 0,
-    selectedProperty: 0,
+    selectedProperty: '',
     modal: false,
     paymentModal: false,
     paymentAccount: {},
@@ -172,6 +172,13 @@ class Profile extends React.Component {
     } else if (e.target.id === 'property') {
       const selectedProperty = e.target.value;
       this.setState({ selectedProperty });
+      const convertIdtoNumber = parseInt(selectedProperty, 10);
+      const getSingleProperty = this.state.properties.find(prop => prop.id === convertIdtoNumber);
+      if (getSingleProperty.type === 0) {
+        this.props.history.push(`/lightHouses/${selectedProperty}`);
+      } else {
+        this.props.history.push(`/siloNuclears/${selectedProperty}`);
+      }
     }
   }
 
@@ -415,7 +422,7 @@ class Profile extends React.Component {
                 <i className="far fa-credit-card fa-2x"></i>
             </button>
             <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
-              <i className="fas fa-trash fa-2x"></i>
+              <i className="profile-delete-btn fas fa-trash fa-2x"></i>
             </button>
           </div>
         );
@@ -431,8 +438,8 @@ class Profile extends React.Component {
             <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddPaymentModal}>
                 <i className="far fa-credit-card fa-2x"></i>
             </button>
-            <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
-              <i className="fas fa-trash fa-2x"></i>
+            <button id='profile-delete' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
+              <i className="profile-delete-btn fas fa-trash fa-2x"></i>
             </button>
         </div>
       );
