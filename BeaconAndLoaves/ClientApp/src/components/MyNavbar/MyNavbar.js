@@ -53,12 +53,17 @@ class MyNavbar extends React.Component {
         </Nav>
         );
       }
+      if (isAuthed && isUser) {
+        return (
+          <Nav className="ml-auto" navbar>
+            <NavItem className="nav-item">
+              <NavLink onClick={logoutClickEvent}>Logout</NavLink>
+            </NavItem>
+          </Nav>
+        );
+      }
       return (
-        <Nav className="ml-auto" navbar>
-          <NavItem className="nav-item">
-            <NavLink onClick={logoutClickEvent}>Logout</NavLink>
-          </NavItem>
-        </Nav>
+        <Nav className="ml-auto" navbar></Nav>
       );
     };
 
