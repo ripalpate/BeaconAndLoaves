@@ -70,6 +70,9 @@ class LightHouseDetail extends React.Component {
     this.props.history.push(`/editProperty/${propertyId}`);
   }
 
+  deleteProperty = () => {
+    
+  }
 
   render() {
     const { lightHouse, isLiked } = this.state;
