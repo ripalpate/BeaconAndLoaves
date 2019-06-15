@@ -22,6 +22,7 @@ import MyNavbar from '../components/MyNavbar/MyNavbar';
 import LikedProperties from '../components/pages/LikedProperties/LikedProperties';
 import Rental from '../components/pages/Rental/Rental';
 import authRequests from '../helpers/data/authRequests';
+import userRequests from '../helpers/data/userRequests';
 import connection from '../helpers/data/connection';
 import OwnerProperties from '../components/pages/OwnerProperties/OwnerProperties';
 
@@ -43,7 +44,21 @@ export default class App extends Component {
   state = {
     authed: false,
     pendingUser: true,
+    isRegistered: false,
+    currentUser: {},
   }
+
+  // setIsRegistered = () => {
+  //   this.setState({ isRegistered: true });
+  // }
+
+  getUser = () => {
+    const uid = authRequests.getCurrentUid();
+    userRequests.getSingleUser(uid)
+      .then((currentUser) => {
+        if (currentUser.data.isActive === true) { this.setState({ currentUser: currentUser.data, isRegistered: true }); }
+      });
+  };
 
   componentDidMount() {
     connection();
@@ -53,7 +68,7 @@ export default class App extends Component {
         this.setState({
           authed: true,
           pendingUser: false,
-        });
+        }, this.getUser());
         authRequests.getCurrentUserJwt();
       } else {
         this.setState({
@@ -72,6 +87,7 @@ export default class App extends Component {
     const {
       authed,
       pendingUser,
+      currentUser,
     } = this.state;
 
     const logoutClickEvent = () => {
@@ -87,14 +103,14 @@ export default class App extends Component {
       <div className="App">
         <BrowserRouter>
           <React.Fragment>
-            <MyNavbar isAuthed={ authed } logoutClickEvent={logoutClickEvent} />
+            <MyNavbar isAuthed={ authed } currentUser={currentUser} logoutClickEvent={logoutClickEvent} />
                 <Switch>
                   <PublicRoute path='/auth'
                     component={Auth}
                     authed={ authed }
                   />
                   <PrivateRoute path='/' exact component={Home} authed={this.state.authed} />
-                  <PrivateRoute path='/register' exact component={Register} authed={this.state.authed} />
+                  <PrivateRoute path='/register' exact component={props => <Register getUser={this.getUser} isRegistered={this.state.isRegistered} {...props} />} authed={this.state.authed} />
                   <PrivateRoute path="/home" component={Home} authed={this.state.authed}/>
                   <PrivateRoute exact path="/profile" component={Profile} authed={this.state.authed}/>
                   <PrivateRoute exact path="/properties" component={Properties} authed={this.state.authed}/>
