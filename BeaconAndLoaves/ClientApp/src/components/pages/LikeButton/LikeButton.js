@@ -18,7 +18,7 @@ class LikeButton extends React.Component {
     }
 
     getAllLikedProperties = () => {
-      likedPropertyRequests.getAllLikedProperties()
+      likedPropertyRequests.getAllLikedPropertiesWithUser()
         .then((likedProperties) => {
           this.setState({ likedProperties });
         });
@@ -32,7 +32,7 @@ class LikeButton extends React.Component {
       const { changeIsLikedState } = this.props;
       this.addLikedProperties();
       changeIsLikedState();
-    }
+    };
 
       addLikedProperties = () => {
         const { userId, propertyId, isLiked } = this.props;
@@ -51,14 +51,15 @@ class LikeButton extends React.Component {
       }
 
       deleteLikedProperties = () => {
+        // const { likedProperties } = this.state;
         const { userId, propertyId } = this.props;
-        likedPropertyRequests.getAllLikedProperties()
+        likedPropertyRequests.getAllLikedPropertiesWithUser()
           .then((likedProperties) => {
             const filterMatchingProperty = likedProperties.filter(lp => lp.userId === userId && lp.propertyId === propertyId);
             const likedPropertyId = filterMatchingProperty[0].id;
             likedPropertyRequests.deleteLikedProperty(likedPropertyId)
               .then(() => {
-                //this.getAllLikedProperties();
+                // this.getAllLikedProperties();
               });
           });
       }

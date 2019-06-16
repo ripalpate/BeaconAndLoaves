@@ -1,6 +1,7 @@
 import React from 'react';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import SingleLikedProperty from '../SingleLikedProperty/SingleLikedProperty';
+// import smashRequests from '../../../helpers/data/smashRequests';
 
 class LikedProperties extends React.Component {
   state = {
