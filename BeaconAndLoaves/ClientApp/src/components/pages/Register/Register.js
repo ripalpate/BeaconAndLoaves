@@ -19,6 +19,8 @@ const defaultUser = {
 };
 
 class Register extends React.Component {
+  registerMounted = false;
+
   static propTypes = {
     getUser: PropTypes.func,
     isRegistered: PropTypes.bool,
@@ -100,8 +102,15 @@ class Register extends React.Component {
   }
 
   componentDidMount() {
-    this.checkRegistration();
-    this.getAllUserPayments();
+    this.registerMounted = true;
+    if (this.profileMounted) {
+      this.checkRegistration();
+      this.getAllUserPayments();
+    }
+  }
+
+  componentWillUnmount() {
+    this.registerMounted = false;
   }
 
   render() {
