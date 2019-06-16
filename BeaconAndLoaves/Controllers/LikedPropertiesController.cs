@@ -46,7 +46,7 @@ namespace BeaconAndLoaves.Controllers
                 return Ok("That shit's gone, man.");
             }
 
-            [HttpGet("user")]
+            [HttpGet()]
             public ActionResult GetAllLikedPropertiesWithUser()
             {
                 var likedProperties = _repository.GetAllLikedPropertiesWithUser();
@@ -61,14 +61,5 @@ namespace BeaconAndLoaves.Controllers
 
                 return Ok(likedPropertyById);
             }
-
-            [HttpGet()]
-            public ActionResult GetAllLikedProperties()
-            {
-                var likedProperties = _repository.GetAllLikedProperties();
-
-                return Ok(likedProperties);
-            }
-
     }
 }

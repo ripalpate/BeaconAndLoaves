@@ -10,20 +10,27 @@ class SingleLikedProperty extends React.Component {
     isLiked: true,
   }
 
-  static propTypes = {
-    likedProperty: propertiesShape,
-    changeIsLikedState: PropTypes.func,
-    // getAllLikedProperties: PropTypes.func,
-  }
+static propTypes = {
+  likedProperty: propertiesShape,
+  changeIsLikedState: PropTypes.func,
+  getAllLikedProperties: PropTypes.func,
+}
 
-  changeIsLikedState = () => {
-    const { isLiked } = this.state;
-    this.setState({ isLiked: !isLiked });
-  }
+changeIsLikedState = () => {
+  const { isLiked } = this.state;
+  this.setState({ isLiked: !isLiked });
+}
 
 rentButtonClickEvent = (e) => {
   const propertyId = e.target.id * 1;
   this.props.rentProperty(propertyId);
+}
+
+componentDidUpdate() {
+  const { isLiked } = this.state;
+  if (isLiked === false) {
+    this.props.getAllLikedProperties();
+  }
 }
 
 render() {

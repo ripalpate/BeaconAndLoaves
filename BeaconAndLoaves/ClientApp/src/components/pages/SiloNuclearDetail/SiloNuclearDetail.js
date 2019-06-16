@@ -30,7 +30,7 @@ class SiloNuclearDetail extends React.Component {
 
   checkExistingProperty = () => {
     const { siloNuclear, isLiked } = this.state;
-    likedPropertyRequests.getAllLikedProperties()
+    likedPropertyRequests.getAllLikedPropertiesWithUser()
       .then((likedProperties) => {
         const currentLikedProperty = likedProperties.filter(x => x.propertyId === siloNuclear.id && x.userId === siloNuclear.ownerId);
         if (currentLikedProperty.length === 1) {

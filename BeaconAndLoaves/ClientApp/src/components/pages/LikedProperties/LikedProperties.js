@@ -12,15 +12,6 @@ class LikedProperties extends React.Component {
     this.getAllLikedProperties();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.state) {
-      likedPropertyRequests.getAllLikedPropertiesWithUser()
-        .then((lps) => {
-          this.setState({ likedProperties: lps });
-        });
-    }
-  }
-
   rentProperty = (propertyId) => {
     this.props.history.push(`/rental/${propertyId}`);
   }

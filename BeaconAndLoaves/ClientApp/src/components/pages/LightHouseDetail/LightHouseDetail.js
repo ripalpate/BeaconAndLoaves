@@ -47,7 +47,7 @@ class LightHouseDetail extends React.Component {
   // check property exist in the state to hold the state of isLiked property
   checkExistingProperty = () => {
     const { lightHouse, isLiked } = this.state;
-    likedPropertyRequests.getAllLikedProperties()
+    likedPropertyRequests.getAllLikedPropertiesWithUser()
       .then((likedProperties) => {
         const currentLikedProperty = likedProperties.filter(x => x.propertyId === lightHouse.id && x.userId === lightHouse.ownerId);
         if (currentLikedProperty.length === 1) {
