@@ -116,10 +116,6 @@ class Register extends React.Component {
     }
   }
 
-  // componentWillUnmount() {
-  //   this.registerMounted = false;
-  // }
-
   render() {
     const {
       newUser,
