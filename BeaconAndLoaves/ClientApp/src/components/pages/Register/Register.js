@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SinglePaymentMethodModal from '../SinglePaymentMethodModal/SinglePaymentMethodModal';
 import userRequests from '../../../helpers/data/userRequests';
+import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import authRequests from '../../../helpers/data/authRequests';
 
 import './Register.scss';
@@ -17,14 +19,21 @@ const defaultUser = {
 };
 
 class Register extends React.Component {
+  registerMounted = false;
+
   static propTypes = {
     getUser: PropTypes.func,
+    isRegistered: PropTypes.bool,
+    currentUser: PropTypes.object,
   }
 
   state = {
-    users: [],
-    currentUser: [],
+    userPaymentAccounts: [],
     newUser: defaultUser,
+    paymentModal: false,
+    isAddingAccount: true,
+    isEditingAccount: false,
+    isRegistering: true,
   }
 
   formFieldStringState = (name, e) => {
@@ -57,56 +66,68 @@ class Register extends React.Component {
     this.setState({ newUser: defaultUser });
     userRequests.createUser(myUser)
       .then(() => {
-        // this.props.history.push('/home');
         this.props.getUser();
       });
   };
 
-  paymentView = () => {
-    this.props.history.push('/paymentMethod');
+  toggleAddPaymentModal = (e) => {
+    e.preventDefault();
+    const { paymentModal } = this.state;
+    this.setState({
+      paymentModal: !paymentModal,
+    });
   }
 
-  paymentViewBTC = () => {
-    this.props.history.push('/paymentMethodBTC');
+  cancelPaymentModal = () => {
+    const { paymentModal } = this.state;
+    this.setState({ paymentModal: !paymentModal });
   }
-
-  getUsers = () => {
-    userRequests.getAllUsers()
-      .then((users) => {
-        this.setState({ users });
-      })
-      .then(() => {
-        this.checkRegistration();
-      });
-  };
-
-  // checkRegistration = () => {
-  //   const { users } = this.state;
-  //   const uid = authRequests.getCurrentUid();
-  //   const currentUser = users.filter(user => user.firebaseId === uid);
-  //   if (currentUser.length !== 0) {
-  //     // this.props.history.push('/home');
-  //   } else {
-  //     this.setState({ currentUser });
-  //   }
-  // }
 
   checkRegistration = () => {
+    const { userPaymentAccounts } = this.state;
     const { isRegistered } = this.props;
-    if (isRegistered) {
+    if (isRegistered && userPaymentAccounts.length > 0) {
       this.props.history.push('/home');
+    }
+    if (isRegistered && userPaymentAccounts.length === 0) {
+      this.setState({ paymentModal: true });
     }
   }
 
+  getAllUserPayments = () => {
+    const { currentUser } = this.props;
+    const { userPaymentAccounts } = this.state;
+    paymentMethodRequests.getAllUserPayments()
+      .then((paymentAccounts) => {
+        paymentAccounts.forEach((paymentAccount) => {
+          if (currentUser.id === paymentAccount.userId) {
+            userPaymentAccounts.push(paymentAccount);
+          }
+        });
+        this.setState({ userPaymentAccounts });
+        this.checkRegistration();
+      });
+  }
+
   componentDidMount() {
-    // this.getUsers();
-    this.checkRegistration();
+    this.registerMounted = true;
+    if (this.registerMounted) {
+      this.getAllUserPayments();
+    }
   }
 
   render() {
     const {
       newUser,
+      paymentModal,
+      isAddingAccount,
+      isEditingAccount,
+      isRegistering,
     } = this.state;
+
+    const {
+      currentUser,
+    } = this.props;
 
     return (
           <div className="reg-container d-flex">
@@ -239,6 +260,16 @@ class Register extends React.Component {
                   </div>
                 </div>
               </form>
+              <SinglePaymentMethodModal
+                paymentModal={paymentModal}
+                isAddingAccount={isAddingAccount}
+                isEditingAccount={isEditingAccount}
+                isRegistering={isRegistering}
+                formSubmit={this.formSubmit}
+                cancelPaymentModal={this.cancelPaymentModal}
+                currentUser={currentUser}
+                getAllUserPayments={this.getAllUserPayments}
+              />
             </div>
     );
   }

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
-import authRequests from '../../../helpers/data/authRequests';
-import userRequests from '../../../helpers/data/userRequests';
 
 const defaultPaymentMethod = {
   accountName: '',
@@ -23,22 +21,12 @@ class PaymentMethodForm extends React.Component {
     newPaymentMethod: defaultPaymentMethod,
     paymentTypes: [],
     selectedPaymentType: '',
-    currentUser: {},
   }
-
-  getUser = () => {
-    const uid = authRequests.getCurrentUid();
-    userRequests.getSingleUser(uid)
-      .then((currentUser) => {
-        this.setState({ currentUser: currentUser.data });
-      });
-  };
 
   paymentTypes = () => {
     paymentMethodRequests.getAllPaymentTypes()
       .then((paymentTypes) => {
         this.setState({ paymentTypes });
-        this.getUser();
       });
   }
 
@@ -67,14 +55,18 @@ class PaymentMethodForm extends React.Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    const { isEditingAccount } = this.props;
+    const { isEditingAccount, isRegistering } = this.props;
     const myPaymentMethod = { ...this.state.newPaymentMethod };
     if (isEditingAccount === false) {
       myPaymentMethod.isActive = true;
-      myPaymentMethod.userId = this.state.currentUser.id;
+      myPaymentMethod.userId = this.props.currentUser.id;
       this.setState({ newPaymentMethod: defaultPaymentMethod });
       paymentMethodRequests.createUserPayment(myPaymentMethod)
         .then(() => {
+          if (isRegistering) {
+            this.props.getAllUserPayments();
+            this.props.cancelPaymentModalEvent();
+          }
           this.props.cancelPaymentModalEvent();
         });
     } else {
