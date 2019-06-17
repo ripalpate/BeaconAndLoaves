@@ -34,6 +34,7 @@ class SinglePaymentMethodModal extends React.Component {
       isRegistering,
       toggleEditPaymentModal,
       getAllUserPayments,
+      currentUser,
     } = this.props;
 
     const formatDate = () => {
@@ -96,6 +97,7 @@ class SinglePaymentMethodModal extends React.Component {
       changeEditView={changeEditView}
       cancelPaymentModalEvent={this.cancelPaymentModalEvent}
       getAllUserPayments={getAllUserPayments}
+      currentUser={currentUser}
       />
     </ModalBody>
     </Modal>
