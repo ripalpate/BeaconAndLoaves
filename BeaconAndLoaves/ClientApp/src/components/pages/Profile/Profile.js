@@ -1,6 +1,7 @@
 import React from 'react';
 import accountShape from '../../../helpers/propz/accountShape';
 import userRequests from '../../../helpers/data/userRequests';
+import authRequests from '../../../helpers/data/authRequests';
 import WarningModal from '../WarningModal/WarningModal';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import SinglePaymentMethodModal from '../SinglePaymentMethodModal/SinglePaymentMethodModal';
@@ -136,6 +137,16 @@ class Profile extends React.Component {
     this.props.history.push('/profile');
   }
 
+  // getUser = () => {
+  //   const uid = authRequests.getCurrentUid();
+  //   userRequests.getSingleUser(uid)
+  //     .then((currentUser) => {
+  //       this.setState({ currentUser: currentUser.data });
+  //       this.getUserPaymentAccounts();
+  //       this.getUserProperties();
+  //     });
+  // };
+
   getUserPaymentAccounts = () => {
     const { currentUser } = this.state;
     const uid = currentUser.id;
@@ -194,6 +205,7 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
+    // this.getUser();\
     const { currentUser } = this.props;
     this.profileMounted = !!currentUser.id;
     if (this.profileMounted) {
@@ -208,6 +220,7 @@ class Profile extends React.Component {
 
   render() {
     const {
+      // currentUser,
       isEditing,
       properties,
       paymentAccounts,
