@@ -67,7 +67,7 @@ class PaymentMethodForm extends React.Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    const { isEditingAccount } = this.props;
+    const { isEditingAccount, isRegistering } = this.props;
     const myPaymentMethod = { ...this.state.newPaymentMethod };
     if (isEditingAccount === false) {
       myPaymentMethod.isActive = true;
@@ -75,6 +75,10 @@ class PaymentMethodForm extends React.Component {
       this.setState({ newPaymentMethod: defaultPaymentMethod });
       paymentMethodRequests.createUserPayment(myPaymentMethod)
         .then(() => {
+          if (isRegistering) {
+            this.props.getAllUserPayments();
+            this.props.cancelPaymentModalEvent();
+          }
           this.props.cancelPaymentModalEvent();
         });
     } else {
