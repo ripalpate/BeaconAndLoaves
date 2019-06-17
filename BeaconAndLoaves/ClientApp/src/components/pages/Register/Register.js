@@ -104,7 +104,8 @@ class Register extends React.Component {
             userPaymentAccounts.push(paymentAccount);
           }
         });
-        this.setState({ userPaymentAccounts }, this.checkRegistration());
+        this.setState({ userPaymentAccounts });
+        this.checkRegistration();
       });
   }
 
@@ -115,9 +116,9 @@ class Register extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    this.registerMounted = false;
-  }
+  // componentWillUnmount() {
+  //   this.registerMounted = false;
+  // }
 
   render() {
     const {

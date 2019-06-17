@@ -48,10 +48,6 @@ export default class App extends Component {
     currentUser: {},
   }
 
-  // setIsRegistered = () => {
-  //   this.setState({ isRegistered: true });
-  // }
-
   getUser = () => {
     const uid = authRequests.getCurrentUid();
     userRequests.getSingleUser(uid)
@@ -74,6 +70,8 @@ export default class App extends Component {
         this.setState({
           authed: false,
           pendingUser: false,
+          currentUser: {},
+          isRegistered: false,
         });
       }
     });
@@ -81,6 +79,7 @@ export default class App extends Component {
 
   componentWillUnmount() {
     this.removeListener();
+    this.logoutClickEvent();
   }
 
   render() {
@@ -93,7 +92,7 @@ export default class App extends Component {
 
     const logoutClickEvent = () => {
       authRequests.logoutUser();
-      this.setState({ authed: false });
+      this.setState({ authed: false, currentUser: {}, isRegistered: false });
     };
 
     if (pendingUser) {
