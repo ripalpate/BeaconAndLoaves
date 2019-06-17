@@ -18,7 +18,7 @@ class LikeButton extends React.Component {
     }
 
     getAllLikedProperties = () => {
-      likedPropertyRequests.getAllLikedProperties()
+      likedPropertyRequests.getAllLikedPropertiesWithUser()
         .then((likedProperties) => {
           this.setState({ likedProperties });
         });
@@ -32,7 +32,7 @@ class LikeButton extends React.Component {
       const { changeIsLikedState } = this.props;
       this.addLikedProperties();
       changeIsLikedState();
-    }
+    };
 
       addLikedProperties = () => {
         const { userId, propertyId, isLiked } = this.props;
@@ -42,8 +42,8 @@ class LikeButton extends React.Component {
         };
         if (!isLiked) {
           likedPropertyRequests.createLikedProperty(myLikedProperty)
-            .then((myLikedProperty) => {
-              this.setState({ currentLikedProperty: myLikedProperty.data });
+            .then((likedProperty) => {
+              this.setState({ currentLikedProperty: likedProperty.data });
             });
         } else {
           this.deleteLikedProperties();
@@ -51,12 +51,16 @@ class LikeButton extends React.Component {
       }
 
       deleteLikedProperties = () => {
-        const { likedProperties } = this.state;
+        // const { likedProperties } = this.state;
         const { userId, propertyId } = this.props;
-        const filterMatchingProperty = likedProperties.filter(lp => lp.userId === userId && lp.propertyId === propertyId);
-        const likedPropertyId = filterMatchingProperty[0].id;
-        likedPropertyRequests.deleteLikedProperty(likedPropertyId)
-          .then(() => {
+        likedPropertyRequests.getAllLikedPropertiesWithUser()
+          .then((likedProperties) => {
+            const filterMatchingProperty = likedProperties.filter(lp => lp.userId === userId && lp.propertyId === propertyId);
+            const likedPropertyId = filterMatchingProperty[0].id;
+            likedPropertyRequests.deleteLikedProperty(likedPropertyId)
+              .then(() => {
+                // this.getAllLikedProperties();
+              });
           });
       }
 

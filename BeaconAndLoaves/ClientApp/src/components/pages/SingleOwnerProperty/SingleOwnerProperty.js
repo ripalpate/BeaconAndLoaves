@@ -31,7 +31,7 @@ class SingleOwnerProperty extends React.Component {
   checkExistingProperty = () => {
     const { property } = this.props;
     const { isLiked } = this.state;
-    likedPropertyRequests.getAllLikedProperties()
+    likedPropertyRequests.getAllLikedPropertiesWithUser()
       .then((likedProperties) => {
         const currentLikedProperty = likedProperties.filter(lp => lp.propertyId === property.id && lp.userId === property.ownerId);
         if (currentLikedProperty.length >= 1) {
