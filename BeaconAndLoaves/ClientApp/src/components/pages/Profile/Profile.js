@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import accountShape from '../../../helpers/propz/accountShape';
 import userRequests from '../../../helpers/data/userRequests';
 import WarningModal from '../WarningModal/WarningModal';
@@ -10,20 +9,17 @@ import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import './Profile.scss';
 
 class Profile extends React.Component {
-  profileMounted = false;
-
   static propTypes = {
     paymentAccount: accountShape,
-    currentUser: PropTypes.object,
   }
 
   state = {
+    currentUser: {},
     paymentAccounts: [],
     properties: [],
     isEditing: false,
     isAddingAccount: false,
     isEditingAccount: false,
-    isRegistering: false,
     userId: 0,
     selectedAccount: 0,
     selectedProperty: '',
@@ -82,7 +78,7 @@ class Profile extends React.Component {
   }
 
   formFieldStringState = (name, e) => {
-    const tempUser = { ...this.props.currentUser };
+    const tempUser = { ...this.state.currentUser };
     tempUser[name] = e.target.value;
     this.setState({ currentUser: tempUser });
   }
@@ -102,7 +98,7 @@ class Profile extends React.Component {
   phoneNumberChange = e => this.formFieldStringState('phoneNumber', e);
 
   editProfile = (e) => {
-    const { currentUser } = this.props;
+    const { currentUser } = this.state;
     this.setState({ isEditing: true });
     this.setState({ userId: currentUser.id });
   }
@@ -118,7 +114,7 @@ class Profile extends React.Component {
   }
 
   deleteProfile = (e) => {
-    const { currentUser } = this.props;
+    const { currentUser } = this.state;
     userRequests.deleteUser(currentUser.id)
       .then(() => {
         this.deletePropertiesAssociatedWithOwner();
@@ -141,7 +137,7 @@ class Profile extends React.Component {
   }
 
   getUserPaymentAccounts = () => {
-    const { currentUser } = this.props;
+    const { currentUser } = this.state;
     const uid = currentUser.id;
     userRequests.getUserPaymentAccounts(uid)
       .then((paymentAccounts) => {
@@ -150,7 +146,7 @@ class Profile extends React.Component {
   };
 
   getUserProperties = () => {
-    const { currentUser } = this.props;
+    const { currentUser } = this.state;
     const uid = currentUser.id;
     userRequests.getUserProperties(uid)
       .then((properties) => {
@@ -189,7 +185,7 @@ class Profile extends React.Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    const { currentUser } = this.props;
+    const { currentUser } = this.state;
     const userId = currentUser.id;
     userRequests.updateUser(userId, currentUser)
       .then(() => {
@@ -220,12 +216,7 @@ class Profile extends React.Component {
       paymentAccount,
       isAddingAccount,
       isEditingAccount,
-      isRegistering,
     } = this.state;
-
-    const {
-      currentUser,
-    } = this.props;
 
     const makeProfileCard = () => {
       if (isEditing) {
@@ -468,10 +459,8 @@ class Profile extends React.Component {
       changeEditView={this.changeEditView}
       isAddingAccount={isAddingAccount}
       isEditingAccount={isEditingAccount}
-      isRegistering={isRegistering}
       cancelPaymentModal={this.cancelPaymentModal}
       toggleEditPaymentModal={this.toggleEditPaymentModal}
-      currentUser={currentUser}
       />
       </div>
       <div className="profileDiv d-flex mx-auto">

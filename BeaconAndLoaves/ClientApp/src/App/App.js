@@ -88,7 +88,6 @@ export default class App extends Component {
       authed,
       pendingUser,
       currentUser,
-      isRegistered,
     } = this.state;
 
     const logoutClickEvent = () => {
@@ -111,12 +110,9 @@ export default class App extends Component {
                     authed={ authed }
                   />
                   <PrivateRoute path='/' exact component={Home} authed={this.state.authed} />
-                  <PrivateRoute path='/register' exact
-                    component={props => <Register getUser={this.getUser} isRegistered={isRegistered} {...props} currentUser={currentUser}/>}
-                      authed={this.state.authed}/>
+                  <PrivateRoute path='/register' exact component={props => <Register getUser={this.getUser} isRegistered={this.state.isRegistered} {...props} />} authed={this.state.authed} />
                   <PrivateRoute path="/home" component={Home} authed={this.state.authed}/>
-                  <PrivateRoute exact path="/profile" component={props => <Profile {...props} currentUser={currentUser}/>}
-                      authed={this.state.authed}/>}/>
+                  <PrivateRoute exact path="/profile" component={Profile} authed={this.state.authed}/>
                   <PrivateRoute exact path="/properties" component={Properties} authed={this.state.authed}/>
                   <PrivateRoute path="/properties/lightHouses" component={LightHouses} authed={this.state.authed}/>
                   <PrivateRoute exact path="/lightHouses/:id" authed={this.state.authed} component={LightHouseDetail}/>

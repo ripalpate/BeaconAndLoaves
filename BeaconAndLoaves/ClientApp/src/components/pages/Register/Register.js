@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SinglePaymentMethodModal from '../SinglePaymentMethodModal/SinglePaymentMethodModal';
 import userRequests from '../../../helpers/data/userRequests';
-import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import authRequests from '../../../helpers/data/authRequests';
 
 import './Register.scss';
@@ -23,17 +22,14 @@ class Register extends React.Component {
 
   static propTypes = {
     getUser: PropTypes.func,
-    isRegistered: PropTypes.bool,
-    currentUser: PropTypes.object,
   }
 
   state = {
-    userPaymentAccounts: [],
+    users: [],
+    currentUser: [],
     newUser: defaultUser,
     paymentModal: false,
     isAddingAccount: true,
-    isEditingAccount: false,
-    isRegistering: true,
   }
 
   formFieldStringState = (name, e) => {
@@ -80,25 +76,26 @@ class Register extends React.Component {
 
   cancelPaymentModal = () => {
     const { paymentModal } = this.state;
-    this.setState({ paymentModal: !paymentModal });
+    this.setState({
+      paymentModal: !paymentModal,
+    });
   }
+
+  getUsers = () => {
+    userRequests.getAllUsers()
+      .then((users) => {
+        this.setState({ users });
+      })
+      .then(() => {
+        this.checkRegistration();
+      });
+  };
 
   checkRegistration = () => {
-    const { userPaymentAccounts } = this.state;
     const { isRegistered } = this.props;
-    if (isRegistered && userPaymentAccounts.length > 0) {
+    if (isRegistered) {
       this.props.history.push('/home');
     }
-    if (isRegistered && userPaymentAccounts.length === 0) {
-      this.setState({ paymentModal: true });
-    }
-  }
-
-  getAllUserPayments = () => {
-    paymentMethodRequests.getAllUserPayments()
-      .then((userPaymentAccounts) => {
-        this.setState({ userPaymentAccounts });
-      });
   }
 
   componentDidMount() {
@@ -118,17 +115,11 @@ class Register extends React.Component {
       newUser,
       paymentModal,
       isAddingAccount,
-      isEditingAccount,
-      isRegistering,
     } = this.state;
-
-    const {
-      currentUser,
-    } = this.props;
 
     return (
           <div className="reg-container d-flex">
-              <form className="row form-container border border-dark rounded mt-5 mx-auto" onSubmit={this.formSubmit}>
+              <form className="row form-container border border-dark rounded mt-5 mx-auto" onSubmit={this.toggleAddPaymentModal}>
                 <h3 className="reg-title mx-auto">Please Register:</h3>
                 <div className="form col-11 mt-2">
                   <div className="col-auto form-lines p-0">
@@ -260,12 +251,7 @@ class Register extends React.Component {
               <SinglePaymentMethodModal
                 paymentModal={paymentModal}
                 isAddingAccount={isAddingAccount}
-                isEditingAccount={isEditingAccount}
-                isRegistering={isRegistering}
                 formSubmit={this.formSubmit}
-                cancelPaymentModal={this.cancelPaymentModal}
-                currentUser={currentUser}
-                checkRegistration={this.checkRegistration}
               />
             </div>
     );
