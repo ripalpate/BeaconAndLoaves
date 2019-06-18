@@ -1,11 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import SingleLikedProperty from '../SingleLikedProperty/SingleLikedProperty';
-// import smashRequests from '../../../helpers/data/smashRequests';
 
 class LikedProperties extends React.Component {
   state = {
     likedProperties: [],
+  }
+
+  static propTypes = {
+    currentUser: PropTypes.object,
   }
 
   componentDidMount() {
@@ -17,9 +21,12 @@ class LikedProperties extends React.Component {
   }
 
   getAllLikedProperties= () => {
+    const { currentUser } = this.props;
     likedPropertyRequests.getAllLikedPropertiesWithUser()
       .then((likedProperties) => {
-        this.setState({ likedProperties });
+        const likedPropertiesForCurrentUser = likedProperties.filter(lp => lp.userId === currentUser.id);
+        // console.log(likedPropertiesForCurrentUser);
+        this.setState({ likedProperties: likedPropertiesForCurrentUser });
       });
   }
 

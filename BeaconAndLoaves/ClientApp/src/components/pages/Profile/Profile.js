@@ -421,13 +421,13 @@ class Profile extends React.Component {
             <button id='rental' type="button" className="btn renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
               See My Rentals' History
             </button>
-            <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
+            <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile} title="Edit Profile">
               <i className="far fa-edit fa-2x"/>
             </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddPaymentModal}>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddPaymentModal} title="Add Payment Account">
                 <i className="far fa-credit-card fa-2x"></i>
             </button>
-            <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
+            <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal} title="Delete Profile">
               <i className="profile-delete-btn fas fa-trash fa-2x"></i>
             </button>
           </div>
