@@ -112,7 +112,7 @@ class LightHouseDetail extends React.Component {
     };
 
     const makebutton = () => {
-      if (lightHouse.isOwner === true) {
+      if (currentUser.isOwner === true) {
         return (
           <div className = "float-right">
             <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
