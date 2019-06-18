@@ -177,7 +177,11 @@ class PaymentMethodForm extends React.Component {
                         <div className="input-group-text">Account Number</div>
                         </div>
                         <input
-                        type="text"
+                        type="text" 
+                        // title="Please enter "
+                        // minLength="15"
+                        // maxLength="17"
+                        pattern="[-+]?[0-9]"
                         className="form-control"
                         id="accountNumber"
                         placeholder="987654321"
