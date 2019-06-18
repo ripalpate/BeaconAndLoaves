@@ -94,6 +94,18 @@ class LightHouseDetail extends React.Component {
       });
   }
 
+  deactivateProperty = (e) => {
+    const { propertyId } = e.target.dataset;
+    const updateProp = { ...this.state.lightHouse };
+    updateProp.isActive = 0;
+    propertiesRequests.updateProperty(propertyId, updateProp)
+      .then(() => {
+        if (updateProp.type === 0) {
+          this.props.history.push('/properties/lighthouses');
+        }
+      });
+  }
+
   render() {
     const { lightHouse, isLiked } = this.state;
     const { currentUser } = this.props;
@@ -116,11 +128,25 @@ class LightHouseDetail extends React.Component {
         return (
           <div className = "float-right">
             <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
-            <i className="fas fa-ban fa-2x mr-3" title="Deactivate"></i>
+            {/* <i className="fas fa-ban fa-2x mr-3" title="Deactivate"></i> */}
             <i onClick = {this.deleteProperty} className="fas fa-trash fa-2x" data-property-id={lightHouse.id} title="Delete"></i>
           </div>
         );
       } return (<span></span>);
+    };
+
+    const activateButton = () => {
+      if (lightHouse.isActive === true) {
+        return (
+        <div className = "float-right mr-3">
+          <i className="fas fa-toggle-on fa-2x" data-property-id={lightHouse.id} title="activate" onClick = {this.deactivateProperty}></i>
+        </div>
+        );
+      } return (
+        <div className = "float-right">
+          <i className="fas fa-toggle-off fa-2x" data-property-id={lightHouse.id} title="activate"></i>
+      </div>
+      );
     };
 
     return (
@@ -142,6 +168,7 @@ class LightHouseDetail extends React.Component {
             <button id={lightHouse.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.rentProperty}>Rent Me!!!</button>
             {makebutton()}
             {makeLikedPropertyButton()}
+            {activateButton()}
           </div>
         </div>
       </div>
