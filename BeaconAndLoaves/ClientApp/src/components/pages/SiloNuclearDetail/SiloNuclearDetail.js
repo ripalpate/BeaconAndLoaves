@@ -109,7 +109,7 @@ class SiloNuclearDetail extends React.Component {
     return (
       <div>
         <div className="back-button">
-          <button className = "btn btn-warning" onClick = {this.backButton}>Back</button>
+          <button className = "bttn-pill bttn-md bttn-warning" onClick = {this.backButton}>Back</button>
         </div>
         <div className="card mx-auto bg-light detail">
           <div className="imgHolder">

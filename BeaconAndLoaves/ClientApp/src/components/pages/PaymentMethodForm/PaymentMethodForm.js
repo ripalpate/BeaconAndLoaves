@@ -106,8 +106,8 @@ class PaymentMethodForm extends React.Component {
     const makeButtons = () => {
       if (isEditingAccount === false) {
         return (
-          <div>
-              <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
+          <div className="text-center">
+              <button className="btn paymentMethod-add-btn btn-success mx-auto mb-2" title="Submit">
                 <i className="fas fa-plus-circle" />
               </button>
           </div>
@@ -115,8 +115,8 @@ class PaymentMethodForm extends React.Component {
       }
 
       return (
-          <div>
-              <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
+          <div className="text-center">
+              <button className="btn paymentMethod-add-btn btn-success mx-auto mb-2" title="Submit">
                 <i className="fas fa-check-square" />
               </button>
           </div>
@@ -148,7 +148,7 @@ class PaymentMethodForm extends React.Component {
 
     return (
             <div>
-                <form className="row form-container border border-dark rounded mt-5 mx-auto" onSubmit={this.formSubmit}>
+                <form className="row form-container border border-dark rounded mx-auto" onSubmit={this.formSubmit}>
                 <div className="form col-11 mt-2">
                     <div className="col-auto form-lines p-0">
                     <label htmlFor="link" className="sr-only">Account Name</label>
@@ -221,8 +221,8 @@ class PaymentMethodForm extends React.Component {
                         />
                     </div>
                     </div>
+                    {makeButtons()}
                 </div>
-                  {makeButtons()}
                 </form>
             </div>
     );
