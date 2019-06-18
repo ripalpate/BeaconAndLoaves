@@ -26,9 +26,6 @@ class LightHouseDetail extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    this.lightHouseDetailMounted = false;
-  }
 
   // get Propertydetails with owner name and hold isLiked state
   getPropertyWithOwnerName = () => {
