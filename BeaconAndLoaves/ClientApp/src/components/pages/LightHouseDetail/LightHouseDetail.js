@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './LightHouseDetail.scss';
 import smashRequests from '../../../helpers/data/smashRequests';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
@@ -6,15 +7,25 @@ import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import LikeButton from '../LikeButton/LikeButton';
 
 class LightHouseDetail extends React.Component {
+  lightHouseDetailMounted = false;
+
   state = {
     currentLikedProperty: [],
     lightHouse: [],
     isLiked: false,
   }
 
-  componentDidMount() {
-    this.getPropertyWithOwnerName();
+  static propTypes = {
+    currentUser: PropTypes.object,
   }
+
+  componentDidMount() {
+    this.lightHouseDetailMounted = true;
+    if (this.lightHouseDetailMounted) {
+      this.getPropertyWithOwnerName();
+    }
+  }
+
 
   // get Propertydetails with owner name and hold isLiked state
   getPropertyWithOwnerName = () => {
@@ -48,9 +59,10 @@ class LightHouseDetail extends React.Component {
   // check property exist in the state to hold the state of isLiked property
   checkExistingProperty = () => {
     const { lightHouse, isLiked } = this.state;
+    const { currentUser } = this.props;
     likedPropertyRequests.getAllLikedPropertiesWithUser()
       .then((likedProperties) => {
-        const currentLikedProperty = likedProperties.filter(x => x.propertyId === lightHouse.id && x.userId === lightHouse.ownerId);
+        const currentLikedProperty = likedProperties.filter(x => x.propertyId === lightHouse.id && x.userId === currentUser.id);
         if (currentLikedProperty.length === 1) {
           this.setState({ isLiked: !isLiked });
           this.setState({ currentLikedProperty });
@@ -81,6 +93,7 @@ class LightHouseDetail extends React.Component {
 
   render() {
     const { lightHouse, isLiked } = this.state;
+    const { currentUser } = this.props;
     const makeLikedPropertyButton = () => {
       if (lightHouse.isOwner === false) {
         return (
@@ -88,7 +101,7 @@ class LightHouseDetail extends React.Component {
           isLiked={isLiked}
           changeIsLikedState= {this.changeIsLikedState}
           lightHouse = {lightHouse}
-          userId = {lightHouse.ownerId}
+          userId = {currentUser.id}
           propertyId = {lightHouse.id}
           />
         );

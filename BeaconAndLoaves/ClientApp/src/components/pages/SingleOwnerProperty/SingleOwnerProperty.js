@@ -14,6 +14,7 @@ class SingleOwnerProperty extends React.Component {
   static propTypes = {
     property: propertiesShape,
     rentProperty: PropTypes.func.isRequired,
+    currentUser: PropTypes.object,
   }
 
   toggleRent = (e) => {
@@ -29,11 +30,11 @@ class SingleOwnerProperty extends React.Component {
 
   // check property exist in the state to hold the state of isLiked property
   checkExistingProperty = () => {
-    const { property } = this.props;
+    const { property, currentUser } = this.props;
     const { isLiked } = this.state;
     likedPropertyRequests.getAllLikedPropertiesWithUser()
       .then((likedProperties) => {
-        const currentLikedProperty = likedProperties.filter(lp => lp.propertyId === property.id && lp.userId === property.ownerId);
+        const currentLikedProperty = likedProperties.filter(lp => lp.propertyId === property.id && lp.userId === currentUser.id);
         if (currentLikedProperty.length >= 1) {
           this.setState({ isLiked: !isLiked });
           this.setState({ currentLikedProperty });
@@ -48,7 +49,7 @@ class SingleOwnerProperty extends React.Component {
   }
 
   render() {
-    const { property } = this.props;
+    const { property, currentUser } = this.props;
     const { isLiked } = this.state;
 
     const makeLikedPropertyButton = () => {
@@ -58,7 +59,7 @@ class SingleOwnerProperty extends React.Component {
           isLiked={isLiked}
           changeIsLikedState= {this.changeIsLikedState}
           property = {property}
-          userId = {property.ownerId}
+          userId = {currentUser.id}
           propertyId = {property.id}
           />
         );

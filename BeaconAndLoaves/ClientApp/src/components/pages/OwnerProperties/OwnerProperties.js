@@ -1,10 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SingleOwnerProperty from '../SingleOwnerProperty/SingleOwnerProperty';
 import smashRequests from '../../../helpers/data/smashRequests';
 
 class OwnerPropducts extends React.Component {
     state = {
       properties: [],
+    }
+
+    static propTypes = {
+      currentUser: PropTypes.object,
     }
 
     rentProperty = (propertyId) => {
@@ -31,12 +36,13 @@ class OwnerPropducts extends React.Component {
 
     render() {
       const { properties } = this.state;
-
+      const { currentUser } = this.props;
       const ownerPropertyComponent = properties.map(property => (
         <SingleOwnerProperty
         property = { property }
         key = {property.id}
         rentProperty = { this.rentProperty }
+        currentUser = {currentUser}
         />
       ));
       return (
