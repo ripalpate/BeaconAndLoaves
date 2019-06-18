@@ -118,14 +118,14 @@ export default class App extends Component {
                       authed={this.state.authed}/>}/>
                   <PrivateRoute exact path="/properties" component={Properties} authed={this.state.authed}/>
                   <PrivateRoute path="/properties/lightHouses" component={LightHouses} authed={this.state.authed}/>
-                  <PrivateRoute exact path="/lightHouses/:id" authed={this.state.authed} component={LightHouseDetail}/>
+                  <PrivateRoute exact path="/lightHouses/:id" authed={this.state.authed} component={props => <LightHouseDetail {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute path="/properties/siloNuclears" component={SiloNuclears} authed={this.state.authed}/>
                   <PrivateRoute exact path="/siloNuclears/:id" authed={this.state.authed} component={SiloNuclearDetail}/>
-                  <PrivateRoute path="/likedProperties" authed={this.state.authed} component={LikedProperties}/>
+                  <PrivateRoute path="/likedProperties" authed={this.state.authed} component={props => <LikedProperties {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute path="/addProperty" authed={this.state.authed} component={AddEditProperty}/>
                   <PrivateRoute path="/editProperty/:id" authed={this.state.authed} component={EditProperty}/>
                   <PrivateRoute exact path="/rental/:id" authed={this.state.authed} component={Rental}/>
-                  <PrivateRoute exact path="/ownerProperties/:id" component={OwnerProperties} authed={this.state.authed}/>
+                  <PrivateRoute exact path="/ownerProperties/:id" authed={this.state.authed} component={props => <OwnerProperties {...props} currentUser={currentUser}/>}/>
                 </Switch>
           </React.Fragment>
         </BrowserRouter>
