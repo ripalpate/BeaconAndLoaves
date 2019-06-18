@@ -177,12 +177,12 @@ class PaymentMethodForm extends React.Component {
                         <div className="input-group-text">Account Number</div>
                         </div>
                         <input
-                        type="text" 
-                        // title="Please enter "
-                        // minLength="15"
-                        // maxLength="17"
-                        pattern="[-+]?[0-9]"
-                        className="form-control"
+                        type="text"
+                        pattern="[0-9]*"
+                        title="Please enter in a 16 digit credit card number."
+                        minLength="16"
+                        maxLength="16"
+                        className="form-control card-js"
                         id="accountNumber"
                         placeholder="987654321"
                         value={newPaymentMethod.accountNumber}
@@ -198,7 +198,8 @@ class PaymentMethodForm extends React.Component {
                         <div className="input-group-text">Exp Date</div>
                         </div>
                         <input
-                        type="text"
+                        type="month"
+                        pattern="[0-9]{4}-[0-9]{2}"
                         className="form-control"
                         id="expirationDate"
                         placeholder="MM/YYYY"
@@ -216,6 +217,10 @@ class PaymentMethodForm extends React.Component {
                         </div>
                         <input
                         type="text"
+                        pattern="[0-9]*"
+                        title="Please enter in a 3 digit credit card CVV number located on the back of the card."
+                        minLength="3"
+                        maxLength="3"
                         className="form-control"
                         id="CVV"
                         placeholder="333"
