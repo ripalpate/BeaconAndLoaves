@@ -98,7 +98,7 @@ class LightHouseDetail extends React.Component {
     const { lightHouse, isLiked } = this.state;
     const { currentUser } = this.props;
     const makeLikedPropertyButton = () => {
-      if (lightHouse.isOwner === false) {
+      if (lightHouse.ownerId !== currentUser.id) {
         return (
           <LikeButton
           isLiked={isLiked}
@@ -112,7 +112,7 @@ class LightHouseDetail extends React.Component {
     };
 
     const makebutton = () => {
-      if (currentUser.isOwner === true) {
+      if (currentUser.isOwner === true && lightHouse.ownerId === currentUser.id) {
         return (
           <div className = "float-right">
             <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
