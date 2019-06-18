@@ -60,10 +60,10 @@ namespace BeaconAndLoaves.Controllers
             return Ok(rentals);
         }
 
-        [HttpGet("renting/{id}")]
-        public ActionResult GetAllRentalsByUserId(int id)
+        [HttpGet("future/{id}")]
+        public ActionResult GetFutureRentalsByUserId(int id)
         {
-            var rentalsByUserId = _repository.GetAllRentalsByUserId(id);
+            var rentalsByUserId = _repository.GetFutureRentalsByUserId(id);
 
             return Ok(rentalsByUserId);
         }

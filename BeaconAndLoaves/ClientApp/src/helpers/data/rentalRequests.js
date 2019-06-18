@@ -13,8 +13,8 @@ const getAllRentalsByPropertyId = id => new Promise((resolve, reject) => {
     });
 });
 
-const getAllRentalsByUserId = id => new Promise((resolve, reject) => {
-  axios.get(`${apiUrl}/renting/${id}`)
+const getFutureRentalsByUserId = id => new Promise((resolve, reject) => {
+  axios.get(`${apiUrl}/future/${id}`)
     .then((results) => {
       const rentalsByUserIdObject = results.data;
       resolve(rentalsByUserIdObject);
@@ -26,4 +26,4 @@ const getAllRentalsByUserId = id => new Promise((resolve, reject) => {
 
 const createRental = rentalObject => axios.post(`${apiUrl}`, (rentalObject));
 
-export default { createRental, getAllRentalsByPropertyId, getAllRentalsByUserId };
+export default { createRental, getAllRentalsByPropertyId, getFutureRentalsByUserId };

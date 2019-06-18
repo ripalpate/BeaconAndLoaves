@@ -16,11 +16,15 @@ class SingleRentalItem extends React.Component {
     };
 
     return (
-            <div className="card">
-                <span>{rental.propertyName}</span>
-                <span>{formatDate(start)} - </span>
-                <span>{formatDate(end)}</span>
-            </div>
+        <li className="renting-item">
+            <span className="col">{rental.propertyName}</span>
+            <span className="col">{formatDate(start)}</span>
+            <span className="col">{formatDate(end)}</span>
+            <span className="col">{rental.city}</span>
+            <span className="col">{rental.state}</span>
+            <span className="col">{rental.name}</span>
+            <span className="col">{rental.email}</span>
+        </li>
     );
   }
 }

@@ -31,7 +31,7 @@ namespace BeaconAndLoaves.Data
             }
         }
 
-        public IEnumerable<Object> GetAllRentalsByUserId(int userId)
+        public IEnumerable<Object> GetFutureRentalsByUserId(int userId)
         {
             var today = DateTime.Today;
             using (var db = new SqlConnection(_connectionString))
@@ -39,10 +39,12 @@ namespace BeaconAndLoaves.Data
                 var rentalsByUserId = db.Query<Object>(@"
                     select rentals.id, rentals.propertyId, rentals.userPaymentId, rentals.startDate,
                     rentals.endDate, rentals.rentalAmount, properties.ownerId, properties.street, properties.city,
-                    properties.state, properties.zipcode, properties.propertyName
+                    properties.state, properties.zipcode, properties.propertyName, users.name, users.email
                     from rentals
                     join properties
                     on rentals.propertyId = properties.id
+                    join users
+                    on users.id = properties.ownerId
                     where rentals.userId = @userId and
                     rentals.startDate > @today
                     ", new { userId, today }).ToList();
