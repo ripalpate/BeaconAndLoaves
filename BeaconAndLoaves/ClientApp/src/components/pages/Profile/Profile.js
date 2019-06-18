@@ -415,7 +415,7 @@ class Profile extends React.Component {
       if (currentUser.isOwner === true) {
         return (
           <div>
-            <button id='renting' type="button" className="btn renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
+            <button id='rentingHistory' type="button" className="bttn-pill mb-3 renter-history-btn m-1" onClick={this.changeView}>
               See My Renting History
             </button>
             <button id='rental' type="button" className="btn renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
@@ -435,7 +435,7 @@ class Profile extends React.Component {
       }
       return (
         <div>
-            <button id='renting' type="button" className="btn renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
+            <button id='rentingHistory' type="button" className="bttn-pill renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
               See My Renting History
             </button>
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile} title="Edit Profile">

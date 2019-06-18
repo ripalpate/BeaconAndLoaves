@@ -31,6 +31,20 @@ namespace BeaconAndLoaves.Data
             }
         }
 
+        public IEnumerable<Rental> GetAllRentalsByUserId(int userId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var rentalsByUserId = db.Query<Rental>(@"
+                    select * 
+                    from rentals
+                    where rentals.userId = @userId
+                    ", new { userId }).ToList();
+
+                return rentalsByUserId;
+            }
+        }
+
         public IEnumerable<Rental> GetRentalsByPropertyId(int propertyId)
         {
             using (var db = new SqlConnection(_connectionString))
