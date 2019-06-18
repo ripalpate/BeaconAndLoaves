@@ -81,7 +81,7 @@ namespace BeaconAndLoaves.Data
                 var userProperties = db.Query<Property>(@"
                     select *
                     from properties
-                    where ownerid = @id and isActive = 1",
+                    where ownerid = @id and isDeleted = 0",
                     new { id });
 
                 return userProperties;
