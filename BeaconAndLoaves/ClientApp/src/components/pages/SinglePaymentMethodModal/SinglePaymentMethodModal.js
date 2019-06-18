@@ -46,6 +46,17 @@ class SinglePaymentMethodModal extends React.Component {
       return formattedDate;
     };
 
+    const createModalHeader = () => {
+      if (isRegistering) {
+        return (
+              <ModalHeader class-name="modal-header">Add New Account</ModalHeader>
+        );
+      }
+      return (
+            <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Add New Account</ModalHeader>
+      );
+    };
+
     const makeModal = () => {
       if (isEditingAccount === false && isAddingAccount === false) {
         return (
@@ -87,7 +98,8 @@ class SinglePaymentMethodModal extends React.Component {
       return (
     <div>
     <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
-    <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Add New Account</ModalHeader>
+    {/* <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Add New Account</ModalHeader> */}
+    {createModalHeader()}
     <ModalBody className="text-center modal-body">
       <PaymentMethodForm
       isEditingAccount={isEditingAccount}
