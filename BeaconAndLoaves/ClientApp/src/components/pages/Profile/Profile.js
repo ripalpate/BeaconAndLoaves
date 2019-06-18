@@ -346,10 +346,10 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="text-center">
-                    <button type="submit" className="btn user-add-btn m-5" onClick={this.formSubmit}>
+                    <button type="submit" className="btn user-add-btn m-5" onClick={this.formSubmit} title="Submit">
                       <i className="fas fa-check-square fa-2x"/>
                     </button>
-                    <button id='cancel' type="button" className="btn back-btn m-5" onClick={this.cancel}>
+                    <button id='cancel' type="button" className="btn back-btn m-5" onClick={this.cancel} title="Cancel">
                       <i className="far fa-window-close fa-2x"/>
                     </button>
                   </div>
@@ -438,13 +438,13 @@ class Profile extends React.Component {
             <button id='renting' type="button" className="btn renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
               See My Renting History
             </button>
-            <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile}>
+            <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile} title="Edit Profile">
               <i className="far fa-edit fa-2x"/>
             </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddPaymentModal}>
+            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddPaymentModal} title="Add Payment Account">
                 <i className="far fa-credit-card fa-2x"></i>
             </button>
-            <button id='profile-delete' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal}>
+            <button id='profile-delete' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal} title="Delete Profile">
               <i className="profile-delete-btn fas fa-trash fa-2x"></i>
             </button>
         </div>

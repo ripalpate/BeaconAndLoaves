@@ -68,7 +68,7 @@ class SinglePaymentMethodModal extends React.Component {
         <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
         <div className="ml-1">Exp Date: {formatDate()}</div>
         <div className="ml-1">CVV: {paymentAccount.cvv}</div>
-        <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal}>
+        <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal} title="Edit Account">
             <i className="far fa-edit fa-2x"/>
         </button>
         </div>
