@@ -75,6 +75,17 @@ state = {
       return formattedDate;
     };
 
+    const createModalHeader = () => {
+      if (isRegistering) {
+        return (
+              <ModalHeader class-name="modal-header">Add New Account</ModalHeader>
+        );
+      }
+      return (
+            <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Add New Account</ModalHeader>
+      );
+    };
+
     const makeModal = () => {
       if (isEditingAccount === false && isAddingAccount === false) {
         return (
@@ -87,7 +98,7 @@ state = {
         <div className="ml-1">Account Type: {getAccountTypeName(paymentAccount.paymentTypeId)}</div>
         <div className="ml-1">Exp Date: {formatDate()}</div>
         <div className="ml-1">CVV: {paymentAccount.cvv}</div>
-        <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal}>
+        <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal} title="Edit Account">
             <i className="far fa-edit fa-2x"/>
         </button>
         </div>
@@ -117,7 +128,8 @@ state = {
       return (
     <div>
     <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
-    <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Add New Account</ModalHeader>
+    {/* <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Add New Account</ModalHeader> */}
+    {createModalHeader()}
     <ModalBody className="text-center modal-body">
       <PaymentMethodForm
       isEditingAccount={isEditingAccount}

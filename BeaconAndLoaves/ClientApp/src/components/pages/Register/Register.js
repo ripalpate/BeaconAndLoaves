@@ -254,7 +254,7 @@ class Register extends React.Component {
                     </div>
                   </div>
                   <div className="text-center">
-                    <button className="btn user-add-btn btn-success my-auto mx-auto">
+                    <button className="btn user-add-btn btn-success my-auto mx-auto" title="Submit">
                       <i className="fas fa-plus-circle" />
                     </button>
                   </div>
