@@ -74,7 +74,7 @@ namespace BeaconAndLoaves.Data
                 var properties = db.Query<Property>(@"
                     select * 
                     from properties
-                    where isActive = 1").ToList();
+                    where isActive = 1 And isDeleted = 0").ToList();
 
                 return properties;
             }
@@ -115,6 +115,7 @@ namespace BeaconAndLoaves.Data
 	                    Price =  @price,
                         IsActive = 1,
                         CreatedOn = GETDATE()
+                        IsDeleted = 0
                      Where Id = @id";
 
                 var rowsAffected = db.Execute(sql, propertyToUpdate);
@@ -134,7 +135,7 @@ namespace BeaconAndLoaves.Data
             {
                 var sql =
                     @"Update Properties 
-                      Set isActive= 0
+                      Set isDeleted = 1
                       Where Id = @id";
 
                 var rowsAffected = db.Execute(sql, new { Id = id});
