@@ -3,8 +3,8 @@ import React from 'react';
 class SingleRentalItem extends React.Component {
   render() {
     const { rental } = this.props;
-    const start = Date(rental.startDate);
-    const end = Date(rental.endDate);
+    const start = new Date(rental.startDate);
+    const end = new Date(rental.endDate);
 
     const formatDate = (rentalDate) => {
       const date = new Date(rentalDate);
