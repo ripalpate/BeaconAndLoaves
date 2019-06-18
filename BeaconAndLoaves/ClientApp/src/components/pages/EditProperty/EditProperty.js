@@ -3,6 +3,8 @@ import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import userRequests from '../../../helpers/data/userRequests';
 
+import './EditProperty.scss';
+
 const defaultProperty = {
   propertyName: '',
   street: '',
@@ -94,9 +96,10 @@ class EditProperty extends React.Component {
       render() {
         const { editedProperty } = this.state;
         return (
-          <div className="NewProperty">
-            <h3>Add Property</h3>
-            <form onSubmit={this.formSubmit}>
+          <div className="edit-property ml-5">
+            <form className="row col-12 border border-dark rounded" onSubmit={this.formSubmit}>
+            <h3 className="edit-property-title">Edit Property</h3>
+            <div className="form col-10 mx-auto">
               <div className="form-group">
                 <label htmlFor="propertyName">Name:</label>
                 <input
@@ -211,7 +214,10 @@ class EditProperty extends React.Component {
                   required
                 />
               </div>
-              <button className="btn btn-success"> <i className="fas fa-check-square fa-2x"/></button>
+              <div className="text-center">
+              <button className="btn btn-success" title="Submit"> <i className="fas fa-check-square fa-2x"/></button>
+              </div>
+              </div>
             </form>
           </div>
         );

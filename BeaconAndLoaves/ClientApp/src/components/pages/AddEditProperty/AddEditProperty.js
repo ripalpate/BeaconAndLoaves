@@ -3,6 +3,8 @@ import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import authRequests from '../../../helpers/data/authRequests';
 import userRequests from '../../../helpers/data/userRequests';
 
+import './AddEditProperty.scss';
+
 const defaultProperty = {
   propertyName: '',
   street: '',
@@ -78,9 +80,10 @@ class AddEditProperty extends React.Component {
       render() {
         const { newProperty } = this.state;
         return (
-          <div className="NewProperty">
-            <h3>Add Property</h3>
-            <form onSubmit={this.formSubmit}>
+          <div className="new-property ml-5">
+            <form className="row col-12 border border-dark rounded" onSubmit={this.formSubmit}>
+              <h3 className="add-property-title">Add Property</h3>
+              <div className="form col-10 mx-auto">
               <div className="form-group">
                 <label htmlFor="propertyName">Name:</label>
                 <input
@@ -197,7 +200,12 @@ class AddEditProperty extends React.Component {
                   required
                 />
               </div>
-              <button className="btn btn-success">Save Property</button>
+              <div className="text-center">
+                <button className="btn user-add-btn btn-success my-auto mx-auto" title="Submit">
+                  <i className="fas fa-plus-circle" />
+                </button>
+              </div>
+              </div>
             </form>
           </div>
         );
