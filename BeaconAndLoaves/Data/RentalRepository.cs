@@ -33,6 +33,7 @@ namespace BeaconAndLoaves.Data
 
         public IEnumerable<Rental> GetAllRentalsByUserId(int userId)
         {
+            var today = DateTime.Today;
             using (var db = new SqlConnection(_connectionString))
             {
                 var rentalsByUserId = db.Query<Rental>(@"
@@ -42,8 +43,9 @@ namespace BeaconAndLoaves.Data
                     from rentals
                     join properties
                     on rentals.propertyId = properties.id
-                    where rentals.userId = @userId
-                    ", new { userId }).ToList();
+                    where rentals.userId = @userId and
+                    rentals.startDate > @today
+                    ", new { userId, today }).ToList();
 
                 return rentalsByUserId;
             }

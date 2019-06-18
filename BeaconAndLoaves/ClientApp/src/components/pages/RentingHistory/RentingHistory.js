@@ -14,26 +14,26 @@ class RentingHistory extends React.Component {
       pastRentals: [],
     }
 
-    sortRentals(allRentals) {
-      const { futureRentals, pastRentals } = this.state;
-      const today = new Date();
-      allRentals.forEach((rental) => {
-        const rentalDate = new Date(rental.startDate);
-        if (rentalDate > today) {
-          futureRentals.push(rental);
-        } if (rentalDate <= today) {
-          pastRentals.push(rental);
-        }
-      });
-    }
+    // sortRentals(allRentals) {
+    //   const { futureRentals, pastRentals } = this.state;
+    //   const today = new Date();
+    //   allRentals.forEach((rental) => {
+    //     const rentalDate = new Date(rental.startDate);
+    //     if (rentalDate > today) {
+    //       futureRentals.push(rental);
+    //     } if (rentalDate <= today) {
+    //       pastRentals.push(rental);
+    //     }
+    //   });
+    // }
 
     componentDidMount() {
       const { currentUser } = this.props;
       this.rentingHistoryMounted = !!currentUser.id;
       if (this.rentingHistoryMounted) {
         rentalRequests.getAllRentalsByUserId(currentUser.id)
-          .then((allRentals) => {
-            this.sortRentals(allRentals);
+          .then((futureRentals) => {
+            this.setState({ futureRentals });
           });
       }
     }
@@ -49,10 +49,10 @@ class RentingHistory extends React.Component {
       ));
 
       return (
-        <div>
+        <div className="col">
             <h2 className="text-center">Future Rentals:</h2>
             <div className="lightHouses row">
-                <div className = "rental-container d-flex mx-auto mt-3">{createFutureRentals}</div>
+                <div className = "rental-container d-flex mx-auto mt-3 col-4">{createFutureRentals}</div>
             </div>
         </div>
       );

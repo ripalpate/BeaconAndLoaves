@@ -4,7 +4,7 @@ class SingleRentalItem extends React.Component {
 
   render() {
     return (
-            <div>{this.props.rental.id}</div>
+            <div className="card">{this.props.rental.id}</div>
     );
   }
 }
