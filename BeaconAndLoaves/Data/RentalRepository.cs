@@ -36,8 +36,12 @@ namespace BeaconAndLoaves.Data
             using (var db = new SqlConnection(_connectionString))
             {
                 var rentalsByUserId = db.Query<Rental>(@"
-                    select * 
+                    select rentals.id, rentals.propertyId, rentals.userPaymentId, rentals.startDate,
+                    rentals.endDate, rentals.rentalAmount, properties.ownerId, properties.street, properties.city,
+                    properties.state, properties.zipcode, properties.propertyName
                     from rentals
+                    join properties
+                    on rentals.propertyId = properties.id
                     where rentals.userId = @userId
                     ", new { userId }).ToList();
 

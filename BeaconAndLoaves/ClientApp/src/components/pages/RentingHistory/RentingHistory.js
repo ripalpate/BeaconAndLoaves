@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SingleRentalItem from '../../SingleRentalItem/SingleRentalItem';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 
 import './RentingHistory.scss';
@@ -8,52 +9,52 @@ class RentingHistory extends React.Component {
     rentingHistoryMounted = false;
 
     state = {
+      allRentals: [],
       futureRentals: [],
       pastRentals: [],
     }
 
+    sortRentals(allRentals) {
+      const { futureRentals, pastRentals } = this.state;
+      const today = new Date();
+      allRentals.forEach((rental) => {
+        const rentalDate = new Date(rental.startDate);
+        if (rentalDate > today) {
+          futureRentals.push(rental);
+        } if (rentalDate <= today) {
+          pastRentals.push(rental);
+        }
+      });
+    }
+
     componentDidMount() {
       const { currentUser } = this.props;
-      const { futureRentals, pastRentals } = this.state;
       this.rentingHistoryMounted = !!currentUser.id;
-      const today = new Date();
       if (this.rentingHistoryMounted) {
         rentalRequests.getAllRentalsByUserId(currentUser.id)
-          .then((rentalHistory) => {
-            rentalHistory.forEach((rental) => {
-              const rentalDate = new Date(rental.startDate);
-              if (rentalDate > today) {
-                futureRentals.push(rental);
-              } if (rentalDate <= today) {
-                pastRentals.push(rental);
-              }
-            });
+          .then((allRentals) => {
+            this.sortRentals(allRentals);
           });
       }
     }
 
     render() {
-      const { rentalHistory } = this.state;
+      const { futureRentals } = this.state;
 
-      //   const createFutureRentals = () => {
-      //     const futureRentals = [];
-      //     const today = new Date();
-      //     rentalHistory.forEach((rental) => {
-      //       const rentalDate = new Date(rental.startDate);
-      //       if (rentalDate > today) {
-      //         console.log('true');
-      //         return (
-      //             <h2>True</h2>
-      //         );
-      //       }
-      //     });
-      //   };
+      const createFutureRentals = futureRentals.map(rental => (
+        <SingleRentalItem
+        rental={rental}
+        key = {rental.id}
+        />
+      ));
 
       return (
-            <div>
-                <h2 className="text-center">Future Rentals:</h2>
-                {/* {createFutureRentals()} */}
+        <div>
+            <h2 className="text-center">Future Rentals:</h2>
+            <div className="lightHouses row">
+                <div className = "rental-container d-flex mx-auto mt-3">{createFutureRentals}</div>
             </div>
+        </div>
       );
     }
 }
