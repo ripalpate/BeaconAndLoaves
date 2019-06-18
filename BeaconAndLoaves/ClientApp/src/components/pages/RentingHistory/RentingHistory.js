@@ -52,7 +52,7 @@ class RentingHistory extends React.Component {
         <div className="col">
             <h2 className="text-center">Future Rentals:</h2>
             <div className="lightHouses row">
-                <div className = "rental-container d-flex mx-auto mt-3 col-4">{createFutureRentals}</div>
+                <div className = "rental-container d-flex mx-auto mt-3 col-12">{createFutureRentals}</div>
             </div>
         </div>
       );

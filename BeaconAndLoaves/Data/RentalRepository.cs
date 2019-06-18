@@ -31,12 +31,12 @@ namespace BeaconAndLoaves.Data
             }
         }
 
-        public IEnumerable<Rental> GetAllRentalsByUserId(int userId)
+        public IEnumerable<Object> GetAllRentalsByUserId(int userId)
         {
             var today = DateTime.Today;
             using (var db = new SqlConnection(_connectionString))
             {
-                var rentalsByUserId = db.Query<Rental>(@"
+                var rentalsByUserId = db.Query<Object>(@"
                     select rentals.id, rentals.propertyId, rentals.userPaymentId, rentals.startDate,
                     rentals.endDate, rentals.rentalAmount, properties.ownerId, properties.street, properties.city,
                     properties.state, properties.zipcode, properties.propertyName
