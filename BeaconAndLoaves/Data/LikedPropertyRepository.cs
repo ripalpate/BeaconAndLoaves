@@ -53,7 +53,7 @@ namespace BeaconAndLoaves.Data
             }
         }
 
-        public IEnumerable<Object> GetAllLikedProperties()
+        public IEnumerable<Object> GetAllLikedPropertiesWithUser()
         {
             using (var db = new SqlConnection(_connectionString))
             {

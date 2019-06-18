@@ -18,7 +18,8 @@ state = {
   static propTypes = {
     togglePaymentModal: PropTypes.func,
     paymentModal: PropTypes.bool,
-    isAdding: PropTypes.bool,
+    isAddingAccount: PropTypes.bool,
+    isEditingAccount: PropTypes.bool,
   }
 
   cancelPaymentModalEvent = () => {
@@ -49,7 +50,10 @@ state = {
       changeEditView,
       isEditingAccount,
       isAddingAccount,
+      isRegistering,
       toggleEditPaymentModal,
+      getAllUserPayments,
+      currentUser,
     } = this.props;
 
     const getAccountTypeName = (type) => {
@@ -117,10 +121,13 @@ state = {
     <ModalBody className="text-center modal-body">
       <PaymentMethodForm
       isEditingAccount={isEditingAccount}
+      isRegistering={isRegistering}
       paymentAccount={paymentAccount}
       toggleIsEditing={this.toggleIsEditing}
       changeEditView={changeEditView}
       cancelPaymentModalEvent={this.cancelPaymentModalEvent}
+      getAllUserPayments={getAllUserPayments}
+      currentUser={currentUser}
       />
     </ModalBody>
     </Modal>
