@@ -69,7 +69,7 @@ state = {
 
     const formatDate = () => {
       const expirationDate = new Date(paymentAccount.expirationDate);
-      const month = expirationDate.getMonth() + 1;
+      const month = (`0${expirationDate.getMonth() + 1}`).slice(-2);
       const year = expirationDate.getFullYear();
       const formattedDate = `${month}/${year}`;
       return formattedDate;
