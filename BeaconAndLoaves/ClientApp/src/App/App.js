@@ -120,7 +120,7 @@ export default class App extends Component {
                   <PrivateRoute path="/properties/lightHouses" component={LightHouses} authed={this.state.authed}/>
                   <PrivateRoute exact path="/lightHouses/:id" authed={this.state.authed} component={props => <LightHouseDetail {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute path="/properties/siloNuclears" component={SiloNuclears} authed={this.state.authed}/>
-                  <PrivateRoute exact path="/siloNuclears/:id" authed={this.state.authed} component={SiloNuclearDetail}/>
+                  <PrivateRoute exact path="/siloNuclears/:id" authed={this.state.authed} component={props => <SiloNuclearDetail {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute path="/likedProperties" authed={this.state.authed} component={props => <LikedProperties {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute path="/addProperty" authed={this.state.authed} component={AddEditProperty}/>
                   <PrivateRoute path="/editProperty/:id" authed={this.state.authed} component={EditProperty}/>

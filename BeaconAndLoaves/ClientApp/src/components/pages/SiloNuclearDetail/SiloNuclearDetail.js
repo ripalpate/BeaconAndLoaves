@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import smashRequests from '../../../helpers/data/smashRequests';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
@@ -10,6 +11,10 @@ class SiloNuclearDetail extends React.Component {
     currentLikedProperty: [],
     siloNuclear: [],
     isLiked: false,
+  }
+
+  static propTypes = {
+    currentUser: PropTypes.object,
   }
 
   componentDidMount() {
@@ -31,9 +36,10 @@ class SiloNuclearDetail extends React.Component {
 
   checkExistingProperty = () => {
     const { siloNuclear, isLiked } = this.state;
+    const { currentUser } = this.props;
     likedPropertyRequests.getAllLikedPropertiesWithUser()
       .then((likedProperties) => {
-        const currentLikedProperty = likedProperties.filter(x => x.propertyId === siloNuclear.id && x.userId === siloNuclear.ownerId);
+        const currentLikedProperty = likedProperties.filter(x => x.propertyId === siloNuclear.id && x.userId === currentUser.id);
         if (currentLikedProperty.length === 1) {
           this.setState({ isLiked: !isLiked });
           this.setState({ currentLikedProperty });
