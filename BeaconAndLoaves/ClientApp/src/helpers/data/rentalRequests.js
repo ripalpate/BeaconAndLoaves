@@ -14,11 +14,9 @@ const getAllRentalsByPropertyId = id => new Promise((resolve, reject) => {
 });
 
 const getAllRentalsByUserId = id => new Promise((resolve, reject) => {
-  console.log('data call')
   axios.get(`${apiUrl}/renting/${id}`)
     .then((results) => {
       const rentalsByUserIdObject = results.data;
-      console.log(rentalsByUserIdObject);
       resolve(rentalsByUserIdObject);
     })
     .catch((error) => {

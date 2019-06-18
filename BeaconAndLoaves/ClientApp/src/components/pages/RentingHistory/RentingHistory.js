@@ -8,30 +8,51 @@ class RentingHistory extends React.Component {
     rentingHistoryMounted = false;
 
     state = {
-      rentalHistory: [],
+      futureRentals: [],
+      pastRentals: [],
     }
 
     componentDidMount() {
       const { currentUser } = this.props;
+      const { futureRentals, pastRentals } = this.state;
       this.rentingHistoryMounted = !!currentUser.id;
+      const today = new Date();
       if (this.rentingHistoryMounted) {
         rentalRequests.getAllRentalsByUserId(currentUser.id)
           .then((rentalHistory) => {
-            this.setState({ rentalHistory });
+            rentalHistory.forEach((rental) => {
+              const rentalDate = new Date(rental.startDate);
+              if (rentalDate > today) {
+                futureRentals.push(rental);
+              } if (rentalDate <= today) {
+                pastRentals.push(rental);
+              }
+            });
           });
       }
     }
 
     render() {
-      const { currentUser } = this.props;
+      const { rentalHistory } = this.state;
 
-      // createRentals = () => {
-
-      // };
+      //   const createFutureRentals = () => {
+      //     const futureRentals = [];
+      //     const today = new Date();
+      //     rentalHistory.forEach((rental) => {
+      //       const rentalDate = new Date(rental.startDate);
+      //       if (rentalDate > today) {
+      //         console.log('true');
+      //         return (
+      //             <h2>True</h2>
+      //         );
+      //       }
+      //     });
+      //   };
 
       return (
             <div>
-                Renting History Page
+                <h2 className="text-center">Future Rentals:</h2>
+                {/* {createFutureRentals()} */}
             </div>
       );
     }
