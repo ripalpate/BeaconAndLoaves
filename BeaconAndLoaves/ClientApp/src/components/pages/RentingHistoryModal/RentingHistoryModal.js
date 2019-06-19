@@ -42,9 +42,9 @@ class RentingHistoryModal extends React.Component {
             <div>Total: ${selectedRental.RentalAmount}</div>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={deleteProfile}>
+            {/* <Button onClick={deleteProfile}>
                 <i className="fas fa-trash fa-2x"></i>
-            </Button>
+            </Button> */}
           </ModalFooter>
         </Modal>
       </div>
