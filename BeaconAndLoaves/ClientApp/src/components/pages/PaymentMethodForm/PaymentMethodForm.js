@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
+import formatDate from '../../../helpers/formatDate';
 
 const defaultPaymentMethod = {
   accountName: '',
@@ -13,8 +14,6 @@ const defaultPaymentMethod = {
 };
 
 class PaymentMethodForm extends React.Component {
-  // formattedDate = '';
-
   static propTypes = {
     isEditingAccount: PropTypes.bool,
   }
@@ -99,10 +98,9 @@ class PaymentMethodForm extends React.Component {
     const { isEditingAccount, paymentAccount } = this.props;
     if (prevProps !== this.props && isEditingAccount) {
       this.setState({
-        formattedDate: this.props.formatDate(),
+        formattedDate: formatDate(paymentAccount.expirationDate),
         newPaymentMethod: paymentAccount,
         selectedPaymentType: paymentAccount.paymentTypeId,
-        formattedDate: this.props.formatDate(),
       });
     }
   }
@@ -114,7 +112,7 @@ class PaymentMethodForm extends React.Component {
       selectedPaymentType,
     } = this.state;
 
-    const { isEditingAccount, formatDate } = this.props;
+    const { isEditingAccount } = this.props;
 
     const makeButtons = () => {
       if (isEditingAccount === false) {
@@ -150,13 +148,6 @@ class PaymentMethodForm extends React.Component {
                 </span>
               </div>
       );
-    };
-
-    const makeExpDate = () => {
-      if (isEditingAccount === true) {
-        return formatDate(newPaymentMethod.expirationDate);
-      }
-      return newPaymentMethod.expirationDate;
     };
 
     return (
@@ -211,7 +202,6 @@ class PaymentMethodForm extends React.Component {
                         <div className="input-group-text">Exp Date</div>
                         </div>
                         <input
-                        // type="month"
                         pattern="[0-9]{2}/[0-9]{4}"
                         className="form-control"
                         id="expirationDate"
