@@ -19,7 +19,10 @@ class RentingHistory extends React.Component {
 
     toggleModal = (rentingId) => {
       const { rentingHistoryModal } = this.state;
-      this.setState({ rentingId, rentingHistoryModal: !rentingHistoryModal }, this.getSingleRental(rentingId));
+      this.setState({ rentingId, rentingHistoryModal: !rentingHistoryModal });
+      if (rentingHistoryModal === false) {
+        this.getSingleRental(rentingId);
+      }
     }
 
     getSingleRental = (rentingId) => {

@@ -38,6 +38,7 @@ class RentingHistoryModal extends React.Component {
             <div>Start Date: </div>
             <div>End Date: </div>
             <div>{selectedRental.city}, {selectedRental.state}</div>
+            <div>Total: ${selectedRental.RentalAmount}</div>
           </ModalBody>
           <ModalFooter>
             <Button onClick={deleteProfile}>
