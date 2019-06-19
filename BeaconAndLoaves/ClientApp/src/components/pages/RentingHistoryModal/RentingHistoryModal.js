@@ -31,6 +31,13 @@ class RentingHistoryModal extends React.Component {
       selectedRental,
     } = this.props;
 
+    const makeButtons = () => {
+      const today = new Date();
+      if (selectedRental.startDate) {
+
+      }
+    };
+
     return (
       <div>
         <Modal isOpen={rentingHistoryModal} toggle={this.toggleEvent} className="modal-lg">
