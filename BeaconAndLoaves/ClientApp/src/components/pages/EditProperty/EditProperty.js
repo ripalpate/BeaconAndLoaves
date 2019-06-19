@@ -88,6 +88,7 @@ class EditProperty extends React.Component {
         e.preventDefault();
         const myProperty = { ...this.state.editedProperty };
         myProperty.ownerId = this.state.currentUser.id;
+        myProperty.isActive = 1;
         this.formSubmitEvent(myProperty);
         this.setState({ editedProperty: defaultProperty });
       }

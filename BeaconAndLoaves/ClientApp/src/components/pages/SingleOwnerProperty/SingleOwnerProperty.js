@@ -53,7 +53,7 @@ class SingleOwnerProperty extends React.Component {
     const { isLiked } = this.state;
 
     const makeLikedPropertyButton = () => {
-      if (property.isOwner === false) {
+      if (property.ownerId !== currentUser.id) {
         return (
           <LikeButton
           isLiked={isLiked}
