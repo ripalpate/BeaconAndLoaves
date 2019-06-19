@@ -75,6 +75,58 @@ namespace BeaconAndLoaves.Data
             }
         }
 
+        public IEnumerable<Object> GetFutureRentalsForOwner(int userId)
+        {
+            var today = DateTime.Today;
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"select rentals.id, rentals.propertyId, rentals.UserId, rentals.userPaymentId, rentals.startDate,
+                            rentals.endDate, rentals.rentalAmount, properties.ownerId, properties.street, properties.city,
+                            properties.state, properties.zipcode, properties.propertyName, users.name as userName, users.email, 
+                            users.City as userCity, users.State as userState,users.Street as userStreet, users.Zipcode as userZipcode, 
+                            users.PhoneNumber as userPhoneNumber
+                            from rentals 
+                            Join Properties 
+				                On rentals.propertyId = Properties.id 
+				            Join users 
+				                On rentals.userId=users.Id
+				            Where Properties.ownerId = @ownerId
+				                And rentals.startDate > @today
+                            Order by rentals.startDate Desc;;";
+                var parameters = new { ownerId = userId, today };
+
+                var rentalsByOwner = db.Query<Object>(sql, parameters).ToList();
+
+                return rentalsByOwner;
+            }
+        }
+
+        public IEnumerable<Object> GetPastRentalsForOwner(int userId)
+        {
+            var today = DateTime.Today;
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"select rentals.id, rentals.propertyId, rentals.UserId, rentals.userPaymentId, rentals.startDate,
+                            rentals.endDate, rentals.rentalAmount, properties.ownerId, properties.street, properties.city,
+                            properties.state, properties.zipcode, properties.propertyName, users.name as userName, users.email, 
+                            users.City as userCity, users.State as userState,users.Street as userStreet, users.Zipcode as userZipcode, 
+                            users.PhoneNumber as userPhoneNumber
+                            from rentals 
+                            Join Properties 
+				                On rentals.propertyId = Properties.id 
+				            Join users 
+				                On rentals.userId=users.Id
+				            Where Properties.ownerId = @ownerId
+				                And rentals.startDate <= @today
+                            Order by rentals.startDate Desc;;";
+                var parameters = new { ownerId = userId, today };
+
+                var rentalsByOwner = db.Query<Object>(sql, parameters).ToList();
+
+                return rentalsByOwner;
+            }
+        }
+
         public IEnumerable<Rental> GetRentalsByPropertyId(int propertyId)
         {
             using (var db = new SqlConnection(_connectionString))
