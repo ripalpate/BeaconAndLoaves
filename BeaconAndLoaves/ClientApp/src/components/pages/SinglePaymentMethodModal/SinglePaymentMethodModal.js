@@ -89,7 +89,7 @@ state = {
       <div className="border border-dark rounded" id={paymentAccount.id}>
         <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
         <div className="ml-1">Account Type: {getAccountTypeName(paymentAccount.paymentTypeId)}</div>
-        <div className="ml-1">Exp Date: {formatDate(paymentAccount.expirationDate)}</div>
+        <div className="ml-1">Exp Date: {formatDate.formatMYDate(paymentAccount.expirationDate)}</div>
         <div className="ml-1">CVV: {paymentAccount.cvv}</div>
         <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal} title="Edit Account">
             <i className="far fa-edit fa-2x"/>

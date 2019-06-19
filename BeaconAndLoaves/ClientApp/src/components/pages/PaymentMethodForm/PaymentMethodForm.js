@@ -98,7 +98,7 @@ class PaymentMethodForm extends React.Component {
     const { isEditingAccount, paymentAccount } = this.props;
     if (prevProps !== this.props && isEditingAccount) {
       this.setState({
-        formattedDate: formatDate(paymentAccount.expirationDate),
+        formattedDate: formatDate.formatMYDate(paymentAccount.expirationDate),
         newPaymentMethod: paymentAccount,
         selectedPaymentType: paymentAccount.paymentTypeId,
       });

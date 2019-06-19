@@ -13,8 +13,8 @@ class SingleRentalItem extends React.Component {
     return (
         <li id={rental.id} className="renting-item" onClick={this.toggleModalEvent}>
             <span className="col">{rental.propertyName}</span>
-            <span className="col">{formatDate(rental.startDate)}</span>
-            <span className="col">{formatDate(rental.endDate)}</span>
+            <span className="col">{formatDate.formatMDYDate(rental.startDate)}</span>
+            <span className="col">{formatDate.formatMDYDate(rental.endDate)}</span>
             <span className="col">{rental.city}</span>
             <span className="col">{rental.state}</span>
             <span className="col">{rental.name}</span>

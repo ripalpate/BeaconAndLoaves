@@ -7,6 +7,7 @@ import {
   ModalFooter,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import formatDate from '../../../helpers/formatDate';
 
 import './RentingHistoryModal.scss';
 
@@ -35,8 +36,8 @@ class RentingHistoryModal extends React.Component {
         <Modal isOpen={rentingHistoryModal} toggle={this.toggleEvent} className="modal-lg">
           <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>{selectedRental.propertyName}</ModalHeader>
           <ModalBody className="text-center modal-body">
-            <div>Start Date: </div>
-            <div>End Date: </div>
+            <div>Start Date: {formatDate.formatMDYDate(selectedRental.StartDate)}</div>
+            <div>End Date: {formatDate.formatMDYDate(selectedRental.EndDate)}</div>
             <div>{selectedRental.city}, {selectedRental.state}</div>
             <div>Total: ${selectedRental.RentalAmount}</div>
           </ModalBody>
