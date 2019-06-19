@@ -13,6 +13,8 @@ const defaultPaymentMethod = {
 };
 
 class PaymentMethodForm extends React.Component {
+  // formattedDate = '';
+
   static propTypes = {
     isEditingAccount: PropTypes.bool,
   }
@@ -21,6 +23,7 @@ class PaymentMethodForm extends React.Component {
     newPaymentMethod: defaultPaymentMethod,
     paymentTypes: [],
     selectedPaymentType: '',
+    formattedDate: '',
   }
 
   paymentTypes = () => {
@@ -37,6 +40,13 @@ class PaymentMethodForm extends React.Component {
     this.setState({ newPaymentMethod: tempPaymentMethod });
   }
 
+  formFieldDateState = (accountName, e) => {
+    e.preventDefault();
+    let tempExpirationDate = this.state.formattedDate;
+    tempExpirationDate = e.target.value;
+    this.setState({ formattedDate: tempExpirationDate });
+  }
+
   formFieldNumberState = (name, e) => {
     const tempPaymentMethod = { ...this.state.newPaymentMethod };
     tempPaymentMethod[name] = e.target.value;
@@ -49,7 +59,7 @@ class PaymentMethodForm extends React.Component {
 
   accountNumberChange = e => this.formFieldStringState('accountNumber', e);
 
-  expirationDateChange = e => this.formFieldStringState('expirationDate', e);
+  expirationDateChange = e => this.formFieldDateState('expirationDate', e);
 
   CVVChange = e => this.formFieldNumberState('cvv', e);
 
@@ -57,6 +67,7 @@ class PaymentMethodForm extends React.Component {
     e.preventDefault();
     const { isEditingAccount, isRegistering } = this.props;
     const myPaymentMethod = { ...this.state.newPaymentMethod };
+    myPaymentMethod.expirationDate = this.state.formattedDate;
     if (isEditingAccount === false) {
       myPaymentMethod.isActive = true;
       myPaymentMethod.userId = this.props.currentUser.id;
@@ -88,8 +99,10 @@ class PaymentMethodForm extends React.Component {
     const { isEditingAccount, paymentAccount } = this.props;
     if (prevProps !== this.props && isEditingAccount) {
       this.setState({
+        formattedDate: this.props.formatDate(),
         newPaymentMethod: paymentAccount,
         selectedPaymentType: paymentAccount.paymentTypeId,
+        formattedDate: this.props.formatDate(),
       });
     }
   }
@@ -178,7 +191,11 @@ class PaymentMethodForm extends React.Component {
                         </div>
                         <input
                         type="text"
-                        className="form-control"
+                        pattern="[0-9]*"
+                        title="Please enter in a 16 digit credit card number."
+                        minLength="16"
+                        maxLength="16"
+                        className="form-control card-js"
                         id="accountNumber"
                         placeholder="987654321"
                         value={newPaymentMethod.accountNumber}
@@ -194,11 +211,12 @@ class PaymentMethodForm extends React.Component {
                         <div className="input-group-text">Exp Date</div>
                         </div>
                         <input
-                        type="text"
+                        // type="month"
+                        pattern="[0-9]{2}/[0-9]{4}"
                         className="form-control"
                         id="expirationDate"
                         placeholder="MM/YYYY"
-                        value={newPaymentMethod.expirationDate}
+                        value={this.state.formattedDate}
                         onChange={this.expirationDateChange}
                         required
                         />
@@ -212,6 +230,10 @@ class PaymentMethodForm extends React.Component {
                         </div>
                         <input
                         type="text"
+                        pattern="[0-9]*"
+                        title="Please enter in a 3 digit credit card CVV number located on the back of the card."
+                        minLength="3"
+                        maxLength="3"
                         className="form-control"
                         id="CVV"
                         placeholder="333"
