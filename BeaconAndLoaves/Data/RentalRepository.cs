@@ -92,7 +92,7 @@ namespace BeaconAndLoaves.Data
 				                On rentals.userId=users.Id
 				            Where Properties.ownerId = @ownerId
 				                And rentals.startDate > @today
-                            Order by rentals.startDate Desc;;";
+                            Order by rentals.startDate Asc;;";
                 var parameters = new { ownerId = userId, today };
 
                 var rentalsByOwner = db.Query<Object>(sql, parameters).ToList();

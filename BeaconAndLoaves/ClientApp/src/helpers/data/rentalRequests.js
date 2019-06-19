@@ -47,10 +47,21 @@ const getFutureOwnerRentals = ownerId => new Promise((resolve, reject) => {
     });
 });
 
+const getPastOwnerRentals = ownerId => new Promise((resolve, reject) => {
+  axios.get(`${apiUrl}/pastRentals/${ownerId}`)
+    .then((results) => {
+      const ownerPastRentals = results.data;
+      resolve(ownerPastRentals);
+    }).catch((error) => {
+      reject(error);
+    });
+});
+
 export default {
   createRental,
   getAllRentalsByPropertyId,
   getFutureRentalsByUserId,
   getPastRentalsByUserId,
   getFutureOwnerRentals,
+  getPastOwnerRentals,
 };

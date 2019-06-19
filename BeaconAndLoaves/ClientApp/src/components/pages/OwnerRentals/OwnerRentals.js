@@ -23,12 +23,17 @@ ownerRentalsMounted = false;
       const ownerId = currentUser.id;
       rentalRequests.getFutureOwnerRentals(ownerId)
         .then((rentals) => {
-          this.setState({ rentals });
+          this.setState({ futureOwnerRentals: rentals });
         });
     }
 
     getPastOwnerRentals = () => {
       const { currentUser } = this.props;
+      const ownerId = currentUser.id;
+      rentalRequests.getPastOwnerRentals(ownerId)
+        .then((rentals) => {
+          this.setState({ pastOwnerRentals: rentals });
+        });
     }
 
     componentDidMount() {
@@ -36,8 +41,8 @@ ownerRentalsMounted = false;
       this.ownerRentalsMounted = !!currentUser.id;
       if (this.ownerRentalsMounted) {
         this.getFutureOwnerRentals();
+        this.getPastOwnerRentals();
       }
-    //  this.getPastRentals();
     }
 
     render() {
