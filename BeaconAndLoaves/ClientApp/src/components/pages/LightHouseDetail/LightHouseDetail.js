@@ -30,11 +30,9 @@ class LightHouseDetail extends React.Component {
   // get Propertydetails with owner name and hold isLiked state
   getPropertyWithOwnerName = () => {
     const lightHouseId = this.props.match.params.id;
-    const ConvertlightHouseIdToNumber = parseInt(lightHouseId, 10);
-    smashRequests.getAllPropertiesWithOwnerInfo()
-      .then((properties) => {
-        const lightHouses = properties.filter(property => property.type === 0);
-        const lightHouse = lightHouses.find(property => property.id === ConvertlightHouseIdToNumber);
+    const convertlightHouseIdToNumber = parseInt(lightHouseId, 10);
+    smashRequests.getSinglePropertyWithOwnerInfo(convertlightHouseIdToNumber)
+      .then((lightHouse) => {
         this.setState({ lightHouse });
       }).then(() => {
         this.checkExistingProperty();
