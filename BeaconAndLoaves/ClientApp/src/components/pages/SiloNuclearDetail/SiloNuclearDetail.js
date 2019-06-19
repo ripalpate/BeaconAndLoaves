@@ -23,11 +23,9 @@ class SiloNuclearDetail extends React.Component {
 
   getPropertyWithOwnerName = () => {
     const siloNuclearId = this.props.match.params.id;
-    const ConvertSiloNuclearIdToNumber = parseInt(siloNuclearId, 10);
-    smashRequests.getAllPropertiesWithOwnerInfo()
-      .then((properties) => {
-        const siloNuclears = properties.filter(property => property.type === 1);
-        const siloNuclear = siloNuclears.find(property => property.id === ConvertSiloNuclearIdToNumber);
+    const convertSiloNuclearIdToNumber = parseInt(siloNuclearId, 10);
+    smashRequests.getSinglePropertyWithOwnerInfo(convertSiloNuclearIdToNumber)
+      .then((siloNuclear) => {
         this.setState({ siloNuclear });
       }).then(() => {
         this.checkExistingProperty();
@@ -77,16 +75,40 @@ class SiloNuclearDetail extends React.Component {
       });
   }
 
+  
+  deactivateProperty = (e) => {
+    const { propertyId } = e.target.dataset;
+    const updateProp = { ...this.state.siloNuclear };
+    updateProp.isActive = 0;
+    propertiesRequests.updateProperty(propertyId, updateProp)
+      .then(() => {
+        if (updateProp.type === 1) {
+          this.props.history.push('/properties/siloNuclears');
+        }
+      });
+  }
+
+  activateProperty = (e) => {
+    const { propertyId } = e.target.dataset;
+    const updateProperty = { ...this.state.siloNuclear };
+    updateProperty.isActive = 1;
+    propertiesRequests.updateProperty(propertyId, updateProperty)
+      .then(() => {
+        this.props.history.push('/properties/siloNuclears');
+      });
+  }
+
   render() {
     const { siloNuclear, isLiked } = this.state;
+    const { currentUser } = this.props;
     const makeLikedPropertyButton = () => {
-      if (siloNuclear.isOwner === false) {
+      if (siloNuclear.ownerId !== currentUser.id) {
         return (
           <LikeButton
           isLiked={isLiked}
           changeIsLikedState= {this.changeIsLikedState}
           siloNuclear = {siloNuclear}
-          userId = {siloNuclear.ownerId}
+          userId = {currentUser.id}
           propertyId = {siloNuclear.id}
           />
         );
@@ -95,13 +117,28 @@ class SiloNuclearDetail extends React.Component {
     };
 
     const makebutton = () => {
-      if (siloNuclear.isOwner === true) {
+      if (currentUser.isOwner === true && siloNuclear.ownerId === currentUser.id) {
         return (
           <div className = "float-right">
-            <i onClick= {this.editEvent} data-property-id={siloNuclear.id} className="far fa-edit edit-icon fa-2x mr-2" title="Edit"/>
-            <i className="fas fa-ban fa-2x mr-2" title="Deactivate"></i>
+            <i onClick= {this.editEvent} data-property-id={siloNuclear.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
             <i onClick = {this.deleteProperty} className="fas fa-trash fa-2x" data-property-id={siloNuclear.id} title="Delete"></i>
+          </div>
+        );
+      } return (<span></span>);
+    };
+
+    const activateButton = () => {
+      if (siloNuclear.ownerId === currentUser.id) {
+        if (siloNuclear.isActive === true) {
+          return (
+        <div className = "float-right mr-3">
+          <i className="fas fa-toggle-on fa-2x" data-property-id={siloNuclear.id} title="Dectivate Property" onClick = {this.deactivateProperty}></i>
         </div>
+          );
+        } return (
+        <div className = "float-right mr-3">
+          <i className="fas fa-toggle-off fa-2x" data-property-id={siloNuclear.id} title="Activate Property" onClick = {this.activateProperty}></i>
+      </div>
         );
       } return (<span></span>);
     };
@@ -125,6 +162,7 @@ class SiloNuclearDetail extends React.Component {
             <button className="btn btn-primary mr-2">Rent</button>
             {makebutton()}
             {makeLikedPropertyButton()}
+            {activateButton()}
           </div>
         </div>
       </div>

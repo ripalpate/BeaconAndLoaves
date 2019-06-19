@@ -30,11 +30,9 @@ class LightHouseDetail extends React.Component {
   // get Propertydetails with owner name and hold isLiked state
   getPropertyWithOwnerName = () => {
     const lightHouseId = this.props.match.params.id;
-    const ConvertlightHouseIdToNumber = parseInt(lightHouseId, 10);
-    smashRequests.getAllPropertiesWithOwnerInfo()
-      .then((properties) => {
-        const lightHouses = properties.filter(property => property.type === 0);
-        const lightHouse = lightHouses.find(property => property.id === ConvertlightHouseIdToNumber);
+    const convertlightHouseIdToNumber = parseInt(lightHouseId, 10);
+    smashRequests.getSinglePropertyWithOwnerInfo(convertlightHouseIdToNumber)
+      .then((lightHouse) => {
         this.setState({ lightHouse });
       }).then(() => {
         this.checkExistingProperty();
@@ -91,11 +89,33 @@ class LightHouseDetail extends React.Component {
       });
   }
 
+  deactivateProperty = (e) => {
+    const { propertyId } = e.target.dataset;
+    const updateProp = { ...this.state.lightHouse };
+    updateProp.isActive = 0;
+    propertiesRequests.updateProperty(propertyId, updateProp)
+      .then(() => {
+        if (updateProp.type === 0) {
+          this.props.history.push('/properties/lighthouses');
+        }
+      });
+  }
+
+  activateProperty = (e) => {
+    const { propertyId } = e.target.dataset;
+    const updateProperty = { ...this.state.lightHouse };
+    updateProperty.isActive = 1;
+    propertiesRequests.updateProperty(propertyId, updateProperty)
+      .then(() => {
+        this.props.history.push('/properties/lighthouses');
+      });
+  }
+
   render() {
     const { lightHouse, isLiked } = this.state;
     const { currentUser } = this.props;
     const makeLikedPropertyButton = () => {
-      if (lightHouse.isOwner === false) {
+      if (lightHouse.ownerId !== currentUser.id) {
         return (
           <LikeButton
           isLiked={isLiked}
@@ -109,13 +129,28 @@ class LightHouseDetail extends React.Component {
     };
 
     const makebutton = () => {
-      if (lightHouse.isOwner === true) {
+      if (currentUser.isOwner === true && lightHouse.ownerId === currentUser.id) {
         return (
           <div className = "float-right">
             <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
-            <i className="fas fa-ban fa-2x mr-3" title="Deactivate"></i>
             <i onClick = {this.deleteProperty} className="fas fa-trash fa-2x" data-property-id={lightHouse.id} title="Delete"></i>
           </div>
+        );
+      } return (<span></span>);
+    };
+
+    const activateButton = () => {
+      if (lightHouse.ownerId === currentUser.id) {
+        if (lightHouse.isActive === true) {
+          return (
+        <div className = "float-right mr-3">
+          <i className="fas fa-toggle-on fa-2x" data-property-id={lightHouse.id} title="Dectivate Property" onClick = {this.deactivateProperty}></i>
+        </div>
+          );
+        } return (
+        <div className = "float-right mr-3">
+          <i className="fas fa-toggle-off fa-2x" data-property-id={lightHouse.id} title="Activate Property" onClick = {this.activateProperty}></i>
+      </div>
         );
       } return (<span></span>);
     };
@@ -139,6 +174,7 @@ class LightHouseDetail extends React.Component {
             <button id={lightHouse.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.rentProperty}>Rent Me!!!</button>
             {makebutton()}
             {makeLikedPropertyButton()}
+            {activateButton()}
           </div>
         </div>
       </div>

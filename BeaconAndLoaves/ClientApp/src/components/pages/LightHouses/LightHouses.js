@@ -17,14 +17,13 @@ class LightHouses extends React.Component {
   getAllLightHouses = () => {
     propertiesRequests.getProperties()
       .then((properties) => {
-        const lightHouses = properties.filter(property => property.type === 0);
+        const lightHouses = properties.filter(property => property.type === 0 && property.isActive === true);
         this.setState({ lightHouses });
         this.setState({ filteredLightHouses: lightHouses });
       }).catch(err => console.error(err));
   }
 
-  componentDidMount()
-  {
+  componentDidMount() {
     this.getAllLightHouses();
     this.sortProperties();
   }
@@ -66,10 +65,10 @@ class LightHouses extends React.Component {
   sortProperties =() => {
     const { ascendingOrder, lightHouses } = this.state;
     if (ascendingOrder === false) {
-      lightHouses.sort((x, y) => (`${  y.createdOn}`).localeCompare(x.createdOn));
+      lightHouses.sort((x, y) => (`${ y.createdOn}`).localeCompare(x.createdOn));
       this.setState({ lightHouses });
     } else {
-      lightHouses.sort((x, y) => (`${  x.createdOn}`).localeCompare(y.createdOn));
+      lightHouses.sort((x, y) => (`${x.createdOn}`).localeCompare(y.createdOn));
       this.setState({ lightHouses });
     }
   }
@@ -90,8 +89,8 @@ class LightHouses extends React.Component {
     const {
       ascendingOrder,
       isSearching,
-      filteredLightHouses 
-} = this.state;
+      filteredLightHouses,
+    } = this.state;
 
     const makeSearch = () => {
       if (isSearching) {
@@ -117,21 +116,20 @@ class LightHouses extends React.Component {
     ));
 
     const makeLatestButton = () => {
-      if(ascendingOrder) {
-        return(
+      if (ascendingOrder) {
+        return (
           <div className="float-right sort-btn">
             <label htmlFor="sort">Sort By</label>
             <button className="btn" onClick={this.handleChange}><i className="far fa-arrow-alt-circle-up fa-2x" onClick={this.handleChange}></i></button>
           </div>
-        )
-      } 
-        return(
+        );
+      }
+      return (
           <div className="float-right sort-btn">
             <label htmlFor="sort">Sort By</label>
             <button className="btn" onClick={this.handleChange}><i className="far fa-arrow-alt-circle-down fa-2x" onClick={this.handleChange}></i></button>
         </div>
-        )
-      
+      );
     };
     return (
       <div>

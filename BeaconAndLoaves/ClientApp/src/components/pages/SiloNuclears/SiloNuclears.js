@@ -17,7 +17,7 @@ class SiloNuclears extends React.Component {
   getSiloNuclears = () => {
     propertiesRequests.getProperties()
       .then((properties) => {
-        const siloNuclears = properties.filter(property => property.type === 1);
+        const siloNuclears = properties.filter(property => property.type === 1 && property.isActive === true);
         this.setState({ siloNuclears });
         this.setState({ filteredSiloNuclears: siloNuclears });
       }).catch(err => console.error(err));

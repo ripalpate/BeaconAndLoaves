@@ -74,7 +74,7 @@ namespace BeaconAndLoaves.Data
                 var properties = db.Query<Property>(@"
                     select * 
                     from properties
-                    where isActive = 1").ToList();
+                    where isActive = 1 And isDeleted = 0").ToList();
 
                 return properties;
             }
@@ -113,8 +113,9 @@ namespace BeaconAndLoaves.Data
 	                    Description = @description,
 	                    ImageUrl= @imageUrl, 
 	                    Price =  @price,
-                        IsActive = 1,
-                        CreatedOn = GETDATE()
+                        IsActive = @isActive,
+                        CreatedOn = GETDATE(),
+                        IsDeleted = 0
                      Where Id = @id";
 
                 var rowsAffected = db.Execute(sql, propertyToUpdate);
@@ -134,7 +135,7 @@ namespace BeaconAndLoaves.Data
             {
                 var sql =
                     @"Update Properties 
-                      Set isActive= 0
+                      Set isDeleted = 1
                       Where Id = @id";
 
                 var rowsAffected = db.Execute(sql, new { Id = id});
@@ -145,5 +146,23 @@ namespace BeaconAndLoaves.Data
                 }
             }
         }
+
+        //public Property UpdatePropertyIsActivate(bool isActive)
+        //{
+        //    using (var db = new SqlConnection(_connectionString))
+        //    {
+        //        var sql =
+        //            @"Update Properties 
+        //              Set isActive = @isActive
+        //              Where Id = @id";
+
+        //        var rowsAffected = db.Execute(sql, new { IsActive = isActive });
+
+        //        if (rowsAffected == 1)
+        //        {
+        //            throw new Exception("Didn't do right");
+        //        }
+        //    }
+        //}
     }
 }

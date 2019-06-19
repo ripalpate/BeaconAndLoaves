@@ -19,6 +19,7 @@ namespace BeaconAndLoaves.Models
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public DateTime CreatedOn { get; set; } 
     }
 
