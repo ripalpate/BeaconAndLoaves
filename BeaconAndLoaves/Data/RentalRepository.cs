@@ -47,6 +47,7 @@ namespace BeaconAndLoaves.Data
                     on users.id = properties.ownerId
                     where rentals.userId = @userId and
                     rentals.startDate > @today
+                    order by rentals.startDate asc
                     ", new { userId, today }).ToList();
 
                 return rentalsByUserId;
@@ -69,6 +70,7 @@ namespace BeaconAndLoaves.Data
                     on users.id = properties.ownerId
                     where rentals.userId = @userId and
                     rentals.startDate <= @today
+                    order by rentals.startDate desc
                     ", new { userId, today }).ToList();
 
                 return rentalsByUserId;
