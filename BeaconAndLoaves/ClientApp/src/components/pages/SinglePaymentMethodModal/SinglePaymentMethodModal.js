@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import './SinglePaymentMethodModal.scss';
 import PaymentMethodForm from '../PaymentMethodForm/PaymentMethodForm';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
+import formatDate from '../../../helpers/formatDate';
 
 class SinglePaymentMethodModal extends React.Component {
 state = {
@@ -67,14 +68,6 @@ state = {
       return paymentName;
     };
 
-    const formatDate = () => {
-      const expirationDate = new Date(paymentAccount.expirationDate);
-      const month = (`0${expirationDate.getMonth() + 1}`).slice(-2);
-      const year = expirationDate.getFullYear();
-      const formattedDate = `${month}/${year}`;
-      return formattedDate;
-    };
-
     const createModalHeader = () => {
       if (isRegistering) {
         return (
@@ -96,7 +89,7 @@ state = {
       <div className="border border-dark rounded" id={paymentAccount.id}>
         <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
         <div className="ml-1">Account Type: {getAccountTypeName(paymentAccount.paymentTypeId)}</div>
-        <div className="ml-1">Exp Date: {formatDate()}</div>
+        <div className="ml-1">Exp Date: {formatDate.formatMYDate(paymentAccount.expirationDate)}</div>
         <div className="ml-1">CVV: {paymentAccount.cvv}</div>
         <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal} title="Edit Account">
             <i className="far fa-edit fa-2x"/>
@@ -118,7 +111,6 @@ state = {
             toggleIsEditing={this.toggleIsEditing}
             changeEditView={changeEditView}
             cancelPaymentModalEvent={this.cancelPaymentModalEvent}
-            formatDate={formatDate}
             />
           </ModalBody>
           </Modal>

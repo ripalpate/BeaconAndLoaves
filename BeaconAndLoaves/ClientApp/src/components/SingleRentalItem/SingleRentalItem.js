@@ -1,30 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import formatDate from '../../helpers/formatDate';
 
 class SingleRentalItem extends React.Component {
+  static propTypes = {
+    user: PropTypes.object,
+  }
+
+  toggleModalEvent = (e) => {
+    const rentingId = e.currentTarget.id * 1;
+    this.props.toggleModal(rentingId);
+  }
+
   render() {
     const { rental } = this.props;
-    const start = new Date(rental.startDate);
-    const end = new Date(rental.endDate);
-
-    const formatDate = (rentalDate) => {
-      const date = new Date(rentalDate);
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      const year = date.getFullYear();
-      const formattedDate = `${month}/${day}/${year}`;
-      return formattedDate;
-    };
 
     return (
-        <li className="renting-item">
-            <span className="col">{rental.propertyName}</span>
-            <span className="col">{formatDate(start)}</span>
-            <span className="col">{formatDate(end)}</span>
-            <span className="col">{rental.city}</span>
-            <span className="col">{rental.state}</span>
-            <span className="col">{rental.name}</span>
-            <span className="col">{rental.email}</span>
-        </li>
+      <tr id={rental.id} className="renting-item" onClick={this.toggleModalEvent}>
+          <td className="rental-property-name">{rental.propertyName}</td>
+          <td className="rental-start">{formatDate.formatMDYDate(rental.startDate)}</td>
+          <td className="rental-end">{formatDate.formatMDYDate(rental.endDate)}</td>
+          <td className="rental-city">{rental.city}</td>
+          <td className="rental-state">{rental.state}</td>
+          <td className="rental-owner">{rental.name}</td>
+          <td className="rental-email">{rental.email}</td>
+      </tr>
     );
   }
 }
