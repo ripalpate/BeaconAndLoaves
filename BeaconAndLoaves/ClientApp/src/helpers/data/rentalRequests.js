@@ -35,8 +35,14 @@ const getPastRentalsByUserId = id => new Promise((resolve, reject) => {
     });
 });
 
+const getSingleRental = rentalId => axios.get(`${apiUrl}/${rentalId}`);
+
 const createRental = rentalObject => axios.post(`${apiUrl}`, (rentalObject));
 
 export default {
-  createRental, getAllRentalsByPropertyId, getFutureRentalsByUserId, getPastRentalsByUserId,
+  createRental,
+  getAllRentalsByPropertyId,
+  getFutureRentalsByUserId,
+  getPastRentalsByUserId,
+  getSingleRental,
 };
