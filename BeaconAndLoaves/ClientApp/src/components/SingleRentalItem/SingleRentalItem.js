@@ -1,6 +1,11 @@
 import React from 'react';
 
 class SingleRentalItem extends React.Component {
+  toggleModalEvent = (e) => {
+    const rentingId = e.currentTarget.id * 1;
+    this.props.toggleModal(rentingId);
+  }
+
   render() {
     const { rental } = this.props;
     const start = new Date(rental.startDate);
@@ -16,7 +21,7 @@ class SingleRentalItem extends React.Component {
     };
 
     return (
-        <li className="renting-item">
+        <li id={rental.id} className="renting-item" onClick={this.toggleModalEvent}>
             <span className="col">{rental.propertyName}</span>
             <span className="col">{formatDate(start)}</span>
             <span className="col">{formatDate(end)}</span>

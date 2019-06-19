@@ -109,16 +109,18 @@ namespace BeaconAndLoaves.Data
             throw new Exception("No rental created");
         }
 
-        public Rental GetSingleRental(int id)
+        public Object GetSingleRental(int id)
         {
             using (var db = new SqlConnection(_connectionString))
             {
                 var query = @"
-                    select *
-                    from rentals
-                    where id = @id";
+                    select r.*, p.propertyName, p.city, p.state
+                    from rentals r
+                    join properties p
+                    on r.propertyId = p.id
+                    where r.id = @id";
                 var parameters = new { Id = id };
-                var singleRental = db.QueryFirstOrDefault<Rental>(query, parameters);
+                var singleRental = db.QueryFirstOrDefault<Object>(query, parameters);
 
                 return singleRental;
             }

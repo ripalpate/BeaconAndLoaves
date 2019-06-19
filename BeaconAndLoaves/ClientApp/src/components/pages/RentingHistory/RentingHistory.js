@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SingleRentalItem from '../../SingleRentalItem/SingleRentalItem';
+import RentingHistoryModal from '../RentingHistoryModal/RentingHistoryModal';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 
 import './RentingHistory.scss';
@@ -11,6 +12,21 @@ class RentingHistory extends React.Component {
     state = {
       futureRentals: [],
       pastRentals: [],
+      rentingId: 0,
+      rentingHistoryModal: false,
+      selectedRental: {},
+    }
+
+    toggleModal = (rentingId) => {
+      const { rentingHistoryModal } = this.state;
+      this.setState({ rentingId, rentingHistoryModal: !rentingHistoryModal }, this.getSingleRental(rentingId));
+    }
+
+    getSingleRental = (rentingId) => {
+      rentalRequests.getSingleRental(rentingId)
+        .then((rental) => {
+          this.setState({ selectedRental: rental.data });
+        });
     }
 
     getFutureRentals = () => {
@@ -39,12 +55,19 @@ class RentingHistory extends React.Component {
     }
 
     render() {
-      const { futureRentals, pastRentals } = this.state;
+      const {
+        futureRentals,
+        pastRentals,
+        rentingHistoryModal,
+        rentingId,
+        selectedRental,
+      } = this.state;
 
       const createFutureRentals = futureRentals.map(rental => (
         <SingleRentalItem
         rental={rental}
         key = {rental.id}
+        toggleModal = {this.toggleModal}
         />
       ));
 
@@ -52,6 +75,7 @@ class RentingHistory extends React.Component {
         <SingleRentalItem
         rental={rental}
         key = {rental.id}
+        toggleModal = {this.toggleModal}
         />
       ));
 
@@ -83,6 +107,12 @@ class RentingHistory extends React.Component {
                     {createPastRentals}
                 </ul>
             </div>
+            <RentingHistoryModal
+              rentingHistoryModal={rentingHistoryModal}
+              rentingId={rentingId}
+              toggleModal={this.toggleModal}
+              selectedRental={selectedRental}
+            />
         </div>
       );
     }
