@@ -11,15 +11,15 @@ class SingleRentalItem extends React.Component {
     const { rental } = this.props;
 
     return (
-        <li id={rental.id} className="renting-item" onClick={this.toggleModalEvent}>
-            <span className="col">{rental.propertyName}</span>
-            <span className="col">{formatDate.formatMDYDate(rental.startDate)}</span>
-            <span className="col">{formatDate.formatMDYDate(rental.endDate)}</span>
-            <span className="col">{rental.city}</span>
-            <span className="col">{rental.state}</span>
-            <span className="col">{rental.name}</span>
-            <span className="col">{rental.email}</span>
-        </li>
+      <tr id={rental.id} className="renting-item" onClick={this.toggleModalEvent}>
+          <td className="rental-property-name">{rental.propertyName}</td>
+          <td className="rental-start">{formatDate.formatMDYDate(rental.startDate)}</td>
+          <td className="rental-end">{formatDate.formatMDYDate(rental.endDate)}</td>
+          <td className="rental-city">{rental.city}</td>
+          <td className="rental-state">{rental.state}</td>
+          <td className="rental-owner">{rental.name}</td>
+          <td className="rental-email">{rental.email}</td>
+      </tr>
     );
   }
 }
