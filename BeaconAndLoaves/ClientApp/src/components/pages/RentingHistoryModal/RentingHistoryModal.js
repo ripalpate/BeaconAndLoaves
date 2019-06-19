@@ -15,7 +15,6 @@ class RentingHistoryModal extends React.Component {
   static propTypes = {
     toggleModal: PropTypes.func,
     rentingHistoryModal: PropTypes.bool,
-    rentingHistory: PropTypes.number,
     selectedRental: PropTypes.object,
   }
 

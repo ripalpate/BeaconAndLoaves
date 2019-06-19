@@ -9,6 +9,10 @@ import './RentingHistory.scss';
 class RentingHistory extends React.Component {
     rentingHistoryMounted = false;
 
+    static propTypes = {
+      currentUser: PropTypes.object,
+    }
+
     state = {
       futureRentals: [],
       pastRentals: [],

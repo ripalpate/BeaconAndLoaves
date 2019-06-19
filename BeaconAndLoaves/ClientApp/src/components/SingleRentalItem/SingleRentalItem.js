@@ -1,7 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import formatDate from '../../helpers/formatDate';
 
 class SingleRentalItem extends React.Component {
+  static propTypes = {
+    user: PropTypes.object,
+  }
+
   toggleModalEvent = (e) => {
     const rentingId = e.currentTarget.id * 1;
     this.props.toggleModal(rentingId);
