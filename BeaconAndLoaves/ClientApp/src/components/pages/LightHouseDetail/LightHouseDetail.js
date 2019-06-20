@@ -50,7 +50,6 @@ class LightHouseDetail extends React.Component {
 
   toggleRentalModal = () => {
     this.setState({ rentalModal: true });
-    // this.props.history.push(`/rental/${propertyId}`);
   }
 
   routeToHome = () => {
@@ -125,7 +124,6 @@ class LightHouseDetail extends React.Component {
       lightHouse,
       isLiked,
       rentalModal,
-      lighthouseId,
     } = this.state;
     const { currentUser } = this.props;
     const makeLikedPropertyButton = () => {

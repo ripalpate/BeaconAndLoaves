@@ -16,6 +16,12 @@ static propTypes = {
   getAllLikedProperties: PropTypes.func,
 }
 
+changeLightHouseToDetailView = (e) => {
+  e.preventDefault();
+  const { lightHouseDetailView } = this.props;
+  lightHouseDetailView(e.currentTarget.id);
+}
+
 changeIsLikedState = () => {
   const { isLiked } = this.state;
   this.setState({ isLiked: !isLiked });
@@ -37,7 +43,7 @@ render() {
   const { isLiked } = this.state;
   const { likedProperty } = this.props;
   return (
-      <div className="card bg-light mr-4 mb-4 singleLikedProperty text-center">
+      <div id={likedProperty.propertyId}className="card bg-light mr-4 mb-4 singleLikedProperty text-center" onClick={this.changeLightHouseToDetailView}>
         <div className="imgHolder">
           <img className="singleLightHouseImg" src={likedProperty.imageUrl} alt="liked Property"/>
         </div>
@@ -47,7 +53,7 @@ render() {
           <p>{likedProperty.city}, {likedProperty.state}, {likedProperty.zipCode}</p>
           <p>{likedProperty.description}</p>
           <p>${likedProperty.price}/per night</p>
-          <button className="bttn-pill bttn-md bttn-primary" id={likedProperty.propertyId} onClick={this.rentButtonClickEvent}>Rent Me!!!</button>
+          {/* <button className="bttn-pill bttn-md bttn-primary" id={likedProperty.propertyId} onClick={this.rentButtonClickEvent}>Rent Me!!!</button> */}
           <LikeButton
             isLiked={ isLiked }
             changeIsLikedState= { this.changeIsLikedState }
