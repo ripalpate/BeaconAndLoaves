@@ -20,6 +20,7 @@ class RentingHistory extends React.Component {
       rentingHistoryModal: false,
       selectedRental: {},
       numDays: 0,
+      isEditing: false,
     }
 
     toggleModal = (rentingId) => {
@@ -31,7 +32,8 @@ class RentingHistory extends React.Component {
     }
 
     toggleRentalEdit = () => {
-      this.setState({ isEditing: true });
+      const { isEditing } = this.state;
+      this.setState({ isEditing: !isEditing });
     }
 
     getSingleRental = (rentingId) => {
