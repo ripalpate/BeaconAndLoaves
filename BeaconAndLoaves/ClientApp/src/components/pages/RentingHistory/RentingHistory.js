@@ -68,6 +68,16 @@ class RentingHistory extends React.Component {
       this.setState({ numDays: diff / (1000 * 60 * 60 * 24) });
     };
 
+    formSubmit = (e) => {
+      e.preventDefault();
+      const { selectedRental } = this.state;
+      const rentalId = selectedRental.id;
+      rentalRequests.updateRental(rentalId, selectedRental)
+        .then(() => {
+          this.setState({ isEditing: false });
+        });
+    }
+
     componentDidMount() {
       const { currentUser } = this.props;
       this.rentingHistoryMounted = !!currentUser.id;
@@ -152,6 +162,7 @@ class RentingHistory extends React.Component {
               numDays={numDays}
               isEditing={isEditing}
               toggleRentalEdit={this.toggleRentalEdit}
+              formSubmit={this.formSubmit}
             />
         </div>
       );
