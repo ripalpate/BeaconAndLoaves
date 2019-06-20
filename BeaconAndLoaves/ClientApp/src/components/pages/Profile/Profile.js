@@ -415,11 +415,11 @@ class Profile extends React.Component {
       if (currentUser.isOwner === true) {
         return (
           <div>
-            <button id='rentingHistory' type="button" className="bttn-pill mb-3 renter-history-btn m-1" onClick={this.changeView}>
-              See My Renting History
+            <button id='rentingHistory' type="button" className="bttn-pill mb-3 renter-history-btn ml-2 mr-2" onClick={this.changeView}>
+             View Trips
             </button>
-            <button id='rental' type="button" className="btn renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
-              See My Rentals' History
+            <button id='viewRentals' type="button" className="bttn-pill renter-history-btn ml-2 " onClick={this.changeView}>
+             View Rentals
             </button>
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile} title="Edit Profile">
               <i className="far fa-edit fa-2x"/>
@@ -435,8 +435,8 @@ class Profile extends React.Component {
       }
       return (
         <div>
-            <button id='rentingHistory' type="button" className="bttn-pill renter-history-btn btn-outline-dark m-1" onClick={this.changeView}>
-              See My Renting History
+            <button id='rentingHistory' type="button" className="bttn-pill renter-history-btn m-1" onClick={this.changeView}>
+              View Trips
             </button>
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile} title="Edit Profile">
               <i className="far fa-edit fa-2x"/>
