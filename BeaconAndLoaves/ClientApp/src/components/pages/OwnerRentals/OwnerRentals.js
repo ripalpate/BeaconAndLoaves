@@ -63,43 +63,66 @@ ownerRentalsMounted = false;
           />
       ));
 
+      const checkLength = () => {
+        if (pastOwnerRentals.length === 0) {
+          return (
+          <div className="no-rentals-message mt-3">
+            <h5 className="card-title">Currently, there are no past rentals.</h5>
+          </div>);
+        }
+        return (
+            <table className="table table-hover text-light">
+                <thead>
+                    <tr>
+                    <th scope="col">Property</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Renter Name</th>
+                    <th scope="col">Renter Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {createPastOwnerRentals}
+                </tbody>
+            </table>
+        );
+      };
+
+      const checkFutureRentalsLength = () => {
+        if (futureOwnerRentals.length === 0) {
+          return (
+          <div className="no-rentals-message mt-3">
+            <h5 className="card-title">Currently, there are no future rentals.</h5>
+          </div>);
+        }
+        return (
+            <table className="table table-hover text-light">
+                <thead>
+                    <tr>
+                    <th scope="col">Property</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Renter Name</th>
+                    <th scope="col">Renter Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {createFutureOwnerRentals}
+                </tbody>
+            </table>
+        );
+      };
       return (
           <div className="ownerRentals col">
               <div className="future-rentals">
                 <h2 className="mt-5">Future Rentals:</h2>
-                <table className="table table-hover text-light">
-                  <thead>
-                    <tr>
-                      <th scope="col">Property</th>
-                      <th scope="col">Start Date</th>
-                      <th scope="col">End Date</th>
-                      <th scope="col">Total Amount</th>
-                      <th scope="col">Renter Name</th>
-                      <th scope="col">Renter Contact</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {createFutureOwnerRentals}
-                  </tbody>
-                </table>
+                {checkFutureRentalsLength()}
               </div>
               <div className="past-rentals">
                 <h2 className="mt-5">Past Rentals:</h2>
-                <table className="table table-hover text-light">
-                  <thead>
-                    <tr>
-                      <th scope="col">Property</th>
-                      <th scope="col">Start Date</th>
-                      <th scope="col">End Date</th>
-                      <th scope="col">Total Amount</th>
-                      <th scope="col">Renter Name</th>
-                      <th scope="col">Renter Contact</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {createPastOwnerRentals}
-                  </tbody>
-                </table>
+                {checkLength()}
               </div>
           </div>
       );
