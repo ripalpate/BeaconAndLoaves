@@ -49,6 +49,7 @@ class Rental extends React.Component {
     rentedDates: [],
     accountName: '',
     modal: false,
+    editRental: false,
   }
 
   toggleValidationModal = () => {
@@ -129,6 +130,14 @@ class Rental extends React.Component {
     const { propertyId } = this.props;
     rentalRequests.getAllRentalsByPropertyId(propertyId)
       .then((rentals) => {
+        if (this.state.editRental) {
+          for (let i = 0; i < rentals.length; i++) {
+            console.log(rentals[i].id);
+            if (rentals[i].id === this.state.rental.Id) {
+              rentals.splice(i, 1);
+            }
+          }
+        }
         this.setState({ rentals });
         this.getDates();
       });
@@ -154,6 +163,7 @@ class Rental extends React.Component {
     this.rentalMounted = !!currentUser.id;
     if (this.rentalMounted) {
       this.getUserPaymentAccounts();
+      this.getAllRentalsByProperty();
     }
   }
 
@@ -161,6 +171,7 @@ class Rental extends React.Component {
     if (props.isEditing) {
       this.setState({
         rental: props.selectedRental,
+        editRental: props.isEditing,
         startDate: new Date(props.selectedRental.StartDate),
         endDate: new Date(props.selectedRental.EndDate),
         paymentAccount: props.selectedRental.UserPaymentId,

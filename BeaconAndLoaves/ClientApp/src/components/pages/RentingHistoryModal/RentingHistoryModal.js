@@ -36,7 +36,6 @@ class RentingHistoryModal extends React.Component {
       rentingHistoryModal,
       selectedRental,
       numDays,
-      isEditing,
     } = this.props;
 
     const makeButtons = () => {
