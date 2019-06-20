@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import React from 'react';
 import {
   Modal,
@@ -9,18 +8,14 @@ import PropTypes from 'prop-types';
 import './SinglePaymentMethodModal.scss';
 import PaymentMethodForm from '../PaymentMethodForm/PaymentMethodForm';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
-import formatDate from '../../../helpers/formatDate';
 
 class SinglePaymentMethodModal extends React.Component {
-state = {
-  paymentTypes: [],
-}
-
   static propTypes = {
     togglePaymentModal: PropTypes.func,
     paymentModal: PropTypes.bool,
     isAddingAccount: PropTypes.bool,
     isEditingAccount: PropTypes.bool,
+    getUserPaymentAccounts: PropTypes.func,
   }
 
   cancelPaymentModalEvent = () => {
@@ -31,20 +26,16 @@ state = {
     this.props.formSubmit();
   }
 
-  paymentTypes = () => {
-    paymentMethodRequests.getAllPaymentTypes()
-      .then((paymentTypes) => {
-        this.setState({ paymentTypes });
-      });
-  }
-
-  componentDidMount() {
-    this.paymentTypes();
-  }
+  // deletePaymentMethod = (e) => {
+  //   const { paymentAccount } = this.props;
+  //   paymentMethodRequests.deleteUserPayment(this.paymentAccount.id)
+  //     .then(() => {
+  //       this.props.history.push('/home');
+  //     });
+  //   this.props.history.push('/home');
+  // }
 
   render() {
-    const { paymentTypes } = this.state;
-
     const {
       paymentModal,
       paymentAccount,
@@ -55,17 +46,24 @@ state = {
       toggleEditPaymentModal,
       getAllUserPayments,
       currentUser,
+      getUserPaymentAccounts,
     } = this.props;
 
-    const getAccountTypeName = (type) => {
-      let paymentName = '';
-      for (let i = 0; i < paymentTypes.length; i++) {
-        if (type - 1 === i) {
-          paymentName = paymentTypes[i];
-          // eslint-disable-next-line indent
-        }
-      }
-      return paymentName;
+    const deletePaymentMethod = () => {
+      paymentMethodRequests.deleteUserPayment(paymentAccount.id)
+        .then(() => {
+          this.cancelPaymentModalEvent();
+          getUserPaymentAccounts();
+        });
+    };
+
+    const formatDate = () => {
+      const expirationDate = new Date(paymentAccount.expirationDate);
+      const month = expirationDate.getMonth() + 1;
+      const day = expirationDate.getDate();
+      const year = expirationDate.getFullYear();
+      const formattedDate = `${month}/${day}/${year}`;
+      return formattedDate;
     };
 
     const createModalHeader = () => {
@@ -88,11 +86,13 @@ state = {
       <ModalBody className="text-center modal-body">
       <div className="border border-dark rounded" id={paymentAccount.id}>
         <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
-        <div className="ml-1">Account Type: {getAccountTypeName(paymentAccount.paymentTypeId)}</div>
-        <div className="ml-1">Exp Date: {formatDate.formatMYDate(paymentAccount.expirationDate)}</div>
+        <div className="ml-1">Exp Date: {formatDate()}</div>
         <div className="ml-1">CVV: {paymentAccount.cvv}</div>
         <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal} title="Edit Account">
             <i className="far fa-edit fa-2x"/>
+        </button>
+        <button id='paymentMethod-delete' type="button" className="btn paymentMethod-delete-btn m-1" onClick={deletePaymentMethod}>
+            <i className="paymentMethod-delete-btn fas fa-trash fa-2x"></i>
         </button>
         </div>
       </ModalBody>
@@ -111,6 +111,7 @@ state = {
             toggleIsEditing={this.toggleIsEditing}
             changeEditView={changeEditView}
             cancelPaymentModalEvent={this.cancelPaymentModalEvent}
+            formatDate={formatDate}
             />
           </ModalBody>
           </Modal>

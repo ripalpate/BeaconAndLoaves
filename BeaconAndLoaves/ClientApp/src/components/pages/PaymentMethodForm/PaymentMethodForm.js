@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
-import formatDate from '../../../helpers/formatDate';
 
 const defaultPaymentMethod = {
   accountName: '',
@@ -14,6 +13,8 @@ const defaultPaymentMethod = {
 };
 
 class PaymentMethodForm extends React.Component {
+  // formattedDate = '';
+
   static propTypes = {
     isEditingAccount: PropTypes.bool,
   }
@@ -98,9 +99,10 @@ class PaymentMethodForm extends React.Component {
     const { isEditingAccount, paymentAccount } = this.props;
     if (prevProps !== this.props && isEditingAccount) {
       this.setState({
-        formattedDate: formatDate.formatMYDate(paymentAccount.expirationDate),
+        formattedDate: this.props.formatDate(),
         newPaymentMethod: paymentAccount,
         selectedPaymentType: paymentAccount.paymentTypeId,
+        formattedDate: this.props.formatDate(),
       });
     }
   }
@@ -112,13 +114,13 @@ class PaymentMethodForm extends React.Component {
       selectedPaymentType,
     } = this.state;
 
-    const { isEditingAccount } = this.props;
+    const { isEditingAccount, formatDate } = this.props;
 
     const makeButtons = () => {
       if (isEditingAccount === false) {
         return (
-          <div className="text-center">
-              <button className="btn paymentMethod-add-btn btn-success mx-auto mb-2" title="Submit">
+          <div>
+              <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
                 <i className="fas fa-plus-circle" />
               </button>
           </div>
@@ -126,8 +128,8 @@ class PaymentMethodForm extends React.Component {
       }
 
       return (
-          <div className="text-center">
-              <button className="btn paymentMethod-add-btn btn-success mx-auto mb-2" title="Submit">
+          <div>
+              <button className="btn paymentMethod-add-btn btn-success my-auto mx-auto">
                 <i className="fas fa-check-square" />
               </button>
           </div>
@@ -150,9 +152,16 @@ class PaymentMethodForm extends React.Component {
       );
     };
 
+    const makeExpDate = () => {
+      if (isEditingAccount === true) {
+        return formatDate(newPaymentMethod.expirationDate);
+      }
+      return newPaymentMethod.expirationDate;
+    };
+
     return (
             <div>
-                <form className="row form-container border border-dark rounded mx-auto" onSubmit={this.formSubmit}>
+                <form className="row form-container border border-dark rounded mt-5 mx-auto" onSubmit={this.formSubmit}>
                 <div className="form col-11 mt-2">
                     <div className="col-auto form-lines p-0">
                     <label htmlFor="link" className="sr-only">Account Name</label>
@@ -233,8 +242,8 @@ class PaymentMethodForm extends React.Component {
                         />
                     </div>
                     </div>
-                    {makeButtons()}
                 </div>
+                  {makeButtons()}
                 </form>
             </div>
     );
