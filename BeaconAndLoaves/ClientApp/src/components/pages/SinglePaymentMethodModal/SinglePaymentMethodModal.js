@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React from 'react';
 import {
   Modal,
@@ -10,6 +11,10 @@ import PaymentMethodForm from '../PaymentMethodForm/PaymentMethodForm';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 
 class SinglePaymentMethodModal extends React.Component {
+  state = {
+    paymentTypes: [],
+  };
+
   static propTypes = {
     togglePaymentModal: PropTypes.func,
     paymentModal: PropTypes.bool,
@@ -26,6 +31,17 @@ class SinglePaymentMethodModal extends React.Component {
     this.props.formSubmit();
   }
 
+  paymentTypes = () => {
+    paymentMethodRequests.getAllPaymentTypes()
+      .then((paymentTypes) => {
+        this.setState({ paymentTypes });
+      });
+  }
+
+  componentDidMount() {
+    this.paymentTypes();
+  }
+
   // deletePaymentMethod = (e) => {
   //   const { paymentAccount } = this.props;
   //   paymentMethodRequests.deleteUserPayment(this.paymentAccount.id)
@@ -36,6 +52,7 @@ class SinglePaymentMethodModal extends React.Component {
   // }
 
   render() {
+    const { paymentTypes } = this.state;
     const {
       paymentModal,
       paymentAccount,
@@ -49,6 +66,17 @@ class SinglePaymentMethodModal extends React.Component {
       getUserPaymentAccounts,
     } = this.props;
 
+    const getAccountTypeName = (type) => {
+      let paymentName = '';
+      for (let i = 0; i < paymentTypes.length; i++) {
+        if (type - 1 === i) {
+          paymentName = paymentTypes[i];
+          // eslint-disable-next-line indent
+        }
+      }
+      return paymentName;
+    };
+
     const deletePaymentMethod = () => {
       paymentMethodRequests.deleteUserPayment(paymentAccount.id)
         .then(() => {
@@ -59,10 +87,10 @@ class SinglePaymentMethodModal extends React.Component {
 
     const formatDate = () => {
       const expirationDate = new Date(paymentAccount.expirationDate);
-      const month = expirationDate.getMonth() + 1;
+      const month = (`0${expirationDate.getMonth() + 1}`).slice(-2);
       const day = expirationDate.getDate();
       const year = expirationDate.getFullYear();
-      const formattedDate = `${month}/${day}/${year}`;
+      const formattedDate = `${month}/${year}`;
       return formattedDate;
     };
 
@@ -86,6 +114,7 @@ class SinglePaymentMethodModal extends React.Component {
       <ModalBody className="text-center modal-body">
       <div className="border border-dark rounded" id={paymentAccount.id}>
         <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
+        <div className="ml-1">Account Type: {getAccountTypeName(paymentAccount.paymentTypeId)}</div>
         <div className="ml-1">Exp Date: {formatDate()}</div>
         <div className="ml-1">CVV: {paymentAccount.cvv}</div>
         <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal} title="Edit Account">
