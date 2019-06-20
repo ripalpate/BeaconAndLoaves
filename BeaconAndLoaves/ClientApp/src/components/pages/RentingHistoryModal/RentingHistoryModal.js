@@ -27,8 +27,8 @@ class RentingHistoryModal extends React.Component {
   }
 
   editButtonEvent = () => {
-    const { toggleRentalEdit } = this.props;
-    toggleRentalEdit();
+    const { toggleRentalModal } = this.props;
+    toggleRentalModal();
   }
 
   render() {

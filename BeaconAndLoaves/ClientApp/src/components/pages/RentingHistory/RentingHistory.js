@@ -37,7 +37,7 @@ class RentingHistory extends React.Component {
       }
     }
 
-    toggleRentalEdit = () => {
+    toggleRentalModal = () => {
       const { isEditing, rentalModal } = this.state;
       this.setState({ isEditing: !isEditing, rentalModal: !rentalModal });
     }
@@ -211,7 +211,7 @@ class RentingHistory extends React.Component {
               selectedRental={selectedRental}
               numDays={numDays}
               isEditing={isEditing}
-              toggleRentalEdit={this.toggleRentalEdit}
+              toggleRentalModal={this.toggleRentalModal}
               formSubmit={this.formSubmit}
             />
             <Rental
