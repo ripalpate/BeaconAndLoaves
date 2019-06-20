@@ -129,7 +129,8 @@ class Rental extends React.Component {
     const { propertyId } = this.props;
     rentalRequests.getAllRentalsByPropertyId(propertyId)
       .then((rentals) => {
-        this.setState({ rentals }, this.getDates());
+        this.setState({ rentals });
+        this.getDates();
       });
   }
 
@@ -145,6 +146,7 @@ class Rental extends React.Component {
       }
     });
     this.setState({ rentedDates });
+    this.figureTotal();
   }
 
   componentDidMount() {
@@ -165,7 +167,6 @@ class Rental extends React.Component {
       });
       this.getUserPaymentAccounts();
       this.getAllRentalsByProperty();
-      this.getDates();
     }
   }
 
@@ -178,7 +179,6 @@ class Rental extends React.Component {
       startDate,
       endDate,
       accountName,
-      rental,
       paymentAccount,
     } = this.state;
 
