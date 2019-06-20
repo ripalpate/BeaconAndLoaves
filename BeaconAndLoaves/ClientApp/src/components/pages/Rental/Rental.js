@@ -42,7 +42,7 @@ class Rental extends React.Component {
     startDate: new Date(),
     endDate: new Date(),
     paymentAccounts: [],
-    currentUser: {},
+    // currentUser: {},
     paymentAccount: 0,
     rentalTotal: 0,
     rental: defaultRental,
@@ -117,6 +117,14 @@ class Rental extends React.Component {
       });
   }
 
+  checkForEditing = (prevProps) => {
+    const { isEditing, selectedRental } = this.props;
+    if (prevProps !== this.props && isEditing) {
+      this.setState({ rental: selectedRental });
+      this.setDates();
+    }
+  }
+
   getUserPaymentAccounts = () => {
     const { currentUser } = this.props;
     const uid = currentUser.id;
@@ -149,12 +157,20 @@ class Rental extends React.Component {
     this.setState({ rentedDates });
   }
 
+  setDates = () => {
+    const { isEditing, rental } = this.props;
+    if (isEditing) {
+      this.setState({ startDate: rental.StartDate });
+    }
+  }
+
   componentDidMount() {
     const { currentUser } = this.props;
     this.rentalMounted = !!currentUser.id;
     if (this.rentalMounted) {
       this.getUserPaymentAccounts();
       this.getAllRentalsByProperty();
+      this.checkForEditing();
     }
   }
 
@@ -202,8 +218,7 @@ class Rental extends React.Component {
     return (
       <div className="text-center">
       <Modal isOpen={rentalModal} className="modal-lg">
-      <ModalHeader class-name="modal-header" toggle={toggleRentalModal}>Rental Confirmation</ModalHeader>
-        {/* <ModalHeader class-name="modal-header" toggle={this.toggleRentalModal}>{makeHeader()}</ModalHeader> */}
+      <ModalHeader class-name="modal-header" toggle={toggleRentalModal}>{makeHeader()}</ModalHeader>
         <ModalBody className="text-center modal-body">
             <form className="rental-form" id={property.id}>
                 <h3 className="text-center">{property.propertyName}</h3>
