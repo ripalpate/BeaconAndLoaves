@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import SingleOwnerRentalItem from '../../SingleOwnerRentalItem/SingleOwnerRentalItem';
-// import rentalRequests from '../../../helpers/data/rentalRequests';
-
-import './OwnerRentals.scss';
+import SingleOwnerRentalItem from '../SingleOwnerRentalItem/SingleOwnerRentalItem';
 import rentalRequests from '../../../helpers/data/rentalRequests';
+import './OwnerRentals.scss';
 
 class OwnerRentals extends React.Component {
 ownerRentalsMounted = false;
@@ -46,55 +44,65 @@ ownerRentalsMounted = false;
     }
 
     render() {
+      const {
+        futureOwnerRentals,
+        pastOwnerRentals,
+      } = this.state;
+
+      const createFutureOwnerRentals = futureOwnerRentals.map(rental => (
+          <SingleOwnerRentalItem
+          rental={rental}
+          key = {rental.id}
+          />
+      ));
+
+      const createPastOwnerRentals = pastOwnerRentals.map(rental => (
+          <SingleOwnerRentalItem
+          rental={rental}
+          key = {rental.id}
+          />
+      ));
+
       return (
-            <div>Rentals</div>
+          <div className="ownerRentals col">
+              <div className="future-rentals">
+                <h2 className="mt-5">Future Rentals:</h2>
+                <table className="table table-hover text-light">
+                  <thead>
+                    <tr>
+                      <th scope="col">Property</th>
+                      <th scope="col">Start Date</th>
+                      <th scope="col">End Date</th>
+                      <th scope="col">Total Amount</th>
+                      <th scope="col">Renter Name</th>
+                      <th scope="col">Renter Contact</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {createFutureOwnerRentals}
+                  </tbody>
+                </table>
+              </div>
+              <div className="past-rentals">
+                <h2 className="mt-5">Past Rentals:</h2>
+                <table className="table table-hover text-light">
+                  <thead>
+                    <tr>
+                      <th scope="col">Property</th>
+                      <th scope="col">Start Date</th>
+                      <th scope="col">End Date</th>
+                      <th scope="col">Total Amount</th>
+                      <th scope="col">Renter Name</th>
+                      <th scope="col">Renter Contact</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {createPastOwnerRentals}
+                  </tbody>
+                </table>
+              </div>
+          </div>
       );
-      //   const { futureOwnerRentals, pastOwnerRentals } = this.state;
-
-      //   const createFutureRentals = futureOwnerRentals.map(rental => (
-      //     <SingleRentalItem
-      //     rental={rental}
-      //     key = {rental.id}
-      //     />
-      //   ));
-
-      //   const createPastRentals = pastOwnerRentals.map(rental => (
-      //     <SingleRentalItem
-      //     rental={rental}
-      //     key = {rental.id}
-      //     />
-      //   ));
-
-    //   return (
-    //     <div className="renting col">
-    //         <div className="future-renting">
-    //             <h2 className="mt-5">Future Rentals:</h2>
-    //             <span className="col">Property</span>
-    //             <span className="col">Start Date</span>
-    //             <span className="col">End Date</span>
-    //             <span className="col">City</span>
-    //             <span className="col">State</span>
-    //             <span className="col">Owner</span>
-    //             <span className="col">Owner Contact</span>
-    //             <ul>
-    //                 {createFutureRentals}
-    //             </ul>
-    //         </div>
-    //         <div className="past-renting">
-    //             <h2 className="mt-5">Past Rentals:</h2>
-    //             <span className="col">Property</span>
-    //             <span className="col">Start Date</span>
-    //             <span className="col">End Date</span>
-    //             <span className="col">City</span>
-    //             <span className="col">State</span>
-    //             <span className="col">Owner</span>
-    //             <span className="col">Owner Contact</span>
-    //             <ul>
-    //                 {createPastRentals}
-    //             </ul>
-    //         </div>
-    //     </div>
-    //   );
     }
 }
 
