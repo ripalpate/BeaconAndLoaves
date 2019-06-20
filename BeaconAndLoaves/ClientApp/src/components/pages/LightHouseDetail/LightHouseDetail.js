@@ -49,7 +49,8 @@ class LightHouseDetail extends React.Component {
   }
 
   toggleRentalModal = () => {
-    this.setState({ rentalModal: true });
+    const { rentalModal } = this.state;
+    this.setState({ rentalModal: !rentalModal });
   }
 
   routeToHome = () => {

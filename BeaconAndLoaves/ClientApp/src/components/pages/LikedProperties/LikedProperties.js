@@ -30,6 +30,10 @@ class LikedProperties extends React.Component {
     this.props.history.push(`/lightHouses/${lightHouseId * 1}`);
   }
 
+  siloDetailView = (siloId) => {
+    this.props.history.push(`/siloNuclears/${siloId * 1}`);
+  }
+
   getAllLikedProperties= () => {
     const { currentUser } = this.props;
     likedPropertyRequests.getAllLikedPropertiesWithUser()
@@ -50,6 +54,7 @@ class LikedProperties extends React.Component {
       rentProperty = {this.rentProperty}
       getAllLikedProperties = {this.getAllLikedProperties}
       lightHouseDetailView={this.lightHouseDetailView}
+      siloDetailView={this.siloDetailView}
       />
     ));
 

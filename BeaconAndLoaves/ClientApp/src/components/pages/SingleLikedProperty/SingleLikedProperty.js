@@ -43,7 +43,7 @@ render() {
   const { isLiked } = this.state;
   const { likedProperty } = this.props;
   return (
-      <div id={likedProperty.propertyId}className="card bg-light mr-4 mb-4 singleLikedProperty text-center" onClick={this.changeLightHouseToDetailView}>
+      <div id={likedProperty.propertyId} data-type={likedProperty.propertyType} className="card bg-light mr-4 mb-4 singleLikedProperty text-center" onClick={this.changeLightHouseToDetailView}>
         <div className="imgHolder">
           <img className="singleLightHouseImg" src={likedProperty.imageUrl} alt="liked Property"/>
         </div>

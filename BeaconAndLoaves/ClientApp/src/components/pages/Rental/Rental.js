@@ -200,9 +200,10 @@ class Rental extends React.Component {
     };
 
     return (
-      <div className="text-center rental-div mx-auto border border-dark rounded">
+      <div className="text-center">
       <Modal isOpen={rentalModal} className="modal-lg">
-        <ModalHeader class-name="modal-header" toggle={this.toggleRentalModal}>{makeHeader()}</ModalHeader>
+      <ModalHeader class-name="modal-header" toggle={toggleRentalModal}>Rental Confirmation</ModalHeader>
+        {/* <ModalHeader class-name="modal-header" toggle={this.toggleRentalModal}>{makeHeader()}</ModalHeader> */}
         <ModalBody className="text-center modal-body">
             <form className="rental-form" id={property.id}>
                 <h3 className="text-center">{property.propertyName}</h3>
@@ -244,6 +245,8 @@ class Rental extends React.Component {
               <button className="bttn-pill bttn-md bttn-primary mb-3" onClick={this.rentalValidation}>Confirm Rental</button>
             </div>
             </ModalBody>
+            <ModalFooter>
+            </ModalFooter>
       </Modal>
       <div>
               <ConfirmationModal
