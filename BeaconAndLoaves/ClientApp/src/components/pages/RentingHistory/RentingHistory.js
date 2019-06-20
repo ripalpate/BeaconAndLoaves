@@ -19,6 +19,7 @@ class RentingHistory extends React.Component {
       rentingId: 0,
       rentingHistoryModal: false,
       selectedRental: {},
+      numDays: 0,
     }
 
     toggleModal = (rentingId) => {
@@ -33,6 +34,9 @@ class RentingHistory extends React.Component {
       rentalRequests.getSingleRental(rentingId)
         .then((rental) => {
           this.setState({ selectedRental: rental.data });
+        })
+        .then(() => {
+          this.numDaysBetween();
         });
     }
 
@@ -52,6 +56,14 @@ class RentingHistory extends React.Component {
         });
     }
 
+    numDaysBetween = () => {
+      const { selectedRental } = this.state;
+      const today = new Date();
+      const startDate = new Date(selectedRental.StartDate);
+      const diff = Math.abs(startDate.getTime() - today.getTime());
+      this.setState({ numDays: diff / (1000 * 60 * 60 * 24) });
+    };
+
     componentDidMount() {
       const { currentUser } = this.props;
       this.rentingHistoryMounted = !!currentUser.id;
@@ -68,6 +80,7 @@ class RentingHistory extends React.Component {
         rentingHistoryModal,
         rentingId,
         selectedRental,
+        numDays,
       } = this.state;
 
       const createFutureRentals = futureRentals.map(rental => (
@@ -131,6 +144,7 @@ class RentingHistory extends React.Component {
               rentingId={rentingId}
               toggleModal={this.toggleModal}
               selectedRental={selectedRental}
+              numDays={numDays}
             />
         </div>
       );
