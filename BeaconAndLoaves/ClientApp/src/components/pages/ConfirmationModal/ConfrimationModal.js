@@ -11,15 +11,15 @@ import './ConfirmationModal.scss';
 
 class MyModal extends React.Component {
   static propTypes = {
-    toggleModal: PropTypes.func,
+    toggleValidationModal: PropTypes.func,
     modal: PropTypes.bool,
     rentProperty: PropTypes.func,
     rental: PropTypes.object,
   }
 
   toggleEvent = () => {
-    const { toggleModal } = this.props;
-    toggleModal();
+    const { toggleValidationModal } = this.props;
+    toggleValidationModal();
   }
 
   render() {

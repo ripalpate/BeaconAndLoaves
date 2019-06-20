@@ -1,8 +1,14 @@
 import React from 'react';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from 'reactstrap';
+import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import ConfirmationModal from '../ConfirmationModal/ConfrimationModal';
-import propertiesRequests from '../../../helpers/data/propertiesRequests';
-import authRequests from '../../../helpers/data/authRequests';
 import userRequests from '../../../helpers/data/userRequests';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
@@ -23,10 +29,20 @@ const defaultRental = {
 };
 
 class Rental extends React.Component {
+  rentalMounted = false;
+
+  static propTypes = {
+    isEditing: PropTypes.bool,
+    rentalModal: PropTypes.bool,
+    currentUser: PropTypes.object,
+    property: PropTypes.object,
+    toggleRentalModal: PropTypes.func,
+    propertyId: PropTypes.number,
+  }
+
   state = {
     startDate: new Date(),
     endDate: new Date(),
-    propertyToRent: {},
     paymentAccounts: [],
     currentUser: {},
     paymentAccount: 0,
@@ -38,7 +54,7 @@ class Rental extends React.Component {
     modal: false,
   }
 
-  toggleModal = () => {
+  toggleValidationModal = () => {
     const { modal } = this.state;
     this.setState({
       modal: !modal,
@@ -47,7 +63,7 @@ class Rental extends React.Component {
 
   rentalValidation = () => {
     if (this.state.paymentAccount !== 0 && this.state.rentalTotal !== 0) {
-      this.toggleModal();
+      this.toggleValidationModal();
     }
   }
 
@@ -72,26 +88,27 @@ class Rental extends React.Component {
   }
 
   figureTotal = () => {
-    const { startDate, endDate, propertyToRent } = this.state;
+    const { startDate, endDate } = this.state;
+    const { property } = this.props;
     const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
     const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    const rentalTotal = diffDays * propertyToRent.price;
+    const rentalTotal = diffDays * property.price;
     this.setState({ rentalTotal });
   }
 
   rentProperty = (e) => {
     e.preventDefault();
     const myRental = { ...this.state.rental };
+    const { property } = this.props;
     const {
       currentUser,
-      propertyToRent,
       paymentAccount,
       startDate,
       endDate,
       rentalTotal,
     } = this.state;
     myRental.userId = currentUser.id * 1;
-    myRental.propertyId = propertyToRent.id * 1;
+    myRental.propertyId = property.id * 1;
     myRental.userPaymentId = paymentAccount * 1;
     myRental.startDate = startDate;
     myRental.endDate = endDate;
@@ -99,12 +116,12 @@ class Rental extends React.Component {
     rentalRequests.createRental(myRental)
       .then(() => {
         this.setState({ rental: defaultRental });
-        this.props.history.push('/home');
+        this.props.routeToHome();
       });
   }
 
   getUserPaymentAccounts = () => {
-    const { currentUser } = this.state;
+    const { currentUser } = this.props;
     const uid = currentUser.id;
     userRequests.getUserPaymentAccounts(uid)
       .then((paymentAccounts) => {
@@ -112,29 +129,12 @@ class Rental extends React.Component {
       });
   };
 
-  getUser = () => {
-    const uid = authRequests.getCurrentUid();
-    userRequests.getSingleUser(uid)
-      .then((currentUser) => {
-        this.setState({ currentUser: currentUser.data });
-        this.getUserPaymentAccounts();
-      });
-  };
-
   getAllRentalsByProperty = () => {
-    const propertyId = this.props.match.params.id;
+    const { propertyId } = this.props;
     rentalRequests.getAllRentalsByPropertyId(propertyId)
       .then((rentals) => {
         this.setState({ rentals });
         this.getDates();
-      });
-  }
-
-  getPropertyToRent = () => {
-    const propertyId = this.props.match.params.id;
-    propertiesRequests.getSingleProperty(propertyId)
-      .then((property) => {
-        this.setState({ propertyToRent: property }, this.getAllRentalsByProperty());
       });
   }
 
@@ -153,13 +153,16 @@ class Rental extends React.Component {
   }
 
   componentDidMount() {
-    this.getPropertyToRent();
-    this.getUser();
+    const { currentUser } = this.props;
+    this.rentalMounted = !!currentUser.id;
+    if (this.rentalMounted) {
+      this.getUserPaymentAccounts();
+      this.getAllRentalsByProperty();
+    }
   }
 
   render() {
     const {
-      propertyToRent,
       paymentAccounts,
       rentalTotal,
       rentedDates,
@@ -168,6 +171,13 @@ class Rental extends React.Component {
       endDate,
       accountName,
     } = this.state;
+
+    const {
+      isEditing,
+      property,
+      rentalModal,
+      toggleRentalModal,
+    } = this.props;
 
     const makeDropdowns = () => (
         <div>
@@ -181,15 +191,29 @@ class Rental extends React.Component {
           </span>
         </div>);
 
+    const makeHeader = () => {
+      if (isEditing) {
+        return (
+          <div>Edit Rental</div>
+        );
+      }
+      return (
+        <div>Add Rental</div>
+      );
+    };
+
     return (
-        <div className="text-center rental-div mx-auto border border-dark rounded">
-            <form className="rental-form" id={propertyToRent.id}>
-                <h3 className="text-center">{propertyToRent.propertyName}</h3>
-                <div className="ml-1">Street: {propertyToRent.street}</div>
-                <div className="ml-1">City: {propertyToRent.city}</div>
-                <div className="ml-1">State: {propertyToRent.state}</div>
-                <div className="ml-1">Zipcode: {propertyToRent.zipCode}</div>
-                <div className="ml-1">Rate: ${propertyToRent.price}/Day</div>
+      <div className="text-center rental-div mx-auto border border-dark rounded">
+      <Modal isOpen={rentalModal} className="modal-lg">
+        <ModalHeader class-name="modal-header" toggle={this.toggleRentalModal}>{makeHeader()}</ModalHeader>
+        <ModalBody className="text-center modal-body">
+            <form className="rental-form" id={property.id}>
+                <h3 className="text-center">{property.propertyName}</h3>
+                <div className="ml-1">Street: {property.street}</div>
+                <div className="ml-1">City: {property.city}</div>
+                <div className="ml-1">State: {property.state}</div>
+                <div className="ml-1">Zipcode: {property.zipCode}</div>
+                <div className="ml-1">Rate: ${property.price}/Day</div>
                 <div id="start">
                     <label>Start Date </label>
                     <DatePicker
@@ -222,12 +246,14 @@ class Rental extends React.Component {
             <div>
               <button className="bttn-pill bttn-md bttn-primary mb-3" onClick={this.rentalValidation}>Confirm Rental</button>
             </div>
-            <div>
+            </ModalBody>
+      </Modal>
+      <div>
               <ConfirmationModal
               modal={modal}
-              toggleModal={this.toggleModal}
+              toggleValidationModal={this.toggleValidationModal}
               rentProperty={this.rentProperty}
-              propertyToRent={propertyToRent}
+              propertyToRent={property}
               startDate={`${startDate.getMonth() + 1}/${startDate.getDate()}/${startDate.getFullYear()}`}
               endDate={`${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}`}
               rentalTotal={rentalTotal}
