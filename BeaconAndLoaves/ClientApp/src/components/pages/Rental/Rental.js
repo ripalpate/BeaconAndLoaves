@@ -161,6 +161,7 @@ class Rental extends React.Component {
         rental: props.selectedRental,
         startDate: new Date(props.selectedRental.StartDate),
         endDate: new Date(props.selectedRental.EndDate),
+        paymentAccount: props.selectedRental.UserPaymentId,
       });
       this.getUserPaymentAccounts();
       this.getAllRentalsByProperty();
@@ -178,6 +179,7 @@ class Rental extends React.Component {
       endDate,
       accountName,
       rental,
+      paymentAccount,
     } = this.state;
 
     const {
@@ -190,8 +192,8 @@ class Rental extends React.Component {
     const makeDropdowns = () => (
         <div>
           <span>Payment Accounts:
-            <select name="account" required className="custom-select mb-2 ml-2" id="account" onChange={this.handlePaymentAccountChange}>
-              <option value={rental.UserPaymentId}>Select Payment Account</option>
+            <select name="account" value={paymentAccount}required className="custom-select mb-2 ml-2" id="account" onChange={this.handlePaymentAccountChange}>
+              <option value="">Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
                 }
