@@ -24,8 +24,6 @@ const defaultRental = {
   startDate: '',
   endDate: '',
   rentalAmount: 0,
-  modal: false,
-  accountName: '',
 };
 
 class Rental extends React.Component {
@@ -99,9 +97,8 @@ class Rental extends React.Component {
   rentProperty = (e) => {
     e.preventDefault();
     const myRental = { ...this.state.rental };
-    const { property } = this.props;
+    const { property, currentUser } = this.props;
     const {
-      currentUser,
       paymentAccount,
       startDate,
       endDate,
