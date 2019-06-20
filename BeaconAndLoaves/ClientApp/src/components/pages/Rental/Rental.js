@@ -42,7 +42,6 @@ class Rental extends React.Component {
     startDate: new Date(),
     endDate: new Date(),
     paymentAccounts: [],
-    // currentUser: {},
     paymentAccount: 0,
     rentalTotal: 0,
     rental: defaultRental,
@@ -117,14 +116,6 @@ class Rental extends React.Component {
       });
   }
 
-  checkForEditing = (prevProps) => {
-    const { isEditing, selectedRental } = this.props;
-    if (prevProps !== this.props && isEditing) {
-      this.setState({ rental: selectedRental });
-      this.setDates();
-    }
-  }
-
   getUserPaymentAccounts = () => {
     const { currentUser } = this.props;
     const uid = currentUser.id;
@@ -138,8 +129,7 @@ class Rental extends React.Component {
     const { propertyId } = this.props;
     rentalRequests.getAllRentalsByPropertyId(propertyId)
       .then((rentals) => {
-        this.setState({ rentals });
-        this.getDates();
+        this.setState({ rentals }, this.getDates());
       });
   }
 
@@ -157,20 +147,24 @@ class Rental extends React.Component {
     this.setState({ rentedDates });
   }
 
-  setDates = () => {
-    const { isEditing, rental } = this.props;
-    if (isEditing) {
-      this.setState({ startDate: rental.StartDate });
-    }
-  }
-
   componentDidMount() {
     const { currentUser } = this.props;
     this.rentalMounted = !!currentUser.id;
     if (this.rentalMounted) {
       this.getUserPaymentAccounts();
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.isEditing) {
+      this.setState({
+        rental: props.selectedRental,
+        startDate: new Date(props.selectedRental.StartDate),
+        endDate: new Date(props.selectedRental.EndDate),
+      });
+      this.getUserPaymentAccounts();
       this.getAllRentalsByProperty();
-      this.checkForEditing();
+      this.getDates();
     }
   }
 
@@ -183,6 +177,7 @@ class Rental extends React.Component {
       startDate,
       endDate,
       accountName,
+      rental,
     } = this.state;
 
     const {
@@ -196,7 +191,7 @@ class Rental extends React.Component {
         <div>
           <span>Payment Accounts:
             <select name="account" required className="custom-select mb-2 ml-2" id="account" onChange={this.handlePaymentAccountChange}>
-              <option value="">Select Payment Account</option>
+              <option value={rental.UserPaymentId}>Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))
                 }
