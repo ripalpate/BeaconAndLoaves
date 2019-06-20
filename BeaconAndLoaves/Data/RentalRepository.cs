@@ -129,7 +129,7 @@ namespace BeaconAndLoaves.Data
         }
 
         //update rental
-        public Rental UpdateProperty(Rental rentalToUpdate)
+        public Rental UpdateRental(Rental rentalToUpdate)
         {
             using (var db = new SqlConnection(_connectionString))
             {

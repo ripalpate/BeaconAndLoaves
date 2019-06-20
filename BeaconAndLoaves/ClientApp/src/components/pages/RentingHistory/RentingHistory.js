@@ -30,6 +30,10 @@ class RentingHistory extends React.Component {
       }
     }
 
+    toggleRentalEdit = () => {
+      this.setState({ isEditing: true });
+    }
+
     getSingleRental = (rentingId) => {
       rentalRequests.getSingleRental(rentingId)
         .then((rental) => {
@@ -81,6 +85,7 @@ class RentingHistory extends React.Component {
         rentingId,
         selectedRental,
         numDays,
+        isEditing,
       } = this.state;
 
       const createFutureRentals = futureRentals.map(rental => (
@@ -145,6 +150,8 @@ class RentingHistory extends React.Component {
               toggleModal={this.toggleModal}
               selectedRental={selectedRental}
               numDays={numDays}
+              isEditing={isEditing}
+              toggleRentalEdit={this.toggleRentalEdit}
             />
         </div>
       );

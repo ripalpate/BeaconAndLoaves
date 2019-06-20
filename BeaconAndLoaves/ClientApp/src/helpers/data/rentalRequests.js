@@ -39,6 +39,8 @@ const getSingleRental = rentalId => axios.get(`${apiUrl}/${rentalId}`);
 
 const createRental = rentalObject => axios.post(`${apiUrl}`, (rentalObject));
 
+const updateRental = (rentalId, rentalObject) => axios.put(`${apiUrl}/${rentalId}`, rentalObject);
+
 export default {
   createRental,
   getAllRentalsByPropertyId,

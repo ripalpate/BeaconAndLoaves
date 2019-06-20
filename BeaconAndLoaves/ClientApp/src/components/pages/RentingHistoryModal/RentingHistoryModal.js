@@ -17,6 +17,8 @@ class RentingHistoryModal extends React.Component {
     rentingHistoryModal: PropTypes.bool,
     selectedRental: PropTypes.object,
     numDays: PropTypes.number,
+    isEditing: PropTypes.bool,
+    toggleEdit: PropTypes.func,
   }
 
   toggleEvent = () => {
@@ -24,18 +26,23 @@ class RentingHistoryModal extends React.Component {
     toggleModal();
   }
 
+  editButtonEvent = () => {
+    const { toggleRentalEdit } = this.props;
+    toggleRentalEdit();
+  }
+
   render() {
     const {
       rentingHistoryModal,
-      deleteProfile,
       selectedRental,
       numDays,
+      isEditing,
     } = this.props;
 
     const makeButtons = () => {
       if (numDays > 30) {
         return (
-            <Button onClick={deleteProfile}>
+            <Button onClick={this.editButtonEvent}>
                 <i className="fas fa-edit fa-2x" title="Edit Rental"></i>
             </Button>
         );
