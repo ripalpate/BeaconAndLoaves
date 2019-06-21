@@ -27,13 +27,13 @@ class Properties extends React.Component {
   render() {
     const { lightHouse, siloNuclear } = this.state;
     return (
-      <div className="properties d-flex">
-        <div id="lighthouses" onClick={this.pageView}>
-          <h3 className="property-title">LightHouse({lightHouse.length})</h3>
+      <div className="properties d-flex justify-content-around">
+        <div id="lighthouses" className="card ml-4 bg-light p-1" onClick={this.pageView}>
+          <h3 className="property-title text-center">LightHouse({lightHouse.length})</h3>
           <img className="lighthouse-img" src="https://www.millerheimangroup.com/wp-content/uploads/2018/09/lighthouse.jpg" alt="lighthouse" width = "500"/>
         </div>
-        <div id="siloNuclears" onClick={this.pageView}>
-          <h3 className="property-title">SiloNuclear({siloNuclear.length})</h3>
+        <div id="siloNuclears" className="card ml-4 bg-light p-1" onClick={this.pageView}>
+          <h3 className="property-title text-center">SiloNuclear({siloNuclear.length})</h3>
           <img className="siloNuclear-img" src="http://2.bp.blogspot.com/_88RoabsTacs/TJGk5wVnmoI/AAAAAAAADyg/J-Ve5gCymdg/s1600/IMG_5560.JPG" alt="siloNuclear" width = "500"/>
         </div>
       </div>

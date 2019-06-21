@@ -144,8 +144,8 @@ class SiloNuclears extends React.Component {
             {makeLatestButton()}
             {makeSearch()}
         </div>
-        <div className="siloNuclears row mt-5">
-          <h3 className = "d-flex mx-auto mt-5">{ singleSiloNuclearComponent}</h3>
+        <div className="siloNuclears row">
+          <div className = "d-flex mx-auto mt-5">{ singleSiloNuclearComponent}</div>
         </div>
       </div>
     );

@@ -19,6 +19,7 @@ class SingleLightHouse extends React.Component {
   render() {
     const { lightHouse } = this.props;
     return (
+      <div className="card-deck">
         <div className="card ml-4 bg-light mb-3 mt-3 singleLightHouse" onClick={this.changeLightHouseToDetailView}>
           <div className="imgHolder">
             <img className="singleLightHouseImg"src={lightHouse.imageUrl} alt="lighthouse"/>
@@ -28,6 +29,7 @@ class SingleLightHouse extends React.Component {
             <h6>Where: {lightHouse.city}, {lightHouse.state}</h6>
           </div>
         </div>
+      </div>
     );
   }
 }
