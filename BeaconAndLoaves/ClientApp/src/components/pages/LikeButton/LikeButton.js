@@ -77,7 +77,7 @@ class LikeButton extends React.Component {
           );
         };
         return (
-            <div>{makeLikedPropertyButton()}</div>
+           <span> {makeLikedPropertyButton()} </span>
         );
       }
 }
