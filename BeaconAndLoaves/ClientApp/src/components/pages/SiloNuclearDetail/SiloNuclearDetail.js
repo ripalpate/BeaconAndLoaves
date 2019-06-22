@@ -67,7 +67,7 @@ class SiloNuclearDetail extends React.Component {
   }
 
   routeToHome = () => {
-    this.props.history.push('/home');
+    this.props.history.push('/rentingHistory');
   }
 
   OwnerPropertiesView = (e) => {

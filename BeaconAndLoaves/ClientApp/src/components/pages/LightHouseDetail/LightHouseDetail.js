@@ -54,7 +54,7 @@ class LightHouseDetail extends React.Component {
   }
 
   routeToHome = () => {
-    this.props.history.push('/home');
+    this.props.history.push('/rentingHistory');
   }
 
   // clicking onheart icon changes isLiked state

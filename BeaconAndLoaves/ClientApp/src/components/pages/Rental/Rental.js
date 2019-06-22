@@ -36,6 +36,7 @@ class Rental extends React.Component {
     property: PropTypes.object,
     toggleRentalModal: PropTypes.func,
     propertyId: PropTypes.number,
+    toggleModal: PropTypes.func,
   }
 
   state = {
@@ -97,7 +98,14 @@ class Rental extends React.Component {
   rentProperty = (e) => {
     e.preventDefault();
     const myRental = { ...this.state.rental };
-    const { property, currentUser } = this.props;
+    const {
+      property,
+      currentUser,
+      isEditing,
+      routeToHome,
+      toggleRentalModal,
+      toggleModal,
+    } = this.props;
     const {
       paymentAccount,
       startDate,
@@ -110,11 +118,21 @@ class Rental extends React.Component {
     myRental.startDate = startDate;
     myRental.endDate = endDate;
     myRental.rentalAmount = rentalTotal * 1;
-    rentalRequests.createRental(myRental)
-      .then(() => {
-        this.setState({ rental: defaultRental });
-        this.props.routeToHome();
-      });
+    if (isEditing) {
+      rentalRequests.updateRental(myRental.Id, myRental)
+        .then(() => {
+          this.setState({ rental: defaultRental });
+          this.toggleValidationModal();
+          toggleRentalModal();
+          toggleModal();
+        });
+    } if (!isEditing) {
+      rentalRequests.createRental(myRental)
+        .then(() => {
+          this.setState({ rental: defaultRental });
+          routeToHome();
+        });
+    }
   }
 
   getUserPaymentAccounts = () => {
@@ -132,7 +150,6 @@ class Rental extends React.Component {
       .then((rentals) => {
         if (this.state.editRental) {
           for (let i = 0; i < rentals.length; i++) {
-            console.log(rentals[i].id);
             if (rentals[i].id === this.state.rental.Id) {
               rentals.splice(i, 1);
             }
@@ -145,6 +162,7 @@ class Rental extends React.Component {
 
   getDates = () => {
     const { rentedDates, rentals } = this.state;
+    const { isEditing } = this.props;
     rentedDates.push(new Date());
     rentals.forEach((rental) => {
       const startDate = new Date(rental.startDate);
@@ -155,7 +173,9 @@ class Rental extends React.Component {
       }
     });
     this.setState({ rentedDates });
-    this.figureTotal();
+    if (isEditing) {
+      this.figureTotal();
+    }
   }
 
   componentDidMount() {
@@ -203,7 +223,7 @@ class Rental extends React.Component {
     const makeDropdowns = () => (
         <div>
           <span>Payment Accounts:
-            <select name="account" value={paymentAccount}required className="custom-select mb-2 ml-2" id="account" onChange={this.handlePaymentAccountChange}>
+            <select name="account" value={paymentAccount} required className="custom-select mb-2 ml-2" id="account" onChange={this.handlePaymentAccountChange}>
               <option value="">Select Payment Account</option>
                 {
                 paymentAccounts.map((account, i) => (<option value={account.id} key={i}>{account.accountName}</option>))

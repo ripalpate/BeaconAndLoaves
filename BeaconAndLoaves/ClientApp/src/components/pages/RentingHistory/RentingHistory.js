@@ -221,6 +221,7 @@ class RentingHistory extends React.Component {
               property={selectedProperty}
               propertyId = {propertyId}
               toggleRentalModal={this.toggleRentalModal}
+              toggleModal={this.toggleModal}
               routeToHome={this.routeToHome}
               selectedRental={selectedRental}
               getSingleRental={getSingleRental}
