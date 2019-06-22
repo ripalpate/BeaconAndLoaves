@@ -74,7 +74,7 @@ namespace BeaconAndLoaves.Controllers
             return Ok(userPayment);
         }
 
-        [HttpPut("remove/{id}")]
+        [HttpDelete("remove/{id}")]
         public ActionResult DeleteUserPayment(int id)
         {
             _repository.DeleteUserPayment(id);
