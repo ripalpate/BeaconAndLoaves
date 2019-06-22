@@ -108,5 +108,14 @@ namespace BeaconAndLoaves.Controllers
 
             return Ok(ownerRentals);
         }
+
+        [HttpGet("sales")]
+
+        public ActionResult GetTotalSales(int id, DateTime month)
+        {
+            var totalSales = _repository.GetTotalEarnedAmount(id, month);
+
+            return Ok(totalSales);
+        }
     }
 }
