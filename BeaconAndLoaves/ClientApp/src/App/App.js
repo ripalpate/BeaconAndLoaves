@@ -27,7 +27,6 @@ import connection from '../helpers/data/connection';
 import OwnerProperties from '../components/pages/OwnerProperties/OwnerProperties';
 import RentingHistory from '../components/pages/RentingHistory/RentingHistory';
 import OwnerRentals from '../components/pages/OwnerRentals/OwnerRentals';
-import OwnerDashboard from '../components/pages/OwnerDashboard/OwnerDashboard';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
@@ -130,7 +129,6 @@ export default class App extends Component {
                   <PrivateRoute exact path="/rental/:id" authed={this.state.authed} component={Rental}/>
                   <PrivateRoute exact path="/rentingHistory" authed={this.state.authed} component={props => <RentingHistory {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute exact path="/viewRentals" authed={this.state.authed} component={props => <OwnerRentals {...props} currentUser={currentUser}/>}/>
-                  <PrivateRoute exact path="/dashboard" authed={this.state.authed} component={props => <OwnerDashboard {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute exact path="/ownerProperties/:id" authed={this.state.authed} component={props => <OwnerProperties {...props} currentUser={currentUser}/>}/>
                 </Switch>
           </React.Fragment>

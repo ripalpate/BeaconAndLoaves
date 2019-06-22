@@ -421,9 +421,6 @@ class Profile extends React.Component {
             <button id='viewRentals' type="button" className="bttn-pill renter-history-btn ml-2 " onClick={this.changeView}>
              View Rentals
             </button>
-            <button id='dashboard' type="button" className="bttn-pill dashboard-btn ml-2 " onClick={this.changeView}>
-             View Total Sales
-            </button>
             <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile} title="Edit Profile">
               <i className="far fa-edit fa-2x"/>
             </button>

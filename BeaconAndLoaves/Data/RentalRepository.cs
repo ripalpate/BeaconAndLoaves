@@ -168,7 +168,7 @@ namespace BeaconAndLoaves.Data
             using (var db = new SqlConnection(_connectionString))
             {
                 var query = @"
-                    select r.*, p.propertyName, p.city, p.state
+                    select r.*, p.propertyName, p.city, p.state, p.ownerId, p.createdOn, p.price
                     from rentals r
                     join properties p
                     on r.propertyId = p.id
