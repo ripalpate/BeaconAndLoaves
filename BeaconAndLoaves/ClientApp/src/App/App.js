@@ -116,7 +116,7 @@ export default class App extends Component {
                     component={props => <Register getUser={this.getUser} isRegistered={isRegistered} {...props} currentUser={currentUser}/>}
                       authed={this.state.authed}/>
                   <PrivateRoute path="/home" component={Home} authed={this.state.authed}/>
-                  <PrivateRoute exact path="/profile" component={props => <Profile {...props} currentUser={currentUser}/>}
+                  <PrivateRoute exact path="/profile" component={props => <Profile {...props} getUser={this.getUser} currentUser={currentUser}/>}
                       authed={this.state.authed}/>}/>
                   <PrivateRoute exact path="/properties" component={Properties} authed={this.state.authed}/>
                   <PrivateRoute path="/properties/lightHouses" component={LightHouses} authed={this.state.authed}/>
@@ -126,7 +126,7 @@ export default class App extends Component {
                   <PrivateRoute path="/likedProperties" authed={this.state.authed} component={props => <LikedProperties {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute path="/addProperty" authed={this.state.authed} component={AddEditProperty}/>
                   <PrivateRoute path="/editProperty/:id" authed={this.state.authed} component={EditProperty}/>
-                  <PrivateRoute exact path="/rental/:id" authed={this.state.authed} component={Rental}/>
+                  {/* <PrivateRoute exact path="/rental/:id" authed={this.state.authed} component={Rental}/> */}
                   <PrivateRoute exact path="/rentingHistory" authed={this.state.authed} component={props => <RentingHistory {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute exact path="/viewRentals" authed={this.state.authed} component={props => <OwnerRentals {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute exact path="/ownerProperties/:id" authed={this.state.authed} component={props => <OwnerProperties {...props} currentUser={currentUser}/>}/>

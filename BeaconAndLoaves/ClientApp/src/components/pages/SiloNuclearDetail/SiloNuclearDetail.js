@@ -4,13 +4,17 @@ import smashRequests from '../../../helpers/data/smashRequests';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import LikeButton from '../LikeButton/LikeButton';
+import Rental from '../Rental/Rental';
+
 import './SiloNuclearDetail.scss';
 
 class SiloNuclearDetail extends React.Component {
   state = {
     currentLikedProperty: [],
-    siloNuclear: [],
+    siloNuclear: {},
     isLiked: false,
+    siloNuclearId: 0,
+    rentalModal: false,
   }
 
   static propTypes = {
@@ -23,6 +27,7 @@ class SiloNuclearDetail extends React.Component {
 
   getPropertyWithOwnerName = () => {
     const siloNuclearId = this.props.match.params.id;
+    this.setState({ siloNuclearId });
     const convertSiloNuclearIdToNumber = parseInt(siloNuclearId, 10);
     smashRequests.getSinglePropertyWithOwnerInfo(convertSiloNuclearIdToNumber)
       .then((siloNuclear) => {
@@ -54,6 +59,15 @@ class SiloNuclearDetail extends React.Component {
 
   backButton = () => {
     this.props.history.push('/properties/siloNuclears');
+  }
+
+  toggleRentalModal = () => {
+    const { rentalModal } = this.state;
+    this.setState({ rentalModal: !rentalModal });
+  }
+
+  routeToHome = () => {
+    this.props.history.push('/rentingHistory');
   }
 
   OwnerPropertiesView = (e) => {
@@ -99,7 +113,7 @@ class SiloNuclearDetail extends React.Component {
   }
 
   render() {
-    const { siloNuclear, isLiked } = this.state;
+    const { siloNuclear, isLiked, rentalModal } = this.state;
     const { currentUser } = this.props;
     const makeLikedPropertyButton = () => {
       if (siloNuclear.ownerId !== currentUser.id) {
@@ -159,12 +173,20 @@ class SiloNuclearDetail extends React.Component {
             <p>{siloNuclear.description}</p>
             <p>${siloNuclear.price}/per night</p>
             <p className="owner-name" onClick = {this.OwnerPropertiesView} data-owner={siloNuclear.ownerId}>Owned By: {siloNuclear.name}</p>
-            <button className="btn btn-primary mr-2">Rent</button>
+            <button id={siloNuclear.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.toggleRentalModal}>Rent Me!!!</button>
             {makebutton()}
             {makeLikedPropertyButton()}
             {activateButton()}
           </div>
         </div>
+        <Rental
+          currentUser={currentUser}
+          rentalModal={rentalModal}
+          property={siloNuclear}
+          propertyId = {this.props.match.params.id * 1}
+          toggleRentalModal={this.toggleRentalModal}
+          routeToHome={this.routeToHome}
+        />
       </div>
     );
   }

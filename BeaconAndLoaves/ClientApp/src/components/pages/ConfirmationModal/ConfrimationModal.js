@@ -11,15 +11,15 @@ import './ConfirmationModal.scss';
 
 class MyModal extends React.Component {
   static propTypes = {
-    toggleModal: PropTypes.func,
+    toggleValidationModal: PropTypes.func,
     modal: PropTypes.bool,
     rentProperty: PropTypes.func,
     rental: PropTypes.object,
   }
 
   toggleEvent = () => {
-    const { toggleModal } = this.props;
-    toggleModal();
+    const { toggleValidationModal } = this.props;
+    toggleValidationModal();
   }
 
   render() {
@@ -35,7 +35,7 @@ class MyModal extends React.Component {
 
     return (
       <div>
-        <Modal isOpen={modal} toggle={this.toggleEvent} className="modal-lg">
+        <Modal isOpen={modal} className="modal-lg">
           <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>Rental Confirmation</ModalHeader>
           <ModalBody className="text-center modal-body">
               <h3>Please Confirm Your Information</h3>

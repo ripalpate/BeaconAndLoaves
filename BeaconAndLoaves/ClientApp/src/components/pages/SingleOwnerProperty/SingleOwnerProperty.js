@@ -13,13 +13,18 @@ class SingleOwnerProperty extends React.Component {
 
   static propTypes = {
     property: propertiesShape,
-    rentProperty: PropTypes.func.isRequired,
+    lightHouseDetailView: PropTypes.func.isRequired,
+    siloDetailView: PropTypes.func.isRequired,
     currentUser: PropTypes.object,
   }
 
-  toggleRent = (e) => {
-    const propertyId = e.target.id;
-    this.props.rentProperty(propertyId);
+  changePropertyToDetailView = (e) => {
+    e.preventDefault();
+    const { lightHouseDetailView, siloDetailView } = this.props;
+    if (e.currentTarget.dataset.type === 0) {
+      lightHouseDetailView(e.currentTarget.id);
+    }
+    siloDetailView(e.currentTarget.id);
   }
 
   // clicking onheart icon changes isLiked state
@@ -68,7 +73,7 @@ class SingleOwnerProperty extends React.Component {
     };
 
     return (
-        <div className="card mx-auto bg-light detail">
+        <div className="card mx-auto bg-light detail" id={property.id} data-type={property.type} onClick={this.changePropertyToDetailView}>
             <div className="imgHolder">
                 <img className="singleLightHouseImg"src={property.imageUrl} alt="property"/>
             </div>
@@ -78,7 +83,6 @@ class SingleOwnerProperty extends React.Component {
                 <p>{property.city}, {property.state} - {property.zipCode}</p>
                 <p>{property.description}</p>
                 <p>${property.price}/per night</p>
-                <button id={property.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.toggleRent}>Rent Me!!!</button>
                 {makeLikedPropertyButton()}
             </div>
         </div>

@@ -39,6 +39,8 @@ const getSingleRental = rentalId => axios.get(`${apiUrl}/${rentalId}`);
 
 const createRental = rentalObject => axios.post(`${apiUrl}`, (rentalObject));
 
+const updateRental = (rentalId, rentalObject) => axios.put(`${apiUrl}/${rentalId}`, rentalObject);
+
 const getFutureOwnerRentals = ownerId => new Promise((resolve, reject) => {
   axios.get(`${apiUrl}/futureRentals/${ownerId}`)
     .then((results) => {
@@ -67,4 +69,5 @@ export default {
   getFutureOwnerRentals,
   getPastOwnerRentals,
   getSingleRental,
+  updateRental,
 };

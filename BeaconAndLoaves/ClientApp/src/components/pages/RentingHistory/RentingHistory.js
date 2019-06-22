@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SingleRentalItem from '../../SingleRentalItem/SingleRentalItem';
 import RentingHistoryModal from '../RentingHistoryModal/RentingHistoryModal';
+import Rental from '../Rental/Rental';
 import rentalRequests from '../../../helpers/data/rentalRequests';
+import propertyRequests from '../../../helpers/data/propertiesRequests';
+
 
 import './RentingHistory.scss';
 
@@ -19,6 +22,11 @@ class RentingHistory extends React.Component {
       rentingId: 0,
       rentingHistoryModal: false,
       selectedRental: {},
+      selectedProperty: {},
+      numDays: 0,
+      isEditing: false,
+      rentalModal: false,
+      propertyId: 0,
     }
 
     toggleModal = (rentingId) => {
@@ -29,10 +37,29 @@ class RentingHistory extends React.Component {
       }
     }
 
+    toggleRentalModal = () => {
+      const { isEditing, rentalModal } = this.state;
+      this.setState({ isEditing: !isEditing, rentalModal: !rentalModal });
+      this.getFutureRentals();
+    }
+
     getSingleRental = (rentingId) => {
       rentalRequests.getSingleRental(rentingId)
         .then((rental) => {
           this.setState({ selectedRental: rental.data });
+        })
+        .then(() => {
+          const { selectedRental } = this.state;
+          this.numDaysBetween();
+          this.getSingleProperty(selectedRental.PropertyId);
+        });
+    }
+
+    getSingleProperty = (propertyId) => {
+      this.setState({ propertyId });
+      propertyRequests.getSingleProperty(propertyId)
+        .then((selectedProperty) => {
+          this.setState({ selectedProperty });
         });
     }
 
@@ -52,6 +79,24 @@ class RentingHistory extends React.Component {
         });
     }
 
+    numDaysBetween = () => {
+      const { selectedRental } = this.state;
+      const today = new Date();
+      const startDate = new Date(selectedRental.StartDate);
+      const diff = Math.abs(startDate.getTime() - today.getTime());
+      this.setState({ numDays: diff / (1000 * 60 * 60 * 24) });
+    };
+
+    formSubmit = (e) => {
+      e.preventDefault();
+      const { selectedRental } = this.state;
+      const rentalId = selectedRental.id;
+      rentalRequests.updateRental(rentalId, selectedRental)
+        .then(() => {
+          this.setState({ isEditing: false });
+        });
+    }
+
     componentDidMount() {
       const { currentUser } = this.props;
       this.rentingHistoryMounted = !!currentUser.id;
@@ -68,7 +113,17 @@ class RentingHistory extends React.Component {
         rentingHistoryModal,
         rentingId,
         selectedRental,
+        selectedProperty,
+        numDays,
+        isEditing,
+        rentalModal,
+        propertyId,
       } = this.state;
+
+      const {
+        currentUser,
+        getSingleRental,
+      } = this.props;
 
       const createFutureRentals = futureRentals.map(rental => (
         <SingleRentalItem
@@ -155,6 +210,22 @@ class RentingHistory extends React.Component {
               rentingId={rentingId}
               toggleModal={this.toggleModal}
               selectedRental={selectedRental}
+              numDays={numDays}
+              isEditing={isEditing}
+              toggleRentalModal={this.toggleRentalModal}
+              formSubmit={this.formSubmit}
+            />
+            <Rental
+              isEditing={isEditing}
+              currentUser={currentUser}
+              rentalModal={rentalModal}
+              property={selectedProperty}
+              propertyId = {propertyId}
+              toggleRentalModal={this.toggleRentalModal}
+              toggleModal={this.toggleModal}
+              routeToHome={this.routeToHome}
+              selectedRental={selectedRental}
+              getSingleRental={getSingleRental}
             />
         </div>
       );
