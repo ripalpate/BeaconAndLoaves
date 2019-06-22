@@ -24,7 +24,8 @@ class LightHouseDetail extends React.Component {
   }
 
   componentDidMount() {
-    this.lightHouseDetailMounted = true;
+    const { currentUser } = this.props;
+    this.lightHouseDetailMounted = !!currentUser.id;
     if (this.lightHouseDetailMounted) {
       this.getPropertyWithOwnerName();
     }
