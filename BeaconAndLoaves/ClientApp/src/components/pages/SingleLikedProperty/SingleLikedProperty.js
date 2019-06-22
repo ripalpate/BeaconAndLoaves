@@ -17,9 +17,10 @@ static propTypes = {
 }
 
 changePropertyToDetailView = (e) => {
+  console.log('clicked!');
   e.preventDefault();
   const { lightHouseDetailView, siloDetailView } = this.props;
-  if (e.CurrentTarget.dataset.type === 0) {
+  if (e.currentTarget.dataset.type === 0) {
     lightHouseDetailView(e.currentTarget.id);
   }
   siloDetailView(e.currentTarget.id);
@@ -46,7 +47,7 @@ render() {
   const { isLiked } = this.state;
   const { likedProperty } = this.props;
   return (
-      <div id={likedProperty.propertyId} data-type={likedProperty.propertyType} className="card bg-light mr-4 mb-4 singleLikedProperty text-center" onClick={this.changeLightHouseToDetailView}>
+      <div id={likedProperty.propertyId} data-type={likedProperty.propertyType} className="card bg-light mr-4 mb-4 singleLikedProperty text-center" onClick={this.changePropertyToDetailView}>
         <div className="imgHolder">
           <img className="singleLightHouseImg" src={likedProperty.imageUrl} alt="liked Property"/>
         </div>
