@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import './LightHouseDetail.scss';
 import smashRequests from '../../../helpers/data/smashRequests';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
+import rentalRequests from '../../../helpers/data/rentalRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
+import WarningModal from '../WarningModal/WarningModal';
 import LikeButton from '../LikeButton/LikeButton';
 
 class LightHouseDetail extends React.Component {
@@ -13,6 +15,8 @@ class LightHouseDetail extends React.Component {
     currentLikedProperty: [],
     lightHouse: [],
     isLiked: false,
+    isDeletingProperty: false,
+    modal: false,
   }
 
   static propTypes = {
@@ -26,6 +30,10 @@ class LightHouseDetail extends React.Component {
     }
   }
 
+toggleModal = () => {
+  const { modal } = this.state;
+  this.setState({ modal: !modal });
+}
 
   // get Propertydetails with owner name and hold isLiked state
   getPropertyWithOwnerName = () => {
@@ -89,6 +97,18 @@ class LightHouseDetail extends React.Component {
       });
   }
 
+  checkFutureRentalsForProperty = (e) => {
+    const { propertyId } = e.target.dataset;
+    rentalRequests.getAllRentalsByPropertyId(propertyId)
+      .then((futureRentals) => {
+        if (futureRentals.length === 0) {
+          this.deleteProperty();
+        } else {
+          this.setState({ isDeletingProperty: true }, this.toggleModal());
+        }
+      });
+  }
+
   deactivateProperty = (e) => {
     const { propertyId } = e.target.dataset;
     const updateProp = { ...this.state.lightHouse };
@@ -112,7 +132,7 @@ class LightHouseDetail extends React.Component {
   }
 
   render() {
-    const { lightHouse, isLiked } = this.state;
+    const { lightHouse, isLiked, isDeletingProperty, modal } = this.state;
     const { currentUser } = this.props;
     const makeLikedPropertyButton = () => {
       if (lightHouse.ownerId !== currentUser.id) {
@@ -133,7 +153,7 @@ class LightHouseDetail extends React.Component {
         return (
           <div className = "float-right">
             <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
-            <i onClick = {this.deleteProperty} className="fas fa-trash fa-2x" data-property-id={lightHouse.id} title="Delete"></i>
+            <i onClick = {this.checkFutureRentalsForProperty} className="fas fa-trash fa-2x" data-property-id={lightHouse.id} title="Delete"></i>
           </div>
         );
       } return (<span></span>);
@@ -177,6 +197,11 @@ class LightHouseDetail extends React.Component {
             {activateButton()}
           </div>
         </div>
+        <WarningModal
+        isDeletingProperty = {isDeletingProperty}
+        toggleModal = {this.toggleModal}
+        modal = {modal}
+        />
       </div>
     );
   }
