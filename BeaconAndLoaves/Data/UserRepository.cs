@@ -67,7 +67,8 @@ namespace BeaconAndLoaves.Data
                 var paymentAccounts = db.Query<UserPayment>(@"
                     select *
                     from userpayment
-                    where userid = @id",
+                    where userid = @id
+                    and isactive = 1",
                     new { id });
 
                 return paymentAccounts;

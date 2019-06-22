@@ -28,7 +28,7 @@ const getAllPaymentTypes = () => new Promise((resolve, reject) => {
 
 const getSingleUserPayment = userPaymentId => axios.get(`${apiUrl}/${userPaymentId}`);
 
-const deleteUserPayment = userPaymentId => axios.put(`${apiUrl}/remove/${userPaymentId}`);
+const deleteUserPayment = userPaymentId => axios.delete(`${apiUrl}/remove/${userPaymentId}`);
 
 const createUserPayment = userPaymentObject => axios.post(`${apiUrl}/addPaymentMethod`, (userPaymentObject));
 

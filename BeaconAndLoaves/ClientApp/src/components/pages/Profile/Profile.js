@@ -472,6 +472,7 @@ class Profile extends React.Component {
       cancelPaymentModal={this.cancelPaymentModal}
       toggleEditPaymentModal={this.toggleEditPaymentModal}
       currentUser={currentUser}
+      getUserPaymentAccounts={this.getUserPaymentAccounts}
       />
       </div>
       <div className="profileDiv d-flex mx-auto">
