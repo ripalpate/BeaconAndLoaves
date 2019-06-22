@@ -19,7 +19,6 @@ class SingleOwnerProperty extends React.Component {
   }
 
   changePropertyToDetailView = (e) => {
-    console.log('clicked!');
     e.preventDefault();
     const { lightHouseDetailView, siloDetailView } = this.props;
     if (e.currentTarget.dataset.type === 0) {
