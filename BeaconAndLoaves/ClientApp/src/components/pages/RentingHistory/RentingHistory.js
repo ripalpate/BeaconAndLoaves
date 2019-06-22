@@ -40,6 +40,7 @@ class RentingHistory extends React.Component {
     toggleRentalModal = () => {
       const { isEditing, rentalModal } = this.state;
       this.setState({ isEditing: !isEditing, rentalModal: !rentalModal });
+      this.getFutureRentals();
     }
 
     getSingleRental = (rentingId) => {
