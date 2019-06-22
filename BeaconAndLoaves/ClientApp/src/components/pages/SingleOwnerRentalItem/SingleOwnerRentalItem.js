@@ -7,11 +7,16 @@ class SingleOwnerRentalItem extends React.Component {
    rental: PropTypes.object,
  }
 
+ toggleModalEvent = (e) => {
+  const rentingId = e.currentTarget.id * 1;
+  this.props.toggleModal(rentingId);
+}
+
  render() {
    const { rental } = this.props;
 
    return (
-      <tr id={rental.id} className="renting-item">
+      <tr id={rental.id} className="renting-item" onClick={this.toggleModalEvent}>
           <td className="rental-property-name">{rental.propertyName}</td>
           <td className="rental-start">{formatDate.formatMDYDate(rental.startDate)}</td>
           <td className="rental-end">{formatDate.formatMDYDate(rental.endDate)}</td>
