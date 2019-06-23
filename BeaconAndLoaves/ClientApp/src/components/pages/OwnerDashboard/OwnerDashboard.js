@@ -1,44 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import rentalRequests from '../../../helpers/data/rentalRequests';
+import userRequests from '../../../helpers/data/userRequests';
 
 class OwnerDashboard extends React.Component {
+  ownerDashboradMounted = false;
 
   state = {
-    propertiesWithSales: [],
+    properties: [],
+    selectedProperty: '',
   }
 
-  static propTypes = {
-    currentUser: PropTypes.object,
-  }
+  getUserProperties = () => {
+    const { currentUser } = this.props;
+    const userId = currentUser.id;
+    userRequests.getUserProperties(userId)
+      .then((properties) => {
+        this.setState({ properties });
+      });
+  };
 
   componentDidMount() {
     const { currentUser } = this.props;
-    this.OwnerDashboard = !!currentUser.id;
-    if (this.OwnerDashboard) {
-      this.getTotalSalesPerProperty();
+    this.ownerDashboardMounted = !!currentUser.id;
+    if (this.ownerDashboardMounted) {
+      this.getUserProperties();
     }
   }
 
-  getTotalSalesPerProperty = () => {
-    const { currentUser } = this.props;
-    rentalRequests.getTotalAmountPerMonth(currentUser.id)
-      .then((totalSalesPerProperty) => {
-        this.setState({ propertiesWithSales: totalSalesPerProperty });
-      }).catch(err => console.error(err));
+  dropdownSelect = (e) => {
+    const selectedProperty = e.target.value;
+    this.setState({ selectedProperty });
   }
 
   render() {
-    const { propertiesWithSales } = this.state;
+    const { properties } = this.state;
+
     return (
-      propertiesWithSales.map(propertyWithSales => (
-      <div className="card">
-        <div className="card-body">
-          <h3>{propertyWithSales.propertyName}</h3>
-          <h6>Lifetime Sales: {propertyWithSales.lifetimeSales}</h6>
+     <div>
+       <div>Select Properties:
+          <select id="property" className="custom-select mb-2 ml-2" onChange={this.dropdownSelect}>
+          <option defaultValue>Select Property</option>
+            {
+            properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
+            }
+          </select>
         </div>
-      </div>
-      ))
+        <div>
+        <select id="drp1"></select>
+        </div>
+
+     </div>
     );
   }
 }
