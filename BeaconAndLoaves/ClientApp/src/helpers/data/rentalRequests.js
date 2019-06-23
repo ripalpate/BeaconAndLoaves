@@ -59,10 +59,11 @@ const getPastOwnerRentals = ownerId => new Promise((resolve, reject) => {
     });
 });
 
-const getTotalAmountPerMonth = () => new Promise((resolve, reject) => {
-  axios.get(`${apiUrl}/sales`)
+const getTotalAmountPerMonth = ownerId => new Promise((resolve, reject) => {
+  axios.get(`${apiUrl}/sales/${ownerId}`)
     .then((results) => {
-      console.log(results.data);
+      const totalSalesPerProperty = results.data;
+      resolve(totalSalesPerProperty);
     }).catch((error) => {
       reject(error);
     });

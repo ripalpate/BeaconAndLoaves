@@ -109,11 +109,11 @@ namespace BeaconAndLoaves.Controllers
             return Ok(ownerRentals);
         }
 
-        [HttpGet("sales")]
+        [HttpGet("sales/{id}")]
 
-        public ActionResult GetTotalSales(int id, DateTime month)
+        public ActionResult GetTotalSales(int id, DateTime startDate)
         {
-            var totalSales = _repository.GetTotalEarnedAmount(id, month);
+            var totalSales = _repository.GetTotalEarnedAmount(id, startDate);
 
             return Ok(totalSales);
         }

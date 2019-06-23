@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SingleOwnerRentalItem from '../SingleOwnerRentalItem/SingleOwnerRentalItem';
 import rentalRequests from '../../../helpers/data/rentalRequests';
-import OwnerDashboardModal from '../OwnerDashboardModal/OwnerDashboardModal';
 import './OwnerRentals.scss';
 
 class OwnerRentals extends React.Component {
@@ -11,9 +10,7 @@ ownerRentalsMounted = false;
     state = {
       futureOwnerRentals: [],
       pastOwnerRentals: [],
-      rentingId: 0,
-      rentingHistoryModal: false,
-      selectedRental: {},
+      totalSales: 0,
     }
 
     static propTypes = {
@@ -35,22 +32,8 @@ ownerRentalsMounted = false;
       rentalRequests.getPastOwnerRentals(ownerId)
         .then((rentals) => {
           this.setState({ pastOwnerRentals: rentals });
-        });
-    }
-
-    
-    toggleModal = (rentingId) => {
-      const { rentingHistoryModal } = this.state;
-      this.setState({ rentingId, rentingHistoryModal: !rentingHistoryModal });
-      if (rentingHistoryModal === false) {
-        this.getSingleRental(rentingId);
-      }
-    }
-
-    getSingleRental = (rentingId) => {
-      rentalRequests.getSingleRental(rentingId)
-        .then((rental) => {
-          this.setState({ selectedRental: rental.data });
+        }).then(() => {
+          this.getTotalSales();
         });
     }
 
@@ -63,20 +46,25 @@ ownerRentalsMounted = false;
       }
     }
 
+    getTotalSales = () => {
+      const { pastOwnerRentals } = this.state;
+      let total = 0;
+      pastOwnerRentals.forEach((item) => {
+        total += item.rentalAmount;
+      });
+      this.setState({ totalSales: total });
+    };
+
     render() {
       const {
         futureOwnerRentals,
         pastOwnerRentals,
-        rentingHistoryModal,
-        rentingId,
-        selectedRental,
       } = this.state;
 
       const createFutureOwnerRentals = futureOwnerRentals.map(rental => (
           <SingleOwnerRentalItem
           rental={rental}
           key = {rental.id}
-          toggleModal = {this.toggleModal}
           />
       ));
 
@@ -84,7 +72,6 @@ ownerRentalsMounted = false;
           <SingleOwnerRentalItem
           rental={rental}
           key = {rental.id}
-          toggleModal = {this.toggleModal}
           />
       ));
 
@@ -149,12 +136,11 @@ ownerRentalsMounted = false;
                 <h2 className="mt-5">Past Rentals:</h2>
                 {checkLength()}
               </div>
-              <OwnerDashboardModal
-                rentingHistoryModal={rentingHistoryModal}
-                rentingId={rentingId}
-                toggleModal={this.toggleModal}
-                selectedRental={selectedRental}
-              />
+              <div className="sales-container">
+                <h3 className="mt-5"> Lifetime Sales for all Properties</h3>
+                <p>Total sales: $ {this.state.totalSales}</p>
+                <button className = "bttn-pill">View Detail Sales </button>
+              </div>
           </div>
       );
     }

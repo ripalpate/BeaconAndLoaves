@@ -207,7 +207,7 @@ namespace BeaconAndLoaves.Data
         public IEnumerable<object> GetTotalEarnedAmount(int userId, DateTime startDate) {
             using (var db = new SqlConnection(_connectionString))
             {
-                var sql = @"Select rentals.PropertyId, SUM(rentals.rentalAmount) as 'Total Amount earned', properties.PropertyName
+                var sql = @"Select rentals.PropertyId, SUM(rentals.rentalAmount) as 'Total Sales', properties.PropertyName
                             From rentals 
                             Join Properties
 	                            On rentals.PropertyId = Properties.id 
@@ -215,8 +215,10 @@ namespace BeaconAndLoaves.Data
 	                            On rentals.userId=users.Id
 	                            Where Properties.OwnerId = @ownerId
 	                            And Month(rentals.startDate) = @month
-	                            Group By rentals.PropertyId, properties.PropertyName";
-                var parameters = new { ownerId = userId, month = startDate };
+	                            And Year(rentals.StartDate) = @year
+	                            And rentals.StartDate <= GETDATE()
+	                            Group By rentals.PropertyId, properties.PropertyName;";
+                var parameters = new { ownerId = userId, month = startDate, Year = startDate };
 
                 var GetTotalSalesPerProperty = db.Query<Object>(sql, parameters).ToList();
 
