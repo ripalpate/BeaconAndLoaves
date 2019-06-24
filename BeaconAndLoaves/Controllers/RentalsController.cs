@@ -111,9 +111,9 @@ namespace BeaconAndLoaves.Controllers
 
         [HttpGet("sales/{id}")]
 
-        public ActionResult GetTotalSales(int id, DateTime startDate)
+        public ActionResult GetTotalSales(int id, DateTime startDate, DateTime endDate, int propertyId)
         {
-            var totalSales = _repository.GetTotalEarnedAmount(id, startDate);
+            var totalSales = _repository.GetTotalEarnedAmount(id, startDate, endDate, propertyId);
 
             return Ok(totalSales);
         }
