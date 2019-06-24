@@ -73,7 +73,8 @@ class SingleOwnerProperty extends React.Component {
     };
 
     return (
-        <div className="card mx-auto bg-light detail" id={property.id} data-type={property.type} onClick={this.changePropertyToDetailView}>
+        <div className="card mx-auto bg-light detail" >
+            <div id={property.id} data-type={property.type} onClick={this.changePropertyToDetailView}>
             <div className="imgHolder">
                 <img className="singleLightHouseImg"src={property.imageUrl} alt="property"/>
             </div>
@@ -83,8 +84,9 @@ class SingleOwnerProperty extends React.Component {
                 <p>{property.city}, {property.state} - {property.zipCode}</p>
                 <p>{property.description}</p>
                 <p>${property.price}/per night</p>
-                {makeLikedPropertyButton()}
             </div>
+            </div>
+            {makeLikedPropertyButton()}
         </div>
     );
   }
