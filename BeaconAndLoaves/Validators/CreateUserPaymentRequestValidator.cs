@@ -13,9 +13,9 @@ namespace BeaconAndLoaves.Validators
         {
             return (string.IsNullOrEmpty(requestToValidate.PaymentTypeId.ToString())
                    || string.IsNullOrEmpty(requestToValidate.UserId.ToString())
-                   || string.IsNullOrEmpty(requestToValidate.AccountNumber.ToString())
+                   || string.IsNullOrEmpty(requestToValidate.AccountNumber)
                    || string.IsNullOrEmpty(requestToValidate.ExpirationDate.ToString())
-                   || string.IsNullOrEmpty(requestToValidate.Cvv.ToString())
+                   || string.IsNullOrEmpty(requestToValidate.Cvv)
                    || string.IsNullOrEmpty(requestToValidate.AccountName)
                    );
         }

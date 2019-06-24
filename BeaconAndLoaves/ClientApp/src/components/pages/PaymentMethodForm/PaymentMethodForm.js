@@ -62,7 +62,7 @@ class PaymentMethodForm extends React.Component {
 
   expirationDateChange = e => this.formFieldDateState('expirationDate', e);
 
-  CVVChange = e => this.formFieldNumberState('cvv', e);
+  CVVChange = e => this.formFieldStringState('cvv', e);
 
   formSubmit = (e) => {
     e.preventDefault();
