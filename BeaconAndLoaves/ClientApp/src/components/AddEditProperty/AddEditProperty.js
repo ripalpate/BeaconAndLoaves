@@ -6,6 +6,7 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 import propertiesRequests from '../../helpers/data/propertiesRequests';
 import authRequests from '../../helpers/data/authRequests';
 import userRequests from '../../helpers/data/userRequests';
@@ -27,6 +28,13 @@ class AddEditProperty extends React.Component {
     state = {
       newProperty: defaultProperty,
       currentUser: [],
+    }
+
+    static propTypes = {
+      isEditing: PropTypes.bool,
+      modal: PropTypes.bool,
+      togglePropertyModal: PropTypes.func,
+      changeAddEditView: PropTypes.func,
     }
 
     componentDidMount() {
@@ -68,51 +76,55 @@ class AddEditProperty extends React.Component {
 
       typeChange = e => this.formFieldNumberState('type', e);
 
-      formSubmitEvent = (newProperty) => {
-        propertiesRequests.createProperty(newProperty)
-          .then(() => {
-            this.props.history.push('/properties');
-          }).catch(err => console.error(err));
-      }
+      // formSubmitEvent = (newProperty) => {
+      //   propertiesRequests.createProperty(newProperty);
+      // }
 
       formSubmit = (e) => {
+        const { togglePropertyModal, changeAddEditView } = this.props;
+        const { newProperty } = this.state;
         e.preventDefault();
         const myProperty = { ...this.state.newProperty };
         myProperty.ownerId = this.state.currentUser.id;
-        this.formSubmitEvent(myProperty);
-        this.setState({ newProperty: defaultProperty });
+        propertiesRequests.createProperty(myProperty)
+          .then(() => {
+            if (newProperty.type === 1) {
+              changeAddEditView('properties/siloNuclear');
+            } else {
+              changeAddEditView('properties/lightHouses');
+            }
+            togglePropertyModal();
+          });
       }
-
 
       render() {
         const { newProperty } = this.state;
 
-        const { modal, isEditing, toggleRentalModal } = this.props;
+        const { modal, isEditing, togglePropertyModal } = this.props;
 
         const makeHeader = () => {
           if (isEditing) {
             return (
-              <div>Edit Rental</div>
+              <div>Edit Property</div>
             );
           }
           return (
-            <div>Add Rental</div>
+            <div>Add Property</div>
           );
         };
 
         return (
-          <div className="new-property ml-5">
+          <div className="new-property m-5 text-center">
             <Modal isOpen={modal} className="modal-lg">
-              <ModalHeader class-name="modal-header" toggle={toggleRentalModal}>{makeHeader()}</ModalHeader>
+              <ModalHeader class-name="modal-header" toggle={togglePropertyModal}>{makeHeader()}</ModalHeader>
                 <ModalBody className="text-center modal-body">
-            <form className="row col-12 border border-dark rounded" onSubmit={this.formSubmit}>
-              <h3 className="add-property-title">Add Property</h3>
-              <div className="form col-10 mx-auto">
-              <div className="form-group">
-                <label htmlFor="propertyName">Name:</label>
+            <form className="" onSubmit={this.formSubmit}>
+              <div className="form mx-auto">
+              <div className="form-group row text-center">
+                <label className="col-3" htmlFor="propertyName">Name:</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control col-8"
                   id="propertyName"
                   aria-describedby="nameHelp"
                   placeholder="Rock Bean Lighthouse"
@@ -121,10 +133,10 @@ class AddEditProperty extends React.Component {
                   required
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="type">Property Type</label>
+              <div className="form-group row">
+                <label className="col-3" htmlFor="type">Property Type:</label>
                     <select
-                    className="form-control"
+                    className="form-control col-8"
                     id="type"
                     value= {newProperty.type}
                     onChange= {this.typeChange}
@@ -134,11 +146,11 @@ class AddEditProperty extends React.Component {
                         <option value="1">Silo Nuclear</option>
                     </select>
               </div>
-              <div className="form-group">
-                <label htmlFor="street">Street:</label>
+              <div className="form-group row">
+                <label className="col-3" htmlFor="street">Street:</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control col-8"
                   id="street"
                   aria-describedby="streetHelp"
                   placeholder="123 Main St"
@@ -147,11 +159,11 @@ class AddEditProperty extends React.Component {
                   required
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="city">City:</label>
+              <div className="form-group row">
+                <label className="col-3" htmlFor="city">City:</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control col-8"
                   id="city"
                   aria-describedby="cityHelp"
                   placeholder="Nashville"
@@ -160,11 +172,11 @@ class AddEditProperty extends React.Component {
                   required
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="state">State:</label>
+              <div className="form-group row">
+                <label className="col-3" htmlFor="state">State:</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control col-8"
                   id="state"
                   aria-describedby="stateHelp"
                   placeholder="TN"
@@ -173,11 +185,11 @@ class AddEditProperty extends React.Component {
                   required
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="zipCode">Zipcode:</label>
+              <div className="form-group row">
+                <label className="col-3" htmlFor="zipCode">Zipcode:</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control col-8"
                   id="zipCode"
                   aria-describedby="zipCodeHelp"
                   placeholder="12345"
@@ -186,10 +198,10 @@ class AddEditProperty extends React.Component {
                   required
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="description">Description:</label>
+              <div className="form-group row">
+                <label className="col-3" htmlFor="description">Description:</label>
                 <textarea
-                  className="form-control"
+                  className="form-control col-8"
                   id="description"
                   value= {newProperty.description}
                   onChange= {this.descriptionChange}
@@ -198,11 +210,11 @@ class AddEditProperty extends React.Component {
                   >
                 </textarea>
               </div>
-              <div className="form-group">
-                <label htmlFor="image">Image:</label>
+              <div className="form-group row">
+                <label className="col-3" htmlFor="image">Image:</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control col-8"
                   id="imageUrl"
                   aria-describedby="imageHelp"
                   placeholder="www.jrekjr.jpg"
@@ -211,11 +223,11 @@ class AddEditProperty extends React.Component {
                   required
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="price">Price per night </label>
+              <div className="form-group row">
+                <label className="col-3" htmlFor="price">Nightly Rate: </label>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control col-8"
                   id="price"
                   aria-describedby="priceHelp"
                   placeholder="1000.50"

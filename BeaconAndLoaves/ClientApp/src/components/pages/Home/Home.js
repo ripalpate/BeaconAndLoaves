@@ -14,6 +14,10 @@ class Home extends React.Component {
     this.props.history.push(`/${view}`);
   }
 
+  changeAddEditView = (view) => {
+    this.props.history.push(`/${view}`);
+  }
+
   togglePropertyModal = () => {
     const { modal } = this.state;
     this.setState({ modal: !modal });
@@ -58,6 +62,8 @@ class Home extends React.Component {
           modal={modal}
           isEditing={isEditing}
           togglePropertyModal={this.togglePropertyModal}
+          changeAddEditView={this.changeAddEditView
+          }
         />
       </div>
     );
