@@ -76,20 +76,35 @@ class AddEditProperty extends React.Component {
       typeChange = e => this.formFieldNumberState('type', e);
 
       formSubmit = (e) => {
-        const { togglePropertyModal, changeAddEditView } = this.props;
+        const { togglePropertyModal, changeAddEditView, isEditing } = this.props;
         const { newProperty } = this.state;
         e.preventDefault();
         const myProperty = { ...this.state.newProperty };
         myProperty.ownerId = this.state.currentUser.id;
-        propertiesRequests.createProperty(myProperty)
-          .then(() => {
-            if (newProperty.type === 1) {
-              changeAddEditView('properties/siloNuclears');
-            } else {
-              changeAddEditView('properties/lightHouses');
-            }
-            togglePropertyModal();
-          });
+        if (isEditing) {
+          propertiesRequests.updateProperty(myProperty.id, myProperty)
+            .then(() => {
+              this.setState({ newProperty: defaultProperty }, togglePropertyModal());
+            });
+        } else {
+          propertiesRequests.createProperty(myProperty)
+            .then(() => {
+              if (newProperty.type === 1) {
+                this.setState({ newProperty: defaultProperty }, togglePropertyModal());
+                changeAddEditView('properties/siloNuclears');
+              } else {
+                this.setState({ newProperty: defaultProperty }, togglePropertyModal());
+                changeAddEditView('properties/lightHouses');
+              }
+            });
+        }
+      }
+
+      componentWillReceiveProps(props) {
+        const { isEditing, selectedProperty } = props;
+        if (isEditing) {
+          this.setState({ newProperty: selectedProperty });
+        }
       }
 
       render() {
@@ -116,7 +131,7 @@ class AddEditProperty extends React.Component {
                   <i className="fas fa-check-circle" />
                 </button>
               </div>
-            )
+            );
           }
           return (
             <div className="text-center">
@@ -124,8 +139,8 @@ class AddEditProperty extends React.Component {
                 <i className="fas fa-plus-circle" />
               </button>
             </div>
-          )
-        }
+          );
+        };
 
         return (
           <div className="new-property m-5 text-center">
