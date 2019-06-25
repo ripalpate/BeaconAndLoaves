@@ -10,9 +10,9 @@ namespace BeaconAndLoaves.Models
 
         public int PaymentTypeId { get; set; }
         public int UserId { get; set; }
-        public long AccountNumber { get; set; }
+        public string AccountNumber { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public int Cvv { get; set; }
+        public string Cvv { get; set; }
         public string AccountName { get; set; }
         public bool IsActive { get; set; }
 
