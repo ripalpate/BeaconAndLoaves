@@ -204,7 +204,7 @@ namespace BeaconAndLoaves.Data
             }
         }
 
-        public Object GetTotalEarnedAmount(int userId, DateTime startDate, DateTime endDate, int propertyId) {
+        public Object GetTotalEarnedAmount(int userId, int propertyId) {
 
             
 
@@ -215,12 +215,11 @@ namespace BeaconAndLoaves.Data
                             Join Properties
 	                            On rentals.PropertyId = Properties.id 
                             Join users 
-	                            On rentals.userId=users.Id
-	                            Where Properties.OwnerId = 04
-	                            And rentals.endDate between @startDate and @endDate
+	                            On rentals.userId = users.Id
+	                            Where Properties.OwnerId = @ownerId
 	                            And properties.id = @propertyId
 	                            Group By rentals.PropertyId, properties.propertyName, properties.createdOn";
-                var parameters = new { ownerId = userId, startDate, endDate, propertyId };
+                var parameters = new { ownerId = userId, propertyId };
                  
                 var GetTotalSalesPerProperty = db.QueryFirstOrDefault<Object>(sql, parameters);
 

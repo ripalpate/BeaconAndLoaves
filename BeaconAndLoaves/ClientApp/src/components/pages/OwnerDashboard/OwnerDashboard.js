@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import userRequests from '../../../helpers/data/userRequests';
@@ -26,7 +25,7 @@ class OwnerDashboard extends React.Component {
       });
   };
 
-  getpropertiesSales = (selectedProperty) => {
+  getPropertySales = (selectedProperty) => {
     const { currentUser } = this.props;
     const { startDate, endDate } = this.state;
     const userId = currentUser.id;
@@ -35,13 +34,14 @@ class OwnerDashboard extends React.Component {
     const selectedEndDate = formatDate.formatMDYDate(endDate);
     rentalRequests.getTotalAmountPerMonth(userId, selectedStartDate, selectedEndDate, selectedPropertyId)
       .then((propertyWithSales) => {
-        this.setState({ propertyWithSales, startDate: propertyWithSales.createdOn });
+        this.setState({ propertyWithSales });
+        this.setState({ startDate: propertyWithSales.createdOn });
       });
   }
 
   submitEvent = () => {
     const { showResults } = this.state;
-    this.setState({ showResults: !showResults }, this.getpropertiesSales());
+    this.setState({ showResults: !showResults }, this.getPropertySales());
   }
 
   componentDidMount() {
@@ -54,7 +54,7 @@ class OwnerDashboard extends React.Component {
 
   dropdownSelect = (e) => {
     const selectedProperty = e.target.value;
-    this.setState({ selectedProperty }, this.getpropertiesSales(selectedProperty));
+    this.setState({ selectedProperty }, this.getPropertySales(selectedProperty));
   }
 
   handleStartChange = (date) => {
