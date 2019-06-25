@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   Modal,
   ModalHeader,
   ModalBody,
@@ -76,10 +75,6 @@ class AddEditProperty extends React.Component {
 
       typeChange = e => this.formFieldNumberState('type', e);
 
-      // formSubmitEvent = (newProperty) => {
-      //   propertiesRequests.createProperty(newProperty);
-      // }
-
       formSubmit = (e) => {
         const { togglePropertyModal, changeAddEditView } = this.props;
         const { newProperty } = this.state;
@@ -89,7 +84,7 @@ class AddEditProperty extends React.Component {
         propertiesRequests.createProperty(myProperty)
           .then(() => {
             if (newProperty.type === 1) {
-              changeAddEditView('properties/siloNuclear');
+              changeAddEditView('properties/siloNuclears');
             } else {
               changeAddEditView('properties/lightHouses');
             }
@@ -112,6 +107,25 @@ class AddEditProperty extends React.Component {
             <div>Add Property</div>
           );
         };
+
+        const makeButton = () => {
+          if (isEditing) {
+            return (
+              <div className="text-center">
+                <button className="btn user-add-btn btn-success my-auto mx-auto" title="Submit">
+                  <i className="fas fa-check-circle" />
+                </button>
+              </div>
+            )
+          }
+          return (
+            <div className="text-center">
+              <button className="btn user-add-btn btn-success my-auto mx-auto" title="Submit">
+                <i className="fas fa-plus-circle" />
+              </button>
+            </div>
+          )
+        }
 
         return (
           <div className="new-property m-5 text-center">
@@ -236,11 +250,7 @@ class AddEditProperty extends React.Component {
                   required
                 />
               </div>
-              <div className="text-center">
-                <button className="btn user-add-btn btn-success my-auto mx-auto" title="Submit">
-                  <i className="fas fa-plus-circle" />
-                </button>
-              </div>
+                {makeButton()}
               </div>
             </form>
               </ModalBody>
