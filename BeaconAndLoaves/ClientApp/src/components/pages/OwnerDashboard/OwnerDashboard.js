@@ -2,7 +2,6 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import userRequests from '../../../helpers/data/userRequests';
-import formatDate from '../../../helpers/formatDate';
 
 class OwnerDashboard extends React.Component {
   ownerDashboradMounted = false;
@@ -31,7 +30,6 @@ class OwnerDashboard extends React.Component {
 
   getAllRentalsRelatedToSelectedProperty = (selectedProperty) => {
     const { currentUser } = this.props;
-    const { createdDate } = this.state;
     const userId = currentUser.id;
     const selectedPropertyId = selectedProperty * 1;
     rentalRequests.getAllRentalsForSingleProperty(userId, selectedPropertyId)
@@ -88,15 +86,11 @@ class OwnerDashboard extends React.Component {
 
   figureTotal = () => {
     const { rentalsAssocWithProperty } = this.state;
-    // const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-    // const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    // const rentalTotal = diffDays * rentalsAssocWithProperty[0].RentalAmount;
     let total = 0;
     rentalsAssocWithProperty.forEach((item) => {
       total += item.RentalAmount;
     });
     this.setState({ rentalTotal: total });
-    // this.setState({ rentalTotal });
   }
 
   totalPerSelection = () => {
