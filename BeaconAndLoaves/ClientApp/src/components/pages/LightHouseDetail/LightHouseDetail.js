@@ -171,7 +171,7 @@ class LightHouseDetail extends React.Component {
     return (
       <div>
         <div className="back-button">
-              <button className = "bttn-pill bttn-md bttn-warning" onClick = {this.backButton}>Back</button>
+              <button className = "bttn-pill bttn-md" onClick = {this.backButton}><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
         </div>
         <div className="card mx-auto bg-light detail">
           <div className="imgHolder">

@@ -73,6 +73,10 @@ class LightHouses extends React.Component {
     }
   }
 
+  backButton = () => {
+    this.props.history.push('/properties');
+  }
+
   lightHouseDetailView = (lightHouseId) => {
     this.props.history.push(`/lightHouses/${lightHouseId}`);
   }
@@ -134,6 +138,7 @@ class LightHouses extends React.Component {
     return (
       <div>
         <div className="serach-sort-container">
+        <button className = "bttn-pill bttn-md" onClick = {this.backButton}><i class="far fa-arrow-alt-circle-left"></i></button>
           <button
             id="search-btn"
             type="button"
