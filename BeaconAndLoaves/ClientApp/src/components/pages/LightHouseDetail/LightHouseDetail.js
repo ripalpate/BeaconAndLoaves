@@ -1,22 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './LightHouseDetail.scss';
 import smashRequests from '../../../helpers/data/smashRequests';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import WarningModal from '../WarningModal/WarningModal';
 import LikeButton from '../LikeButton/LikeButton';
+import Rental from '../Rental/Rental';
+
+import './LightHouseDetail.scss';
 
 class LightHouseDetail extends React.Component {
   lightHouseDetailMounted = false;
 
   state = {
     currentLikedProperty: [],
-    lightHouse: [],
+    lightHouse: {},
     isLiked: false,
     isDeletingProperty: false,
     modal: false,
+    lightHouseId: 0,
+    rentalModal: false,
   }
 
   static propTypes = {
@@ -39,6 +43,7 @@ toggleModal = () => {
   // get Propertydetails with owner name and hold isLiked state
   getPropertyWithOwnerName = () => {
     const lightHouseId = this.props.match.params.id;
+    this.setState({ lightHouseId });
     const convertlightHouseIdToNumber = parseInt(lightHouseId, 10);
     smashRequests.getSinglePropertyWithOwnerInfo(convertlightHouseIdToNumber)
       .then((lightHouse) => {
@@ -52,9 +57,13 @@ toggleModal = () => {
     this.props.history.push('/properties/lightHouses');
   }
 
-  rentProperty = (e) => {
-    const propertyId = e.target.id;
-    this.props.history.push(`/rental/${propertyId}`);
+  toggleRentalModal = () => {
+    const { rentalModal } = this.state;
+    this.setState({ rentalModal: !rentalModal });
+  }
+
+  routeToHome = () => {
+    this.props.history.push('/rentingHistory');
   }
 
   // clicking onheart icon changes isLiked state
@@ -133,7 +142,13 @@ toggleModal = () => {
   }
 
   render() {
-    const { lightHouse, isLiked, isDeletingProperty, modal } = this.state;
+    const {
+      lightHouse,
+      isLiked,
+      rentalModal,
+      modal,
+      isDeletingProperty,
+    } = this.state;
     const { currentUser } = this.props;
     const makeLikedPropertyButton = () => {
       if (lightHouse.ownerId !== currentUser.id) {
@@ -192,7 +207,7 @@ toggleModal = () => {
             <p>{lightHouse.description}</p>
             <p>${lightHouse.price}/per night</p>
             <p className="owner-name" onClick = {this.OwnerPropertiesView} data-owner={lightHouse.ownerId}>Owned By: {lightHouse.name}</p>
-            <button id={lightHouse.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.rentProperty}>Rent Me!!!</button>
+            <button id={lightHouse.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.toggleRentalModal}>Rent Me!!!</button>
             {makebutton()}
             {makeLikedPropertyButton()}
             {activateButton()}
@@ -202,6 +217,14 @@ toggleModal = () => {
         isDeletingProperty = {isDeletingProperty}
         toggleModal = {this.toggleModal}
         modal = {modal}
+        />
+        <Rental
+          currentUser={currentUser}
+          rentalModal={rentalModal}
+          property={lightHouse}
+          propertyId = {this.props.match.params.id * 1}
+          toggleRentalModal={this.toggleRentalModal}
+          routeToHome={this.routeToHome}
         />
       </div>
     );

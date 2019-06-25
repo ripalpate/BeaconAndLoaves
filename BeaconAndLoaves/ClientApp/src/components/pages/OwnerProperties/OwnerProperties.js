@@ -12,8 +12,12 @@ class OwnerPropducts extends React.Component {
       currentUser: PropTypes.object,
     }
 
-    rentProperty = (propertyId) => {
-      this.props.history.push(`/rental/${propertyId}`);
+    lightHouseDetailView = (lightHouseId) => {
+      this.props.history.push(`/lightHouses/${lightHouseId * 1}`);
+    }
+  
+    siloDetailView = (siloId) => {
+      this.props.history.push(`/siloNuclears/${siloId * 1}`);
     }
 
     getOwnerPropertiesWithOwnerInfo =() => {
@@ -43,12 +47,14 @@ class OwnerPropducts extends React.Component {
         key = {property.id}
         rentProperty = { this.rentProperty }
         currentUser = {currentUser}
+        siloDetailView={this.siloDetailView}
+        lightHouseDetailView={this.lightHouseDetailView}
         />
       ));
       return (
         <div>
             <div className="back-button">
-              <button className = "btn btn-warning" onClick = {this.backButton}>Back</button>
+              <button className = "bttn-pill btn-warning" onClick = {this.backButton}>Back</button>
             </div>
             <div className = "row">
             {ownerPropertyComponent}

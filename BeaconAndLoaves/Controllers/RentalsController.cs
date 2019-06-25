@@ -47,7 +47,7 @@ namespace BeaconAndLoaves.Controllers
             {
                 return BadRequest();
             }
-            var rental = _repository.UpdateProperty(rentalToUpdate);
+            var rental = _repository.UpdateRental(rentalToUpdate);
             return Ok(rental);
         }
 

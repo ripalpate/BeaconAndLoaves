@@ -12,15 +12,16 @@ import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import formatDate from '../../../helpers/formatDate';
 
 class SinglePaymentMethodModal extends React.Component {
-state = {
-  paymentTypes: [],
-}
+  state = {
+    paymentTypes: [],
+  };
 
   static propTypes = {
     togglePaymentModal: PropTypes.func,
     paymentModal: PropTypes.bool,
     isAddingAccount: PropTypes.bool,
     isEditingAccount: PropTypes.bool,
+    getUserPaymentAccounts: PropTypes.func,
   }
 
   cancelPaymentModalEvent = () => {
@@ -42,9 +43,17 @@ state = {
     this.paymentTypes();
   }
 
+  // deletePaymentMethod = (e) => {
+  //   const { paymentAccount } = this.props;
+  //   paymentMethodRequests.deleteUserPayment(this.paymentAccount.id)
+  //     .then(() => {
+  //       this.props.history.push('/home');
+  //     });
+  //   this.props.history.push('/home');
+  // }
+
   render() {
     const { paymentTypes } = this.state;
-
     const {
       paymentModal,
       paymentAccount,
@@ -55,6 +64,7 @@ state = {
       toggleEditPaymentModal,
       getAllUserPayments,
       currentUser,
+      getUserPaymentAccounts,
     } = this.props;
 
     const getAccountTypeName = (type) => {
@@ -67,6 +77,23 @@ state = {
       }
       return paymentName;
     };
+
+    const deletePaymentMethod = () => {
+      paymentMethodRequests.deleteUserPayment(paymentAccount.id)
+        .then(() => {
+          this.cancelPaymentModalEvent();
+          getUserPaymentAccounts();
+        });
+    };
+
+    // const formatDate = () => {
+    //   const expirationDate = new Date(paymentAccount.expirationDate);
+    //   const month = (`0${expirationDate.getMonth() + 1}`).slice(-2);
+    //   const day = expirationDate.getDate();
+    //   const year = expirationDate.getFullYear();
+    //   const formattedDate = `${month}/${year}`;
+    //   return formattedDate;
+    // };
 
     const createModalHeader = () => {
       if (isRegistering) {
@@ -94,6 +121,9 @@ state = {
         <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal} title="Edit Account">
             <i className="far fa-edit fa-2x"/>
         </button>
+        <button id='paymentMethod-delete' type="button" className="btn paymentMethod-delete-btn m-1" onClick={deletePaymentMethod}>
+            <i className="paymentMethod-delete-btn fas fa-trash fa-2x"></i>
+        </button>
         </div>
       </ModalBody>
       </Modal>
@@ -111,6 +141,7 @@ state = {
             toggleIsEditing={this.toggleIsEditing}
             changeEditView={changeEditView}
             cancelPaymentModalEvent={this.cancelPaymentModalEvent}
+            formatDate={formatDate}
             />
           </ModalBody>
           </Modal>

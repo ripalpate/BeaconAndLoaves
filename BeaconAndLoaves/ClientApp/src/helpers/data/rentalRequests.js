@@ -39,6 +39,8 @@ const getSingleRental = rentalId => axios.get(`${apiUrl}/${rentalId}`);
 
 const createRental = rentalObject => axios.post(`${apiUrl}`, (rentalObject));
 
+const updateRental = (rentalId, rentalObject) => axios.put(`${apiUrl}/${rentalId}`, rentalObject);
+
 const getFutureOwnerRentals = ownerId => new Promise((resolve, reject) => {
   axios.get(`${apiUrl}/futureRentals/${ownerId}`)
     .then((results) => {
@@ -60,7 +62,7 @@ const getPastOwnerRentals = ownerId => new Promise((resolve, reject) => {
 });
 
 const getTotalAmountPerMonth = (ownerId, startdate, endDate, propertyId) => new Promise((resolve, reject) => {
-  axios.get(`${apiUrl}/sales/${ownerId}?startDate=${startdate}&endDate=${endDate}&propertyId=${propertyId}`)
+  axios.get(`${apiUrl}/sales/${ownerId}?propertyId=${propertyId}`)
     .then((results) => {
       const totalSalesPerProperty = results.data;
       resolve(totalSalesPerProperty);
@@ -78,4 +80,5 @@ export default {
   getPastOwnerRentals,
   getSingleRental,
   getTotalAmountPerMonth,
+  updateRental,
 };

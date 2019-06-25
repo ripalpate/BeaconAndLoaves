@@ -30,6 +30,7 @@ class Profile extends React.Component {
     modal: false,
     paymentModal: false,
     paymentAccount: {},
+    editedUser: {},
   }
 
   paymentAccount = {
@@ -84,7 +85,7 @@ class Profile extends React.Component {
   formFieldStringState = (name, e) => {
     const tempUser = { ...this.props.currentUser };
     tempUser[name] = e.target.value;
-    this.setState({ currentUser: tempUser });
+    this.setState({ editedUser: tempUser });
   }
 
   emailChange = e => this.formFieldStringState('email', e);
@@ -189,11 +190,11 @@ class Profile extends React.Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    const { currentUser } = this.props;
-    const userId = currentUser.id;
-    userRequests.updateUser(userId, currentUser)
+    const { editedUser } = this.state;
+    const userId = editedUser.id;
+    userRequests.updateUser(userId, editedUser)
       .then(() => {
-        this.setState({ isEditing: false });
+        this.setState({ isEditing: false }, this.props.getUser);
       });
   }
 
@@ -203,6 +204,7 @@ class Profile extends React.Component {
     if (this.profileMounted) {
       this.getUserPaymentAccounts();
       this.getUserProperties();
+      this.setState({ editedUser: currentUser });
     }
   }
 
@@ -221,6 +223,7 @@ class Profile extends React.Component {
       isAddingAccount,
       isEditingAccount,
       isRegistering,
+      editedUser,
     } = this.state;
 
     const {
@@ -244,7 +247,7 @@ class Profile extends React.Component {
                         className="form-control"
                         id="email"
                         placeholder="bob@xxx.com"
-                        value={currentUser.email}
+                        value={editedUser.email}
                         onChange={this.emailChange}
                         />
                     </div>
@@ -260,7 +263,7 @@ class Profile extends React.Component {
                         className="form-control"
                         id="name"
                         placeholder="Sumatra Wet Process Gunung Tujuh"
-                        value={currentUser.name}
+                        value={editedUser.name}
                         onChange={this.nameChange}
                         />
                     </div>
@@ -276,7 +279,7 @@ class Profile extends React.Component {
                         className="form-control"
                         id="street"
                         placeholder="123 Main St."
-                        value={currentUser.street}
+                        value={editedUser.street}
                         onChange={this.streetChange}
                         />
                     </div>
@@ -292,7 +295,7 @@ class Profile extends React.Component {
                         className="form-control"
                         id="city"
                         placeholder="Springfield"
-                        value={currentUser.city}
+                        value={editedUser.city}
                         onChange={this.cityChange}
                         />
                     </div>
@@ -308,7 +311,7 @@ class Profile extends React.Component {
                         className="form-control"
                         id="state"
                         placeholder="TN"
-                        value={currentUser.state}
+                        value={editedUser.state}
                         onChange={this.stateChange}
                         />
                     </div>
@@ -324,7 +327,7 @@ class Profile extends React.Component {
                         className="form-control"
                         id="zipCode"
                         placeholder="12345"
-                        value={currentUser.zipCode}
+                        value={editedUser.zipCode}
                         onChange={this.zipCodeChange}
                         />
                     </div>
@@ -340,7 +343,7 @@ class Profile extends React.Component {
                         className="form-control"
                         id="phoneNumber"
                         placeholder="615-333-4444"
-                        value={currentUser.phoneNumber}
+                        value={editedUser.phoneNumber}
                         onChange={this.phoneNumberChange}
                         />
                     </div>
@@ -472,6 +475,7 @@ class Profile extends React.Component {
       cancelPaymentModal={this.cancelPaymentModal}
       toggleEditPaymentModal={this.toggleEditPaymentModal}
       currentUser={currentUser}
+      getUserPaymentAccounts={this.getUserPaymentAccounts}
       />
       </div>
       <div className="profileDiv d-flex mx-auto">
