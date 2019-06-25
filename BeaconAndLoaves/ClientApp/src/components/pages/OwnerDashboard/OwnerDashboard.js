@@ -9,11 +9,13 @@ class OwnerDashboard extends React.Component {
 
   state = {
     properties: [],
-    propertyWithSales: {},
+    rentalsAssocWithProperty: [],
     selectedProperty: '',
     startDate: new Date(),
     endDate: new Date(),
     showResults: false,
+    rentalTotals: 0,
+    totalSales: 0,
   }
 
   getUserProperties = () => {
@@ -27,22 +29,21 @@ class OwnerDashboard extends React.Component {
 
   getPropertySales = (selectedProperty) => {
     const { currentUser } = this.props;
-    const { startDate, endDate } = this.state;
     const userId = currentUser.id;
     const selectedPropertyId = selectedProperty * 1;
-    const selectedStartDate = formatDate.formatMDYDate(startDate);
-    const selectedEndDate = formatDate.formatMDYDate(endDate);
-    rentalRequests.getTotalAmountPerMonth(userId, selectedStartDate, selectedEndDate, selectedPropertyId)
-      .then((propertyWithSales) => {
-        this.setState({ propertyWithSales });
-        this.setState({ startDate: propertyWithSales.createdOn });
+    rentalRequests.getAllRentalsForSingleProperty(userId, selectedPropertyId)
+      .then((rentalsAssocWithProperty) => {
+        this.setState({ rentalsAssocWithProperty });
+        this.setState({ startDate: new Date(rentalsAssocWithProperty[0].createdOn) });
+      }).then(() => {
+        this.figureTotal();
       });
   }
 
-  submitEvent = () => {
-    const { showResults } = this.state;
-    this.setState({ showResults: !showResults }, this.getPropertySales());
-  }
+  // submitEvent = () => {
+  //   const { showResults } = this.state;
+  //   this.setState({ showResults: !showResults }, this.getPropertySales());
+  // }
 
   componentDidMount() {
     const { currentUser } = this.props;
@@ -52,17 +53,35 @@ class OwnerDashboard extends React.Component {
     }
   }
 
+  getTotalSales = () => {
+    const { rentalsAssocWithProperty } = this.state;
+    let total = 0;
+    rentalsAssocWithProperty.forEach((item) => {
+      total += item.RentalAmount;
+    });
+    this.setState({ totalSales: total });
+  };
+
   dropdownSelect = (e) => {
     const selectedProperty = e.target.value;
     this.setState({ selectedProperty }, this.getPropertySales(selectedProperty));
   }
 
   handleStartChange = (date) => {
-    this.setState({ startDate: date });
+    this.setState({ startDate: date }, this.figureTotal);
   }
 
   handleEndChange = (date) => {
-    this.setState({ endDate: date });
+    this.setState({ endDate: date }, this.figureTotal);
+  }
+
+  figureTotal = () => {
+    const { startDate, endDate } = this.state;
+    const { rentalsAssocWithProperty } = this.state;
+    const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    const rentalTotal = diffDays * rentalsAssocWithProperty[0].Price;
+    this.setState({ rentalTotal });
   }
 
   render() {

@@ -143,6 +143,22 @@ namespace BeaconAndLoaves.Data
             }
         }
 
+        public IEnumerable<Object> GetAllRentalsByPropertyIdAndOwnerId(int userId, int propertyId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var rentals = db.Query<Object>(@"
+                   Select rentals.*, Properties.PropertyName, properties.OwnerId, properties.Price, properties.createdOn 
+                    From rentals 
+                    Join Properties
+	                    On rentals.PropertyId = Properties.id 
+	                    Where rentals.propertyId = @propertyId
+	                    And Properties.OwnerId = @ownerId
+                    ", new { propertyId, ownerId = userId }).ToList();
+
+                return rentals;
+            }
+        }
 
         public Rental AddRental(int propertyId, int userId, int userPaymentId,
             DateTime startDate, DateTime endDate, decimal rentalAmount)
@@ -204,9 +220,7 @@ namespace BeaconAndLoaves.Data
             }
         }
 
-        public Object GetTotalEarnedAmount(int userId, int propertyId) {
-
-            
+        public Object GetTotalEarnedAmount(int userId, int propertyId) {  
 
             using (var db = new SqlConnection(_connectionString))
             {

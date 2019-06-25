@@ -117,5 +117,14 @@ namespace BeaconAndLoaves.Controllers
 
             return Ok(totalSales);
         }
+
+        [HttpGet("allRentals/{id}")]
+
+        public ActionResult GetAllRentalsByPropertyIdAndOwnerId(int id, int propertyId)
+        {
+            var allRentalsForSingleProperty = _repository.GetAllRentalsByPropertyIdAndOwnerId(id, propertyId);
+
+            return Ok(allRentalsForSingleProperty);
+        }
     }
 }
