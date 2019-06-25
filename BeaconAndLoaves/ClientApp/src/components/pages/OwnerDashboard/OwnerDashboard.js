@@ -14,7 +14,7 @@ class OwnerDashboard extends React.Component {
     startDate: new Date(),
     endDate: new Date(),
     showResults: false,
-    rentalTotals: 0,
+    rentalTotal: 0,
     totalSales: 0,
   }
 
@@ -27,7 +27,7 @@ class OwnerDashboard extends React.Component {
       });
   };
 
-  getPropertySales = (selectedProperty) => {
+  getAllRentalsRelatedToSelectedProperty = (selectedProperty) => {
     const { currentUser } = this.props;
     const userId = currentUser.id;
     const selectedPropertyId = selectedProperty * 1;
@@ -37,7 +37,16 @@ class OwnerDashboard extends React.Component {
         this.setState({ startDate: new Date(rentalsAssocWithProperty[0].createdOn) });
       }).then(() => {
         this.figureTotal();
+        this.getFutureRentalsEndDate();
       });
+  }
+
+  getFutureRentalsEndDate = () => {
+    const { rentalsAssocWithProperty } = this.state;
+    // const x = new Date(Math.max.apply(null, rentalsAssocWithProperty.map(e => new Date(e.endDate))));
+    // console.log(x);
+    const x = rentalsAssocWithProperty.sort((r, a) => (new Date(a.EndDate) - new Date(r.EndDate)));
+    console.log(x);
   }
 
   // submitEvent = () => {
@@ -53,18 +62,9 @@ class OwnerDashboard extends React.Component {
     }
   }
 
-  getTotalSales = () => {
-    const { rentalsAssocWithProperty } = this.state;
-    let total = 0;
-    rentalsAssocWithProperty.forEach((item) => {
-      total += item.RentalAmount;
-    });
-    this.setState({ totalSales: total });
-  };
-
   dropdownSelect = (e) => {
     const selectedProperty = e.target.value;
-    this.setState({ selectedProperty }, this.getPropertySales(selectedProperty));
+    this.setState({ selectedProperty }, this.getAllRentalsRelatedToSelectedProperty(selectedProperty));
   }
 
   handleStartChange = (date) => {
@@ -85,19 +85,7 @@ class OwnerDashboard extends React.Component {
   }
 
   render() {
-    const { properties, propertyWithSales } = this.state;
-
-    const displaySales = () => {
-      const { showResults } = this.state;
-      if (showResults === true) {
-        return (
-      <div>
-        <h5>{propertyWithSales.propertyName}</h5>
-        <p>{propertyWithSales.totalSales}</p>
-      </div>
-        );
-      } return (<div></div>);
-    };
+    const { properties, rentalTotal } = this.state;
 
     return (
      <div>
@@ -124,11 +112,9 @@ class OwnerDashboard extends React.Component {
               className="ml-3"
               selected={this.state.endDate}
               onChange={this.handleEndChange}
-              maxDate={this.state.endDate}
             />
           </div>
-          <button className= "bttn-pill" onClick={this.submitEvent}>Submit</button>
-            {displaySales()}
+          <div>Total Sales: ${rentalTotal}</div>
      </div>
     );
   }
