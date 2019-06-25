@@ -1,7 +1,14 @@
 import React from 'react';
-import propertiesRequests from '../../../helpers/data/propertiesRequests';
-import authRequests from '../../../helpers/data/authRequests';
-import userRequests from '../../../helpers/data/userRequests';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from 'reactstrap';
+import propertiesRequests from '../../helpers/data/propertiesRequests';
+import authRequests from '../../helpers/data/authRequests';
+import userRequests from '../../helpers/data/userRequests';
 
 import './AddEditProperty.scss';
 
@@ -79,8 +86,25 @@ class AddEditProperty extends React.Component {
 
       render() {
         const { newProperty } = this.state;
+
+        const { modal, isEditing, toggleRentalModal } = this.props;
+
+        const makeHeader = () => {
+          if (isEditing) {
+            return (
+              <div>Edit Rental</div>
+            );
+          }
+          return (
+            <div>Add Rental</div>
+          );
+        };
+
         return (
           <div className="new-property ml-5">
+            <Modal isOpen={modal} className="modal-lg">
+              <ModalHeader class-name="modal-header" toggle={toggleRentalModal}>{makeHeader()}</ModalHeader>
+                <ModalBody className="text-center modal-body">
             <form className="row col-12 border border-dark rounded" onSubmit={this.formSubmit}>
               <h3 className="add-property-title">Add Property</h3>
               <div className="form col-10 mx-auto">
@@ -207,6 +231,10 @@ class AddEditProperty extends React.Component {
               </div>
               </div>
             </form>
+              </ModalBody>
+              <ModalFooter>
+              </ModalFooter>
+            </Modal>
           </div>
         );
       }
