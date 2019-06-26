@@ -114,7 +114,7 @@ namespace BeaconAndLoaves.Data
 	                    ImageUrl= @imageUrl, 
 	                    Price =  @price,
                         IsActive = @isActive,
-                        CreatedOn = GETDATE(),
+                        CreatedOn = @createdOn,
                         IsDeleted = 0
                      Where Id = @id";
 

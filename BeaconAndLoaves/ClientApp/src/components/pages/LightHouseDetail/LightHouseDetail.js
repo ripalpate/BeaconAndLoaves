@@ -7,6 +7,7 @@ import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import WarningModal from '../WarningModal/WarningModal';
 import LikeButton from '../LikeButton/LikeButton';
 import Rental from '../Rental/Rental';
+import AddEditProperty from '../../AddEditProperty/AddEditProperty';
 
 import './LightHouseDetail.scss';
 
@@ -21,6 +22,8 @@ class LightHouseDetail extends React.Component {
     modal: false,
     lightHouseId: 0,
     rentalModal: false,
+    modal: false,
+    isEditing: false,
   }
 
   static propTypes = {
@@ -60,6 +63,15 @@ toggleModal = () => {
   toggleRentalModal = () => {
     const { rentalModal } = this.state;
     this.setState({ rentalModal: !rentalModal });
+  }
+
+  togglePropertyModal = () => {
+    const { modal, isEditing } = this.state;
+    if (isEditing) {
+      this.setState({ modal: !modal, isEditing: false });
+      this.getPropertyWithOwnerName();
+    }
+    this.setState({ modal: !modal, isEditing: true });
   }
 
   routeToHome = () => {
@@ -147,9 +159,12 @@ toggleModal = () => {
       isLiked,
       rentalModal,
       modal,
+      isEditing,
       isDeletingProperty,
     } = this.state;
+
     const { currentUser } = this.props;
+
     const makeLikedPropertyButton = () => {
       if (lightHouse.ownerId !== currentUser.id) {
         return (
@@ -168,7 +183,7 @@ toggleModal = () => {
       if (currentUser.isOwner === true && lightHouse.ownerId === currentUser.id) {
         return (
           <div className = "float-right">
-            <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
+            <i onClick= {this.togglePropertyModal} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
             <i onClick = {this.checkFutureRentalsForProperty} className="fas fa-trash fa-2x" data-property-id={lightHouse.id} title="Delete"></i>
           </div>
         );
@@ -225,6 +240,13 @@ toggleModal = () => {
           propertyId = {this.props.match.params.id * 1}
           toggleRentalModal={this.toggleRentalModal}
           routeToHome={this.routeToHome}
+        />
+        <AddEditProperty
+          modal={modal}
+          isEditing={isEditing}
+          togglePropertyModal={this.togglePropertyModal}
+          changeAddEditView={this.changeAddEditView}
+          selectedProperty={lightHouse}
         />
       </div>
     );

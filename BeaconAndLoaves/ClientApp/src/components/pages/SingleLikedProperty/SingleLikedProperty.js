@@ -18,11 +18,13 @@ static propTypes = {
 
 changePropertyToDetailView = (e) => {
   e.preventDefault();
+  const propertyType = e.currentTarget.dataset.type * 1;
   const { lightHouseDetailView, siloDetailView } = this.props;
-  if (e.currentTarget.dataset.type === 0) {
+  if (propertyType === 0) {
     lightHouseDetailView(e.currentTarget.id);
+  } else {
+    siloDetailView(e.currentTarget.id);
   }
-  siloDetailView(e.currentTarget.id);
 }
 
 changeIsLikedState = () => {

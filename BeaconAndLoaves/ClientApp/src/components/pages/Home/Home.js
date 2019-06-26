@@ -1,13 +1,31 @@
 import React from 'react';
+import AddEditProperty from '../../AddEditProperty/AddEditProperty';
+
 import './Home.scss';
 
 class Home extends React.Component {
+  state = {
+    modal: false,
+    isEditing: false,
+  }
+
   changeView = (e) => {
     const view = e.currentTarget.id;
     this.props.history.push(`/${view}`);
   }
 
+  changeAddEditView = (view) => {
+    this.props.history.push(`/${view}`);
+  }
+
+  togglePropertyModal = () => {
+    const { modal } = this.state;
+    this.setState({ modal: !modal });
+  }
+
   render() {
+    const { modal, isEditing } = this.state;
+
     return (
       <div className="Home mx-auto">
         <div className="card-deck mt-5">
@@ -32,7 +50,7 @@ class Home extends React.Component {
               <p className="card-text">Saved Properties that I like most</p>
             </div>
           </div>
-          <div className="card border-dark" id='addProperty' onClick={this.changeView}>
+          <div className="card border-dark" id='addProperty' onClick={this.togglePropertyModal}>
             <div className="card-body home text-center">
               <h4 className="card-title"><i className="fas fa-plus-circle fa-6x home-addProperty"></i></h4>
               <h5 className="card-subtitle mb-2 text-muted">Add Property</h5>
@@ -40,6 +58,13 @@ class Home extends React.Component {
             </div>
           </div>
         </div>
+        <AddEditProperty
+          modal={modal}
+          isEditing={isEditing}
+          togglePropertyModal={this.togglePropertyModal}
+          changeAddEditView={this.changeAddEditView
+          }
+        />
       </div>
     );
   }
