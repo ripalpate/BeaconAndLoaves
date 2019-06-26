@@ -13,10 +13,9 @@ class OwnerDashboard extends React.Component {
     selectedProperty: '',
     startDate: new Date(),
     endDate: new Date(),
-    showResults: false,
     rentalTotal: 0,
-    totalSales: 0,
     createdDate: new Date(),
+    averagePerRental: 0,
   }
 
   getUserProperties = () => {
@@ -77,11 +76,15 @@ class OwnerDashboard extends React.Component {
   }
 
   handleStartChange = (date) => {
-    this.setState({ startDate: date }, this.totalPerSelection);
+    this.setState({ startDate: date }, () => {
+      this.totalPerSelection();
+    });
   }
 
   handleEndChange = (date) => {
-    this.setState({ endDate: date }, this.totalPerSelection);
+    this.setState({ endDate: date }, () => {
+      this.totalPerSelection();
+    });
   }
 
   figureTotal = () => {
@@ -90,21 +93,50 @@ class OwnerDashboard extends React.Component {
     rentalsAssocWithProperty.forEach((item) => {
       total += item.RentalAmount;
     });
-    this.setState({ rentalTotal: total });
+    const arrayLength = rentalsAssocWithProperty.length;
+    this.setState({ rentalTotal: total }, this.averagePerRental(total, arrayLength));
+  }
+
+  getDates = () => {
+    const { rentedDates, rentals } = this.state;
+    const { isEditing } = this.props;
+    rentedDates.push(new Date());
+    rentals.forEach((rental) => {
+      const startDate = new Date(rental.startDate);
+      const endDate = new Date(rental.endDate);
+      while (startDate <= endDate) {
+        rentedDates.push(new Date(startDate));
+        startDate.setDate(startDate.getDate() + 1);
+      }
+    });
+    this.setState({ rentedDates });
+    if (isEditing) {
+      this.figureTotal();
+    }
   }
 
   totalPerSelection = () => {
-    const { rentalsAssocWithProperty } = this.state;
-    const y = rentalsAssocWithProperty.filter(x => new Date(this.state.startDate) <= new Date(x.StartDate) && new Date(x.StartDate) <= new Date(this.state.endDate));
+    const { rentalsAssocWithProperty, startDate, endDate } = this.state;
+    const filterRentalsBasedonIncomingDates = rentalsAssocWithProperty.filter(rental => new Date(startDate) <= new Date(rental.StartDate) && new Date(rental.StartDate) <= new Date(endDate));
     let total = 0;
-    y.forEach((item) => {
+    filterRentalsBasedonIncomingDates.forEach((item) => {
       total += item.RentalAmount;
     });
-    this.setState({ rentalTotal: total });
+    const arrayLength = filterRentalsBasedonIncomingDates.length;
+    this.setState({ rentalTotal: total, rentalsAssocWithProperty: filterRentalsBasedonIncomingDates }, this.averagePerRental(total, arrayLength));
+  }
+
+  averagePerRental = (total, arrayLength) => {
+    const average = total / arrayLength;
+    this.setState({ averagePerRental: average });
   }
 
   render() {
-    const { properties, rentalTotal } = this.state;
+    const {
+      properties,
+      rentalTotal,
+      averagePerRental,
+    } = this.state;
 
     return (
      <div>
@@ -132,7 +164,10 @@ class OwnerDashboard extends React.Component {
               onChange={this.handleEndChange}
             />
           </div>
-          <div>Total Sales: ${rentalTotal}</div>
+          <div>
+            <p>Total Sales: ${rentalTotal}</p>
+            <p>Average ${averagePerRental} per rental</p>
+          </div>
      </div>
     );
   }
