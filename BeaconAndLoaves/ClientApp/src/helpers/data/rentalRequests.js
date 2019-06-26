@@ -61,6 +61,28 @@ const getPastOwnerRentals = ownerId => new Promise((resolve, reject) => {
     });
 });
 
+// const getTotalAmountPerMonth = (ownerId, propertyId) => new Promise((resolve, reject) => {
+//   axios.get(`${apiUrl}/sales/${ownerId}?propertyId=${propertyId}`)
+//     .then((results) => {
+//       console.log(results);
+//       const totalSalesPerProperty = results.data;
+//       resolve(totalSalesPerProperty);
+//     }).catch((error) => {
+//       reject(error);
+//     });
+// });
+
+const getAllRentalsForSingleProperty = (ownerId, propertyId) => new Promise((resolve, reject) => {
+  axios.get(`${apiUrl}/allRentals/${ownerId}?propertyId=${propertyId}`)
+    .then((results) => {
+      const allRentalsRelatedToProperty = results.data;
+      resolve(allRentalsRelatedToProperty);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
+
 export default {
   createRental,
   getAllRentalsByPropertyId,
@@ -69,5 +91,6 @@ export default {
   getFutureOwnerRentals,
   getPastOwnerRentals,
   getSingleRental,
+  getAllRentalsForSingleProperty,
   updateRental,
 };
