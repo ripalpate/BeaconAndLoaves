@@ -326,7 +326,8 @@ class Profile extends React.Component {
                         type="text"
                         className="form-control"
                         id="zipCode"
-                        placeholder="12345"
+                        placeholder="12345-6789"
+                        pattern="^[0-9]{5}(?:-[0-9]{4})?$"
                         value={editedUser.zipCode}
                         onChange={this.zipCodeChange}
                         />
@@ -343,6 +344,7 @@ class Profile extends React.Component {
                         className="form-control"
                         id="phoneNumber"
                         placeholder="615-333-4444"
+                        pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$"
                         value={editedUser.phoneNumber}
                         onChange={this.phoneNumberChange}
                         />
