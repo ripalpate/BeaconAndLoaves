@@ -126,7 +126,7 @@ class AddEditProperty extends React.Component {
         const makeButton = () => {
           if (isEditing) {
             return (
-              <div className="text-center">
+              <div className="mx-auto">
                 <button className="btn user-add-btn btn-success my-auto mx-auto" title="Submit">
                   <i className="fas fa-check-circle" />
                 </button>
@@ -134,7 +134,7 @@ class AddEditProperty extends React.Component {
             );
           }
           return (
-            <div className="text-center">
+            <div className="mx-auto">
               <button className="btn user-add-btn btn-success my-auto mx-auto" title="Submit">
                 <i className="fas fa-plus-circle" />
               </button>
@@ -265,11 +265,11 @@ class AddEditProperty extends React.Component {
                   required
                 />
               </div>
-                {makeButton()}
               </div>
             </form>
               </ModalBody>
               <ModalFooter>
+                {makeButton()}
               </ModalFooter>
             </Modal>
           </div>
