@@ -127,8 +127,14 @@ class OwnerDashboard extends React.Component {
   }
 
   averagePerRental = (total, arrayLength) => {
-    const average = total / arrayLength;
-    this.setState({ averagePerRental: average });
+    let average = 0;
+    if (total === 0) {
+      average = 0;
+      this.setState({ averagePerRental: average });
+    } else {
+      average = total / arrayLength;
+      this.setState({ averagePerRental: average });
+    }
   }
 
   render() {
