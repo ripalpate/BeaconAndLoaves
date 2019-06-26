@@ -265,11 +265,11 @@ class AddEditProperty extends React.Component {
                   required
                 />
               </div>
+              {makeButton()}
               </div>
             </form>
               </ModalBody>
               <ModalFooter>
-                {makeButton()}
               </ModalFooter>
             </Modal>
           </div>
