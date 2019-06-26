@@ -183,13 +183,8 @@ toggleModal = () => {
       if (currentUser.isOwner === true && lightHouse.ownerId === currentUser.id) {
         return (
           <div className = "float-right">
-<<<<<<< HEAD
             <i onClick= {this.togglePropertyModal} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
-            <i onClick = {this.deleteProperty} className="fas fa-trash fa-2x" data-property-id={lightHouse.id} title="Delete"></i>
-=======
-            <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
             <i onClick = {this.checkFutureRentalsForProperty} className="fas fa-trash fa-2x" data-property-id={lightHouse.id} title="Delete"></i>
->>>>>>> master
           </div>
         );
       } return (<span></span>);
