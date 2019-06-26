@@ -249,6 +249,7 @@ class Profile extends React.Component {
                         placeholder="bob@xxx.com"
                         value={editedUser.email}
                         onChange={this.emailChange}
+                        required
                         />
                     </div>
                   </div>
@@ -265,6 +266,7 @@ class Profile extends React.Component {
                         placeholder="Sumatra Wet Process Gunung Tujuh"
                         value={editedUser.name}
                         onChange={this.nameChange}
+                        required
                         />
                     </div>
                   </div>
@@ -281,6 +283,7 @@ class Profile extends React.Component {
                         placeholder="123 Main St."
                         value={editedUser.street}
                         onChange={this.streetChange}
+                        required
                         />
                     </div>
                   </div>
@@ -297,6 +300,7 @@ class Profile extends React.Component {
                         placeholder="Springfield"
                         value={editedUser.city}
                         onChange={this.cityChange}
+                        required
                         />
                     </div>
                   </div>
@@ -313,6 +317,7 @@ class Profile extends React.Component {
                         placeholder="TN"
                         value={editedUser.state}
                         onChange={this.stateChange}
+                        required
                         />
                     </div>
                   </div>
@@ -327,9 +332,10 @@ class Profile extends React.Component {
                         className="form-control"
                         id="zipCode"
                         placeholder="12345-6789"
-                        pattern="^[0-9]{5}(?:-[0-9]{4})?$"
+                        pattern="[0-9]{5}(?:-[0-9]{4})?"
                         value={editedUser.zipCode}
                         onChange={this.zipCodeChange}
+                        required
                         />
                     </div>
                   </div>
@@ -347,11 +353,12 @@ class Profile extends React.Component {
                         pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$"
                         value={editedUser.phoneNumber}
                         onChange={this.phoneNumberChange}
+                        required
                         />
                     </div>
                   </div>
                   <div className="text-center">
-                    <button type="submit" className="btn user-add-btn m-5" onClick={this.formSubmit} title="Submit">
+                    <button type="submit" className="btn user-add-btn m-5" title="Submit">
                       <i className="fas fa-check-square fa-2x"/>
                     </button>
                     <button id='cancel' type="button" className="btn back-btn m-5" onClick={this.cancel} title="Cancel">
