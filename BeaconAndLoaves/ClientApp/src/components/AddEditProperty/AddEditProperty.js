@@ -221,9 +221,10 @@ class AddEditProperty extends React.Component {
                   className="form-control col-8"
                   id="zipCode"
                   aria-describedby="zipCodeHelp"
-                  placeholder="12345"
+                  placeholder="12345-6789"
                   value= {newProperty.zipCode}
                   onChange= {this.zipCodeChange}
+                  pattern="^[0-9]{5}(?:-[0-9]{4})?$"
                   required
                 />
               </div>
