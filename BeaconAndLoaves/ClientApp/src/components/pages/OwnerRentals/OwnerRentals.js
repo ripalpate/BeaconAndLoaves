@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SingleOwnerRentalItem from '../SingleOwnerRentalItem/SingleOwnerRentalItem';
 import RentalHistoryModal from '../../RentalHistoryModal/RentalHistoryModal';
 import rentalRequests from '../../../helpers/data/rentalRequests';
+import userRequests from '../../../helpers/data/userRequests';
 import './OwnerRentals.scss';
 
 class OwnerRentals extends React.Component {
