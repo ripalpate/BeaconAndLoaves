@@ -15,6 +15,7 @@ class MyModal extends React.Component {
     toggleModal: PropTypes.func,
     modal: PropTypes.bool,
     deleteProfile: PropTypes.func,
+    isDeletingProperty: PropTypes.bool,
   }
 
   toggleEvent = () => {
@@ -26,19 +27,36 @@ class MyModal extends React.Component {
     const {
       modal,
       deleteProfile,
+      isDeletingProperty,
     } = this.props;
 
+    const populateText = () => {
+      if (isDeletingProperty) {
+        return (
+       <div> Sorry, you will not be able to delete the property as there are future rentals coming up </div>
+        );
+      } return (
+        <div>Are you sure you want to do that?</div>
+      );
+    };
+    const populateDeleteButton = () => {
+      if (!isDeletingProperty) {
+        return (
+        <Button onClick={deleteProfile}>
+          <i className="fas fa-trash fa-2x"></i>
+        </Button>
+        );
+      } return (<div></div>);
+    };
     return (
       <div>
         <Modal isOpen={modal} toggle={this.toggleEvent} className="modal-lg">
           <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>Achtung!!!</ModalHeader>
           <ModalBody className="text-center modal-body">
-              Are you sure you want to do that?
+             {populateText()}
           </ModalBody>
           <ModalFooter>
-            <Button onClick={deleteProfile}>
-                <i className="fas fa-trash fa-2x"></i>
-            </Button>
+            {populateDeleteButton()}
           </ModalFooter>
         </Modal>
       </div>

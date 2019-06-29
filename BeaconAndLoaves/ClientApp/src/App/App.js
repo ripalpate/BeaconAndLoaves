@@ -16,17 +16,18 @@ import LightHouses from '../components/pages/LightHouses/LightHouses';
 import SiloNuclears from '../components/pages/SiloNuclears/SiloNuclears';
 import LightHouseDetail from '../components/pages/LightHouseDetail/LightHouseDetail';
 import SiloNuclearDetail from '../components/pages/SiloNuclearDetail/SiloNuclearDetail';
-import AddEditProperty from '../components/pages/AddEditProperty/AddEditProperty';
-import EditProperty from '../components/pages/EditProperty/EditProperty';
+// import AddEditProperty from '../components/pages/AddEditProperty/AddEditProperty';
+// import EditProperty from '../components/pages/EditProperty/EditProperty';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
 import LikedProperties from '../components/pages/LikedProperties/LikedProperties';
-import Rental from '../components/pages/Rental/Rental';
+// import Rental from '../components/pages/Rental/Rental';
 import authRequests from '../helpers/data/authRequests';
 import userRequests from '../helpers/data/userRequests';
 import connection from '../helpers/data/connection';
 import OwnerProperties from '../components/pages/OwnerProperties/OwnerProperties';
 import RentingHistory from '../components/pages/RentingHistory/RentingHistory';
 import OwnerRentals from '../components/pages/OwnerRentals/OwnerRentals';
+import OwnerDashboard from '../components/pages/OwnerDashboard/OwnerDashboard';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
@@ -124,12 +125,13 @@ export default class App extends Component {
                   <PrivateRoute path="/properties/siloNuclears" component={SiloNuclears} authed={this.state.authed}/>
                   <PrivateRoute exact path="/siloNuclears/:id" authed={this.state.authed} component={props => <SiloNuclearDetail {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute path="/likedProperties" authed={this.state.authed} component={props => <LikedProperties {...props} currentUser={currentUser}/>}/>
-                  <PrivateRoute path="/addProperty" authed={this.state.authed} component={AddEditProperty}/>
-                  <PrivateRoute path="/editProperty/:id" authed={this.state.authed} component={EditProperty}/>
+                  {/* <PrivateRoute path="/addProperty" authed={this.state.authed} component={AddEditProperty}/> */}
+                  {/* <PrivateRoute path="/editProperty/:id" authed={this.state.authed} component={EditProperty}/> */}
                   {/* <PrivateRoute exact path="/rental/:id" authed={this.state.authed} component={Rental}/> */}
                   <PrivateRoute exact path="/rentingHistory" authed={this.state.authed} component={props => <RentingHistory {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute exact path="/viewRentals" authed={this.state.authed} component={props => <OwnerRentals {...props} currentUser={currentUser}/>}/>
                   <PrivateRoute exact path="/ownerProperties/:id" authed={this.state.authed} component={props => <OwnerProperties {...props} currentUser={currentUser}/>}/>
+                  <PrivateRoute exact path="/ownerDashboard" authed={this.state.authed} component={props => <OwnerDashboard {...props} currentUser={currentUser}/>}/>
                 </Switch>
           </React.Fragment>
         </BrowserRouter>

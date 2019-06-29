@@ -10,6 +10,7 @@ ownerRentalsMounted = false;
     state = {
       futureOwnerRentals: [],
       pastOwnerRentals: [],
+      totalSales: 0,
     }
 
     static propTypes = {
@@ -35,6 +36,8 @@ ownerRentalsMounted = false;
       rentalRequests.getPastOwnerRentals(ownerId)
         .then((rentals) => {
           this.setState({ pastOwnerRentals: rentals });
+        }).then(() => {
+          this.getTotalSales();
         });
     }
 
@@ -46,6 +49,19 @@ ownerRentalsMounted = false;
         this.getPastOwnerRentals();
       }
     }
+
+    ownerDashboardGraphicalView = () => {
+      this.props.history.push('/ownerDashboard');
+    }
+
+    getTotalSales = () => {
+      const { pastOwnerRentals } = this.state;
+      let total = 0;
+      pastOwnerRentals.forEach((item) => {
+        total += item.rentalAmount;
+      });
+      this.setState({ totalSales: total });
+    };
 
     render() {
       const {
@@ -128,6 +144,11 @@ ownerRentalsMounted = false;
               <div className="past-rentals">
                 <h2 className="mt-5">Past Rentals:</h2>
                 {checkLength()}
+              </div>
+              <div className="sales-container">
+                <h3 className="mt-5"> Lifetime Sales for all Properties</h3>
+                <p>Total sales: $ {this.state.totalSales}</p>
+                <button className = "bttn-pill" onClick={this.ownerDashboardGraphicalView}>View Detail Sales </button>
               </div>
           </div>
       );

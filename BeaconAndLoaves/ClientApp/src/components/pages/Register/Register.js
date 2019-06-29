@@ -229,7 +229,8 @@ class Register extends React.Component {
                         type="text"
                         className="form-control"
                         id="zipCode"
-                        placeholder="12345"
+                        placeholder="12345-6789"
+                        pattern="^[0-9]{5}(?:-[0-9]{4})?$"
                         value={newUser.zipCode}
                         onChange={this.zipCodeChange}
                         required
@@ -249,6 +250,7 @@ class Register extends React.Component {
                         placeholder="615-333-4444"
                         value={newUser.phoneNumber}
                         onChange={this.phoneNumberChange}
+                        pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$"
                         required
                         />
                     </div>

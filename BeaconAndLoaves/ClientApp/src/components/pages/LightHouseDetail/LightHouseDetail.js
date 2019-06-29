@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import smashRequests from '../../../helpers/data/smashRequests';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
+import rentalRequests from '../../../helpers/data/rentalRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
+import WarningModal from '../WarningModal/WarningModal';
 import LikeButton from '../LikeButton/LikeButton';
 import Rental from '../Rental/Rental';
+import AddEditProperty from '../../AddEditProperty/AddEditProperty';
 
 import './LightHouseDetail.scss';
 
@@ -15,8 +18,12 @@ class LightHouseDetail extends React.Component {
     currentLikedProperty: [],
     lightHouse: {},
     isLiked: false,
+    isDeletingProperty: false,
+    modal: false,
     lightHouseId: 0,
     rentalModal: false,
+    modal: false,
+    isEditing: false,
   }
 
   static propTypes = {
@@ -24,12 +31,17 @@ class LightHouseDetail extends React.Component {
   }
 
   componentDidMount() {
-    this.lightHouseDetailMounted = true;
+    const { currentUser } = this.props;
+    this.lightHouseDetailMounted = !!currentUser.id;
     if (this.lightHouseDetailMounted) {
       this.getPropertyWithOwnerName();
     }
   }
 
+toggleModal = () => {
+  const { modal } = this.state;
+  this.setState({ modal: !modal });
+}
 
   // get Propertydetails with owner name and hold isLiked state
   getPropertyWithOwnerName = () => {
@@ -51,6 +63,15 @@ class LightHouseDetail extends React.Component {
   toggleRentalModal = () => {
     const { rentalModal } = this.state;
     this.setState({ rentalModal: !rentalModal });
+  }
+
+  togglePropertyModal = () => {
+    const { modal, isEditing } = this.state;
+    if (isEditing) {
+      this.setState({ modal: !modal, isEditing: false });
+      this.getPropertyWithOwnerName();
+    }
+    this.setState({ modal: !modal, isEditing: true });
   }
 
   routeToHome = () => {
@@ -98,6 +119,18 @@ class LightHouseDetail extends React.Component {
       });
   }
 
+  checkFutureRentalsForProperty = (e) => {
+    const { propertyId } = e.target.dataset;
+    rentalRequests.getAllRentalsByPropertyId(propertyId)
+      .then((futureRentals) => {
+        if (futureRentals.length === 0) {
+          this.deleteProperty();
+        } else {
+          this.setState({ isDeletingProperty: true }, this.toggleModal());
+        }
+      });
+  }
+
   deactivateProperty = (e) => {
     const { propertyId } = e.target.dataset;
     const updateProp = { ...this.state.lightHouse };
@@ -125,8 +158,13 @@ class LightHouseDetail extends React.Component {
       lightHouse,
       isLiked,
       rentalModal,
+      modal,
+      isEditing,
+      isDeletingProperty,
     } = this.state;
+
     const { currentUser } = this.props;
+
     const makeLikedPropertyButton = () => {
       if (lightHouse.ownerId !== currentUser.id) {
         return (
@@ -145,8 +183,8 @@ class LightHouseDetail extends React.Component {
       if (currentUser.isOwner === true && lightHouse.ownerId === currentUser.id) {
         return (
           <div className = "float-right">
-            <i onClick= {this.editEvent} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
-            <i onClick = {this.deleteProperty} className="fas fa-trash fa-2x" data-property-id={lightHouse.id} title="Delete"></i>
+            <i onClick= {this.togglePropertyModal} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
+            <i onClick = {this.checkFutureRentalsForProperty} className="fas fa-trash fa-2x" data-property-id={lightHouse.id} title="Delete"></i>
           </div>
         );
       } return (<span></span>);
@@ -190,6 +228,11 @@ class LightHouseDetail extends React.Component {
             {activateButton()}
           </div>
         </div>
+        <WarningModal
+        isDeletingProperty = {isDeletingProperty}
+        toggleModal = {this.toggleModal}
+        modal = {modal}
+        />
         <Rental
           currentUser={currentUser}
           rentalModal={rentalModal}
@@ -197,6 +240,13 @@ class LightHouseDetail extends React.Component {
           propertyId = {this.props.match.params.id * 1}
           toggleRentalModal={this.toggleRentalModal}
           routeToHome={this.routeToHome}
+        />
+        <AddEditProperty
+          modal={modal}
+          isEditing={isEditing}
+          togglePropertyModal={this.togglePropertyModal}
+          changeAddEditView={this.changeAddEditView}
+          selectedProperty={lightHouse}
         />
       </div>
     );

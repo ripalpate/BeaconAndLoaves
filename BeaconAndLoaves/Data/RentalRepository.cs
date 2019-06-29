@@ -120,7 +120,7 @@ namespace BeaconAndLoaves.Data
 				                On rentals.userId=users.Id
 				            Where Properties.ownerId = @ownerId
 				                And rentals.startDate <= @today
-                            Order by rentals.startDate Desc;;";
+                            Order by rentals.startDate Desc;";
                 var parameters = new { ownerId = userId, today };
 
                 var rentalsByOwner = db.Query<Object>(sql, parameters).ToList();
@@ -143,6 +143,22 @@ namespace BeaconAndLoaves.Data
             }
         }
 
+        public IEnumerable<Object> GetAllRentalsByPropertyIdAndOwnerId(int userId, int propertyId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var rentals = db.Query<Object>(@"
+                   Select rentals.*, Properties.PropertyName, properties.OwnerId, properties.Price, properties.createdOn 
+                    From rentals 
+                    Join Properties
+	                    On rentals.PropertyId = Properties.id 
+	                    Where rentals.propertyId = @propertyId
+	                    And Properties.OwnerId = @ownerId
+                    ", new { propertyId, ownerId = userId }).ToList();
+
+                return rentals;
+            }
+        }
 
         public Rental AddRental(int propertyId, int userId, int userPaymentId,
             DateTime startDate, DateTime endDate, decimal rentalAmount)
@@ -168,7 +184,7 @@ namespace BeaconAndLoaves.Data
             using (var db = new SqlConnection(_connectionString))
             {
                 var query = @"
-                    select r.*, p.propertyName, p.city, p.state
+                    select r.*, p.propertyName, p.city, p.state, p.ownerId, p.createdOn, p.price
                     from rentals r
                     join properties p
                     on r.propertyId = p.id
@@ -202,7 +218,27 @@ namespace BeaconAndLoaves.Data
                 }
                 throw new Exception("Could not update rental");
             }
+        }
 
+        public Object GetTotalEarnedAmount(int userId, int propertyId) {  
+
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"Select rentals.PropertyId, SUM(rentals.rentalAmount) as 'totalSales', properties.propertyName, properties.createdOn
+                            From rentals 
+                            Join Properties
+	                            On rentals.PropertyId = Properties.id 
+                            Join users 
+	                            On rentals.userId = users.Id
+	                            Where Properties.OwnerId = @ownerId
+	                            And properties.id = @propertyId
+	                            Group By rentals.PropertyId, properties.propertyName, properties.createdOn";
+                var parameters = new { ownerId = userId, propertyId };
+                 
+                var GetTotalSalesPerProperty = db.QueryFirstOrDefault<Object>(sql, parameters);
+
+                return GetTotalSalesPerProperty;
+            }
         }
     }
 }
