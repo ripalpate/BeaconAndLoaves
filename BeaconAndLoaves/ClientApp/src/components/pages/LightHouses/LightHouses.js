@@ -138,7 +138,7 @@ class LightHouses extends React.Component {
     return (
       <div>
         <div className="serach-sort-container">
-        <button className = "bttn-pill bttn-md" onClick = {this.backButton}><i class="far fa-arrow-alt-circle-left"></i></button>
+        <button className = "bttn-pill bttn-md" onClick = {this.backButton} title="Back to All Properties"><i className="far fa-arrow-alt-circle-left"></i></button>
           <button
             id="search-btn"
             type="button"

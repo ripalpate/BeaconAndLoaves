@@ -187,9 +187,9 @@ class SiloNuclearDetail extends React.Component {
     return (
       <div>
         <div className="back-button">
-          <button className = "bttn-pill bttn-md" onClick = {this.backButton}><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
-          <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToProperties}><i class="fas fa-home fa-2x"></i></button>
-          <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToLikedProperties}><i class="fas fa-heart fa-2x"></i></button>
+          <button className = "bttn-pill bttn-md" onClick = {this.backButton} title="To All Nuclear Silos"><i className="far fa-arrow-alt-circle-left"></i></button>
+          <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToProperties} title="To All Properties"><i className="fas fa-home"></i></button>
+          <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToLikedProperties} title="To Liked Properties"><i className="fas fa-heart"></i></button>
         </div>
         <div className="card mx-auto bg-light detail">
           <div className="imgHolder">

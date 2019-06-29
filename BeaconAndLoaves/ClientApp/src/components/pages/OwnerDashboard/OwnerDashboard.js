@@ -150,7 +150,7 @@ class OwnerDashboard extends React.Component {
 
     return (
      <div>
-      <button className = "bttn-pill bttn-md mt-3" onClick = {this.backButton}><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
+      <button className = "bttn-pill bttn-md mt-3" onClick = {this.backButton} title="Back to All Rentals"><i className="far fa-arrow-alt-circle-left"></i></button>
        <div>Select Properties:
           <select id="property" className="custom-select mb-2 ml-2" onChange={this.dropdownSelect}>
           <option defaultValue>Select Property</option>
