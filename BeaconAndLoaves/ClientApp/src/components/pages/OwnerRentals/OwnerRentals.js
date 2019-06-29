@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SingleOwnerRentalItem from '../SingleOwnerRentalItem/SingleOwnerRentalItem';
+import RentalHistoryModal from '../../RentalHistoryModal/RentalHistoryModal';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import './OwnerRentals.scss';
 
@@ -11,10 +12,27 @@ ownerRentalsMounted = false;
       futureOwnerRentals: [],
       pastOwnerRentals: [],
       totalSales: 0,
+      modal: false,
+      selectedRental: {},
     }
 
     static propTypes = {
       currentUser: PropTypes.object,
+    }
+
+    toggleModal = (rentalId) => {
+      const { modal } = this.state;
+      this.setState({ rentalId, modal: !modal });
+      if (modal === false) {
+        this.getSingleRental(rentalId);
+      }
+    }
+
+    getSingleRental = (rentalId) => {
+      rentalRequests.getSingleRental(rentalId)
+        .then((rental) => {
+          this.setState({ selectedRental: rental.data });
+        });
     }
 
     getFutureOwnerRentals = () => {
@@ -63,12 +81,15 @@ ownerRentalsMounted = false;
       const {
         futureOwnerRentals,
         pastOwnerRentals,
+        modal,
+        selectedRental,
       } = this.state;
 
       const createFutureOwnerRentals = futureOwnerRentals.map(rental => (
           <SingleOwnerRentalItem
           rental={rental}
           key = {rental.id}
+          toggleModal={this.toggleModal}
           />
       ));
 
@@ -76,6 +97,7 @@ ownerRentalsMounted = false;
           <SingleOwnerRentalItem
           rental={rental}
           key = {rental.id}
+          toggleModal={this.toggleModal}
           />
       ));
 
@@ -145,6 +167,11 @@ ownerRentalsMounted = false;
                 <p>Total sales: $ {this.state.totalSales}</p>
                 <button className = "bttn-pill" onClick={this.ownerDashboardGraphicalView}>View Detail Sales </button>
               </div>
+              <RentalHistoryModal
+                modal={modal}
+                selectedRental={selectedRental}
+                toggleModal={this.toggleModal}
+              />
           </div>
       );
     }
