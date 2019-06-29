@@ -38,8 +38,8 @@ class RentalHistoryModal extends React.Component {
             <div>End Date: {formatDate.formatMDYDate(selectedRental.EndDate)}</div>
             <div>{selectedRental.city}, {selectedRental.state}</div>
             <div>Total: ${selectedRental.RentalAmount}</div>
-            <div>Renter's Name: {selectedRental.name}</div>
-            <div>Renter's Email: {selectedRental.email}</div>
+            <div>Renter's Name: {selectedRental.renter}</div>
+            <div>Renter's Email: {selectedRental.renterEmail}</div>
           </ModalBody>
           <ModalFooter>
           </ModalFooter>

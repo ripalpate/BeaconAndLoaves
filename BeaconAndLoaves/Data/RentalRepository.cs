@@ -184,12 +184,16 @@ namespace BeaconAndLoaves.Data
             using (var db = new SqlConnection(_connectionString))
             {
                 var query = @"
-                    select r.*, p.propertyName, p.city, p.state, p.ownerId, p.createdOn, p.price, u.name, u.email
+                    select r.*, p.propertyName, p.city, p.state, p.ownerId,
+                    p.createdOn, p.price, o.name as owner, o.email as ownerEmail,
+                    renter.name as renter, renter.email as renterEmail
                     from rentals r
                     join properties p
                     on r.propertyId = p.id
-                    join users u
-                    on r.userId = u.id
+                    join users o
+                    on p.ownerId = o.id
+                    join users renter
+                    on r.userId = renter.id
                     where r.id = @id";
                 var parameters = new { Id = id };
                 var singleRental = db.QueryFirstOrDefault<Object>(query, parameters);

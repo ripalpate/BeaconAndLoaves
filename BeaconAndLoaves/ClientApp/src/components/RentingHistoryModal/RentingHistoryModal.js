@@ -7,14 +7,14 @@ import {
   ModalFooter,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import formatDate from '../../../helpers/formatDate';
+import formatDate from '../../helpers/formatDate';
 
 import './RentingHistoryModal.scss';
 
 class RentingHistoryModal extends React.Component {
   static propTypes = {
     toggleModal: PropTypes.func,
-    rentingHistoryModal: PropTypes.bool,
+    historyModal: PropTypes.bool,
     selectedRental: PropTypes.object,
     numDays: PropTypes.number,
     isEditing: PropTypes.bool,
@@ -33,7 +33,7 @@ class RentingHistoryModal extends React.Component {
 
   render() {
     const {
-      rentingHistoryModal,
+      historyModal,
       selectedRental,
       numDays,
     } = this.props;
@@ -51,13 +51,15 @@ class RentingHistoryModal extends React.Component {
 
     return (
       <div>
-        <Modal isOpen={rentingHistoryModal} toggle={this.toggleEvent} className="modal-lg">
+        <Modal isOpen={historyModal} toggle={this.toggleEvent} className="modal-lg">
           <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>{selectedRental.propertyName}</ModalHeader>
           <ModalBody className="text-center modal-body">
             <div>Start Date: {formatDate.formatMDYDate(selectedRental.StartDate)}</div>
             <div>End Date: {formatDate.formatMDYDate(selectedRental.EndDate)}</div>
             <div>{selectedRental.city}, {selectedRental.state}</div>
             <div>Total: ${selectedRental.RentalAmount}</div>
+            <div>Owner's Name: {selectedRental.owner}</div>
+            <div>Owner's Email: {selectedRental.ownerEmail}</div>
           </ModalBody>
           <ModalFooter>
             {makeButtons()}

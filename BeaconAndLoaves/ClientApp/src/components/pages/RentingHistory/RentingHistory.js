@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SingleRentalItem from '../../SingleRentalItem/SingleRentalItem';
-import RentingHistoryModal from '../RentingHistoryModal/RentingHistoryModal';
+import RentingHistoryModal from '../../RentingHistoryModal/RentingHistoryModal';
 import Rental from '../Rental/Rental';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import propertyRequests from '../../../helpers/data/propertiesRequests';
@@ -20,7 +20,7 @@ class RentingHistory extends React.Component {
       futureRentals: [],
       pastRentals: [],
       rentingId: 0,
-      rentingHistoryModal: false,
+      historyModal: false,
       selectedRental: {},
       selectedProperty: {},
       numDays: 0,
@@ -30,9 +30,9 @@ class RentingHistory extends React.Component {
     }
 
     toggleModal = (rentingId) => {
-      const { rentingHistoryModal } = this.state;
-      this.setState({ rentingId, rentingHistoryModal: !rentingHistoryModal });
-      if (rentingHistoryModal === false) {
+      const { historyModal } = this.state;
+      this.setState({ rentingId, historyModal: !historyModal });
+      if (historyModal === false) {
         this.getSingleRental(rentingId);
       }
     }
@@ -110,7 +110,7 @@ class RentingHistory extends React.Component {
       const {
         futureRentals,
         pastRentals,
-        rentingHistoryModal,
+        historyModal,
         rentingId,
         selectedRental,
         selectedProperty,
@@ -206,7 +206,7 @@ class RentingHistory extends React.Component {
               {checkPastRentalsLength()}
             </div>
             <RentingHistoryModal
-              rentingHistoryModal={rentingHistoryModal}
+              historyModal={historyModal}
               rentingId={rentingId}
               toggleModal={this.toggleModal}
               selectedRental={selectedRental}
