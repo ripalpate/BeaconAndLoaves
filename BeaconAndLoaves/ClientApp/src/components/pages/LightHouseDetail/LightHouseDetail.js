@@ -6,7 +6,7 @@ import rentalRequests from '../../../helpers/data/rentalRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import WarningModal from '../WarningModal/WarningModal';
 import LikeButton from '../LikeButton/LikeButton';
-import Rental from '../Rental/Rental';
+import Rental from '../../Rental/Rental';
 import AddEditProperty from '../../AddEditProperty/AddEditProperty';
 
 import './LightHouseDetail.scss';

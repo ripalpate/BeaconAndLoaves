@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SingleRentalItem from '../../SingleRentalItem/SingleRentalItem';
 import RentingHistoryModal from '../../RentingHistoryModal/RentingHistoryModal';
-import Rental from '../Rental/Rental';
+import Rental from '../../Rental/Rental';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import propertyRequests from '../../../helpers/data/propertiesRequests';
 

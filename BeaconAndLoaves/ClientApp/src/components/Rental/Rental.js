@@ -9,9 +9,9 @@ import {
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import ConfirmationModal from '../ConfirmationModal/ConfrimationModal';
-import userRequests from '../../../helpers/data/userRequests';
-import rentalRequests from '../../../helpers/data/rentalRequests';
-import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
+import userRequests from '../../helpers/data/userRequests';
+import rentalRequests from '../../helpers/data/rentalRequests';
+import paymentMethodRequests from '../../helpers/data/paymentMethodRequests';
 
 
 import './Rental.scss';
@@ -172,6 +172,7 @@ class Rental extends React.Component {
         startDate.setDate(startDate.getDate() + 1);
       }
     });
+    rentedDates.sort((a, b) => ((a - b)));
     this.setState({ rentedDates });
     if (isEditing) {
       this.figureTotal();
@@ -261,9 +262,8 @@ class Rental extends React.Component {
                       className="ml-3"
                       selected={this.state.startDate}
                       selectsStart
-                      minDate={this.state.startDate}
+                      minDate={new Date()}
                       startDate={this.state.startDate}
-                      endDate={this.state.endDate}
                       onChange={this.handleStartChange}
                       excludeDates={ rentedDates }
                       />
