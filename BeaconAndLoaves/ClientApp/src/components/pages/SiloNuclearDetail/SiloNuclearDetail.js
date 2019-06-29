@@ -82,6 +82,14 @@ class SiloNuclearDetail extends React.Component {
     this.props.history.push('/rentingHistory');
   }
 
+  backToProperties = () => {
+    this.props.history.push('/properties');
+  }
+
+  backToLikedProperties = () => {
+    this.props.history.push('/likedProperties');
+  }
+
   OwnerPropertiesView = (e) => {
     const ownerId = e.target.dataset.owner;
     this.props.history.push(`/ownerProperties/${ownerId}`);
@@ -180,6 +188,8 @@ class SiloNuclearDetail extends React.Component {
       <div>
         <div className="back-button">
           <button className = "bttn-pill bttn-md" onClick = {this.backButton}><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
+          <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToProperties}><i class="fas fa-home fa-2x"></i></button>
+          <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToLikedProperties}><i class="fas fa-heart fa-2x"></i></button>
         </div>
         <div className="card mx-auto bg-light detail">
           <div className="imgHolder">

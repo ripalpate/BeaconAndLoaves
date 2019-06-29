@@ -18,6 +18,10 @@ class OwnerDashboard extends React.Component {
     averagePerRental: 0,
   }
 
+  backButton = () => {
+    this.props.history.push('/viewRentals');
+  }
+
   getUserProperties = () => {
     const { currentUser } = this.props;
     const userId = currentUser.id;
@@ -146,6 +150,7 @@ class OwnerDashboard extends React.Component {
 
     return (
      <div>
+      <button className = "bttn-pill bttn-md mt-3" onClick = {this.backButton}><i class="far fa-arrow-alt-circle-left fa-2x"></i></button>
        <div>Select Properties:
           <select id="property" className="custom-select mb-2 ml-2" onChange={this.dropdownSelect}>
           <option defaultValue>Select Property</option>
