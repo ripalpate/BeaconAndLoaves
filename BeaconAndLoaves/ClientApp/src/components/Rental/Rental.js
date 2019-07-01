@@ -275,7 +275,7 @@ class Rental extends React.Component {
                         selected={this.state.endDate}
                         selectsEnd
                         startDate={this.state.startDate}
-                        endDate={this.state.endDate}
+                        endDate={this.state.startDate}
                         minDate={this.state.startDate}
                         onChange={this.handleEndChange}
                         excludeDates={ rentedDates }
