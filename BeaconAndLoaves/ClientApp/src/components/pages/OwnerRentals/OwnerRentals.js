@@ -17,6 +17,10 @@ ownerRentalsMounted = false;
       currentUser: PropTypes.object,
     }
 
+    backButton = () => {
+      this.props.history.push('/profile');
+    }
+
     getFutureOwnerRentals = () => {
       const { currentUser } = this.props;
       const ownerId = currentUser.id;
@@ -132,6 +136,7 @@ ownerRentalsMounted = false;
       };
       return (
           <div className="ownerRentals col">
+              <button className = "bttn-pill bttn-md mt-3" onClick = {this.backButton} title="Back to Profile"><i className="far fa-arrow-alt-circle-left"></i></button>
               <div className="future-rentals">
                 <h2 className="mt-5">Future Rentals:</h2>
                 {checkFutureRentalsLength()}
