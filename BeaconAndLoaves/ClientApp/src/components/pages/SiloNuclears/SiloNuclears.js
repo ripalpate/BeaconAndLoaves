@@ -75,6 +75,10 @@ class SiloNuclears extends React.Component {
     }
   }
 
+  backButton = () => {
+    this.props.history.push('/properties');
+  }
+
   handleChange =(e) => {
     const { ascendingOrder } = this.state;
     e.preventDefault();
@@ -131,6 +135,7 @@ class SiloNuclears extends React.Component {
     return (
       <div>
         <div className="serach-sort-container">
+          <button className = "bttn-pill bttn-md" onClick = {this.backButton} title="Back to All Properties"><i className="far fa-arrow-alt-circle-left"></i></button>
           <button
             id="search-btn"
             type="button"

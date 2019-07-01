@@ -43,6 +43,10 @@ class RentingHistory extends React.Component {
       this.getFutureRentals();
     }
 
+    backButton = () => {
+      this.props.history.push('/profile');
+    }
+
     getSingleRental = (rentingId) => {
       rentalRequests.getSingleRental(rentingId)
         .then((rental) => {
@@ -198,6 +202,7 @@ class RentingHistory extends React.Component {
       return (
         <div className="renting col">
             <div className="future-renting">
+            <button className = "bttn-pill bttn-md mt-3" onClick = {this.backButton} title="Back to Profile"><i className="far fa-arrow-alt-circle-left"></i></button>
               <h2 className="mt-5">Future Rentals:</h2>
               {checkFutureRentalsLength()}
             </div>
