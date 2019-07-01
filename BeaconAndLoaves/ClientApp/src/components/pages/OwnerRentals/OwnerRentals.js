@@ -34,6 +34,8 @@ ownerRentalsMounted = false;
         .then((rental) => {
           this.setState({ selectedRental: rental.data });
         });
+    }
+
 
     backButton = () => {
       this.props.history.push('/profile');
