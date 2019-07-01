@@ -5,11 +5,12 @@ import formatDate from '../../../helpers/formatDate';
 class SingleOwnerRentalItem extends React.Component {
  static propTypes ={
    rental: PropTypes.object,
+   toggleModal: PropTypes.func,
  }
 
  toggleModalEvent = (e) => {
-  const rentingId = e.currentTarget.id * 1;
-  this.props.toggleModal(rentingId);
+  const rentalId = e.currentTarget.id * 1;
+  this.props.toggleModal(rentalId);
 }
 
  render() {
