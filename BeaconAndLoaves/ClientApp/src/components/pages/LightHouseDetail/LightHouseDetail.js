@@ -218,7 +218,7 @@ toggleModal = () => {
       <div>
         <div className="back-button">
               <button className = "bttn-pill bttn-md" onClick = {this.backButton} title="To All Lighthouses"><i className="far fa-arrow-alt-circle-left"></i></button>
-              <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToProperties} title="To All Properties"><i className="fas fa-home"></i></button>
+              <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToProperties} title="To All Properties"><i class="fas fa-building"></i></button>
               <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToLikedProperties} title="To Liked Properties"><i className="fas fa-heart"></i></button>
         </div>
         <div className="card mx-auto bg-light detail">
