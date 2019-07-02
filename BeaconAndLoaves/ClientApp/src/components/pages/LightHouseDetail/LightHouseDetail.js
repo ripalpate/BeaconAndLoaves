@@ -22,7 +22,6 @@ class LightHouseDetail extends React.Component {
     modal: false,
     lightHouseId: 0,
     rentalModal: false,
-    modal: false,
     isEditing: false,
   }
 
