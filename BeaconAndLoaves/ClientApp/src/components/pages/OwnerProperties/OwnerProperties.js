@@ -54,7 +54,7 @@ class OwnerPropducts extends React.Component {
       return (
         <div>
             <div className="back-button">
-              <button className = "bttn-pill btn-warning" onClick = {this.backButton}>Back</button>
+            <button className = "bttn-pill bttn-md mt-3" onClick = {this.backButton} title="Back to Properties"><i className="far fa-arrow-alt-circle-left"></i></button>
             </div>
             <div className = "row">
             {ownerPropertyComponent}
