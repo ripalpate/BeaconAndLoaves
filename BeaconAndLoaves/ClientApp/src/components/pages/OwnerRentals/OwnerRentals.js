@@ -167,7 +167,7 @@ ownerRentalsMounted = false;
               <div className="sales-container">
                 <h3 className="mt-5"> Lifetime Sales for all Properties</h3>
                 <p>Total sales: $ {this.state.totalSales}</p>
-                <button className = "bttn-pill" onClick={this.ownerDashboardGraphicalView}>View Detail Sales </button>
+                <button className = "bttn-pill" onClick={this.ownerDashboardGraphicalView}>View Dashboard </button>
               </div>
               <div className="future-rentals">
                 <h2 className="mt-5">Future Rentals:</h2>
