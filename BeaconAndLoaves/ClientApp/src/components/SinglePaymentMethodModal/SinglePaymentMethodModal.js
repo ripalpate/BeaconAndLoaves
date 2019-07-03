@@ -8,8 +8,8 @@ import {
 import PropTypes from 'prop-types';
 import './SinglePaymentMethodModal.scss';
 import PaymentMethodForm from '../PaymentMethodForm/PaymentMethodForm';
-import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
-import formatDate from '../../../helpers/formatDate';
+import paymentMethodRequests from '../../helpers/data/paymentMethodRequests';
+import formatDate from '../../helpers/formatDate';
 
 class SinglePaymentMethodModal extends React.Component {
   state = {
@@ -42,15 +42,6 @@ class SinglePaymentMethodModal extends React.Component {
   componentDidMount() {
     this.paymentTypes();
   }
-
-  // deletePaymentMethod = (e) => {
-  //   const { paymentAccount } = this.props;
-  //   paymentMethodRequests.deleteUserPayment(this.paymentAccount.id)
-  //     .then(() => {
-  //       this.props.history.push('/home');
-  //     });
-  //   this.props.history.push('/home');
-  // }
 
   render() {
     const { paymentTypes } = this.state;
@@ -85,15 +76,6 @@ class SinglePaymentMethodModal extends React.Component {
           getUserPaymentAccounts();
         });
     };
-
-    // const formatDate = () => {
-    //   const expirationDate = new Date(paymentAccount.expirationDate);
-    //   const month = (`0${expirationDate.getMonth() + 1}`).slice(-2);
-    //   const day = expirationDate.getDate();
-    //   const year = expirationDate.getFullYear();
-    //   const formattedDate = `${month}/${year}`;
-    //   return formattedDate;
-    // };
 
     const createModalHeader = () => {
       if (isRegistering) {
@@ -151,7 +133,6 @@ class SinglePaymentMethodModal extends React.Component {
       return (
     <div>
     <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
-    {/* <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Add New Account</ModalHeader> */}
     {createModalHeader()}
     <ModalBody className="text-center modal-body">
       <PaymentMethodForm

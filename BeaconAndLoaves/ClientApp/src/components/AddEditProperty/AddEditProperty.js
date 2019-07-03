@@ -110,7 +110,7 @@ class AddEditProperty extends React.Component {
       render() {
         const { newProperty } = this.state;
 
-        const { modal, isEditing, togglePropertyModal } = this.props;
+        const { addEditingModal, isEditing, togglePropertyModal } = this.props;
 
         const makeHeader = () => {
           if (isEditing) {
@@ -144,7 +144,7 @@ class AddEditProperty extends React.Component {
 
         return (
           <div className="new-property m-5 text-center">
-            <Modal isOpen={modal} className="modal-lg">
+            <Modal isOpen={addEditingModal} className="modal-lg">
               <ModalHeader class-name="modal-header" toggle={togglePropertyModal}>{makeHeader()}</ModalHeader>
                 <ModalBody className="text-center modal-body">
             <form className="" onSubmit={this.formSubmit}>

@@ -8,9 +8,9 @@ import {
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import ConfirmationModal from '../ConfirmationModal/ConfrimationModal';
-import userRequests from '../../../helpers/data/userRequests';
-import rentalRequests from '../../../helpers/data/rentalRequests';
-import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
+import userRequests from '../../helpers/data/userRequests';
+import rentalRequests from '../../helpers/data/rentalRequests';
+import paymentMethodRequests from '../../helpers/data/paymentMethodRequests';
 
 
 import './Rental.scss';
