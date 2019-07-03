@@ -80,6 +80,7 @@ class Rental extends React.Component {
       isRenting: !isRenting,
       rentedDates: [],
       attemptedDates: [],
+      rentalTotal: 0,
     },
     () => { this.resetDates(); this.getDates(); });
   }
