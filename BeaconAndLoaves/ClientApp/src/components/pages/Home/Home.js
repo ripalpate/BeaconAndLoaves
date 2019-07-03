@@ -5,7 +5,7 @@ import './Home.scss';
 
 class Home extends React.Component {
   state = {
-    modal: false,
+    addEditingModal: false,
     isEditing: false,
   }
 
@@ -19,12 +19,12 @@ class Home extends React.Component {
   }
 
   togglePropertyModal = () => {
-    const { modal } = this.state;
-    this.setState({ modal: !modal });
+    const { addEditingModal } = this.state;
+    this.setState({ addEditingModal: !addEditingModal });
   }
 
   render() {
-    const { modal, isEditing } = this.state;
+    const { addEditingModal, isEditing } = this.state;
 
     return (
       <div className="Home mx-auto">
@@ -59,11 +59,10 @@ class Home extends React.Component {
           </div>
         </div>
         <AddEditProperty
-          modal={modal}
+          addEditingModal={addEditingModal}
           isEditing={isEditing}
           togglePropertyModal={this.togglePropertyModal}
-          changeAddEditView={this.changeAddEditView
-          }
+          changeAddEditView={this.changeAddEditView}
         />
       </div>
     );

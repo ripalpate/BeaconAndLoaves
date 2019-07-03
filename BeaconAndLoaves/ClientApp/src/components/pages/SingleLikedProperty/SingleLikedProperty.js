@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import propertiesShape from '../../../helpers/propz/propertiesShape';
 import './SingleLikedProperty.scss';
-import LikeButton from '../LikeButton/LikeButton';
+import LikeButton from '../../LikeButton/LikeButton';
 
 
 class SingleLikedProperty extends React.Component {

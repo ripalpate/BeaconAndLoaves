@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import smashRequests from '../../../helpers/data/smashRequests';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
-import LikeButton from '../LikeButton/LikeButton';
-import Rental from '../Rental/Rental';
+import LikeButton from '../../LikeButton/LikeButton';
+import Rental from '../../Rental/Rental';
 import AddEditProperty from '../../AddEditProperty/AddEditProperty';
 
 import './SiloNuclearDetail.scss';

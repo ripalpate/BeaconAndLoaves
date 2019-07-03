@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
+import likedPropertyRequests from '../../helpers/data/likedPropertyRequests';
 import './LikeButton.scss';
 
 class LikeButton extends React.Component {

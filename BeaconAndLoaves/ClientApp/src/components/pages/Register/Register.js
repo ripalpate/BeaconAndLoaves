@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SinglePaymentMethodModal from '../SinglePaymentMethodModal/SinglePaymentMethodModal';
+import SinglePaymentMethodModal from '../../SinglePaymentMethodModal/SinglePaymentMethodModal';
 import userRequests from '../../../helpers/data/userRequests';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import authRequests from '../../../helpers/data/authRequests';
