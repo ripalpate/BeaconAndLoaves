@@ -16,7 +16,7 @@ class SiloNuclearDetail extends React.Component {
     isLiked: false,
     siloNuclearId: 0,
     rentalModal: false,
-    modal: false,
+    addEditingmodal: false,
     isEditing: false,
   }
 
@@ -70,12 +70,12 @@ class SiloNuclearDetail extends React.Component {
   }
 
   togglePropertyModal = () => {
-    const { modal, isEditing } = this.state;
+    const { addEditingModal, isEditing } = this.state;
     if (isEditing) {
-      this.setState({ modal: !modal, isEditing: false });
+      this.setState({ addEditingModal: !addEditingModal, isEditing: false });
       this.getPropertyWithOwnerName();
     }
-    this.setState({ modal: !modal, isEditing: true });
+    this.setState({ addEditingModal: !addEditingModal, isEditing: true });
   }
 
   routeToHome = () => {
@@ -136,7 +136,7 @@ class SiloNuclearDetail extends React.Component {
       siloNuclear,
       isLiked,
       rentalModal,
-      modal,
+      addEditingModal,
       isEditing,
     } = this.state;
 
@@ -217,7 +217,7 @@ class SiloNuclearDetail extends React.Component {
           routeToHome={this.routeToHome}
         />
         <AddEditProperty
-          modal={modal}
+          addEditingModal={addEditingModal}
           isEditing={isEditing}
           togglePropertyModal={this.togglePropertyModal}
           changeAddEditView={this.changeAddEditView}
