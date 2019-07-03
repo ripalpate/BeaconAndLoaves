@@ -9,6 +9,7 @@ class OwnerDashboard extends React.Component {
 
   state = {
     properties: [],
+    allRentals: [],
     rentalsAssocWithProperty: [],
     rentalsSortedByLatestDate: [],
     selectedProperty: '',
@@ -28,7 +29,7 @@ class OwnerDashboard extends React.Component {
     const userId = currentUser.id;
     userRequests.getUserProperties(userId)
       .then((properties) => {
-        this.setState({ properties });
+        this.setState({ properties }, this.getPropertiesWithRentalTotals(properties));
       });
   };
 
@@ -45,6 +46,18 @@ class OwnerDashboard extends React.Component {
         this.getFutureRentalsEndDate();
         this.figureTotal();
       });
+  }
+
+  getPropertiesWithRentalTotals = (properties) => {
+    const { allRentals } = this.state;
+    properties.forEach((property) => {
+      rentalRequests.getAllRentalsByPropertyIdWithTotals(property.id)
+        .then((rentals) => {
+          rentals.forEach((rental) => {
+            allRentals.push(rental);
+          });
+        });
+    });
   }
 
   getSinglePropertyCreatedOn = () => {

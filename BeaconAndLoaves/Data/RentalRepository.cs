@@ -143,6 +143,24 @@ namespace BeaconAndLoaves.Data
             }
         }
 
+        public IEnumerable<Object> GetRentalsByPropertyIdWithTotals(int propertyId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+
+                var rentalsWithTotals = db.Query<Object>(@"
+                    select SUM(r.rentalamount) as totalRentals, p.propertyName
+                    from rentals r
+                    join properties p
+                    on p.id = r.propertyId
+                    where r.propertyId = @propertyId
+                    group by p.PropertyName
+                    ", new { propertyId }).ToList();
+
+                return rentalsWithTotals;
+            }
+        }
+
         public IEnumerable<Object> GetAllRentalsByPropertyIdAndOwnerId(int userId, int propertyId)
         {
             using (var db = new SqlConnection(_connectionString))
@@ -223,6 +241,27 @@ namespace BeaconAndLoaves.Data
                     return rentalToUpdate;
                 }
                 throw new Exception("Could not update rental");
+            }
+        }
+
+        public Object GetTotalEarnedAmount(int userId, int propertyId) {  
+
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"Select rentals.PropertyId, SUM(rentals.rentalAmount) as 'totalSales', properties.propertyName, properties.createdOn
+                            From rentals 
+                            Join Properties
+	                            On rentals.PropertyId = Properties.id 
+                            Join users 
+	                            On rentals.userId = users.Id
+	                            Where Properties.OwnerId = @ownerId
+	                            And properties.id = @propertyId
+	                            Group By rentals.PropertyId, properties.propertyName, properties.createdOn";
+                var parameters = new { ownerId = userId, propertyId };
+                 
+                var GetTotalSalesPerProperty = db.QueryFirstOrDefault<Object>(sql, parameters);
+
+                return GetTotalSalesPerProperty;
             }
         }
     }
