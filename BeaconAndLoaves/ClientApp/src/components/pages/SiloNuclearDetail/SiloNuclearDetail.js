@@ -173,12 +173,12 @@ class SiloNuclearDetail extends React.Component {
         if (siloNuclear.isActive === true) {
           return (
         <div className = "float-right mr-3">
-          <i className="fas fa-toggle-on fa-2x" data-property-id={siloNuclear.id} title="Dectivate Property" onClick = {this.deactivateProperty}></i>
+          <i className="fas fa-toggle-on fa-2x deactivate-icon" data-property-id={siloNuclear.id} title="Dectivate Property" onClick = {this.deactivateProperty}></i>
         </div>
           );
         } return (
         <div className = "float-right mr-3">
-          <i className="fas fa-toggle-off fa-2x" data-property-id={siloNuclear.id} title="Activate Property" onClick = {this.activateProperty}></i>
+          <i className="fas fa-toggle-off fa-2x activate-icon" data-property-id={siloNuclear.id} title="Activate Property" onClick = {this.activateProperty}></i>
       </div>
         );
       } return (<span></span>);
