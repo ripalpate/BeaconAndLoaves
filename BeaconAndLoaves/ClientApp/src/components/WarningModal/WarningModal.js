@@ -16,6 +16,7 @@ class MyModal extends React.Component {
     modal: PropTypes.bool,
     deleteProfile: PropTypes.func,
     isDeletingProperty: PropTypes.bool,
+    isRenting: PropTypes.bool,
   }
 
   toggleEvent = () => {
@@ -28,6 +29,8 @@ class MyModal extends React.Component {
       modal,
       deleteProfile,
       isDeletingProperty,
+      isRenting,
+      isDeletingProfile,
     } = this.props;
 
     const populateText = () => {
@@ -35,12 +38,19 @@ class MyModal extends React.Component {
         return (
        <div> Sorry, you will not be able to delete the property as there are future rentals coming up </div>
         );
+      } if (isRenting) {
+        return (
+          <div>
+            <div>Your selected dates contain unavailable dates.</div>
+            <div>Please select another end date.</div>
+          </div>
+        );
       } return (
         <div>Are you sure you want to do that?</div>
       );
     };
     const populateDeleteButton = () => {
-      if (!isDeletingProperty) {
+      if (isDeletingProfile) {
         return (
         <Button onClick={deleteProfile}>
           <i className="fas fa-trash fa-2x"></i>

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   Modal,
   ModalHeader,
   ModalBody,
@@ -9,9 +8,11 @@ import {
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import ConfirmationModal from '../ConfirmationModal/ConfrimationModal';
+import WarningModal from '../WarningModal/WarningModal';
 import userRequests from '../../helpers/data/userRequests';
 import rentalRequests from '../../helpers/data/rentalRequests';
 import paymentMethodRequests from '../../helpers/data/paymentMethodRequests';
+import formatDate from '../../helpers/formatDate';
 
 
 import './Rental.scss';
@@ -25,6 +26,9 @@ const defaultRental = {
   endDate: '',
   rentalAmount: 0,
 };
+
+// const today = new Date();
+// const tomorrow = today.setDate(today.getDate() + 1);
 
 class Rental extends React.Component {
   rentalMounted = false;
@@ -42,6 +46,7 @@ class Rental extends React.Component {
   state = {
     startDate: new Date(),
     endDate: new Date(),
+    selectedDate: new Date(),
     paymentAccounts: [],
     paymentAccount: 0,
     rentalTotal: 0,
@@ -51,6 +56,9 @@ class Rental extends React.Component {
     accountName: '',
     modal: false,
     editRental: false,
+    warningModal: false,
+    isRenting: false,
+    attemptedDates: [],
   }
 
   toggleValidationModal = () => {
@@ -60,18 +68,65 @@ class Rental extends React.Component {
     });
   }
 
+  toggleWarningModal = () => {
+    const { warningModal, isRenting } = this.state;
+    if (warningModal === false) {
+      this.setState({
+        warningModal: !warningModal,
+        isRenting: !isRenting,
+      });
+    }
+    this.setState({
+      warningModal: !warningModal,
+      isRenting: !isRenting,
+      rentedDates: [],
+      attemptedDates: [],
+    },
+    () => { this.resetDates(); this.getDates(); });
+  }
+
+  resetDates = () => {
+    this.setState({
+      startDate: new Date(),
+      endDate: new Date(),
+    });
+  }
+
   rentalValidation = () => {
     if (this.state.paymentAccount !== 0 && this.state.rentalTotal !== 0) {
       this.toggleValidationModal();
     }
   }
 
+  checkDates = (date) => {
+    const { rentedDates, selectedDate, attemptedDates } = this.state;
+    while (selectedDate <= date) {
+      attemptedDates.push(new Date(selectedDate));
+      selectedDate.setDate(selectedDate.getDate() + 1);
+    }
+    rentedDates.forEach((rentedDate) => {
+      attemptedDates.forEach((attemptedDate) => {
+        if (formatDate.formatMDYDate(rentedDate) === formatDate.formatMDYDate(attemptedDate)) {
+          this.toggleWarningModal();
+        }
+      });
+    });
+    this.figureTotal();
+  }
+
   handleStartChange = (date) => {
-    this.setState({ startDate: date }, this.figureTotal);
+    this.setState({ startDate: new Date(date), selectedDate: new Date(date), attemptedDates: [] });
+    this.figureTotal();
   }
 
   handleEndChange = (date) => {
-    this.setState({ endDate: date }, this.figureTotal);
+    this.setState(function (state, props) {
+        return {
+          endDate: date
+        }
+      });
+    // this.setState({ endDate: date });
+    this.checkDates(date);
   }
 
   handlePaymentAccountChange = (e) => {
@@ -165,11 +220,11 @@ class Rental extends React.Component {
     const { isEditing } = this.props;
     rentedDates.push(new Date());
     rentals.forEach((rental) => {
-      const startDate = new Date(rental.startDate);
-      const endDate = new Date(rental.endDate);
-      while (startDate <= endDate) {
-        rentedDates.push(new Date(startDate));
-        startDate.setDate(startDate.getDate() + 1);
+      const start = new Date(rental.startDate);
+      const end = new Date(rental.endDate);
+      while (start <= end) {
+        rentedDates.push(new Date(start));
+        start.setDate(start.getDate() + 1);
       }
     });
     rentedDates.sort((a, b) => ((a - b)));
@@ -212,6 +267,8 @@ class Rental extends React.Component {
       endDate,
       accountName,
       paymentAccount,
+      warningModal,
+      isRenting,
     } = this.state;
 
     const {
@@ -260,10 +317,10 @@ class Rental extends React.Component {
                     <label>Start Date </label>
                     <DatePicker
                       className="ml-3"
-                      selected={this.state.startDate}
+                      selected={startDate}
                       selectsStart
-                      minDate={new Date()}
-                      startDate={this.state.startDate}
+                      startDate={startDate}
+                      endDate={startDate}
                       onChange={this.handleStartChange}
                       excludeDates={ rentedDates }
                       />
@@ -272,11 +329,11 @@ class Rental extends React.Component {
                     <label>End Date: </label>
                     <DatePicker
                         className="ml-3"
-                        selected={this.state.endDate}
+                        selected={endDate}
                         selectsEnd
-                        startDate={this.state.startDate}
-                        endDate={this.state.startDate}
-                        minDate={this.state.startDate}
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={startDate}
                         onChange={this.handleEndChange}
                         excludeDates={ rentedDates }
                     />
@@ -291,18 +348,24 @@ class Rental extends React.Component {
             <ModalFooter>
             </ModalFooter>
       </Modal>
-      <div>
-              <ConfirmationModal
-              modal={modal}
-              toggleValidationModal={this.toggleValidationModal}
-              rentProperty={this.rentProperty}
-              propertyToRent={property}
-              startDate={`${startDate.getMonth() + 1}/${startDate.getDate()}/${startDate.getFullYear()}`}
-              endDate={`${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}`}
-              rentalTotal={rentalTotal}
-              accountName={accountName}
-              />
-            </div>
+        <div>
+          <ConfirmationModal
+          modal={modal}
+          toggleValidationModal={this.toggleValidationModal}
+          rentProperty={this.rentProperty}
+          propertyToRent={property}
+          startDate={`${startDate.getMonth() + 1}/${startDate.getDate()}/${startDate.getFullYear()}`}
+          endDate={`${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}`}
+          rentalTotal={rentalTotal}
+          accountName={accountName}
+          />
+          <WarningModal
+            modal={warningModal}
+            toggleModal={this.toggleWarningModal}
+            isRenting={isRenting}
+            resetDates={this.resetDates}
+          />
+        </div>
       </div>
     );
   }

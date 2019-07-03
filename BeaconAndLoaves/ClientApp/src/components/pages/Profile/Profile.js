@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import accountShape from '../../../helpers/propz/accountShape';
 import userRequests from '../../../helpers/data/userRequests';
-import WarningModal from '../WarningModal/WarningModal';
+import WarningModal from '../../WarningModal/WarningModal';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import SinglePaymentMethodModal from '../SinglePaymentMethodModal/SinglePaymentMethodModal';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
@@ -31,6 +31,7 @@ class Profile extends React.Component {
     paymentModal: false,
     paymentAccount: {},
     editedUser: {},
+    isDeletingProfile: false,
   }
 
   paymentAccount = {
@@ -224,6 +225,7 @@ class Profile extends React.Component {
       isEditingAccount,
       isRegistering,
       editedUser,
+      isDeletingProfile,
     } = this.state;
 
     const {
@@ -471,6 +473,7 @@ class Profile extends React.Component {
         modal={modal}
         toggleModal={this.toggleModal}
         deleteProfile={this.deleteProfile}
+        isDeletingProfile={isDeletingProfile}
          />
       </div>
       <div>

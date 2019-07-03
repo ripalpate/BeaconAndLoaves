@@ -4,7 +4,7 @@ import smashRequests from '../../../helpers/data/smashRequests';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
-import WarningModal from '../WarningModal/WarningModal';
+import WarningModal from '../../WarningModal/WarningModal';
 import LikeButton from '../LikeButton/LikeButton';
 import Rental from '../../Rental/Rental';
 import AddEditProperty from '../../AddEditProperty/AddEditProperty';
