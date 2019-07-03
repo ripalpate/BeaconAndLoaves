@@ -98,6 +98,7 @@ class Rental extends React.Component {
   }
 
   checkDates = (date) => {
+    this.figureTotal();
     const { rentedDates, selectedDate, attemptedDates } = this.state;
     while (selectedDate <= date) {
       attemptedDates.push(new Date(selectedDate));
@@ -110,21 +111,14 @@ class Rental extends React.Component {
         }
       });
     });
-    this.figureTotal();
   }
 
   handleStartChange = (date) => {
-    this.setState({ startDate: new Date(date), selectedDate: new Date(date), attemptedDates: [] });
-    this.figureTotal();
+    this.setState({ startDate: new Date(date), selectedDate: new Date(date), attemptedDates: [] }, this.figureTotal);
   }
 
   handleEndChange = (date) => {
-    this.setState(function (state, props) {
-        return {
-          endDate: date
-        }
-      });
-    // this.setState({ endDate: date });
+    this.setState({ endDate: new Date(date) }, this.figureTotal);
     this.checkDates(date);
   }
 
