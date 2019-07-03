@@ -147,6 +147,7 @@ class OwnerDashboard extends React.Component {
       properties,
       rentalTotal,
       averagePerRental,
+      rentalsAssocWithProperty,
     } = this.state;
 
     return (
@@ -181,6 +182,7 @@ class OwnerDashboard extends React.Component {
           <div>
             <p>Total Sales: ${rentalTotal}</p>
             <p>Average ${averagePerRental} per rental</p>
+            <p>Number of rentals: {rentalsAssocWithProperty.length}</p>
           </div>
       </div>
      </div>
