@@ -109,15 +109,6 @@ namespace BeaconAndLoaves.Controllers
             return Ok(ownerRentals);
         }
 
-        [HttpGet("sales/{id}")]
-
-        public ActionResult GetTotalSales(int id, int propertyId)
-        {
-            var totalSales = _repository.GetTotalEarnedAmount(id, propertyId);
-
-            return Ok(totalSales);
-        }
-
         [HttpGet("allRentals/{id}")]
 
         public ActionResult GetAllRentalsByPropertyIdAndOwnerId(int id, int propertyId)

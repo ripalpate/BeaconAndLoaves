@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import SingleOwnerRentalItem from '../SingleOwnerRentalItem/SingleOwnerRentalItem';
 import RentalHistoryModal from '../../RentalHistoryModal/RentalHistoryModal';
 import rentalRequests from '../../../helpers/data/rentalRequests';
-import userRequests from '../../../helpers/data/userRequests';
 import './OwnerRentals.scss';
 
 class OwnerRentals extends React.Component {
@@ -75,12 +74,16 @@ ownerRentalsMounted = false;
     }
 
     getTotalSales = () => {
-      const { pastOwnerRentals } = this.state;
-      let total = 0;
+      const { pastOwnerRentals, futureOwnerRentals } = this.state;
+      let pastTotal = 0;
+      let futureTotal = 0;
       pastOwnerRentals.forEach((item) => {
-        total += item.rentalAmount;
+        pastTotal += item.rentalAmount;
       });
-      this.setState({ totalSales: total });
+      futureOwnerRentals.forEach((item) => {
+        futureTotal += item.rentalAmount;
+      });
+      this.setState({ totalSales: pastTotal + futureTotal });
     };
 
     render() {
@@ -161,6 +164,11 @@ ownerRentalsMounted = false;
       return (
           <div className="ownerRentals col">
               <button className = "bttn-pill bttn-md mt-3" onClick = {this.backButton} title="Back to Profile"><i className="far fa-arrow-alt-circle-left"></i></button>
+              <div className="sales-container">
+                <h3 className="mt-5"> Lifetime Sales for all Properties</h3>
+                <p>Total sales: $ {this.state.totalSales}</p>
+                <button className = "bttn-pill" onClick={this.ownerDashboardGraphicalView}>View Dashboard </button>
+              </div>
               <div className="future-rentals">
                 <h2 className="mt-5">Future Rentals:</h2>
                 {checkFutureRentalsLength()}
@@ -168,11 +176,6 @@ ownerRentalsMounted = false;
               <div className="past-rentals">
                 <h2 className="mt-5">Past Rentals:</h2>
                 {checkLength()}
-              </div>
-              <div className="sales-container">
-                <h3 className="mt-5"> Lifetime Sales for all Properties</h3>
-                <p>Total sales: $ {this.state.totalSales}</p>
-                <button className = "bttn-pill" onClick={this.ownerDashboardGraphicalView}>View Detail Sales </button>
               </div>
               <RentalHistoryModal
                 modal={modal}
