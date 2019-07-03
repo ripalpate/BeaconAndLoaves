@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import accountShape from '../../../helpers/propz/accountShape';
 import userRequests from '../../../helpers/data/userRequests';
-import WarningModal from '../WarningModal/WarningModal';
+import WarningModal from '../../WarningModal/WarningModal';
 import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
 import SinglePaymentMethodModal from '../../SinglePaymentMethodModal/SinglePaymentMethodModal';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
