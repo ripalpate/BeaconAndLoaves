@@ -2,6 +2,7 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import userRequests from '../../../helpers/data/userRequests';
+import './OwnerDashboard.scss';
 
 class OwnerDashboard extends React.Component {
   ownerDashboradMounted = false;
@@ -151,21 +152,23 @@ class OwnerDashboard extends React.Component {
     return (
      <div>
       <button className = "bttn-pill bttn-md mt-3" onClick = {this.backButton} title="Back to All Rentals"><i className="far fa-arrow-alt-circle-left"></i></button>
-       <div>Select Properties:
-          <select id="property" className="custom-select mb-2 ml-2" onChange={this.dropdownSelect}>
-          <option defaultValue>Select Property</option>
-            {
-            properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
-            }
-          </select>
-        </div>
-        <div id="start">
-          <label>Start Date </label>
-          <DatePicker
-            className="ml-3"
-            selected={this.state.startDate}
-            onChange={this.handleStartChange}
-          />
+       <div className="ownerDashboard card">
+        <h4 className="text-center">Dashboard</h4>
+        <div>Select Properties:
+            <select id="property" className="custom-select mb-2 ml-2" onChange={this.dropdownSelect}>
+            <option defaultValue>Select Property</option>
+              {
+              properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
+              }
+            </select>
+          </div>
+          <div id="start">
+            <label>Start Date </label>
+            <DatePicker
+              className="ml-3"
+              selected={this.state.startDate}
+              onChange={this.handleStartChange}
+            />
           </div>
           <div id="end">
             <label>End Date: </label>
@@ -179,6 +182,7 @@ class OwnerDashboard extends React.Component {
             <p>Total Sales: ${rentalTotal}</p>
             <p>Average ${averagePerRental} per rental</p>
           </div>
+      </div>
      </div>
     );
   }
