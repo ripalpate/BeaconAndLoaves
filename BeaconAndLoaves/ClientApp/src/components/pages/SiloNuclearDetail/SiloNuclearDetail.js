@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import smashRequests from '../../../helpers/data/smashRequests';
 import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
-import LikeButton from '../LikeButton/LikeButton';
+import LikeButton from '../../LikeButton/LikeButton';
 import Rental from '../../Rental/Rental';
 import AddEditProperty from '../../AddEditProperty/AddEditProperty';
 
@@ -16,7 +16,7 @@ class SiloNuclearDetail extends React.Component {
     isLiked: false,
     siloNuclearId: 0,
     rentalModal: false,
-    modal: false,
+    addEditingmodal: false,
     isEditing: false,
   }
 
@@ -70,12 +70,12 @@ class SiloNuclearDetail extends React.Component {
   }
 
   togglePropertyModal = () => {
-    const { modal, isEditing } = this.state;
+    const { addEditingModal, isEditing } = this.state;
     if (isEditing) {
-      this.setState({ modal: !modal, isEditing: false });
+      this.setState({ addEditingModal: !addEditingModal, isEditing: false });
       this.getPropertyWithOwnerName();
     }
-    this.setState({ modal: !modal, isEditing: true });
+    this.setState({ addEditingModal: !addEditingModal, isEditing: true });
   }
 
   routeToHome = () => {
@@ -136,7 +136,7 @@ class SiloNuclearDetail extends React.Component {
       siloNuclear,
       isLiked,
       rentalModal,
-      modal,
+      addEditingModal,
       isEditing,
     } = this.state;
 
@@ -173,12 +173,12 @@ class SiloNuclearDetail extends React.Component {
         if (siloNuclear.isActive === true) {
           return (
         <div className = "float-right mr-3">
-          <i className="fas fa-toggle-on fa-2x" data-property-id={siloNuclear.id} title="Dectivate Property" onClick = {this.deactivateProperty}></i>
+          <i className="fas fa-toggle-on fa-2x deactivate-icon" data-property-id={siloNuclear.id} title="Dectivate Property" onClick = {this.deactivateProperty}></i>
         </div>
           );
         } return (
         <div className = "float-right mr-3">
-          <i className="fas fa-toggle-off fa-2x" data-property-id={siloNuclear.id} title="Activate Property" onClick = {this.activateProperty}></i>
+          <i className="fas fa-toggle-off fa-2x activate-icon" data-property-id={siloNuclear.id} title="Activate Property" onClick = {this.activateProperty}></i>
       </div>
         );
       } return (<span></span>);
@@ -217,7 +217,7 @@ class SiloNuclearDetail extends React.Component {
           routeToHome={this.routeToHome}
         />
         <AddEditProperty
-          modal={modal}
+          addEditingModal={addEditingModal}
           isEditing={isEditing}
           togglePropertyModal={this.togglePropertyModal}
           changeAddEditView={this.changeAddEditView}

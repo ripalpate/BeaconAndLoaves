@@ -5,7 +5,7 @@ import propertiesRequests from '../../../helpers/data/propertiesRequests';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import WarningModal from '../../WarningModal/WarningModal';
-import LikeButton from '../LikeButton/LikeButton';
+import LikeButton from '../../LikeButton/LikeButton';
 import Rental from '../../Rental/Rental';
 import AddEditProperty from '../../AddEditProperty/AddEditProperty';
 
@@ -22,7 +22,7 @@ class LightHouseDetail extends React.Component {
     modal: false,
     lightHouseId: 0,
     rentalModal: false,
-    modal: false,
+    addEditingModal: false,
     isEditing: false,
   }
 
@@ -74,12 +74,12 @@ toggleModal = () => {
   }
 
   togglePropertyModal = () => {
-    const { modal, isEditing } = this.state;
+    const { addEditingModal, isEditing } = this.state;
     if (isEditing) {
-      this.setState({ modal: !modal, isEditing: false });
+      this.setState({ addEditingModal: !addEditingModal, isEditing: false });
       this.getPropertyWithOwnerName();
     }
-    this.setState({ modal: !modal, isEditing: true });
+    this.setState({ addEditingModal: !addEditingModal, isEditing: true });
   }
 
   routeToHome = () => {
@@ -119,8 +119,7 @@ toggleModal = () => {
     this.props.history.push(`/editProperty/${propertyId}`);
   }
 
-  deleteProperty = (e) => {
-    const { propertyId } = e.target.dataset;
+  deleteProperty = (propertyId) => {
     propertiesRequests.deleteProperty(propertyId)
       .then(() => {
         this.props.history.push('/properties/lighthouses');
@@ -132,7 +131,7 @@ toggleModal = () => {
     rentalRequests.getAllRentalsByPropertyId(propertyId)
       .then((futureRentals) => {
         if (futureRentals.length === 0) {
-          this.deleteProperty();
+          this.deleteProperty(propertyId);
         } else {
           this.setState({ isDeletingProperty: true }, this.toggleModal());
         }
@@ -167,6 +166,7 @@ toggleModal = () => {
       isLiked,
       rentalModal,
       modal,
+      addEditingModal,
       isEditing,
       isDeletingProperty,
     } = this.state;
@@ -218,7 +218,7 @@ toggleModal = () => {
       <div>
         <div className="back-button">
               <button className = "bttn-pill bttn-md" onClick = {this.backButton} title="To All Lighthouses"><i className="far fa-arrow-alt-circle-left"></i></button>
-              <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToProperties} title="To All Properties"><i class="fas fa-building"></i></button>
+              <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToProperties} title="To All Properties"><i className="fas fa-building"></i></button>
               <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToLikedProperties} title="To Liked Properties"><i className="fas fa-heart"></i></button>
         </div>
         <div className="card mx-auto bg-light detail">
@@ -252,7 +252,7 @@ toggleModal = () => {
           routeToHome={this.routeToHome}
         />
         <AddEditProperty
-          modal={modal}
+          addEditingModal={addEditingModal}
           isEditing={isEditing}
           togglePropertyModal={this.togglePropertyModal}
           changeAddEditView={this.changeAddEditView}

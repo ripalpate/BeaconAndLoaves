@@ -9,11 +9,10 @@ import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import ConfirmationModal from '../ConfirmationModal/ConfrimationModal';
 import WarningModal from '../WarningModal/WarningModal';
+import formatDate from '../../helpers/formatDate';
 import userRequests from '../../helpers/data/userRequests';
 import rentalRequests from '../../helpers/data/rentalRequests';
 import paymentMethodRequests from '../../helpers/data/paymentMethodRequests';
-import formatDate from '../../helpers/formatDate';
-
 
 import './Rental.scss';
 import 'react-datepicker/dist/react-datepicker.css';

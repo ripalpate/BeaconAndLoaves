@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import paymentMethodRequests from '../../../helpers/data/paymentMethodRequests';
-import formatDate from '../../../helpers/formatDate';
+import paymentMethodRequests from '../../helpers/data/paymentMethodRequests';
+import formatDate from '../../helpers/formatDate';
 
 const defaultPaymentMethod = {
   accountName: '',
@@ -114,7 +114,7 @@ class PaymentMethodForm extends React.Component {
       selectedPaymentType,
     } = this.state;
 
-    const { isEditingAccount, formatDate } = this.props;
+    const { isEditingAccount } = this.props;
 
     const makeButtons = () => {
       if (isEditingAccount === false) {
@@ -150,13 +150,6 @@ class PaymentMethodForm extends React.Component {
                 </span>
               </div>
       );
-    };
-
-    const makeExpDate = () => {
-      if (isEditingAccount === true) {
-        return formatDate(newPaymentMethod.expirationDate);
-      }
-      return newPaymentMethod.expirationDate;
     };
 
     return (

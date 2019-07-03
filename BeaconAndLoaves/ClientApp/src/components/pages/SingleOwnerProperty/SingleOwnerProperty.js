@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import propertiesShape from '../../../helpers/propz/propertiesShape';
-import LikeButton from '../LikeButton/LikeButton';
+import LikeButton from '../../LikeButton/LikeButton';
 import likedPropertyRequests from '../../../helpers/data/likedPropertyRequests';
 import './SingleOwnerProperty.scss';
 
