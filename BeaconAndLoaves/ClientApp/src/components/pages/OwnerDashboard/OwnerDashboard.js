@@ -1,5 +1,6 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
+import Graph from '../../Graph/Graph';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import userRequests from '../../../helpers/data/userRequests';
 import './OwnerDashboard.scss';
@@ -18,10 +19,16 @@ class OwnerDashboard extends React.Component {
     rentalTotal: 0,
     createdDate: new Date(),
     averagePerRental: 0,
+    graphModal: false,
   }
 
   backButton = () => {
     this.props.history.push('/viewRentals');
+  }
+
+  toggleGraphModal = () => {
+    const { graphModal } = this.state;
+    this.setState({ graphModal: !graphModal });
   }
 
   getUserProperties = () => {
@@ -29,7 +36,7 @@ class OwnerDashboard extends React.Component {
     const userId = currentUser.id;
     userRequests.getUserProperties(userId)
       .then((properties) => {
-        this.setState({ properties }, this.getPropertiesWithRentalTotals(properties));
+        this.setState({ properties });
       });
   };
 
@@ -48,17 +55,17 @@ class OwnerDashboard extends React.Component {
       });
   }
 
-  getPropertiesWithRentalTotals = (properties) => {
-    const { allRentals } = this.state;
-    properties.forEach((property) => {
-      rentalRequests.getAllRentalsByPropertyIdWithTotals(property.id)
-        .then((rentals) => {
-          rentals.forEach((rental) => {
-            allRentals.push(rental);
-          });
-        });
-    });
-  }
+  // getPropertiesWithRentalTotals = (properties) => {
+  //   const { allRentals } = this.state;
+  //   properties.forEach((property) => {
+  //     rentalRequests.getAllRentalsByPropertyIdWithTotals(property.id)
+  //       .then((rentals) => {
+  //         rentals.forEach((rental) => {
+  //           allRentals.push(rental);
+  //         });
+  //       });
+  //   });
+  // }
 
   getSinglePropertyCreatedOn = () => {
     const { selectedProperty, properties } = this.state;
@@ -160,11 +167,13 @@ class OwnerDashboard extends React.Component {
       properties,
       rentalTotal,
       averagePerRental,
+      graphModal,
     } = this.state;
 
     return (
      <div>
       <button className = "bttn-pill bttn-md mt-3" onClick = {this.backButton} title="Back to All Rentals"><i className="far fa-arrow-alt-circle-left"></i></button>
+      <button className = "bttn-pill bttn-md mt-3" onClick = {this.toggleGraphModal} title="Show Graph"><i className="far fa-arrow-alt-circle-left"></i></button>
        <div className="ownerDashboard card">
         <h4 className="text-center">Dashboard</h4>
         <div>Select Properties:
@@ -196,6 +205,11 @@ class OwnerDashboard extends React.Component {
             <p>Average ${averagePerRental} per rental</p>
           </div>
       </div>
+        <Graph
+          currentUser={this.props.currentUser}
+          toggleGraphModal={this.toggleGraphModal}
+          graphModal={graphModal}
+        />
      </div>
     );
   }
