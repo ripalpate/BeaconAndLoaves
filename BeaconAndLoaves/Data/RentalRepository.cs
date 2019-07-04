@@ -149,7 +149,8 @@ namespace BeaconAndLoaves.Data
             {
 
                 var rentalsWithTotals = db.Query<Object>(@"
-                    select p.propertyName, SUM(r.rentalamount) as totalRentals
+                    select p.propertyName, SUM(r.rentalamount) as totalRentals, 
+                        (SUM(r.rentalamount)/COUNT(r.rentalAmount)) as rentalsAverage
                     from rentals r
                     join properties p
                     on p.id = r.propertyId

@@ -2,78 +2,85 @@ import React, { PureComponent } from 'react';
 import {
   BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
+import {
+  Modal,
+  ModalHeader,
+} from 'reactstrap';
+import rentalRequests from '../../helpers/data/rentalRequests';
+import userRequests from '../../helpers/data/userRequests';
 
-// const data = [
-//   {
-//     name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
-//   },
-//   {
-//     name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
-//   },
-//   {
-//     name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
-//   },
-//   {
-//     name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
-//   },
-//   {
-//     name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
-//   },
-//   {
-//     name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
-//   },
-//   {
-//     name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
-//   },
-// ];
+import './Graph.scss';
 
 export default class Graph2 extends PureComponent {
   static jsfiddleUrl = 'https://jsfiddle.net/alidingling/30763kr7/';
 
+  graphMounted = false;
+
   state = {
-    data: [],
+    allRentals: [],
+    properties: [],
   }
 
-  componentWillReceiveProps(props) {
-    this.setState({
-      data: props.data,
+  toggleEvent = () => {
+    this.props.toggleGraphModal();
+  }
+
+  getUserProperties = () => {
+    const { currentUser } = this.props;
+    const userId = currentUser.id;
+    userRequests.getUserProperties(userId)
+      .then((properties) => {
+        this.setState({ properties }, this.getPropertiesWithRentalTotals);
+      });
+  };
+
+  getPropertiesWithRentalTotals = () => {
+    const { allRentals, properties } = this.state;
+    properties.forEach((property) => {
+      rentalRequests.getAllRentalsByPropertyIdWithTotals(property.id)
+        .then((rentals) => {
+          rentals.forEach((rental) => {
+            allRentals.push(rental);
+          });
+        });
     });
+    this.setState({ allRentals });
+  }
+
+  componentDidMount() {
+    const { currentUser } = this.props;
+    this.graphMounted = !!currentUser.id;
+    if (this.graphMounted) {
+      this.getUserProperties();
+    }
   }
 
 
   render() {
-    const { data } = this.state;
-
-    const usableData = {};
-    Object.keys(data).forEach((s) => {
-      data[s].forEach((d) => {
-        const x = d[XAxis];
-        const y = d[YAxis];
-        let entry = usableData[x];
-        if (!entry) entry = {};
-        Object.assign(entry, { xAxis: x, [s]: y });
-        usableData[x] = entry;
-      });
-    });
+    const { allRentals } = this.state;
+    const { graphModal, currentUser } = this.props;
 
     return (
-      <BarChart
-        width={500}
-        height={300}
-        data={Object.values(usableData)}
-        margin={{
-          top: 5, right: 30, left: 20, bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="Xaxis" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        {Object.keys(data).map((s, index) => (
-            <Bar dataKey={s} name={s} key={s}/>
-        ))}
-      </BarChart>
+        <Modal isOpen={graphModal} toggle={this.toggleEvent} className="modal-lg">
+            <ModalHeader toggle={this.toggleEvent}>{currentUser.name}'s Property Stats</ModalHeader>
+            <BarChart
+            className="mx-auto"
+            width={500}
+            height={300}
+            data={allRentals}
+            margin={{
+              top: 5, right: 30, left: 20, bottom: 5,
+            }}
+        >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="propertyName" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="totalRentals" fill="rgba(187, 21, 21, 1)" />
+            <Bar dataKey="rentalsAverage" fill="rgba(42, 52, 79, 1)" />
+        </BarChart>
+      </Modal>
     );
   }
 }

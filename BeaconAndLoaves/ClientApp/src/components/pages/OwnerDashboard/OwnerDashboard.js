@@ -1,6 +1,6 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
-import Graph from '../../Graph/Graph';
+import Graph2 from '../../Graph/Graph2';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import userRequests from '../../../helpers/data/userRequests';
 import './OwnerDashboard.scss';
@@ -205,7 +205,7 @@ class OwnerDashboard extends React.Component {
             <p>Average ${averagePerRental} per rental</p>
           </div>
       </div>
-        <Graph
+        <Graph2
           currentUser={this.props.currentUser}
           toggleGraphModal={this.toggleGraphModal}
           graphModal={graphModal}
