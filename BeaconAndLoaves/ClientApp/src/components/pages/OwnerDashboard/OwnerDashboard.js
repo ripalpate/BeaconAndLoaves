@@ -151,9 +151,11 @@ class OwnerDashboard extends React.Component {
     } = this.state;
 
     return (
-     <div className="dashboardContainer">
+      <div>
       <button className = "bttn-pill bttn-md mt-3" onClick = {this.backButton} title="Back to All Rentals"><i className="far fa-arrow-alt-circle-left"></i></button>
-      <div className="ownerDashboard mx-auto border border-dark rounded pl-3">
+     <div className="dashboardContainer d-flex mx-auto">
+      <div>
+      <div className="ownerDashboard text-cemter border border-dark rounded pl-3">
         <h4 className="text-center">Dashboard</h4>
         <div>Select Properties:
             <select id="property" className="custom-select mb-2 ml-2" onChange={this.dropdownSelect}>
@@ -185,6 +187,8 @@ class OwnerDashboard extends React.Component {
             <p>Number of rentals: {rentalsAssocWithProperty.length}</p>
           </div>
       </div>
+     </div>
+     </div>
      </div>
     );
   }
