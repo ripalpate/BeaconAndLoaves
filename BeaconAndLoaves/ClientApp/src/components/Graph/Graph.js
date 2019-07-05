@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import {
   BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
@@ -7,37 +6,13 @@ import {
   Modal,
   ModalHeader,
 } from 'reactstrap';
-import { scaleOrdinal } from 'd3-scale';
-import { schemeCategory10 } from 'd3-scale-chromatic';
 import rentalRequests from '../../helpers/data/rentalRequests';
 import userRequests from '../../helpers/data/userRequests';
 
-const colors = scaleOrdinal(schemeCategory10).range();
+import './Graph.scss';
 
-const getPath = (x, y, width, height) => `M${x},${y + height}
-          C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3} ${x + width / 2}, ${y}
-          C${x + width / 2},${y + height / 3} ${x + 2 * width / 3},${y + height} ${x + width}, ${y + height}
-          Z`;
-
-const TriangleBar = (props) => {
-  const {
-    fill, x, y, width, height,
-  } = props;
-
-  return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
-};
-
-TriangleBar.propTypes = {
-  fill: PropTypes.string,
-  x: PropTypes.number,
-  y: PropTypes.number,
-  width: PropTypes.number,
-  height: PropTypes.number,
-  allRentals: PropTypes.array,
-};
-
-class Graph extends PureComponent {
-  static jsfiddleUrl = 'https://jsfiddle.net/alidingling/rnywhbu8/';
+export default class Graph2 extends PureComponent {
+  static jsfiddleUrl = 'https://jsfiddle.net/alidingling/30763kr7/';
 
   graphMounted = false;
 
@@ -80,37 +55,32 @@ class Graph extends PureComponent {
     }
   }
 
+
   render() {
     const { allRentals } = this.state;
-    const { graphModal } = this.props;
+    const { graphModal, currentUser } = this.props;
+
     return (
-      <div>
-          <Modal isOpen={graphModal} toggle={this.toggleEvent} className="modal-lg">
-            <ModalHeader toggle={this.toggleEvent}>Total Sales/Property</ModalHeader>
+        <Modal isOpen={graphModal} toggle={this.toggleEvent} className="modal-lg">
+            <ModalHeader toggle={this.toggleEvent}>{currentUser.name}'s Property Stats</ModalHeader>
             <BarChart
-                className="mx-auto"
-                width={500}
-                height={300}
-                data={allRentals}
-                margin={{
-                  top: 20, right: 30, left: 20, bottom: 5,
-                }}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="propertyName" />
-                <YAxis />
-                <Bar dataKey="totalRentals" fill="#8884d8" shape={<TriangleBar />} label={{ position: 'top' }}>
-                {
-                    allRentals.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={colors[index % 20]} />
-                    ))
-                }
-                </Bar>
-            </BarChart>
-        </Modal>
-      </div>
+            className="mx-auto"
+            width={500}
+            height={300}
+            data={allRentals}
+            margin={{
+              top: 5, right: 30, left: 20, bottom: 5,
+            }}
+        >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="propertyName" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="totalRentals" fill="rgba(187, 21, 21, 1)" />
+            <Bar dataKey="rentalsAverage" fill="rgba(42, 52, 79, 1)" />
+        </BarChart>
+      </Modal>
     );
   }
 }
-
-export default Graph;
