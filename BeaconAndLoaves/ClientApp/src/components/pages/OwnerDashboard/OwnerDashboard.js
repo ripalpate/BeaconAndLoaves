@@ -159,9 +159,9 @@ class OwnerDashboard extends React.Component {
     } = this.state;
 
     return (
-     <div>
-      <button className = "bttn-pill bttn-md mt-3" onClick = {this.backButton} title="Back to All Rentals"><i className="far fa-arrow-alt-circle-left"></i></button>
-      <button className = "bttn-pill bttn-md mt-3" onClick = {this.toggleGraphModal} title="Show Graph"><i className="far fa-arrow-alt-circle-left"></i></button>
+     <div className="mt-3">
+      <button className = "bttn-pill bttn-md mt-3 ml-1" onClick = {this.backButton} title="Back to All Rentals"><i className="far fa-arrow-alt-circle-left"></i></button>
+      <button className = "bttn-pill bttn-md mt-3 ml-1" onClick = {this.toggleGraphModal} title="Show Graph"><i class="fas fa-chart-line"></i></button>
        <div className="ownerDashboard card">
         <h4 className="text-center">Dashboard</h4>
         <div>Select Properties:
