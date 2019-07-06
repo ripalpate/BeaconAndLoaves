@@ -31,5 +31,23 @@
     }
 }
 
-.card:nth-child(odd) {background:$color3}
-// .card:nth-child(odd) {background:$color4}
+#profile, #likedProperties, #properties, #addProperty {
+    background:$color3;
+    cursor: pointer;
+}
+
+.card:hover{ 
+    box-shadow: 1px 8px 20px $color2;
+   -webkit-transition:  box-shadow .6s ease-in;
+ }
+
+
+// .zoom {
+//     transition: all 0.5s;
+// }
+
+// .zoom:hover {
+//     -ms-transform: scale(1.1); /* IE 9 */
+//     -webkit-transform: scale(1.1); /* Safari 3-8 */
+//     transform: scale(1.1); 
+//   }
