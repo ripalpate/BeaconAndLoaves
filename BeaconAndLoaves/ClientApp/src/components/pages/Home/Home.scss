@@ -32,13 +32,13 @@
 }
 
 #profile, #likedProperties, #properties, #addProperty {
-    background:$color3;
+    background:$color1;
     cursor: pointer;
 }
 
 .card:hover{ 
     box-shadow: 1px 8px 20px $color2;
-   -webkit-transition:  box-shadow .6s ease-in;
+    -webkit-transition:  box-shadow .6s ease-in;
  }
 
 
