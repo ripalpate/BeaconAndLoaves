@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
-  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
 import {
   Modal,
@@ -63,15 +63,16 @@ export default class Graph2 extends PureComponent {
     return (
         <Modal isOpen={graphModal} toggle={this.toggleEvent} className="modal-lg">
             <ModalHeader toggle={this.toggleEvent}>{currentUser.name}'s Property Stats</ModalHeader>
+            <ResponsiveContainer width={800} height={400}>
             <BarChart
-            className="mx-auto"
-            width={500}
-            height={300}
-            data={allRentals}
-            margin={{
-              top: 5, right: 30, left: 20, bottom: 5,
-            }}
-        >
+              className="mx-auto"
+              width={500}
+              height={300}
+              data={allRentals}
+              margin={{
+                top: 5, right: 30, left: 20, bottom: 5,
+              }}
+            >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="propertyName" />
             <YAxis />
@@ -79,8 +80,9 @@ export default class Graph2 extends PureComponent {
             <Legend />
             <Bar dataKey="totalRentals" fill="rgba(187, 21, 21, 1)" />
             <Bar dataKey="rentalsAverage" fill="rgba(42, 52, 79, 1)" />
-        </BarChart>
-      </Modal>
+            </BarChart>
+          </ResponsiveContainer>
+        </Modal>
     );
   }
 }
