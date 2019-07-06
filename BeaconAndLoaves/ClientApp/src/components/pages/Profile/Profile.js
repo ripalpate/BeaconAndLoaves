@@ -239,7 +239,7 @@ class Profile extends React.Component {
                 <h3 className="mx-auto edit-profile-title">Edit Profile</h3>
                 <div className="form col-11 mt-2">
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Email</label>
+                    <label htmlFor="link" className="sr-only profile-form-label">Email</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Email</div>
@@ -256,7 +256,7 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="name" className="sr-only">Name</label>
+                    <label htmlFor="name" className="sr-only profile-form-label">Name</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Name</div>
@@ -273,7 +273,7 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Street</label>
+                    <label htmlFor="link" className="sr-only profile-form-label">Street</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Street</div>
@@ -290,7 +290,7 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">City</label>
+                    <label htmlFor="link" className="sr-only profile-form-label">City</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">City</div>
@@ -307,7 +307,7 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">State</label>
+                    <label htmlFor="link" className="sr-only profile-form-label">State</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">State</div>
@@ -324,7 +324,7 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Zip Code</label>
+                    <label htmlFor="link" className="sr-only profile-form-label">Zip Code</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Zip Code</div>
@@ -342,7 +342,7 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Phone Number</label>
+                    <label htmlFor="link" className="sr-only profile-form-label">Phone Number</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Phone Number</div>
