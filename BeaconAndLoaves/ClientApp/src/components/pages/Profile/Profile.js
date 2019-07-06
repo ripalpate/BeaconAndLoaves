@@ -31,6 +31,7 @@ class Profile extends React.Component {
     paymentModal: false,
     paymentAccount: {},
     editedUser: {},
+    isDeletingProfile: false,
   }
 
   paymentAccount = {
@@ -224,6 +225,7 @@ class Profile extends React.Component {
       isEditingAccount,
       isRegistering,
       editedUser,
+      isDeletingProfile,
     } = this.state;
 
     const {
@@ -471,6 +473,7 @@ class Profile extends React.Component {
         modal={modal}
         toggleModal={this.toggleModal}
         deleteProfile={this.deleteProfile}
+        isDeletingProfile={isDeletingProfile}
          />
       </div>
       <div>
