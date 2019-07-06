@@ -1,5 +1,15 @@
+@import '../../../styles/variables';
+
 .ownerDashboard {
     width: 50%;
     margin: 0 auto;
     padding: 5px;
+}
+
+.fa-chart-line {
+    color: $color1;
+}
+
+.fa-arrow-alt-circle-left {
+    color: $color3,
 }
