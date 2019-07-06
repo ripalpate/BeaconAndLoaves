@@ -3,6 +3,7 @@
 .Home {
     margin-top: 100px;
     width: 75%;
+    font-family: $body-font;
 }
 
 @media (min-width: 576px) {
@@ -32,12 +33,12 @@
 }
 
 #profile, #likedProperties, #properties, #addProperty {
-    background:$color1;
+    background:$color2;
     cursor: pointer;
 }
 
 .card:hover{ 
-    box-shadow: 1px 8px 20px $color2;
+    box-shadow: 1px 8px 20px $color3;
     -webkit-transition:  box-shadow .6s ease-in;
  }
 

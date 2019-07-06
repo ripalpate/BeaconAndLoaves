@@ -35,7 +35,6 @@ ownerRentalsMounted = false;
         });
     }
 
-
     backButton = () => {
       this.props.history.push('/profile');
     }
