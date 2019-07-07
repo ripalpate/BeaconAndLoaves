@@ -1,11 +1,36 @@
+@import '../../../styles/variables';
+
 #lighthouses {
   margin: 20px; 
+  padding-bottom:10px;
 }
 
 #siloNuclears{
   margin: 20px;
 }
 
-.property-title {
-  color: white;
+.Properties {
+  margin-top: 12%;
+  width: 80%;
+  font-family: $body-font;
+}
+
+@media (min-width:769px) and (max-width:992px) {
+  .Properties {
+    width: 100%;
+    margin-top: 24.5% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-columns {
+      column-count: 1 !important;
+  }
+  .Properties {
+    width: 60%;
+    margin-top: 12.5% !important;
+  }
+  #siloNuclears{
+    margin-left:20px !important;
+  }
 }

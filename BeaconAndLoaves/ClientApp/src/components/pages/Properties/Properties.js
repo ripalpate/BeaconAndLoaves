@@ -27,15 +27,17 @@ class Properties extends React.Component {
   render() {
     const { lightHouse, siloNuclear } = this.state;
     return (
-      <div className="properties d-flex">
-        <div id="lighthouses" onClick={this.pageView}>
-          <h3 className="property-title">LightHouse({lightHouse.length})</h3>
-          <img className="lighthouse-img" src="https://www.millerheimangroup.com/wp-content/uploads/2018/09/lighthouse.jpg" alt="lighthouse" width = "500"/>
+      <div className="Properties mx-auto">
+      <div className="card-columns mt-5">
+        <div className="card text-center" id="lighthouses" onClick={this.pageView}>
+          <h3 className="card-title property-title">LightHouse({lightHouse.length})</h3>
+          <img className="card-image-top lighthouse-img pt-2" src="http://tshega.org/wp-content/uploads/2018/04/lighthouse.png" alt="lighthouse" width = "180px"/>
         </div>
-        <div id="siloNuclears" onClick={this.pageView}>
-          <h3 className="property-title">SiloNuclear({siloNuclear.length})</h3>
-          <img className="siloNuclear-img" src="http://2.bp.blogspot.com/_88RoabsTacs/TJGk5wVnmoI/AAAAAAAADyg/J-Ve5gCymdg/s1600/IMG_5560.JPG" alt="siloNuclear" width = "500"/>
+        <div className="card text-center ml-5" id="siloNuclears" onClick={this.pageView}>
+          <h3 className="property-title pb-2">SiloNuclear({siloNuclear.length})</h3>
+          <i className="card-image-top p-3 fas fa-rocket fa-10x"></i>
         </div>
+      </div>
       </div>
     );
   }
