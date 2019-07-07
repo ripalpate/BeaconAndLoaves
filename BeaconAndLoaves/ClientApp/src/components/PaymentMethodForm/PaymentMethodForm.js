@@ -14,8 +14,6 @@ const defaultPaymentMethod = {
 };
 
 class PaymentMethodForm extends React.Component {
-  // formattedDate = '';
-
   static propTypes = {
     isEditingAccount: PropTypes.bool,
   }
@@ -120,7 +118,7 @@ class PaymentMethodForm extends React.Component {
       if (isEditingAccount === false) {
         return (
           <div className="text-center">
-          <button className="btn paymentMethod-add-btn btn-success mx-auto mb-2" title="Submit">
+          <button className="bttn-pill paymentMethod-add-btn mx-auto mb-2" title="Submit">
                 <i className="fas fa-plus-circle" />
               </button>
           </div>
@@ -129,7 +127,7 @@ class PaymentMethodForm extends React.Component {
 
       return (
         <div className="text-center">
-        <button className="btn paymentMethod-add-btn btn-success mx-auto mb-2" title="Submit">
+        <button className="bttn-pill paymentMethod-add-btn mx-auto mb-2" title="Submit">
                 <i className="fas fa-check-square" />
               </button>
           </div>

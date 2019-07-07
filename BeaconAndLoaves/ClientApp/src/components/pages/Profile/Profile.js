@@ -373,7 +373,7 @@ class Profile extends React.Component {
       }
       return (
         <div className="profile-card border border-dark rounded" id={currentUser.id}>
-          <h3 className="text-center">{currentUser.name}</h3>
+          <h3 className="text-center profile-header">{currentUser.name}</h3>
           <div className="ml-1">Email: {currentUser.email}</div>
           <div className="ml-1">Street: {currentUser.street}</div>
           <div className="ml-1">City: {currentUser.city}</div>

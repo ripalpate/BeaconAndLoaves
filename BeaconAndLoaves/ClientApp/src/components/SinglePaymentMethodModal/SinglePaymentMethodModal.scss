@@ -1,7 +1,17 @@
+@import "../../styles/variables";
+
 #paymentMethodModal{
 color: black !important;
 }
 
 .paymentMethod-edit-btn{
   color: black;
+}
+
+.modal-header{
+  font-family: $header-font
+}
+
+.paymentMethod-delete-btn {
+  color: $color1;
 }

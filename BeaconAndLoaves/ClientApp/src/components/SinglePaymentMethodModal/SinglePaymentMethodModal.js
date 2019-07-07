@@ -100,11 +100,11 @@ class SinglePaymentMethodModal extends React.Component {
         <div className="ml-1">Account Type: {getAccountTypeName(paymentAccount.paymentTypeId)}</div>
         <div className="ml-1">Exp Date: {formatDate.formatMYDate(paymentAccount.expirationDate)}</div>
         <div className="ml-1">CVV: {paymentAccount.cvv}</div>
-        <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal} title="Edit Account">
-            <i className="far fa-edit fa-2x"/>
+        <button id='paymentMethod-edit' type="button" className="bttn-pill paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal} title="Edit Account">
+            <i className="far fa-edit fa-1x"/>
         </button>
-        <button id='paymentMethod-delete' type="button" className="btn paymentMethod-delete-btn m-1" onClick={deletePaymentMethod}>
-            <i className="paymentMethod-delete-btn fas fa-trash fa-2x"></i>
+        <button id='paymentMethod-delete' type="button" className="bttn-pill paymentMethod-delete-btn m-1" onClick={deletePaymentMethod}>
+            <i className="paymentMethod-delete-btn fas fa-trash fa-1x"></i>
         </button>
         </div>
       </ModalBody>
