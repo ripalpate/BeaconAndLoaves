@@ -449,17 +449,17 @@ class Profile extends React.Component {
       }
       return (
         <div>
-            <button id='rentingHistory' type="button" className="bttn-pill renter-history-btn m-1" onClick={this.changeView}>
+            <button id='rentingHistory' type="button" className="bttn-pill renter-history-btn ml-2 mr-2" onClick={this.changeView}>
               View Trips
             </button>
-            <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile} title="Edit Profile">
-              <i className="far fa-edit fa-2x"/>
+            <button id='profile-edit' type="button" className="bttn-pill profile-edit-btn ml-2" onClick={this.editProfile} title="Edit Profile">
+              <i className="far fa-edit fa-1x"/>
             </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddPaymentModal} title="Add Payment Account">
-                <i className="far fa-credit-card fa-2x"></i>
+            <button type="button" className="bttn-pill payment-add-btn ml-2" onClick={this.toggleAddPaymentModal} title="Add Payment Account">
+                <i className="far fa-credit-card fa-1x"></i>
             </button>
-            <button id='profile-delete' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal} title="Delete Profile">
-              <i className="profile-delete-btn fas fa-trash fa-2x"></i>
+            <button id='profile-delete' type="button" className="bttn-pill profile-delete-btn ml-2 mr-2" onClick={this.toggleModal} title="Delete Profile">
+              <i className="profile-delete-btn fas fa-trash fa-1x"></i>
             </button>
         </div>
       );
