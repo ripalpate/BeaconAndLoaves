@@ -360,10 +360,10 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="text-center">
-                    <button type="submit" className="bttn-pill user-add-btn m-2 float-left" title="Submit">
+                    <button type="submit" className="bttn-pill user-add-btn m-2" title="Submit">
                       <i className="user-add-btn fas fa-check-square fa-1x"/>
                     </button>
-                    <button id='cancel' type="button" className="bttn-pill back-btn m-2 float-right" onClick={this.cancel} title="Cancel">
+                    <button id='cancel' type="button" className="bttn-pill back-btn m-2" onClick={this.cancel} title="Cancel">
                       <i className="back-btn far fa-window-close fa-1x"/>
                     </button>
                   </div>
