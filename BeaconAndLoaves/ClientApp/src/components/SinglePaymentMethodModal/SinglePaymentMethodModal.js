@@ -6,10 +6,11 @@ import {
   ModalBody,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import './SinglePaymentMethodModal.scss';
 import PaymentMethodForm from '../PaymentMethodForm/PaymentMethodForm';
 import paymentMethodRequests from '../../helpers/data/paymentMethodRequests';
 import formatDate from '../../helpers/formatDate';
+
+import './SinglePaymentMethodModal.scss';
 
 class SinglePaymentMethodModal extends React.Component {
   state = {
@@ -94,7 +95,7 @@ class SinglePaymentMethodModal extends React.Component {
     <div>
       <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
       <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>{paymentAccount.accountName}</ModalHeader>
-      <ModalBody className="text-center modal-body">
+      <ModalBody className="text-center modal-body payment-detail">
       <div className="border border-dark rounded" id={paymentAccount.id}>
         <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
         <div className="ml-1">Account Type: {getAccountTypeName(paymentAccount.paymentTypeId)}</div>
@@ -115,8 +116,8 @@ class SinglePaymentMethodModal extends React.Component {
         return (
           <div>
           <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
-          <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Edit Payment Account</ModalHeader>
-          <ModalBody className="text-center modal-body">
+          <ModalHeader className="modal-header" toggle={this.cancelPaymentModalEvent}>Edit Payment Account</ModalHeader>
+          <ModalBody className="text-center modal-body payment-modal">
             <PaymentMethodForm
             isEditingAccount={isEditingAccount}
             paymentAccount={paymentAccount}
@@ -125,6 +126,7 @@ class SinglePaymentMethodModal extends React.Component {
             cancelPaymentModalEvent={this.cancelPaymentModalEvent}
             formatDate={formatDate}
             />
+            
           </ModalBody>
           </Modal>
         </div>
@@ -134,7 +136,7 @@ class SinglePaymentMethodModal extends React.Component {
     <div>
     <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
     {createModalHeader()}
-    <ModalBody className="text-center modal-body">
+    <ModalBody className="text-center modal-body payment-modal">
       <PaymentMethodForm
       isEditingAccount={isEditingAccount}
       isRegistering={isRegistering}
