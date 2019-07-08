@@ -235,7 +235,7 @@ class Profile extends React.Component {
     const makeProfileCard = () => {
       if (isEditing) {
         return (
-              <form className="row edit-form-container border border-dark rounded" onSubmit={this.formSubmit}>
+              <form className="row edit-form-container border border-dark rounded animated fadeIn" onSubmit={this.formSubmit}>
                 <h3 className="mx-auto edit-profile-title">Edit Profile</h3>
                 <div className="form col-11 mt-2">
                   <div className="col-auto form-lines p-0">
@@ -372,7 +372,7 @@ class Profile extends React.Component {
         );
       }
       return (
-        <div className="profile-card border border-dark rounded" id={currentUser.id}>
+        <div className="profile-card border border-dark rounded animated fadeIn" id={currentUser.id}>
           <h3 className="text-center">{currentUser.name}</h3>
           <div className="ml-1">Email: {currentUser.email}</div>
           <div className="ml-1">Street: {currentUser.street}</div>
