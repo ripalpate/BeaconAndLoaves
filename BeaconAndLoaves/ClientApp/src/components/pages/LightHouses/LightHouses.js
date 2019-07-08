@@ -152,8 +152,8 @@ class LightHouses extends React.Component {
             {makeLatestButton()}
             {makeSearch()}
         </div>
-        <div className="lightHouses row">
-          <div className = "lightHouseContainer d-flex mx-auto mt-3">{singleLightHouseComponent}</div>
+        <div className="lightHouses">
+          <div className = "d-flex flex-wrap justify-content-center mt-3">{singleLightHouseComponent}</div>
         </div>
       </div>
     );

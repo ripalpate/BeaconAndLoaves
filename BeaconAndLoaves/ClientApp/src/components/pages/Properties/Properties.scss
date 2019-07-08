@@ -12,6 +12,11 @@
   color:$color6;
 }
 
+.card:hover{ 
+  box-shadow: 1px 8px 20px $color3;
+  -webkit-transition:  box-shadow .6s ease-in;
+}
+
 .Properties {
   margin-top: 12%;
   width: 80%;
