@@ -45,9 +45,10 @@ class Profile extends React.Component {
   };
 
   toggleModal = () => {
-    const { modal } = this.state;
+    const { modal, isDeletingProfile } = this.state;
     this.setState({
       modal: !modal,
+      isDeletingProfile: !isDeletingProfile,
     });
   }
 

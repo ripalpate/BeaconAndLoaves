@@ -52,9 +52,9 @@ class MyModal extends React.Component {
     const populateDeleteButton = () => {
       if (isDeletingProfile) {
         return (
-        <Button onClick={deleteProfile}>
-          <i className="fas fa-trash fa-2x"></i>
-        </Button>
+        <button type="button" onClick={deleteProfile} className="bttn-pill delete-profile-confirm-btn">
+          <i className="fas fa-trash fa-1x"></i>
+        </button>
         );
       } return (<div></div>);
     };
