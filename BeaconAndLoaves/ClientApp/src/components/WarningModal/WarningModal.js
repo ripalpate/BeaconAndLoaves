@@ -61,7 +61,7 @@ class MyModal extends React.Component {
       <div>
         <Modal isOpen={modal} toggle={this.toggleEvent} className="modal-lg">
           <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>Achtung!!!</ModalHeader>
-          <ModalBody className="text-center modal-body">
+          <ModalBody className="text-center modal-body warning-modal">
              {populateText()}
           </ModalBody>
           <ModalFooter>
