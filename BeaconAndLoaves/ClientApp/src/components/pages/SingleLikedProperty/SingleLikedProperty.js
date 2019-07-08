@@ -48,18 +48,18 @@ render() {
   const { isLiked } = this.state;
   const { likedProperty } = this.props;
   return (
-      <div className="card bg-light mr-4 mb-4 singleLikedProperty text-center">
+      <div className="card bg-light mr-4 mb-4 singleLikedProperty">
         <div id={likedProperty.propertyId} data-type={likedProperty.propertyType} onClick={this.changePropertyToDetailView}>
-        <div className="imgHolder">
-          <img className="singleLightHouseImg" src={likedProperty.imageUrl} alt="liked Property"/>
-        </div>
-        <div className="card-body">
-          <h5>{likedProperty.propertyName}</h5>
-          <p>{likedProperty.street}</p>
-          <p>{likedProperty.city}, {likedProperty.state}, {likedProperty.zipCode}</p>
-          <p>{likedProperty.description}</p>
-          <p>${likedProperty.price}/per night</p>
-        </div>
+          <div className="imgHolder">
+            <img className="singleLightHouseImg" src={likedProperty.imageUrl} alt="liked Property"/>
+          </div>
+          <div className="card-body">
+            <h5>{likedProperty.propertyName}</h5>
+            <p>{likedProperty.street}</p>
+            <p>{likedProperty.city}, {likedProperty.state}, {likedProperty.zipCode}</p>
+            <p>{likedProperty.description}</p>
+            <p>${likedProperty.price}/per night</p>
+          </div>
         </div>
         <LikeButton
             isLiked={ isLiked }

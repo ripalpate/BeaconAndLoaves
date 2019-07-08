@@ -122,14 +122,14 @@ class LightHouses extends React.Component {
     const makeLatestButton = () => {
       if (ascendingOrder) {
         return (
-          <div className="float-right sort-btn">
+          <div className="float-right sort-btn animated slideInDown">
             <label htmlFor="sort">Sort By</label>
             <button className="btn" onClick={this.handleChange}><i className="far fa-arrow-alt-circle-up fa-2x" onClick={this.handleChange}></i></button>
           </div>
         );
       }
       return (
-          <div className="float-right sort-btn">
+          <div className="float-right sort-btn animated slideInDown">
             <label htmlFor="sort">Sort By</label>
             <button className="btn" onClick={this.handleChange}><i className="far fa-arrow-alt-circle-down fa-2x" onClick={this.handleChange}></i></button>
         </div>
@@ -137,7 +137,7 @@ class LightHouses extends React.Component {
     };
     return (
       <div>
-        <div className="serach-sort-container">
+        <div className="serach-sort-container ml-2 animated slideInDown">
         <button className = "bttn-pill bttn-md" onClick = {this.backButton} title="Back to All Properties"><i className="far fa-arrow-alt-circle-left"></i></button>
           <button
             id="search-btn"
