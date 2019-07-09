@@ -1,6 +1,8 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
-import GraphModal from '../../GraphModal/GraphModal';
+import {
+  BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+} from 'recharts';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import userRequests from '../../../helpers/data/userRequests';
 import './OwnerDashboard.scss';
@@ -19,16 +21,25 @@ class OwnerDashboard extends React.Component {
     rentalTotal: 0,
     createdDate: new Date(),
     averagePerRental: 0,
-    graphModal: false,
   }
 
   backButton = () => {
     this.props.history.push('/viewRentals');
   }
 
-  toggleGraphModal = () => {
-    const { graphModal } = this.state;
-    this.setState({ graphModal: !graphModal });
+  getPropertiesWithRentalTotals = () => {
+    const allRentals = [...this.state.allRentals];
+    const properties = [...this.state.properties];
+
+    properties.forEach((property) => {
+      rentalRequests.getAllRentalsByPropertyIdWithTotals(property.id)
+        .then((rentals) => {
+          rentals.forEach((rental) => {
+            allRentals.push(rental);
+          });
+          this.setState({ allRentals });
+        });
+    });
   }
 
   getUserProperties = () => {
@@ -37,6 +48,9 @@ class OwnerDashboard extends React.Component {
     userRequests.getUserProperties(userId)
       .then((properties) => {
         this.setState({ properties });
+      })
+      .then(() => {
+        this.getPropertiesWithRentalTotals();
       });
   };
 
@@ -151,17 +165,17 @@ class OwnerDashboard extends React.Component {
   }
 
   render() {
+    const properties = [...this.state.properties];
+    const allRentals = [...this.state.allRentals];
+
     const {
-      properties,
       rentalTotal,
       averagePerRental,
-      graphModal,
     } = this.state;
 
     return (
      <div className="mt-3">
       <button className = "bttn-pill bttn-md mt-3 ml-1" onClick = {this.backButton} title="Back to All Rentals"><i className="far fa-arrow-alt-circle-left"></i></button>
-      <button className = "bttn-pill bttn-md mt-3 ml-1" onClick = {this.toggleGraphModal} title="Show Graph"><i className="fas fa-chart-line"></i></button>
        <div className="ownerDashboard card">
         <h4 className="text-center">Dashboard</h4>
         <div>Select Properties:
@@ -193,11 +207,27 @@ class OwnerDashboard extends React.Component {
             <p>Average ${averagePerRental} per rental</p>
           </div>
       </div>
-        <GraphModal
-          currentUser={this.props.currentUser}
-          toggleGraphModal={this.toggleGraphModal}
-          graphModal={graphModal}
-        />
+        <div className="mt-5 graph-container">
+          <ResponsiveContainer width={800} height={400}>
+            <BarChart
+              className="mx-auto"
+              width={500}
+              height={300}
+              data={allRentals}
+              margin={{
+                top: 5, right: 30, left: 20, bottom: 5,
+              }}
+            >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="propertyName" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="totalRentals" fill="rgba(187, 21, 21, 1)" />
+            <Bar dataKey="rentalsAverage" fill="rgba(42, 52, 79, 1)" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
      </div>
     );
   }
