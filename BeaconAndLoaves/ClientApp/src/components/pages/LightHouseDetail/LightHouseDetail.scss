@@ -1,7 +1,13 @@
+@import '../../../styles/variables';
+
 .detail {
-  max-width: 25rem;
   margin-top:10px;
   margin-bottom: 10px;
+  width:25rem;
+}
+
+#details {
+  background: $color7;
 }
 
 #isLiked {
@@ -22,4 +28,8 @@
 
 .activate-icon {
   color: red;
+}
+
+.owner-name {
+  color: blue;
 }

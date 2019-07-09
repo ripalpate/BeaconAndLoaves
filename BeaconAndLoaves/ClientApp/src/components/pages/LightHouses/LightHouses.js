@@ -153,7 +153,7 @@ class LightHouses extends React.Component {
             {makeSearch()}
         </div>
         <div className="lightHouses">
-          <div className = "d-flex flex-wrap justify-content-center mt-3">{singleLightHouseComponent}</div>
+          <div className = "d-flex flex-wrap justify-content-center mt-3 w-75">{singleLightHouseComponent}</div>
         </div>
       </div>
     );

@@ -186,22 +186,25 @@ class SiloNuclearDetail extends React.Component {
 
     return (
       <div>
-        <div className="back-button">
+        <div className="back-button animated slideInDown">
           <button className = "bttn-pill bttn-md" onClick = {this.backButton} title="To All Nuclear Silos"><i className="far fa-arrow-alt-circle-left"></i></button>
-          <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToProperties} title="To All Properties"><i class="fas fa-building"></i></button>
+          <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToProperties} title="To All Properties"><i className="fas fa-building"></i></button>
           <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToLikedProperties} title="To Liked Properties"><i className="fas fa-heart"></i></button>
         </div>
-        <div className="card mx-auto bg-light detail">
+        <div className="card mx-auto detail animated zoomIn" id="details">
           <div className="imgHolder">
             <img className="singleLightHouseImg" src={siloNuclear.imageUrl} alt="siloNuclear"/>
           </div>
-          <div className="card-body">
+          <div className="card-body desc">
             <h5>{siloNuclear.propertyName}</h5>
             <p>{siloNuclear.street}</p>
             <p>{siloNuclear.city}, {siloNuclear.state} - {siloNuclear.zipCode}</p>
             <p>{siloNuclear.description}</p>
             <p>${siloNuclear.price}/per night</p>
-            <p className="owner-name" onClick = {this.OwnerPropertiesView} data-owner={siloNuclear.ownerId}>Owned By: {siloNuclear.name}</p>
+            <p className="owner" onClick = {this.OwnerPropertiesView} data-owner={siloNuclear.ownerId}>Owner:
+              <span className= "owner-name" data-owner={siloNuclear.ownerId} onClick = {this.OwnerPropertiesView}> {siloNuclear.name}
+              </span> 
+            </p>
             <button id={siloNuclear.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.toggleRentalModal}>Rent Me!!!</button>
             {makebutton()}
             {makeLikedPropertyButton()}
