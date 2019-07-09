@@ -3,8 +3,8 @@ import {
   Button,
   Modal,
   ModalHeader,
-  ModalBody,
   ModalFooter,
+  ModalBody,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import formatDate from '../../helpers/formatDate';
@@ -41,9 +41,9 @@ class RentingHistoryModal extends React.Component {
     const makeButtons = () => {
       if (numDays > 30) {
         return (
-            <Button onClick={this.editButtonEvent}>
-                <i className="fas fa-edit fa-2x" title="Edit Rental"></i>
-            </Button>
+            <button className="bttn-pill edit-rental-btn mx-auto" onClick={this.editButtonEvent}>
+                <i className="fas fa-edit fa-1x" title="Edit Rental"></i>
+            </button>
         );
       }
       return <div>Rental is not editable within 30 days of booking.</div>;
@@ -53,7 +53,7 @@ class RentingHistoryModal extends React.Component {
       <div>
         <Modal isOpen={historyModal} toggle={this.toggleEvent} className="modal-lg">
           <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>{selectedRental.propertyName}</ModalHeader>
-          <ModalBody className="text-center modal-body">
+          <ModalBody className="text-center modal-body renting-history-modal">
             <div>Start Date: {formatDate.formatMDYDate(selectedRental.StartDate)}</div>
             <div>End Date: {formatDate.formatMDYDate(selectedRental.EndDate)}</div>
             <div>{selectedRental.city}, {selectedRental.state}</div>
@@ -61,7 +61,7 @@ class RentingHistoryModal extends React.Component {
             <div>Owner's Name: {selectedRental.owner}</div>
             <div>Owner's Email: {selectedRental.ownerEmail}</div>
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter className="renting-history-modal-footer">
             {makeButtons()}
           </ModalFooter>
         </Modal>
