@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import paymentMethodRequests from '../../helpers/data/paymentMethodRequests';
 import formatDate from '../../helpers/formatDate';
 
+import './PaymentMethodForm.scss';
+
 const defaultPaymentMethod = {
   accountName: '',
   userId: 0,
@@ -14,8 +16,6 @@ const defaultPaymentMethod = {
 };
 
 class PaymentMethodForm extends React.Component {
-  // formattedDate = '';
-
   static propTypes = {
     isEditingAccount: PropTypes.bool,
   }
@@ -120,7 +120,7 @@ class PaymentMethodForm extends React.Component {
       if (isEditingAccount === false) {
         return (
           <div className="text-center">
-          <button className="btn paymentMethod-add-btn btn-success mx-auto mb-2" title="Submit">
+          <button className="bttn-pill paymentMethod-add-btn mx-auto mb-2" title="Submit">
                 <i className="fas fa-plus-circle" />
               </button>
           </div>
@@ -129,8 +129,8 @@ class PaymentMethodForm extends React.Component {
 
       return (
         <div className="text-center">
-        <button className="btn paymentMethod-add-btn btn-success mx-auto mb-2" title="Submit">
-                <i className="fas fa-check-square" />
+        <button className="bttn-pill edit-payment-submit-btn mx-auto mb-2" title="Submit">
+                <i className="far fa-check-square edit-payment-submit-btn" />
               </button>
           </div>
       );
@@ -140,7 +140,7 @@ class PaymentMethodForm extends React.Component {
       let counter = 0;
       return (
               <div>
-                <span>Payment Types:
+                <span className="paymentType-label">Payment Types:
                   <select name="payment" required className="custom-select mb-2" value={selectedPaymentType} onChange={(event) => { this.selectPaymentType(event); this.paymentTypeIdChange(event); }}>
                   <option value="">Select Payment Type</option>
                     {

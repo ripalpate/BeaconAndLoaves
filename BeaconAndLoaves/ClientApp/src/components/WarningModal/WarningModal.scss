@@ -1,7 +1,25 @@
+@import "../../styles/variables";
+
 .modal-body{
     font-size: 1.5em;
 }
 
 .modal-header{
     font-size: 2em;
+    font-family: $header-font;
+    color: $color1;
+    background-color: $color4;
 }
+
+.delete-profile-confirm-btn {
+    color: $color1;
+}
+
+.warning-modal {
+    background-color: $color8;
+}
+
+.modal-footer {
+    background-color: $color4;
+}
+

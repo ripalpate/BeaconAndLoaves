@@ -6,10 +6,11 @@ import {
   ModalBody,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import './SinglePaymentMethodModal.scss';
 import PaymentMethodForm from '../PaymentMethodForm/PaymentMethodForm';
 import paymentMethodRequests from '../../helpers/data/paymentMethodRequests';
 import formatDate from '../../helpers/formatDate';
+
+import './SinglePaymentMethodModal.scss';
 
 class SinglePaymentMethodModal extends React.Component {
   state = {
@@ -94,17 +95,17 @@ class SinglePaymentMethodModal extends React.Component {
     <div>
       <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
       <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>{paymentAccount.accountName}</ModalHeader>
-      <ModalBody className="text-center modal-body">
+      <ModalBody className="text-center modal-body payment-detail">
       <div className="border border-dark rounded" id={paymentAccount.id}>
         <div className="ml-1">Account Number: {paymentAccount.accountNumber}</div>
         <div className="ml-1">Account Type: {getAccountTypeName(paymentAccount.paymentTypeId)}</div>
         <div className="ml-1">Exp Date: {formatDate.formatMYDate(paymentAccount.expirationDate)}</div>
         <div className="ml-1">CVV: {paymentAccount.cvv}</div>
-        <button id='paymentMethod-edit' type="button" className="btn paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal} title="Edit Account">
-            <i className="far fa-edit fa-2x"/>
+        <button id='paymentMethod-edit' type="button" className="bttn-pill paymentMethod-edit-btn m-1" onClick={toggleEditPaymentModal} title="Edit Account">
+            <i className="far fa-edit fa-1x"/>
         </button>
-        <button id='paymentMethod-delete' type="button" className="btn paymentMethod-delete-btn m-1" onClick={deletePaymentMethod}>
-            <i className="paymentMethod-delete-btn fas fa-trash fa-2x"></i>
+        <button id='paymentMethod-delete' type="button" className="bttn-pill paymentMethod-delete-btn m-1" onClick={deletePaymentMethod}>
+            <i className="paymentMethod-delete-btn fas fa-trash fa-1x"></i>
         </button>
         </div>
       </ModalBody>
@@ -114,9 +115,9 @@ class SinglePaymentMethodModal extends React.Component {
       } if (isEditingAccount === true) {
         return (
           <div>
-          <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
-          <ModalHeader class-name="modal-header" toggle={this.cancelPaymentModalEvent}>Edit Payment Account</ModalHeader>
-          <ModalBody className="text-center modal-body">
+          <Modal isOpen={paymentModal} className="modal-lg animated fadeIn" id="paymentMethodModal">
+          <ModalHeader className="modal-header" toggle={this.cancelPaymentModalEvent}>Edit Payment Account</ModalHeader>
+          <ModalBody className="text-center modal-body payment-modal">
             <PaymentMethodForm
             isEditingAccount={isEditingAccount}
             paymentAccount={paymentAccount}
@@ -125,6 +126,7 @@ class SinglePaymentMethodModal extends React.Component {
             cancelPaymentModalEvent={this.cancelPaymentModalEvent}
             formatDate={formatDate}
             />
+            
           </ModalBody>
           </Modal>
         </div>
@@ -134,7 +136,7 @@ class SinglePaymentMethodModal extends React.Component {
     <div>
     <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
     {createModalHeader()}
-    <ModalBody className="text-center modal-body">
+    <ModalBody className="text-center modal-body payment-modal">
       <PaymentMethodForm
       isEditingAccount={isEditingAccount}
       isRegistering={isRegistering}
