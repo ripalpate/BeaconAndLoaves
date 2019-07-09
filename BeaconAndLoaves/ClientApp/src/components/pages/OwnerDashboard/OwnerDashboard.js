@@ -214,7 +214,7 @@ class OwnerDashboard extends React.Component {
           </div>
         </div>
         <div className="mt-5 graph-container mx-auto">
-          <div className="graph-wrapper border border-dark rounded pt-3">
+          {/* <div className="graph-wrapper border border-dark rounded pt-3"> */}
           <ResponsiveContainer width={725} height={400}>
             <BarChart
               className="mx-auto"
@@ -234,7 +234,7 @@ class OwnerDashboard extends React.Component {
             <Bar dataKey="Rentals Average" fill="rgba(42, 52, 79, 1)" />
             </BarChart>
           </ResponsiveContainer>
-        </div>
+        {/* </div> */}
         </div>
     </div>
     );
