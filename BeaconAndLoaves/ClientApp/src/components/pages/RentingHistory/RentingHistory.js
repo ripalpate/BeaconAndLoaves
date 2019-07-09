@@ -29,6 +29,10 @@ class RentingHistory extends React.Component {
       propertyId: 0,
     }
 
+    changeView = (ownerId) => {
+      this.props.history.push(`/ownerProperties/${ownerId}`);
+    }
+
     toggleModal = (rentingId) => {
       const { historyModal } = this.state;
       this.setState({ rentingId, historyModal: !historyModal });
@@ -231,6 +235,7 @@ class RentingHistory extends React.Component {
               routeToHome={this.routeToHome}
               selectedRental={selectedRental}
               getSingleRental={getSingleRental}
+              changeView={this.changeView}
             />
         </div>
       );

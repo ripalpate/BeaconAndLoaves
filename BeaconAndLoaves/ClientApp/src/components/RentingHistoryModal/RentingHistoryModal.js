@@ -36,6 +36,7 @@ class RentingHistoryModal extends React.Component {
       historyModal,
       selectedRental,
       numDays,
+      changeView,
     } = this.props;
 
     const makeButtons = () => {
@@ -58,8 +59,8 @@ class RentingHistoryModal extends React.Component {
             <div>End Date: {formatDate.formatMDYDate(selectedRental.EndDate)}</div>
             <div>{selectedRental.city}, {selectedRental.state}</div>
             <div>Total: ${selectedRental.RentalAmount}</div>
-            <div>Owner's Name: {selectedRental.owner}</div>
-            <div>Owner's Email: {selectedRental.ownerEmail}</div>
+            <div>Owner's Name: <span onClick={changeView}className="property-owner-name">{selectedRental.owner}</span></div>
+            <div>Owner's Email: <a href={"mailto:" + selectedRental.ownerEmail}>{selectedRental.ownerEmail}</a></div>
           </ModalBody>
           <ModalFooter className="renting-history-modal-footer">
             {makeButtons()}
