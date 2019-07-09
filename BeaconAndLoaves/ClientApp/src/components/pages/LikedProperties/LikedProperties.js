@@ -57,7 +57,7 @@ class LikedProperties extends React.Component {
 
     return (
       <div>
-      <button className = "bttn-pill bttn-md mt-4 ml-3  animated slideInDown" onClick = {this.backToProperties} title="To All Properties"><i className="fas fa-building"></i></button>
+      <button className = "bttn-pill bttn-md mt-4 ml-3 allProperties animated slideInDown" onClick = {this.backToProperties} title="To All Properties"><i className="fas fa-building"></i></button>
       <div className="likedProperty">
         <div className = "d-flex flex-wrap justify-content-center mt-3 w-75">
           {singleLikedPropertyComponent}

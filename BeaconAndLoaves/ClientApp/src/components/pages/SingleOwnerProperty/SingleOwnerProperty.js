@@ -79,7 +79,7 @@ class SingleOwnerProperty extends React.Component {
                 <img className="singleLightHouseImg"src={property.imageUrl} alt="property"/>
             </div>
             <div className="card-body property-body">
-                <h5>{property.propertyName}</h5>
+                <h5 className="propertyTitle">{property.propertyName}</h5>
                 <p>{property.street}</p>
                 <p>{property.city}, {property.state} - {property.zipCode}</p>
                 <p>{property.description}</p>

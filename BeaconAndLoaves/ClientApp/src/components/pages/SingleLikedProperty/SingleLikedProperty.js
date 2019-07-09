@@ -54,7 +54,7 @@ render() {
             <img className="singleLightHouseImg" src={likedProperty.imageUrl} alt="liked Property"/>
           </div>
           <div className="card-body">
-            <h5>{likedProperty.propertyName}</h5>
+            <h5 className="propertyTitle">{likedProperty.propertyName}</h5>
             <p>{likedProperty.street}</p>
             <p>{likedProperty.city}, {likedProperty.state}, {likedProperty.zipCode}</p>
             <p>{likedProperty.description}</p>

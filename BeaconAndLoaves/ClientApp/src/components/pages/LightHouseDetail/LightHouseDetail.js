@@ -218,15 +218,15 @@ toggleModal = () => {
       <div className = "">
         <div className="back-button animated slideInDown">
               <button className = "bttn-pill bttn-md" onClick = {this.backButton} title="To All Lighthouses"><i className="far fa-arrow-alt-circle-left"></i></button>
-              <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToProperties} title="To All Properties"><i className="fas fa-building"></i></button>
-              <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToLikedProperties} title="To Liked Properties"><i className="fas fa-heart"></i></button>
+              <button className = "bttn-pill bttn-md mt-3 ml-2 allProperties" onClick = {this.backToProperties} title="To All Properties"><i className="fas fa-building"></i></button>
+              <button className = "bttn-pill bttn-md mt-3 ml-2 likePropertyButton" onClick = {this.backToLikedProperties} title="To Liked Properties"><i className="fas fa-heart"></i></button>
         </div>
         <div className="card mx-auto detail animated zoomIn" id="details">
           <div className="imgHolder">
             <img className="singleLightHouseImg"src={lightHouse.imageUrl} alt="lighthouse"/>
           </div>
           <div className="card-body desc">
-            <h5>{lightHouse.propertyName}</h5>
+            <h5 className="propertyTitle">{lightHouse.propertyName}</h5>
             <p>{lightHouse.street}</p>
             <p>{lightHouse.city}, {lightHouse.state} - {lightHouse.zipCode}</p>
             <p>{lightHouse.description}</p>
