@@ -115,7 +115,7 @@ class SinglePaymentMethodModal extends React.Component {
       } if (isEditingAccount === true) {
         return (
           <div>
-          <Modal isOpen={paymentModal} className="modal-lg" id="paymentMethodModal">
+          <Modal isOpen={paymentModal} className="modal-lg animated fadeIn" id="paymentMethodModal">
           <ModalHeader className="modal-header" toggle={this.cancelPaymentModalEvent}>Edit Payment Account</ModalHeader>
           <ModalBody className="text-center modal-body payment-modal">
             <PaymentMethodForm

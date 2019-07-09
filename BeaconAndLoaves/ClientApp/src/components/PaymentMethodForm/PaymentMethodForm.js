@@ -130,7 +130,7 @@ class PaymentMethodForm extends React.Component {
       return (
         <div className="text-center">
         <button className="bttn-pill edit-payment-submit-btn mx-auto mb-2" title="Submit">
-                <i className="fas fa-check-square" />
+                <i className="far fa-check-square edit-payment-submit-btn" />
               </button>
           </div>
       );

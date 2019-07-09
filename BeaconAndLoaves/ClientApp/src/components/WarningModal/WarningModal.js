@@ -51,7 +51,7 @@ class MyModal extends React.Component {
     const populateDeleteButton = () => {
       if (isDeletingProfile) {
         return (
-        <button type="button" onClick={deleteProfile} className="bttn-pill delete-profile-confirm-btn">
+        <button type="button" onClick={deleteProfile} className="bttn-pill delete-profile-confirm-btn mt-3">
           <i className="fas fa-trash fa-1x"></i>
         </button>
         );
@@ -60,13 +60,11 @@ class MyModal extends React.Component {
     return (
       <div>
         <Modal isOpen={modal} toggle={this.toggleEvent} className="modal-lg">
-          <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>Achtung!!!</ModalHeader>
+          <ModalHeader className="modal-header" toggle={this.toggleEvent}>Achtung!!!</ModalHeader>
           <ModalBody className="text-center modal-body warning-modal">
              {populateText()}
+             {populateDeleteButton()}
           </ModalBody>
-          <ModalFooter>
-            {populateDeleteButton()}
-          </ModalFooter>
         </Modal>
       </div>
     );
