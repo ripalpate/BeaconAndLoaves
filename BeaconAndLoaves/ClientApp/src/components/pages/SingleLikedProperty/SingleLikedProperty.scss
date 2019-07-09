@@ -1,8 +1,10 @@
-.singleLikedProperty {
-    max-width: 20rem;
-}
-// .likeButtonHolder {
-//     position: absolute;
-//     top: 8px;
-//     right: 12px;
-// }
+@import '../../../styles/variables';
+
+#singleLikedProperty:nth-child(even){
+    background:$color7;
+  }
+  
+#singleLikedProperty:nth-child(odd){
+    background:$color8;
+  }
+  

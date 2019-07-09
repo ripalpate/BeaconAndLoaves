@@ -1,6 +1,7 @@
+@import '../../../styles/variables';
 
 .back-button{
-    margin-top: 74px;
+    margin-top: 65px;
     margin-left: 27px;
 }
 
@@ -9,3 +10,11 @@
     bottom:0;
     right:0;
 }
+
+.singleOwnerProperties:nth-child(even){
+    background:$color7;
+  }
+
+.singleOwnerProperties:nth-child(odd){
+    background:$color8;
+  }

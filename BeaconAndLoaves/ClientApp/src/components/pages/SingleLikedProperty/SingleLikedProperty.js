@@ -48,7 +48,7 @@ render() {
   const { isLiked } = this.state;
   const { likedProperty } = this.props;
   return (
-      <div className="card bg-light mr-4 mb-4 singleLikedProperty">
+      <div className="card detail ml-4 mb-3 mt-3 animated zoomIn" id = "singleLikedProperty">
         <div id={likedProperty.propertyId} data-type={likedProperty.propertyType} onClick={this.changePropertyToDetailView}>
           <div className="imgHolder">
             <img className="singleLightHouseImg" src={likedProperty.imageUrl} alt="liked Property"/>
@@ -61,12 +61,14 @@ render() {
             <p>${likedProperty.price}/per night</p>
           </div>
         </div>
-        <LikeButton
-            isLiked={ isLiked }
-            changeIsLikedState= { this.changeIsLikedState }
-            userId = { likedProperty.userId }
-            propertyId = { likedProperty.propertyId }
-            />
+        <div className=" button">
+          <LikeButton
+              isLiked={ isLiked }
+              changeIsLikedState= { this.changeIsLikedState }
+              userId = { likedProperty.userId }
+              propertyId = { likedProperty.propertyId }
+              />
+        </div>    
       </div>
   );
 }
