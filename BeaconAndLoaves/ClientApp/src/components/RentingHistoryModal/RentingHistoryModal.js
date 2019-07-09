@@ -19,6 +19,12 @@ class RentingHistoryModal extends React.Component {
     numDays: PropTypes.number,
     isEditing: PropTypes.bool,
     toggleEdit: PropTypes.func,
+    changeView: PropTypes.func,
+  }
+
+  changeViewEvent = () => {
+    const { ownerId } = this.props.selectedRental;
+    this.props.changeView(ownerId);
   }
 
   toggleEvent = () => {
@@ -36,7 +42,6 @@ class RentingHistoryModal extends React.Component {
       historyModal,
       selectedRental,
       numDays,
-      changeView,
     } = this.props;
 
     const makeButtons = () => {
@@ -59,7 +64,7 @@ class RentingHistoryModal extends React.Component {
             <div>End Date: {formatDate.formatMDYDate(selectedRental.EndDate)}</div>
             <div>{selectedRental.city}, {selectedRental.state}</div>
             <div>Total: ${selectedRental.RentalAmount}</div>
-            <div>Owner's Name: <span onClick={changeView}className="property-owner-name">{selectedRental.owner}</span></div>
+            <div>Owner's Name: <span onClick={this.changeViewEvent}className="property-owner-name">{selectedRental.owner}</span></div>
             <div>Owner's Email: <a href={"mailto:" + selectedRental.ownerEmail}>{selectedRental.ownerEmail}</a></div>
           </ModalBody>
           <ModalFooter className="renting-history-modal-footer">

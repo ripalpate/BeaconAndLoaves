@@ -13,5 +13,9 @@
 }
 
 .property-owner-name {
-    color: blue;
+    color: $color3;
+}
+
+.property-owner-name:hover {
+    cursor: pointer;
 }

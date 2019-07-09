@@ -223,6 +223,7 @@ class RentingHistory extends React.Component {
               isEditing={isEditing}
               toggleRentalModal={this.toggleRentalModal}
               formSubmit={this.formSubmit}
+              changeView={this.changeView}
             />
             <Rental
               isEditing={isEditing}
@@ -235,7 +236,6 @@ class RentingHistory extends React.Component {
               routeToHome={this.routeToHome}
               selectedRental={selectedRental}
               getSingleRental={getSingleRental}
-              changeView={this.changeView}
             />
         </div>
       );
