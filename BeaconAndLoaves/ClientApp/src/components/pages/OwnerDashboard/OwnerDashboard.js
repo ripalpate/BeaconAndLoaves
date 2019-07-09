@@ -171,44 +171,51 @@ class OwnerDashboard extends React.Component {
     const {
       rentalTotal,
       averagePerRental,
+      rentalsAssocWithProperty,
     } = this.state;
 
     return (
-     <div className="mt-3">
-      <button className = "bttn-pill bttn-md mt-3 ml-1" onClick = {this.backButton} title="Back to All Rentals"><i className="far fa-arrow-alt-circle-left"></i></button>
-       <div className="ownerDashboard card">
-        <h4 className="text-center">Dashboard</h4>
-        <div>Select Properties:
-            <select id="property" className="custom-select mb-2 ml-2" onChange={this.dropdownSelect}>
-            <option defaultValue>Select Property</option>
-              {
-              properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
-              }
-            </select>
+      <div>
+        <button className = "bttn-pill bttn-md mt-3 back-button" onClick = {this.backButton} title="Back to All Rentals"><i className="far fa-arrow-alt-circle-left"></i></button>
+        <div className="dashboardContainer d-flex mx-auto">
+          <div className="dashboardWrapper">
+            <div className="ownerDashboard text-cemter border border-dark rounded pl-3">
+              <h4 className="text-center">Dashboard</h4>
+              <div>Select Properties:
+                  <select id="property" className="custom-select mb-2 ml-2" onChange={this.dropdownSelect}>
+                  <option defaultValue>Select Property</option>
+                    {
+                    properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
+                    }
+                  </select>
+                </div>
+                <div id="start">
+                  <label>Start Date </label>
+                  <DatePicker
+                    className="ml-3"
+                    selected={this.state.startDate}
+                    onChange={this.handleStartChange}
+                  />
+                </div>
+                <div id="end">
+                  <label>End Date: </label>
+                  <DatePicker
+                    className="ml-3"
+                    selected={this.state.endDate}
+                    onChange={this.handleEndChange}
+                  />
+                </div>
+                <div>
+                  <p>Total Sales: ${rentalTotal}</p>
+                  <p>Average ${averagePerRental} per rental</p>
+                  <p>Number of rentals: {rentalsAssocWithProperty.length}</p>
+                </div>
+            </div>
           </div>
-          <div id="start">
-            <label>Start Date </label>
-            <DatePicker
-              className="ml-3"
-              selected={this.state.startDate}
-              onChange={this.handleStartChange}
-            />
-          </div>
-          <div id="end">
-            <label>End Date: </label>
-            <DatePicker
-              className="ml-3"
-              selected={this.state.endDate}
-              onChange={this.handleEndChange}
-            />
-          </div>
-          <div>
-            <p>Total Sales: ${rentalTotal}</p>
-            <p>Average ${averagePerRental} per rental</p>
-          </div>
-      </div>
-        <div className="mt-5 graph-container">
-          <ResponsiveContainer width={800} height={400}>
+        </div>
+        <div className="mt-5 graph-container mx-auto">
+          <div className="graph-wrapper border border-dark rounded pt-3">
+          <ResponsiveContainer width={725} height={400}>
             <BarChart
               className="mx-auto"
               width={500}
@@ -219,16 +226,17 @@ class OwnerDashboard extends React.Component {
               }}
             >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="propertyName" />
-            <YAxis />
+            <XAxis dataKey="propertyName" stroke="white" tick={{ fill: 'white' }}/>
+            <YAxis tick={{ fill: 'white' }} stroke="white"/>
             <Tooltip />
             <Legend />
-            <Bar dataKey="totalRentals" fill="rgba(187, 21, 21, 1)" />
-            <Bar dataKey="rentalsAverage" fill="rgba(42, 52, 79, 1)" />
+            <Bar dataKey="Total Rentals" fill="rgba(187, 21, 21, 1)" />
+            <Bar dataKey="Rentals Average" fill="rgba(42, 52, 79, 1)" />
             </BarChart>
           </ResponsiveContainer>
         </div>
-     </div>
+        </div>
+    </div>
     );
   }
 }
