@@ -12,3 +12,27 @@
 #account, #property {
     width: 55%;
 }
+
+.fa-edit {
+    color: $color2;
+}
+
+.profile-delete-btn {
+    color: $color1;
+}
+
+.fa-credit-card {
+    color: $color4;
+}
+
+.back-btn {
+    color: $color1;
+}
+
+.user-add-btn {
+    color: $color3;
+}
+
+.edit-profile-title, .profile-header {
+    font-family: $header-font;
+}

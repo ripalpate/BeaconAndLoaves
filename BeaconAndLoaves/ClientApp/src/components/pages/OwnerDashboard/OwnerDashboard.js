@@ -1,5 +1,8 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
+import {
+  BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+} from 'recharts';
 import rentalRequests from '../../../helpers/data/rentalRequests';
 import userRequests from '../../../helpers/data/userRequests';
 import './OwnerDashboard.scss';
@@ -9,6 +12,7 @@ class OwnerDashboard extends React.Component {
 
   state = {
     properties: [],
+    allRentals: [],
     rentalsAssocWithProperty: [],
     rentalsSortedByLatestDate: [],
     selectedProperty: '',
@@ -23,12 +27,30 @@ class OwnerDashboard extends React.Component {
     this.props.history.push('/viewRentals');
   }
 
+  getPropertiesWithRentalTotals = () => {
+    const allRentals = [...this.state.allRentals];
+    const properties = [...this.state.properties];
+
+    properties.forEach((property) => {
+      rentalRequests.getAllRentalsByPropertyIdWithTotals(property.id)
+        .then((rentals) => {
+          rentals.forEach((rental) => {
+            allRentals.push(rental);
+          });
+          this.setState({ allRentals });
+        });
+    });
+  }
+
   getUserProperties = () => {
     const { currentUser } = this.props;
     const userId = currentUser.id;
     userRequests.getUserProperties(userId)
       .then((properties) => {
         this.setState({ properties });
+      })
+      .then(() => {
+        this.getPropertiesWithRentalTotals();
       });
   };
 
@@ -143,8 +165,10 @@ class OwnerDashboard extends React.Component {
   }
 
   render() {
+    const properties = [...this.state.properties];
+    const allRentals = [...this.state.allRentals];
+
     const {
-      properties,
       rentalTotal,
       averagePerRental,
       rentalsAssocWithProperty,
@@ -188,6 +212,29 @@ class OwnerDashboard extends React.Component {
                 </div>
             </div>
           </div>
+        </div>
+        <div className="mt-5 graph-container mx-auto">
+          <div className="graph-wrapper border border-dark rounded pt-3">
+          <ResponsiveContainer width={670} height={400}>
+            <BarChart
+              className="mx-auto"
+              width={670}
+              height={400}
+              data={allRentals}
+              margin={{
+                top: 5, right: 30, left: 20, bottom: 5,
+              }}
+            >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="propertyName" stroke="white" tick={{ fill: 'white' }}/>
+            <YAxis tick={{ fill: 'white' }} stroke="white"/>
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="Total Rentals" fill="rgba(187, 21, 21, 1)" />
+            <Bar dataKey="Rentals Average" fill="rgba(42, 52, 79, 1)" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
         </div>
     </div>
     );

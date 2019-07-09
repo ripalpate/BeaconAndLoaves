@@ -13,6 +13,17 @@ const getAllRentalsByPropertyId = id => new Promise((resolve, reject) => {
     });
 });
 
+const getAllRentalsByPropertyIdWithTotals = id => new Promise((resolve, reject) => {
+  axios.get(`${apiUrl}/propertyTotals/${id}`)
+    .then((results) => {
+      const rentalsObject = results.data;
+      resolve(rentalsObject);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
+
 const getFutureRentalsByUserId = id => new Promise((resolve, reject) => {
   axios.get(`${apiUrl}/future/${id}`)
     .then((results) => {
@@ -93,4 +104,5 @@ export default {
   getSingleRental,
   getAllRentalsForSingleProperty,
   updateRental,
+  getAllRentalsByPropertyIdWithTotals,
 };

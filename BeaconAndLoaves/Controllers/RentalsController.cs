@@ -92,6 +92,14 @@ namespace BeaconAndLoaves.Controllers
             return Ok(rentalsByPropertyId);
         }
 
+        [HttpGet("propertyTotals/{id}")]
+        public ActionResult GetRentalsByPropertyIdWithTotals(int id)
+        {
+            var rentalsByPropertyIdWithTotals = _repository.GetRentalsByPropertyIdWithTotals(id);
+
+            return Ok(rentalsByPropertyIdWithTotals);
+        }
+
         [HttpGet("futureRentals/{id}")]
         public ActionResult GetFutureRentalsForOwner(int id)
         {

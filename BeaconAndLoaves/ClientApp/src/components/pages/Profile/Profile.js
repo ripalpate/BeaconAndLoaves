@@ -45,9 +45,10 @@ class Profile extends React.Component {
   };
 
   toggleModal = () => {
-    const { modal } = this.state;
+    const { modal, isDeletingProfile } = this.state;
     this.setState({
       modal: !modal,
+      isDeletingProfile: !isDeletingProfile,
     });
   }
 
@@ -235,11 +236,11 @@ class Profile extends React.Component {
     const makeProfileCard = () => {
       if (isEditing) {
         return (
-              <form className="row edit-form-container border border-dark rounded" onSubmit={this.formSubmit}>
+              <form className="row edit-form-container border border-dark rounded animated fadeIn" onSubmit={this.formSubmit}>
                 <h3 className="mx-auto edit-profile-title">Edit Profile</h3>
                 <div className="form col-11 mt-2">
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Email</label>
+                    <label htmlFor="link" className="sr-only profile-form-label">Email</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Email</div>
@@ -256,7 +257,7 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="name" className="sr-only">Name</label>
+                    <label htmlFor="name" className="sr-only profile-form-label">Name</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Name</div>
@@ -273,7 +274,7 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Street</label>
+                    <label htmlFor="link" className="sr-only profile-form-label">Street</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Street</div>
@@ -290,7 +291,7 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">City</label>
+                    <label htmlFor="link" className="sr-only profile-form-label">City</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">City</div>
@@ -307,7 +308,7 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">State</label>
+                    <label htmlFor="link" className="sr-only profile-form-label">State</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">State</div>
@@ -324,7 +325,7 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Zip Code</label>
+                    <label htmlFor="link" className="sr-only profile-form-label">Zip Code</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Zip Code</div>
@@ -342,7 +343,7 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Phone Number</label>
+                    <label htmlFor="link" className="sr-only profile-form-label">Phone Number</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Phone Number</div>
@@ -360,11 +361,11 @@ class Profile extends React.Component {
                     </div>
                   </div>
                   <div className="text-center">
-                    <button type="submit" className="btn user-add-btn m-5" title="Submit">
-                      <i className="fas fa-check-square fa-2x"/>
+                    <button type="submit" className="bttn-pill user-add-btn m-2" title="Submit">
+                      <i className="user-add-btn far fa-check-square fa-1x"/>
                     </button>
-                    <button id='cancel' type="button" className="btn back-btn m-5" onClick={this.cancel} title="Cancel">
-                      <i className="far fa-window-close fa-2x"/>
+                    <button id='cancel' type="button" className="bttn-pill back-btn m-2" onClick={this.cancel} title="Cancel">
+                      <i className="back-btn far fa-window-close fa-1x"/>
                     </button>
                   </div>
                 </div>
@@ -372,8 +373,8 @@ class Profile extends React.Component {
         );
       }
       return (
-        <div className="profile-card border border-dark rounded" id={currentUser.id}>
-          <h3 className="text-center">{currentUser.name}</h3>
+        <div className="profile-card border border-dark rounded animated fadeIn" id={currentUser.id}>
+          <h3 className="text-center profile-header">{currentUser.name}</h3>
           <div className="ml-1">Email: {currentUser.email}</div>
           <div className="ml-1">Street: {currentUser.street}</div>
           <div className="ml-1">City: {currentUser.city}</div>
@@ -435,31 +436,31 @@ class Profile extends React.Component {
             <button id='viewRentals' type="button" className="bttn-pill renter-history-btn ml-2 " onClick={this.changeView}>
              View Rentals
             </button>
-            <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile} title="Edit Profile">
-              <i className="far fa-edit fa-2x"/>
+            <button id='profile-edit' type="button" className="bttn-pill profile-edit-btn ml-2" onClick={this.editProfile} title="Edit Profile">
+              <i className="far fa-edit fa-1x"/>
             </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddPaymentModal} title="Add Payment Account">
-                <i className="far fa-credit-card fa-2x"></i>
+            <button type="button" className="bttn-pill payment-add-btn ml-2" onClick={this.toggleAddPaymentModal} title="Add Payment Account">
+                <i className="far fa-credit-card fa-1x"></i>
             </button>
-            <button id='profile-delte' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal} title="Delete Profile">
-              <i className="profile-delete-btn fas fa-trash fa-2x"></i>
+            <button id='profile-delte' type="button" className="bttn-pill profile-delete-btn ml-2 mr-2" onClick={this.toggleModal} title="Delete Profile">
+              <i className="profile-delete-btn fas fa-trash fa-1x"></i>
             </button>
           </div>
         );
       }
       return (
         <div>
-            <button id='rentingHistory' type="button" className="bttn-pill renter-history-btn m-1" onClick={this.changeView}>
+            <button id='rentingHistory' type="button" className="bttn-pill renter-history-btn ml-2 mr-2" onClick={this.changeView}>
               View Trips
             </button>
-            <button id='profile-edit' type="button" className="btn profile-edit-btn m-1" onClick={this.editProfile} title="Edit Profile">
-              <i className="far fa-edit fa-2x"/>
+            <button id='profile-edit' type="button" className="bttn-pill profile-edit-btn ml-2" onClick={this.editProfile} title="Edit Profile">
+              <i className="far fa-edit fa-1x"/>
             </button>
-            <button type="button" className="btn payment-add-btn m-1" onClick={this.toggleAddPaymentModal} title="Add Payment Account">
-                <i className="far fa-credit-card fa-2x"></i>
+            <button type="button" className="bttn-pill payment-add-btn ml-2" onClick={this.toggleAddPaymentModal} title="Add Payment Account">
+                <i className="far fa-credit-card fa-1x"></i>
             </button>
-            <button id='profile-delete' type="button" className="btn profile-delete-btn m-1" onClick={this.toggleModal} title="Delete Profile">
-              <i className="profile-delete-btn fas fa-trash fa-2x"></i>
+            <button id='profile-delete' type="button" className="bttn-pill profile-delete-btn ml-2 mr-2" onClick={this.toggleModal} title="Delete Profile">
+              <i className="profile-delete-btn fas fa-trash fa-1x"></i>
             </button>
         </div>
       );
