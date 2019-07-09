@@ -235,7 +235,7 @@ toggleModal = () => {
               <span className= "owner-name" data-owner={lightHouse.ownerId} onClick = {this.OwnerPropertiesView}> {lightHouse.name}
               </span>
             </p>
-            <button id={lightHouse.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.toggleRentalModal}>Rent Me!!!</button>
+            <button id={lightHouse.id} className="bttn-pill bttn-md rentButton mr-2" onClick={this.toggleRentalModal}>Rent Me!!!</button>
             {makebutton()}
             {makeLikedPropertyButton()}
             {activateButton()}

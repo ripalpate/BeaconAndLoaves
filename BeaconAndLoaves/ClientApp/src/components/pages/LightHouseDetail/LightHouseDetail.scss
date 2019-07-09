@@ -23,15 +23,15 @@
 }
 
 .deactivate-icon {
-  color:green;
+  color:$color13;
 }
 
 .activate-icon {
-  color: red;
+  color:$color12;
 }
 
 .owner-name {
-  color: blue;
+  color: $color14;
 }
 
 .propertyTitle {
@@ -43,5 +43,9 @@
 }
 
 .allProperties{
+  color:$color11;
+}
+
+.rentButton{
   color:$color11;
 }

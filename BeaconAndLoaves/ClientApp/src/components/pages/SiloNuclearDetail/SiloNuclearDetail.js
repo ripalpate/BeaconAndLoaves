@@ -205,7 +205,7 @@ class SiloNuclearDetail extends React.Component {
               <span className= "owner-name" data-owner={siloNuclear.ownerId} onClick = {this.OwnerPropertiesView}> {siloNuclear.name}
               </span> 
             </p>
-            <button id={siloNuclear.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.toggleRentalModal}>Rent Me!!!</button>
+            <button id={siloNuclear.id} className="bttn-pill bttn-md rentButton mr-2" onClick={this.toggleRentalModal}>Rent Me!!!</button>
             {makebutton()}
             {makeLikedPropertyButton()}
             {activateButton()}
