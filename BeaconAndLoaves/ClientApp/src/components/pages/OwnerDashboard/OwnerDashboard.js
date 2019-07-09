@@ -147,43 +147,49 @@ class OwnerDashboard extends React.Component {
       properties,
       rentalTotal,
       averagePerRental,
+      rentalsAssocWithProperty,
     } = this.state;
 
     return (
-     <div>
-      <button className = "bttn-pill bttn-md mt-3" onClick = {this.backButton} title="Back to All Rentals"><i className="far fa-arrow-alt-circle-left"></i></button>
-       <div className="ownerDashboard card">
-        <h4 className="text-center">Dashboard</h4>
-        <div>Select Properties:
-            <select id="property" className="custom-select mb-2 ml-2" onChange={this.dropdownSelect}>
-            <option defaultValue>Select Property</option>
-              {
-              properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
-              }
-            </select>
+      <div>
+        <button className = "bttn-pill bttn-md mt-3 back-button" onClick = {this.backButton} title="Back to All Rentals"><i className="far fa-arrow-alt-circle-left"></i></button>
+        <div className="dashboardContainer d-flex mx-auto">
+          <div className="dashboardWrapper">
+            <div className="ownerDashboard text-cemter border border-dark rounded pl-3">
+              <h4 className="text-center">Dashboard</h4>
+              <div>Select Properties:
+                  <select id="property" className="custom-select mb-2 ml-2" onChange={this.dropdownSelect}>
+                  <option defaultValue>Select Property</option>
+                    {
+                    properties.map((property, i) => (<option value={property.id} key={i}>{property.propertyName}</option>))
+                    }
+                  </select>
+                </div>
+                <div id="start">
+                  <label>Start Date </label>
+                  <DatePicker
+                    className="ml-3"
+                    selected={this.state.startDate}
+                    onChange={this.handleStartChange}
+                  />
+                </div>
+                <div id="end">
+                  <label>End Date: </label>
+                  <DatePicker
+                    className="ml-3"
+                    selected={this.state.endDate}
+                    onChange={this.handleEndChange}
+                  />
+                </div>
+                <div>
+                  <p>Total Sales: ${rentalTotal}</p>
+                  <p>Average ${averagePerRental} per rental</p>
+                  <p>Number of rentals: {rentalsAssocWithProperty.length}</p>
+                </div>
+            </div>
           </div>
-          <div id="start">
-            <label>Start Date </label>
-            <DatePicker
-              className="ml-3"
-              selected={this.state.startDate}
-              onChange={this.handleStartChange}
-            />
-          </div>
-          <div id="end">
-            <label>End Date: </label>
-            <DatePicker
-              className="ml-3"
-              selected={this.state.endDate}
-              onChange={this.handleEndChange}
-            />
-          </div>
-          <div>
-            <p>Total Sales: ${rentalTotal}</p>
-            <p>Average ${averagePerRental} per rental</p>
-          </div>
-      </div>
-     </div>
+        </div>
+    </div>
     );
   }
 }

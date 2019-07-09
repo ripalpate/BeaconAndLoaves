@@ -71,7 +71,7 @@ class LikeButton extends React.Component {
             );
           }
           return (
-                <button className="btn" onClick={this.changeIsLikedStateEvent}><i id="isLiked" className="far fa-heart fa-2x"/></button>
+                <button className="btn float-right" onClick={this.changeIsLikedStateEvent}><i id="isLiked" className="fas fa-heart fa-2x"/></button>
           );
         };
         return (
