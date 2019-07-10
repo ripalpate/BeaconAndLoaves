@@ -49,8 +49,6 @@ class RentalHistoryModal extends React.Component {
             <div>Renter's Name: {selectedRental.renter}</div>
             <div>Renter's Email: <a href={"mailto:" + selectedRental.renterEmail}>{selectedRental.renterEmail}</a></div>
           </ModalBody>
-          <ModalFooter>
-          </ModalFooter>
         </Modal>
       </div>
     );
