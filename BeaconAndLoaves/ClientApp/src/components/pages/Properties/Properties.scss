@@ -1,11 +1,45 @@
+@import '../../../styles/variables';
+
 #lighthouses {
   margin: 20px; 
+  padding-bottom:10px;
+  background:$color7;
 }
 
 #siloNuclears{
   margin: 20px;
+  background: $color7;
+  // color:$color6;
 }
 
-.property-title {
-  color: white;
+.card:hover{ 
+  box-shadow: 1px 8px 20px $color3;
+  -webkit-transition:  box-shadow .6s ease-in;
+}
+
+.Properties {
+  margin-top: 12%;
+  width: 80%;
+  font-family: $body-font;
+  cursor:pointer;
+}
+
+@media (min-width:769px) and (max-width:992px) {
+  .Properties {
+    width: 100%;
+    margin-top: 24.5% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-columns {
+      column-count: 1 !important;
+  }
+  .Properties {
+    width: 60%;
+    margin-top: 12.5% !important;
+  }
+  #siloNuclears{
+    margin-left:20px !important;
+  }
 }

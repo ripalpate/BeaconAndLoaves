@@ -53,11 +53,11 @@ class OwnerPropducts extends React.Component {
       ));
       return (
         <div>
-            <div className="back-button">
-              <button className = "bttn-pill btn-warning" onClick = {this.backButton}>Back</button>
+            <div className="back-button animated slideInDown">
+              <button className = "bttn-pill bttn-md allProperties" title="To All Properties" onClick = {this.backButton}><i className="fas fa-building"></i></button>
             </div>
-            <div className = "row">
-            {ownerPropertyComponent}
+            <div className = "ownerProperty">
+              <div className = "d-flex flex-wrap justify-content-center mt-3 w-75">{ownerPropertyComponent}</div>
             </div>
         </div>
       );

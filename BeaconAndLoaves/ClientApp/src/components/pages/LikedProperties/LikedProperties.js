@@ -57,11 +57,11 @@ class LikedProperties extends React.Component {
 
     return (
       <div>
-      <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToProperties} title="To All Properties"><i className="fas fa-building"></i></button>
-      <div className="likedProperty row">
-          <div className = "d-flex mx-auto mt-5">
+      <button className = "bttn-pill bttn-md mt-4 ml-3 allProperties animated slideInDown" onClick = {this.backToProperties} title="To All Properties"><i className="fas fa-building"></i></button>
+      <div className="likedProperty">
+        <div className = "d-flex flex-wrap justify-content-center mt-3 w-75">
           {singleLikedPropertyComponent}
-          </div>
+        </div>
       </div>
       </div>
     );
