@@ -3,8 +3,8 @@ import {
   Button,
   Modal,
   ModalHeader,
-  ModalBody,
   ModalFooter,
+  ModalBody,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import formatDate from '../../helpers/formatDate';
@@ -19,6 +19,18 @@ class RentingHistoryModal extends React.Component {
     numDays: PropTypes.number,
     isEditing: PropTypes.bool,
     toggleEdit: PropTypes.func,
+    changeView: PropTypes.func,
+    propertyDetailView: PropTypes.func,
+  }
+
+  changeViewEvent = () => {
+    const { ownerId } = this.props.selectedRental;
+    this.props.changeView(ownerId);
+  }
+
+  propertyDetailEvent = () => {
+    const { PropertyId } = this.props.selectedRental;
+    this.props.propertyDetailView(PropertyId);
   }
 
   toggleEvent = () => {
@@ -41,9 +53,9 @@ class RentingHistoryModal extends React.Component {
     const makeButtons = () => {
       if (numDays > 30) {
         return (
-            <Button onClick={this.editButtonEvent}>
-                <i className="fas fa-edit fa-2x" title="Edit Rental"></i>
-            </Button>
+            <button className="bttn-pill edit-rental-btn mx-auto" onClick={this.editButtonEvent}>
+                <i className="fas fa-edit fa-1x" title="Edit Rental"></i>
+            </button>
         );
       }
       return <div>Rental is not editable within 30 days of booking.</div>;
@@ -52,16 +64,20 @@ class RentingHistoryModal extends React.Component {
     return (
       <div>
         <Modal isOpen={historyModal} toggle={this.toggleEvent} className="modal-lg">
-          <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>{selectedRental.propertyName}</ModalHeader>
-          <ModalBody className="text-center modal-body">
+          <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>
+            <span className="property-name" title="Go To Property Detail" onClick={this.propertyDetailEvent}>
+              {selectedRental.propertyName}
+            </span>
+          </ModalHeader>
+          <ModalBody className="text-center modal-body renting-history-modal">
             <div>Start Date: {formatDate.formatMDYDate(selectedRental.StartDate)}</div>
             <div>End Date: {formatDate.formatMDYDate(selectedRental.EndDate)}</div>
             <div>{selectedRental.city}, {selectedRental.state}</div>
             <div>Total: ${selectedRental.RentalAmount}</div>
-            <div>Owner's Name: {selectedRental.owner}</div>
-            <div>Owner's Email: {selectedRental.ownerEmail}</div>
+            <div>Owner's Name: <span onClick={this.changeViewEvent}className="property-owner-name" title="Go To Owner's Properties">{selectedRental.owner}</span></div>
+            <div>Owner's Email: <a href={"mailto:" + selectedRental.ownerEmail}>{selectedRental.ownerEmail}</a></div>
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter className="renting-history-modal-footer">
             {makeButtons()}
           </ModalFooter>
         </Modal>

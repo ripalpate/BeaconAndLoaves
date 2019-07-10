@@ -29,6 +29,19 @@ class RentingHistory extends React.Component {
       propertyId: 0,
     }
 
+    changeView = (ownerId) => {
+      this.props.history.push(`/ownerProperties/${ownerId}`);
+    }
+
+    propertyDetailView = (propertyId) => {
+      const { selectedRental } = this.state;
+      if (selectedRental.type === 0) {
+        this.props.history.push(`/lightHouses/${propertyId}`);
+      } else {
+        this.props.history.push(`/siloNuclears/${propertyId}`);
+      }
+    }
+
     toggleModal = (rentingId) => {
       const { historyModal } = this.state;
       this.setState({ rentingId, historyModal: !historyModal });
@@ -219,6 +232,8 @@ class RentingHistory extends React.Component {
               isEditing={isEditing}
               toggleRentalModal={this.toggleRentalModal}
               formSubmit={this.formSubmit}
+              changeView={this.changeView}
+              propertyDetailView={this.propertyDetailView}
             />
             <Rental
               isEditing={isEditing}

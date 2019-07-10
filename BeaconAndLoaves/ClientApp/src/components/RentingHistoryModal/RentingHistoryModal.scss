@@ -1,0 +1,25 @@
+@import '../../styles/variables';
+
+.renting-history-modal, .renting-history-modal-footer {
+    background-color: $color2;
+}
+
+.modal-footer {
+    border-top: none !important;
+}
+
+.modal-header {
+    border-bottom: none !important;
+}
+
+.property-owner-name {
+    color: $color3;
+}
+
+.property-owner-name:hover {
+    cursor: pointer;
+}
+
+.property-name:hover {
+    cursor: pointer
+}
