@@ -213,7 +213,7 @@ class PaymentMethodForm extends React.Component {
                     </div>
                     </div>
                     <div className="col-auto form-lines p-0">
-                    <div className="input-group mb-2">
+                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">CVV</div>
                         </div>
