@@ -130,7 +130,7 @@ class Register extends React.Component {
     } = this.props;
 
     return (
-          <div className="reg-container d-flex">
+          <div className="reg-container d-flex animated fadeIn">
               <form className="row form-container border border-dark rounded mt-5 mx-auto" onSubmit={this.formSubmit}>
                 <h3 className="reg-title mx-auto">Please Register:</h3>
                 <div className="form col-11 mt-2">
