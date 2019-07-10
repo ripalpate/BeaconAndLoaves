@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .new-property {
     width: 60%;
     margin-top: 5%;
@@ -6,4 +8,12 @@
 
 .add-property-title {
     color: white;
+}
+
+.modal-body {
+    background-color: $color2;
+}
+
+.edit {
+    color:$color3 !important;
 }

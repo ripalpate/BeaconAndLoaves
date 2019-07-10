@@ -3,7 +3,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
@@ -339,8 +338,6 @@ class Rental extends React.Component {
               <button className="bttn-pill bttn-md bttn-primary mb-3" onClick={this.rentalValidation}>Confirm Rental</button>
             </div>
             </ModalBody>
-            <ModalFooter>
-            </ModalFooter>
       </Modal>
         <div>
           <ConfirmationModal

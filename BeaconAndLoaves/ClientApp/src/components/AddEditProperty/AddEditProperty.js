@@ -127,15 +127,15 @@ class AddEditProperty extends React.Component {
           if (isEditing) {
             return (
               <div className="mx-auto">
-                <button className="btn user-add-btn btn-success my-auto mx-auto" title="Submit">
-                  <i className="fas fa-check-circle" />
+                <button className="bttn-pill user-add-btn my-auto mx-auto" title="Submit">
+                  <i className="fas fa-check-circle edit" />
                 </button>
               </div>
             );
           }
           return (
             <div className="mx-auto">
-              <button className="btn user-add-btn btn-success my-auto mx-auto" title="Submit">
+              <button className="bttn-pill user-add-btn my-auto mx-auto" title="Submit">
                 <i className="fas fa-plus-circle" />
               </button>
             </div>
@@ -146,132 +146,166 @@ class AddEditProperty extends React.Component {
           <div className="new-property m-5 text-center">
             <Modal isOpen={addEditingModal} className="modal-lg">
               <ModalHeader class-name="modal-header" toggle={togglePropertyModal}>{makeHeader()}</ModalHeader>
-                <ModalBody className="text-center modal-body">
-            <form className="" onSubmit={this.formSubmit}>
-              <div className="form mx-auto">
-              <div className="form-group row text-center">
-                <label className="col-3" htmlFor="propertyName">Name:</label>
-                <input
-                  type="text"
-                  className="form-control col-8"
-                  id="propertyName"
-                  aria-describedby="nameHelp"
-                  placeholder="Rock Bean Lighthouse"
-                  value= {newProperty.propertyName}
-                  onChange= {this.propertyNameChange}
-                  required
-                />
+                <ModalBody className="text-center modal-body addEditPropertyModal">
+            <form className="row border border-dark rounded mx-auto" onSubmit={this.formSubmit}>
+              <div className="form col-11 mt-2">
+                <div className="col-auto form-lines p-0">
+                  <div className="input-group mb-2">
+                    <div className="input-group-prepend">
+                      <div className="input-group-text">Name:</div>
+                    </div>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="propertyName"
+                      aria-describedby="nameHelp"
+                      placeholder="Rock Bean Lighthouse"
+                      value= {newProperty.propertyName}
+                      onChange= {this.propertyNameChange}
+                      required
+                    />
+                </div>
               </div>
-              <div className="form-group row">
-                <label className="col-3" htmlFor="type">Property Type:</label>
+              <div className="col-auto form-lines p-0">
+                <div className="input-group mb-2">
+                    <div className="input-group-prepend">
+                      <div className="input-group-text">Property Type:</div>
+                    </div>
                     <select
-                    className="form-control col-8"
+                    className="form-control"
                     id="type"
                     value= {newProperty.type}
                     onChange= {this.typeChange}
                     required
                     >
-                        <option value="0">Lighthouse</option>
-                        <option value="1">Silo Nuclear</option>
+                      <option value="0">Lighthouse</option>
+                      <option value="1">Silo Nuclear</option>
                     </select>
+                </div>
               </div>
-              <div className="form-group row">
-                <label className="col-3" htmlFor="street">Street:</label>
-                <input
-                  type="text"
-                  className="form-control col-8"
-                  id="street"
-                  aria-describedby="streetHelp"
-                  placeholder="123 Main St"
-                  value= {newProperty.street}
-                  onChange= {this.streetChange}
-                  required
-                />
+              <div className="col-auto form-lines p-0">
+                <div className="input-group mb-2">
+                  <div className="input-group-prepend">
+                    <div className="input-group-text">Street:</div>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="street"
+                    aria-describedby="streetHelp"
+                    placeholder="123 Main St"
+                    value= {newProperty.street}
+                    onChange= {this.streetChange}
+                    required
+                  />
+                </div>
               </div>
-              <div className="form-group row">
-                <label className="col-3" htmlFor="city">City:</label>
-                <input
-                  type="text"
-                  className="form-control col-8"
-                  id="city"
-                  aria-describedby="cityHelp"
-                  placeholder="Nashville"
-                  value= {newProperty.city}
-                  onChange= {this.cityChange}
-                  required
-                />
+              <div className="col-auto form-lines p-0">
+                <div className="input-group mb-2">
+                  <div className="input-group-prepend">
+                    <div className="input-group-text">City:</div>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="city"
+                    aria-describedby="cityHelp"
+                    placeholder="Nashville"
+                    value= {newProperty.city}
+                    onChange= {this.cityChange}
+                    required
+                  />
+                </div>
               </div>
-              <div className="form-group row">
-                <label className="col-3" htmlFor="state">State:</label>
-                <input
-                  type="text"
-                  className="form-control col-8"
-                  id="state"
-                  aria-describedby="stateHelp"
-                  placeholder="TN"
-                  value= {newProperty.state}
-                  onChange= {this.stateChange}
-                  required
-                />
+              <div className="col-auto form-lines p-0">
+                <div className="input-group mb-2">
+                  <div className="input-group-prepend">
+                    <div className="input-group-text">State:</div>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="state"
+                    aria-describedby="stateHelp"
+                    placeholder="TN"
+                    value= {newProperty.state}
+                    onChange= {this.stateChange}
+                    required
+                  />
+                </div>
               </div>
-              <div className="form-group row">
-                <label className="col-3" htmlFor="zipCode">Zipcode:</label>
-                <input
-                  type="text"
-                  className="form-control col-8"
-                  id="zipCode"
-                  aria-describedby="zipCodeHelp"
-                  placeholder="12345-6789"
-                  value= {newProperty.zipCode}
-                  onChange= {this.zipCodeChange}
-                  pattern="^[0-9]{5}(?:-[0-9]{4})?$"
-                  required
-                />
+              <div className="col-auto form-lines p-0">
+                <div className="input-group mb-2">
+                  <div className="input-group-prepend">
+                    <div className="input-group-text">Zipcode:</div>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="zipCode"
+                    aria-describedby="zipCodeHelp"
+                    placeholder="12345-6789"
+                    value= {newProperty.zipCode}
+                    onChange= {this.zipCodeChange}
+                    pattern="^[0-9]{5}(?:-[0-9]{4})?$"
+                    required
+                  />
+                </div>
               </div>
-              <div className="form-group row">
-                <label className="col-3" htmlFor="description">Description:</label>
-                <textarea
-                  className="form-control col-8"
-                  id="description"
-                  value= {newProperty.description}
-                  onChange= {this.descriptionChange}
-                  rows="5"
-                  required
-                  >
-                </textarea>
+              <div className="col-auto form-lines p-0">
+                <div className="input-group mb-2">
+                  <div className="input-group-prepend">
+                    <div className="input-group-text">Description:</div>
+                  </div>
+                  <textarea
+                    className="form-control"
+                    id="description"
+                    value= {newProperty.description}
+                    onChange= {this.descriptionChange}
+                    rows="5"
+                    required
+                    >
+                  </textarea>
+                </div>
               </div>
-              <div className="form-group row">
-                <label className="col-3" htmlFor="image">Image:</label>
-                <input
-                  type="text"
-                  className="form-control col-8"
-                  id="imageUrl"
-                  aria-describedby="imageHelp"
-                  placeholder="www.jrekjr.jpg"
-                  value= {newProperty.imageUrl}
-                  onChange= {this.imageChange}
-                  required
-                />
+              <div className="col-auto form-lines p-0">
+                <div className="input-group mb-2">
+                  <div className="input-group-prepend">
+                    <div className="input-group-text">Image:</div>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="imageUrl"
+                    aria-describedby="imageHelp"
+                    placeholder="www.jrekjr.jpg"
+                    value= {newProperty.imageUrl}
+                    onChange= {this.imageChange}
+                    required
+                  />
+                </div>
               </div>
-              <div className="form-group row">
-                <label className="col-3" htmlFor="price">Nightly Rate: </label>
-                <input
-                  type="text"
-                  className="form-control col-8"
-                  id="price"
-                  aria-describedby="priceHelp"
-                  placeholder="1000.50"
-                  value = {newProperty.price}
-                  onChange = {this.priceChange}
-                  required
-                />
+              <div className="col-auto form-lines p-0">
+                <div className="input-group mb-2">
+                  <div className="input-group-prepend">
+                    <div className="input-group-text">Nightly Rate:</div>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="price"
+                    aria-describedby="priceHelp"
+                    placeholder="1000.50"
+                    value = {newProperty.price}
+                    onChange = {this.priceChange}
+                    required
+                  />
+                </div>  
               </div>
-              {makeButton()}
+              <div className="pb-2">{makeButton()}</div>
               </div>
             </form>
               </ModalBody>
-              <ModalFooter>
-              </ModalFooter>
             </Modal>
           </div>
         );
