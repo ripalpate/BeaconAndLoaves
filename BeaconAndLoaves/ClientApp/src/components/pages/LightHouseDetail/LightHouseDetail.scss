@@ -1,7 +1,13 @@
+@import '../../../styles/variables';
+
 .detail {
-  max-width: 25rem;
   margin-top:10px;
   margin-bottom: 10px;
+  width:25rem;
+}
+
+#details {
+  background: $color7;
 }
 
 #isLiked {
@@ -17,9 +23,35 @@
 }
 
 .deactivate-icon {
-  color:green;
+  color:$color13;
+  padding-top:5px;
 }
 
 .activate-icon {
-  color: red;
+  color:$color12;
+  padding-top:5px;
+}
+
+.owner-name {
+  color: $color14;
+}
+
+.propertyTitle {
+  font-family: $header-font;
+}
+
+.likePropertyButton{
+  color:$color1;
+}
+
+.allProperties{
+  color:$color11;
+}
+
+.rentButton{
+  color:$color11;
+}
+
+.edit-icon{
+  color:$color2;
 }

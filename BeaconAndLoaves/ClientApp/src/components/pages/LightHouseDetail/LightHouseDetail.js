@@ -191,8 +191,10 @@ toggleModal = () => {
       if (currentUser.isOwner === true && lightHouse.ownerId === currentUser.id) {
         return (
           <div className = "float-right">
-            <i onClick= {this.togglePropertyModal} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
-            <i onClick = {this.checkFutureRentalsForProperty} className="fas fa-trash fa-2x" data-property-id={lightHouse.id} title="Delete"></i>
+            <button className="bttn-pill mr-3"onClick= {this.togglePropertyModal} data-property-id={lightHouse.id}><i onClick= {this.togglePropertyModal} data-property-id={lightHouse.id} className="far fa-edit edit-icon" title="Edit"/></button>
+            <button className="bttn-pill"onClick = {this.checkFutureRentalsForProperty} data-property-id={lightHouse.id}>
+              <i onClick = {this.checkFutureRentalsForProperty} className="fas fa-trash delete-btn" data-property-id={lightHouse.id} title="Delete"></i>
+            </button>
           </div>
         );
       } return (<span></span>);
@@ -203,36 +205,39 @@ toggleModal = () => {
         if (lightHouse.isActive === true) {
           return (
         <div className = "float-right mr-3">
-          <i className="fas fa-toggle-on fa-2x deactivate-icon" data-property-id={lightHouse.id} title="Dectivate Property" onClick = {this.deactivateProperty}></i>
+          <i className="fas fa-2x fa-toggle-on deactivate-icon" data-property-id={lightHouse.id} title="Dectivate Property" onClick = {this.deactivateProperty}></i>
         </div>
           );
         } return (
         <div className = "float-right mr-3">
-          <i className="fas fa-toggle-off fa-2x activate-icon" data-property-id={lightHouse.id} title="Activate Property" onClick = {this.activateProperty}></i>
-      </div>
+          <i className="fas fa-2x fa-toggle-off activate-icon" data-property-id={lightHouse.id} title="Activate Property" onClick = {this.activateProperty}></i>
+        </div>
         );
       } return (<span></span>);
     };
 
     return (
-      <div>
-        <div className="back-button">
+      <div className = "">
+        <div className="back-button animated slideInDown">
               <button className = "bttn-pill bttn-md" onClick = {this.backButton} title="To All Lighthouses"><i className="far fa-arrow-alt-circle-left"></i></button>
-              <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToProperties} title="To All Properties"><i className="fas fa-building"></i></button>
-              <button className = "bttn-pill bttn-md mt-3 ml-2" onClick = {this.backToLikedProperties} title="To Liked Properties"><i className="fas fa-heart"></i></button>
+              <button className = "bttn-pill bttn-md mt-3 ml-2 allProperties" onClick = {this.backToProperties} title="To All Properties"><i className="fas fa-building"></i></button>
+              <button className = "bttn-pill bttn-md mt-3 ml-2 likePropertyButton" onClick = {this.backToLikedProperties} title="To Liked Properties"><i className="fas fa-heart"></i></button>
         </div>
-        <div className="card mx-auto bg-light detail">
+        <div className="card mx-auto detail animated zoomIn" id="details">
           <div className="imgHolder">
             <img className="singleLightHouseImg"src={lightHouse.imageUrl} alt="lighthouse"/>
           </div>
-          <div className="card-body">
-            <h5>{lightHouse.propertyName}</h5>
+          <div className="card-body desc">
+            <h5 className="propertyTitle">{lightHouse.propertyName}</h5>
             <p>{lightHouse.street}</p>
             <p>{lightHouse.city}, {lightHouse.state} - {lightHouse.zipCode}</p>
             <p>{lightHouse.description}</p>
             <p>${lightHouse.price}/per night</p>
-            <p className="owner-name" onClick = {this.OwnerPropertiesView} data-owner={lightHouse.ownerId}>Owned By: {lightHouse.name}</p>
-            <button id={lightHouse.id} className="bttn-pill bttn-md bttn-primary mr-2" onClick={this.toggleRentalModal}>Rent Me!!!</button>
+            <p className="" onClick = {this.OwnerPropertiesView} data-owner={lightHouse.ownerId}>Owner: 
+              <span className= "owner-name" data-owner={lightHouse.ownerId} onClick = {this.OwnerPropertiesView}> {lightHouse.name}
+              </span>
+            </p>
+            <button id={lightHouse.id} className="bttn-pill bttn-md rentButton mr-2" onClick={this.toggleRentalModal}>Rent Me!!!</button>
             {makebutton()}
             {makeLikedPropertyButton()}
             {activateButton()}
