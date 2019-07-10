@@ -191,8 +191,10 @@ toggleModal = () => {
       if (currentUser.isOwner === true && lightHouse.ownerId === currentUser.id) {
         return (
           <div className = "float-right">
-            <i onClick= {this.togglePropertyModal} data-property-id={lightHouse.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
-            <i onClick = {this.checkFutureRentalsForProperty} className="fas fa-trash fa-2x" data-property-id={lightHouse.id} title="Delete"></i>
+            <button className="bttn-pill mr-3"onClick= {this.togglePropertyModal} data-property-id={lightHouse.id}><i onClick= {this.togglePropertyModal} data-property-id={lightHouse.id} className="far fa-edit edit-icon" title="Edit"/></button>
+            <button className="bttn-pill"onClick = {this.checkFutureRentalsForProperty} data-property-id={lightHouse.id}>
+              <i onClick = {this.checkFutureRentalsForProperty} className="fas fa-trash delete-btn" data-property-id={lightHouse.id} title="Delete"></i>
+            </button>
           </div>
         );
       } return (<span></span>);
@@ -203,13 +205,13 @@ toggleModal = () => {
         if (lightHouse.isActive === true) {
           return (
         <div className = "float-right mr-3">
-          <i className="fas fa-toggle-on fa-2x deactivate-icon" data-property-id={lightHouse.id} title="Dectivate Property" onClick = {this.deactivateProperty}></i>
+          <i className="fas fa-2x fa-toggle-on deactivate-icon" data-property-id={lightHouse.id} title="Dectivate Property" onClick = {this.deactivateProperty}></i>
         </div>
           );
         } return (
         <div className = "float-right mr-3">
-          <i className="fas fa-toggle-off fa-2x activate-icon" data-property-id={lightHouse.id} title="Activate Property" onClick = {this.activateProperty}></i>
-      </div>
+          <i className="fas fa-2x fa-toggle-off activate-icon" data-property-id={lightHouse.id} title="Activate Property" onClick = {this.activateProperty}></i>
+        </div>
         );
       } return (<span></span>);
     };

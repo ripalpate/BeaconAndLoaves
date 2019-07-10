@@ -24,10 +24,12 @@
 
 .deactivate-icon {
   color:$color13;
+  padding-top:5px;
 }
 
 .activate-icon {
   color:$color12;
+  padding-top:5px;
 }
 
 .owner-name {
@@ -48,4 +50,8 @@
 
 .rentButton{
   color:$color11;
+}
+
+.edit-icon{
+  color:$color2;
 }

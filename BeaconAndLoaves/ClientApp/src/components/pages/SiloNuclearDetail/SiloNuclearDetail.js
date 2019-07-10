@@ -161,8 +161,12 @@ class SiloNuclearDetail extends React.Component {
       if (currentUser.isOwner === true && siloNuclear.ownerId === currentUser.id) {
         return (
           <div className = "float-right">
-            <i onClick= {this.togglePropertyModal} data-property-id={siloNuclear.id} className="far fa-edit edit-icon fa-2x mr-3" title="Edit"/>
-            <i onClick = {this.deleteProperty} className="fas fa-trash fa-2x" data-property-id={siloNuclear.id} title="Delete"></i>
+            <button className="bttn-pill mr-3" onClick= {this.togglePropertyModal} data-property-id={siloNuclear.id}>
+               <i onClick= {this.togglePropertyModal} data-property-id={siloNuclear.id} className="far fa-edit edit-icon" title="Edit"/>
+            </button>
+            <button className="bttn-pill" onClick = {this.deleteProperty} data-property-id={siloNuclear.id}>
+               <i onClick = {this.deleteProperty} className="fas fa-trash delete-btn" data-property-id={siloNuclear.id} title="Delete"></i>
+            </button>
           </div>
         );
       } return (<span></span>);
