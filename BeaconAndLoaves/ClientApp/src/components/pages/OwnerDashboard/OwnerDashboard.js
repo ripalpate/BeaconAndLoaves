@@ -178,9 +178,9 @@ class OwnerDashboard extends React.Component {
       <div>
         <button className = "bttn-pill bttn-md mt-3 back-button" onClick = {this.backButton} title="Back to All Rentals"><i className="far fa-arrow-alt-circle-left"></i></button>
         <div className="dashboardContainer d-flex mx-auto">
-          <div className="dashboardWrapper">
-            <div className="ownerDashboard text-cemter border border-dark rounded pl-3">
-              <h4 className="text-center">Dashboard</h4>
+          <div className="dashboardWrapper animated fadeIn">
+            <div className="ownerDashboard border border-dark rounded pl-3">
+              <h4 className="text-center dashboardTitle">Dashboard</h4>
               <div>Select Properties:
                   <select id="property" className="custom-select mb-2 ml-2" onChange={this.dropdownSelect}>
                   <option defaultValue>Select Property</option>
