@@ -139,15 +139,16 @@ class PaymentMethodForm extends React.Component {
     const makeDropdowns = () => {
       let counter = 0;
       return (
-              <div>
-                <span className="paymentType-label">Payment Types:
-                  <select name="payment" required className="custom-select mb-2" value={selectedPaymentType} onChange={(event) => { this.selectPaymentType(event); this.paymentTypeIdChange(event); }}>
+              <div className="input-group mb-2">
+                <div className="input-group-prepend">
+                <div className="paymentType-label input-group-text">Payment Types:</div>
+                </div>
+                  <select name="payment" required className="custom-select" value={selectedPaymentType} onChange={(event) => { this.selectPaymentType(event); this.paymentTypeIdChange(event); }}>
                   <option value="">Select Payment Type</option>
                     {
                       paymentTypes.map(paymentType => (<option key={counter++}value={counter}>{paymentType}</option>))
                     }
                   </select>
-                </span>
               </div>
       );
     };
@@ -157,7 +158,6 @@ class PaymentMethodForm extends React.Component {
                   <form className="row form-container border border-dark rounded mx-auto" onSubmit={this.formSubmit}>
                   <div className="form col-11 mt-2">
                     <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Account Name</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Account Name</div>
@@ -177,7 +177,6 @@ class PaymentMethodForm extends React.Component {
                         {makeDropdowns()}
                     </div>
                     <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Account Number</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Account Number</div>
@@ -198,7 +197,6 @@ class PaymentMethodForm extends React.Component {
                     </div>
                     </div>
                     <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Exp Date</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Exp Date</div>
@@ -215,8 +213,7 @@ class PaymentMethodForm extends React.Component {
                     </div>
                     </div>
                     <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">CVV</label>
-                    <div className="input-group mb-2">
+                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">CVV</div>
                         </div>

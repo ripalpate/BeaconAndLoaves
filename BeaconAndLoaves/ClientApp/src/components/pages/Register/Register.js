@@ -135,7 +135,6 @@ class Register extends React.Component {
                 <h3 className="reg-title mx-auto">Please Register:</h3>
                 <div className="form col-11 mt-2">
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Email</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Email</div>
@@ -152,7 +151,6 @@ class Register extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="name" className="sr-only">Name</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Name</div>
@@ -169,7 +167,6 @@ class Register extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Street</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Street</div>
@@ -186,7 +183,6 @@ class Register extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">City</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">City</div>
@@ -203,7 +199,6 @@ class Register extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">State</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">State</div>
@@ -220,7 +215,6 @@ class Register extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Zip Code</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Zip Code</div>
@@ -238,7 +232,6 @@ class Register extends React.Component {
                     </div>
                   </div>
                   <div className="col-auto form-lines p-0">
-                    <label htmlFor="link" className="sr-only">Phone Number</label>
                     <div className="input-group mb-2">
                         <div className="input-group-prepend">
                         <div className="input-group-text">Phone Number</div>
@@ -256,7 +249,7 @@ class Register extends React.Component {
                     </div>
                   </div>
                   <div className="text-center">
-                    <button className="btn user-add-btn btn-success my-auto mx-auto" title="Submit">
+                    <button className="bttn-pill user-add-btn mx-auto mb-2" title="Submit">
                       <i className="fas fa-plus-circle" />
                     </button>
                   </div>
