@@ -20,6 +20,15 @@ ownerRentalsMounted = false;
       currentUser: PropTypes.object,
     }
 
+    propertyDetailView = (propertyId) => {
+      const { selectedRental } = this.state;
+      if (selectedRental.type === 0) {
+        this.props.history.push(`/lightHouses/${propertyId}`);
+      } else {
+        this.props.history.push(`/siloNuclears/${propertyId}`);
+      }
+    }
+
     toggleModal = (rentalId) => {
       const { modal } = this.state;
       this.setState({ rentalId, modal: !modal });
@@ -180,6 +189,7 @@ ownerRentalsMounted = false;
                 modal={modal}
                 selectedRental={selectedRental}
                 toggleModal={this.toggleModal}
+                propertyDetailView={this.propertyDetailView}
               />
           </div>
       );

@@ -17,6 +17,11 @@ class RentalHistoryModal extends React.Component {
     modal: PropTypes.bool,
   }
 
+  propertyDetailEvent = () => {
+    const { PropertyId } = this.props.selectedRental;
+    this.props.propertyDetailView(PropertyId);
+  }
+
   toggleEvent = () => {
     const { toggleModal } = this.props;
     toggleModal();
@@ -31,14 +36,18 @@ class RentalHistoryModal extends React.Component {
     return (
       <div>
         <Modal isOpen={modal} toggle={this.toggleEvent} className="modal-lg">
-          <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>{selectedRental.propertyName}</ModalHeader>
-          <ModalBody className="text-center modal-body">
+          <ModalHeader class-name="modal-header" toggle={this.toggleEvent}>
+            <span className="property-name" title="Go To Property Detail" onClick={this.propertyDetailEvent}>
+              {selectedRental.propertyName}
+            </span>
+          </ModalHeader>
+          <ModalBody className="text-center modal-body rental-history-modal">
             <div>Start Date: {formatDate.formatMDYDate(selectedRental.StartDate)}</div>
             <div>End Date: {formatDate.formatMDYDate(selectedRental.EndDate)}</div>
             <div>{selectedRental.city}, {selectedRental.state}</div>
             <div>Total: ${selectedRental.RentalAmount}</div>
             <div>Renter's Name: {selectedRental.renter}</div>
-            <div>Renter's Email: {selectedRental.renterEmail}</div>
+            <div>Renter's Email: <a href={"mailto:" + selectedRental.renterEmail}>{selectedRental.renterEmail}</a></div>
           </ModalBody>
           <ModalFooter>
           </ModalFooter>
