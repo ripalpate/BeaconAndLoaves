@@ -442,7 +442,7 @@ class Profile extends React.Component {
             <button type="button" className="bttn-pill payment-add-btn ml-2" onClick={this.toggleAddPaymentModal} title="Add Payment Account">
                 <i className="far fa-credit-card fa-1x"></i>
             </button>
-            <button id='profile-delte' type="button" className="bttn-pill profile-delete-btn ml-2 mr-2" onClick={this.toggleModal} title="Delete Profile">
+            <button id='profile-delete' type="button" className="bttn-pill profile-delete-btn ml-2 mr-2" onClick={this.toggleModal} title="Delete Profile">
               <i className="profile-delete-btn fas fa-trash fa-1x"></i>
             </button>
           </div>
