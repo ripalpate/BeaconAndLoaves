@@ -39,7 +39,8 @@ namespace BeaconAndLoaves.Data
                 var rentalsByUserId = db.Query<Object>(@"
                     select rentals.id, rentals.propertyId, rentals.userPaymentId, rentals.startDate,
                     rentals.endDate, rentals.rentalAmount, properties.ownerId, properties.street, properties.city,
-                    properties.state, properties.zipcode, properties.propertyName, users.name, users.email
+                    properties.state, properties.zipcode, properties.propertyName, properties.type,
+                    users.name, users.email
                     from rentals
                     join properties
                     on rentals.propertyId = properties.id
@@ -62,7 +63,8 @@ namespace BeaconAndLoaves.Data
                 var rentalsByUserId = db.Query<Object>(@"
                     select rentals.id, rentals.propertyId, rentals.userPaymentId, rentals.startDate,
                     rentals.endDate, rentals.rentalAmount, properties.ownerId, properties.street, properties.city,
-                    properties.state, properties.zipcode, properties.propertyName, users.name, users.email
+                    properties.state, properties.zipcode, properties.propertyName, properties.type,
+                    users.name, users.email
                     from rentals
                     join properties
                     on rentals.propertyId = properties.id
@@ -204,7 +206,8 @@ namespace BeaconAndLoaves.Data
             {
                 var query = @"
                     select r.*, p.propertyName, p.city, p.state, p.ownerId,
-                    p.createdOn, p.price, o.name as owner, o.email as ownerEmail,
+                    p.createdOn, p.price, p.type,
+                    o.name as owner, o.email as ownerEmail,
                     renter.name as renter, renter.email as renterEmail
                     from rentals r
                     join properties p
