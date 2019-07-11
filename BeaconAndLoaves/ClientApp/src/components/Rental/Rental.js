@@ -3,7 +3,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
@@ -299,8 +298,8 @@ class Rental extends React.Component {
       <div className="text-center">
       <Modal isOpen={rentalModal} className="modal-lg">
       <ModalHeader class-name="modal-header" toggle={toggleRentalModal}>{makeHeader()}</ModalHeader>
-        <ModalBody className="text-center modal-body">
-            <form className="rental-form" id={property.id}>
+        <ModalBody className="text-center modal-body" id="rental-body">
+            <form className="rental-form border border-dark rounded" id={property.id}>
                 <h3 className="text-center">{property.propertyName}</h3>
                 <div className="ml-1">Street: {property.street}</div>
                 <div className="ml-1">City: {property.city}</div>
@@ -336,11 +335,9 @@ class Rental extends React.Component {
                 <div>{makeDropdowns()}</div>
             </form>
             <div>
-              <button className="bttn-pill bttn-md bttn-primary mb-3" onClick={this.rentalValidation}>Confirm Rental</button>
+              <button className="bttn-pill bttn-md rentButton mb-3 mt-3" onClick={this.rentalValidation}>Confirm Rental</button>
             </div>
             </ModalBody>
-            <ModalFooter>
-            </ModalFooter>
       </Modal>
         <div>
           <ConfirmationModal
