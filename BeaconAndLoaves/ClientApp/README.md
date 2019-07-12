@@ -20,11 +20,9 @@ The attempts page has graphing for all of the attempts of a roast with time vs t
 ## Screenshots
 ![Auth Screenshot](./screenshots/beacon-and-loaves-auth.png)
 ![Home Screenshot](./screenshots/beacon-and-loaves-home.png)
-![Beans Modal Screenshot](./images/get-roasted-beans-modal-view.png)
-![Inventory Screenshot](./images/get-roasted-inventory-view.png)
-![Roasts Screenshot](./images/get-roasted-roasts-view.png)
-![Attempts Screenshot](./images/get-roasted-attemtps-view.png)
-![Attempts Graph Screenshot](./images/get-roasted-attemtps-graph-view.png)
+![Profile Screenshot](./screenshots/beacon-and-loaves-profile.png)
+![Dashboard Screenshot](./screenshots/beacon-and-loaves-dashboard.png)
+![Property Screenshot](./screenshots/beacon-and-loaves-property.png)
 
 ## How to run this project:
 
