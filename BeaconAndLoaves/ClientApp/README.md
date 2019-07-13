@@ -1,11 +1,19 @@
 # Beacon And Loaves
 This app was created by Ripal Patel, Rob Rice and Shane D Wilson as our final group project for our C#/.Net back-end course work at Nashville Software School. Beacon and Loaves is a short term rental app for the light house (or nuclear silo) enthusiast.
 
-
+After authorization the database is checked for an existing Firebase ID. If none is found, the registration page mounts and the user must register AND provide a payment account. User profiles are editable or they may be soft deleted.
 
 A user of the app can be both a renter and/or owner of properties. Properties may be edited or soft deleted.
 
+A property may be added to a liked properties list for future research. A property may be rented.
 
+Dates before the current date and any dates already rented on a property are inaccessible.
+
+The user may examine their future and past trips on their profile.
+
+The user may examine their future and past property rentals on their profile.
+
+Property rental data is graphed on the owner dashboard.
 
 ## Tech Used
 * React.js
