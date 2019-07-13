@@ -217,7 +217,7 @@ class OwnerDashboard extends React.Component {
             </div>
           </div>
         </div>
-        <div className="mt-5 graph-container mx-auto">
+        <div className="graph-container mx-auto">
           <div className="graph-wrapper border border-dark rounded pt-3">
           <ResponsiveContainer width='99%' aspect={4.0 / 3.0}>
             <BarChart
