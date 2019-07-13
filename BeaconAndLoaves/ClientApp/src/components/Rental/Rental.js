@@ -143,7 +143,7 @@ class Rental extends React.Component {
     const { property } = this.props;
     const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
     const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    const rentalTotal = diffDays * property.price;
+    const rentalTotal = (diffDays * property.price).toFixed(2);
     this.setState({ rentalTotal });
   }
 

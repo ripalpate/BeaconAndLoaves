@@ -121,6 +121,7 @@ class OwnerDashboard extends React.Component {
       total += item.RentalAmount;
     });
     const arrayLength = rentalsAssocWithProperty.length;
+    total = total.toFixed(2);
     this.setState({ rentalTotal: total }, this.averagePerRental(total, arrayLength));
   }
 
@@ -149,6 +150,7 @@ class OwnerDashboard extends React.Component {
     filterRentalsBasedonIncomingDates.forEach((item) => {
       total += item.RentalAmount;
     });
+    total = total.toFixed(2);
     const arrayLength = filterRentalsBasedonIncomingDates.length;
     this.setState({ rentalTotal: total, rentalsAssocWithProperty: filterRentalsBasedonIncomingDates }, this.averagePerRental(total, arrayLength));
   }
@@ -157,9 +159,11 @@ class OwnerDashboard extends React.Component {
     let average = 0;
     if (total === 0) {
       average = 0;
+      average = average.toFixed(2);
       this.setState({ averagePerRental: average });
     } else {
       average = total / arrayLength;
+      average = average.toFixed(2);
       this.setState({ averagePerRental: average });
     }
   }
