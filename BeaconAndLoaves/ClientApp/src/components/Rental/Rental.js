@@ -25,9 +25,6 @@ const defaultRental = {
   rentalAmount: 0,
 };
 
-// const today = new Date();
-// const tomorrow = today.setDate(today.getDate() + 1);
-
 class Rental extends React.Component {
   rentalMounted = false;
 
@@ -114,7 +111,14 @@ class Rental extends React.Component {
   }
 
   handleStartChange = (date) => {
-    this.setState({ startDate: new Date(date), selectedDate: new Date(date), attemptedDates: [] }, this.figureTotal);
+    const startDate = new Date(date);
+    const selectedDate = new Date(date);
+    const { endDate } = this.state;
+    if (Date.parse(endDate) < Date.parse(startDate)) {
+      this.setState({ startDate, selectedDate, attemptedDates: [] });
+    } else {
+      this.setState({ startDate, selectedDate, attemptedDates: [] }, this.figureTotal);
+    }
   }
 
   handleEndChange = (date) => {
@@ -314,6 +318,7 @@ class Rental extends React.Component {
                       selectsStart
                       startDate={startDate}
                       endDate={startDate}
+                      minDate={startDate}
                       onChange={this.handleStartChange}
                       excludeDates={ rentedDates }
                       />
