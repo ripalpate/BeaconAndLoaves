@@ -255,6 +255,8 @@ class Rental extends React.Component {
   }
 
   render() {
+    const today = new Date();
+
     const {
       paymentAccounts,
       rentalTotal,
@@ -318,7 +320,7 @@ class Rental extends React.Component {
                       selectsStart
                       startDate={startDate}
                       endDate={startDate}
-                      minDate={startDate}
+                      minDate={today}
                       onChange={this.handleStartChange}
                       excludeDates={ rentedDates }
                       />
