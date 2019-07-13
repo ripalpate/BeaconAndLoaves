@@ -6,11 +6,15 @@
 
 .graph-container {
     color: white;
-    width: 62%;
+    width: 75%;
 }
 
-.graph-wrapper {
-    width: 70%;
+.recharts-cartesian-axis-tick-value {
+    font-size: 10px;
+}
+
+.recharts-tooltip-label{
+    color: black;
 }
 
 .dashboardTitle {
