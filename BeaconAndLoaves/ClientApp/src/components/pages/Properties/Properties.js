@@ -30,11 +30,11 @@ class Properties extends React.Component {
       <div className="Properties mx-auto">
       <div className="card-columns animated zoomIn mt-5">
         <div className="card text-center" id="lighthouses" onClick={this.pageView}>
-          <h3 className="card-title property-title">Lighthouse({lightHouse.length})</h3>
+          <h3 className="card-title property-title">Lighthouses({lightHouse.length})</h3>
           <img className="card-image-top lighthouse-img pt-2" src="http://tshega.org/wp-content/uploads/2018/04/lighthouse.png" alt="lighthouse" width = "180px"/>
         </div>
         <div className="card text-center ml-5" id="siloNuclears" onClick={this.pageView}>
-          <h3 className="property-title pb-2">Nuclear Silo({siloNuclear.length})</h3>
+          <h3 className="property-title pb-2">Nuclear Silos({siloNuclear.length})</h3>
           <i className="card-image-top p-3 fas fa-rocket fa-10x"></i>
         </div>
       </div>
