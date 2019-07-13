@@ -91,6 +91,8 @@ ownerRentalsMounted = false;
       futureOwnerRentals.forEach((item) => {
         futureTotal += item.rentalAmount;
       });
+      pastTotal.toFixed(2);
+      futureTotal.toFixed(2);
       this.setState({ totalSales: pastTotal + futureTotal });
     };
 
