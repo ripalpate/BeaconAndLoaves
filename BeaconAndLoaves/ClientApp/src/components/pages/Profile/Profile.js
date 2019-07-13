@@ -85,7 +85,7 @@ class Profile extends React.Component {
   }
 
   formFieldStringState = (name, e) => {
-    const tempUser = { ...this.props.editedUser };
+    const tempUser = { ...this.state.editedUser };
     tempUser[name] = e.target.value;
     this.setState({ editedUser: tempUser });
   }
@@ -192,8 +192,8 @@ class Profile extends React.Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    const editedUser = { ...this.state.editedUser };
-    const userId = editedUser.id;
+    const { editedUser } = this.state;
+    const userId = this.props.currentUser.id;
     userRequests.updateUser(userId, editedUser)
       .then(() => {
         this.setState({ isEditing: false }, this.props.getUser);
