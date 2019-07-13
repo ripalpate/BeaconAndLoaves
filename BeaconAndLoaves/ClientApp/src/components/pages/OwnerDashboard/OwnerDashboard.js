@@ -219,11 +219,11 @@ class OwnerDashboard extends React.Component {
         </div>
         <div className="mt-5 graph-container mx-auto">
           <div className="graph-wrapper border border-dark rounded pt-3">
-          <ResponsiveContainer width={1200} height={800}>
+          <ResponsiveContainer width='99%' aspect={4.0 / 3.0}>
             <BarChart
               className="mx-auto"
-              width={1200}
-              height={800}
+              width='99%'
+              height={4.0 / 3.0}
               data={allRentals}
               margin={{
                 top: 5, right: 30, left: 20, bottom: 5,
