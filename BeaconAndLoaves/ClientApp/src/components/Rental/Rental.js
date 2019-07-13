@@ -111,7 +111,14 @@ class Rental extends React.Component {
   }
 
   handleStartChange = (date) => {
-    this.setState({ startDate: new Date(date), selectedDate: new Date(date), attemptedDates: [] }, this.figureTotal);
+    const startDate = new Date(date);
+    const selectedDate = new Date(date);
+    const { endDate } = this.state;
+    if (Date.parse(endDate) < Date.parse(startDate)) {
+      this.setState({ startDate, selectedDate, attemptedDates: [] });
+    } else {
+      this.setState({ startDate, selectedDate, attemptedDates: [] }, this.figureTotal);
+    }
   }
 
   handleEndChange = (date) => {
