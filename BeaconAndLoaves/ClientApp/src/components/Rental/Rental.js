@@ -25,9 +25,6 @@ const defaultRental = {
   rentalAmount: 0,
 };
 
-// const today = new Date();
-// const tomorrow = today.setDate(today.getDate() + 1);
-
 class Rental extends React.Component {
   rentalMounted = false;
 
@@ -314,6 +311,7 @@ class Rental extends React.Component {
                       selectsStart
                       startDate={startDate}
                       endDate={startDate}
+                      minDate={startDate}
                       onChange={this.handleStartChange}
                       excludeDates={ rentedDates }
                       />
