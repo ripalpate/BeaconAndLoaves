@@ -2,19 +2,20 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import axios from 'axios';
 
-axios.interceptors.request.use((request) => {
-  const token = sessionStorage.getItem('token');
+axios.interceptors.request.use(
+  request => getCurrentUserJwt()
+    .then(() => {
+      const token = sessionStorage.getItem('token');
+      if (token != null) {
+        request.headers.Authorization = `Bearer ${token}`;
+      }
+      return request;
+    })
+    .catch(error => console.error(error)),
+  err => Promise.reject(err),
+);
 
-  if (token != null) {
-    request.headers.Authorization = `Bearer ${token}`;
-  }
-
-  return request;
-}, err => Promise.reject(err));
-
-axios.interceptors.response.use(response => response, (errorResponse) => {
-  console.error('Blew up');
-});
+axios.interceptors.response.use(response => response, errorResponse => Promise.reject(errorResponse));
 
 const authenticate = () => {
   const provider = new firebase.auth.GoogleAuthProvider();

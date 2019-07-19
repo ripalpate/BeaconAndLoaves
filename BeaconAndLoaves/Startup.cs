@@ -76,6 +76,11 @@ namespace BeaconAndLoaves
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials();
+            });
+
             app.UseMvc();
 
             app.UseSpa(spa =>

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BeaconAndLoaves.Data;
-using Microsoft.AspNetCore.Http;
+﻿using BeaconAndLoaves.Data;
 using Microsoft.AspNetCore.Mvc;
-using static BeaconAndLoaves.Controllers.SecureControllerBaseController;
 
 namespace BeaconAndLoaves.Controllers
 {
